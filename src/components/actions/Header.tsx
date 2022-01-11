@@ -12,6 +12,7 @@ const Layout = styled(Link)`
   align-items: center;
   user-select: none;
   cursor: pointer;
+  z-index: 10;
 
   ${MobileQuery} {
     position: absolute;

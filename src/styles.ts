@@ -7,4 +7,8 @@ const Color = {
   WHITE: '#ffffff',
 };
 
-export { MobileLimit, MobileQuery, PcQuery, Color };
+const HideOverflow = `overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;`;
+
+export { MobileLimit, MobileQuery, PcQuery, Color, HideOverflow };
