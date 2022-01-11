@@ -11,7 +11,7 @@ const App = (): JSX.Element => {
   return (
     <div>
       <Header />
-      <AnimatePresence>
+      <AnimatePresence exitBeforeEnter>
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<MainPage />} />
           <Route path="/music" element={<MusicPage />} />

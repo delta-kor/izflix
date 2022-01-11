@@ -1,8 +1,17 @@
+import { motion } from 'framer-motion';
 import { Component } from 'react';
 
 class MainPage extends Component {
   render() {
-    return <h1>MainPage</h1>;
+    return (
+      <motion.div
+        exit={{ opacity: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
+        MainPage
+      </motion.div>
+    );
   }
 }
 

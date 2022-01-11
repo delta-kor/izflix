@@ -1,9 +1,10 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../../icons/logo.svg';
 import { Mobile, Pc } from '../tools/MediaQuery';
 
-const MobileLayout = styled.div`
+const MobileLayout = styled(Link)`
   display: flex;
   position: absolute;
   top: 0;
@@ -13,10 +14,10 @@ const MobileLayout = styled.div`
   padding: 0 32px;
   align-items: center;
   user-select: none;
+  cursor: pointer;
 
   & > * {
     margin: 0 24px 0 0;
-    cursor: pointer;
 
     :last-child {
       margin: 0;
@@ -34,7 +35,7 @@ const MobileTitle = styled.div`
   font-size: 20px;
 `;
 
-const PcLayout = styled.div`
+const PcLayout = styled(Link)`
   display: flex;
   position: fixed;
   top: 0;
@@ -44,10 +45,10 @@ const PcLayout = styled.div`
   align-items: center;
   justify-content: center;
   user-select: none;
+  cursor: pointer;
 
   & > * {
     margin: 0 32px 0 0;
-    cursor: pointer;
 
     :last-child {
       margin: 0;
@@ -70,13 +71,13 @@ class Header extends Component {
     return (
       <>
         <Mobile>
-          <MobileLayout>
+          <MobileLayout to="/">
             <MobileIcon src={Logo} />
             <MobileTitle>IZFLIX</MobileTitle>
           </MobileLayout>
         </Mobile>
         <Pc>
-          <PcLayout>
+          <PcLayout to="/">
             <PcIcon src={Logo} />
             <PcTitle>IZFLIX</PcTitle>
           </PcLayout>

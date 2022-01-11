@@ -5,11 +5,12 @@
   padding: 0;
   outline: none;
   box-sizing: border-box;
+  text-decoration: none;
+  color: #ffffff;
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
   background: #070d2d;
-  color: #ffffff;
   font-family: 'NanumSquare', sans-serif;
 }
