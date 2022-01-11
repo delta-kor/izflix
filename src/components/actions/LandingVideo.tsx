@@ -1,4 +1,5 @@
-import { Component } from 'react';
+import { motion } from 'framer-motion';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { HideOverflow, MobileQuery, PcQuery } from '../../styles';
 
@@ -16,7 +17,7 @@ const Layout = styled.div`
   }
 `;
 
-const Video = styled.video`
+const Video = styled(motion.video)`
   display: block;
   position: absolute;
   object-fit: cover;
@@ -107,16 +108,37 @@ const Description = styled.div`
   }
 `;
 
-class LandingVideo extends Component {
+const src = 'https://v.iz-cdn.kro.kr/one_the_story/day1/mise_en_scene#t=30';
+
+interface State {
+  loaded: boolean;
+}
+
+class LandingVideo extends Component<any, State> {
+  state: State = { loaded: false };
+  videoRef = React.createRef<HTMLVideoElement>();
+
+  componentDidMount = () => {
+    const videoElement = this.videoRef.current!;
+    videoElement.onloadedmetadata = () => {
+      this.setState({ loaded: true });
+    };
+    videoElement.src = src;
+  };
+
   render() {
     return (
       <Layout>
         <Video
-          src="https://v.iz-cdn.kro.kr/one_the_story/day1/mise_en_scene#t=30"
+          ref={this.videoRef}
+          variants={{ initial: { opacity: 0 }, load: { opacity: 1 } }}
+          initial="initial"
+          animate={this.state.loaded ? 'load' : 'initial'}
+          transition={{ duration: 1 }}
           muted
           autoPlay
           loop
-        ></Video>
+        />
         <Cover />
         <Description>
           <p>인기 동영상</p>
