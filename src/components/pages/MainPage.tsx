@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Component } from 'react';
 import LandingVideo from '../actions/LandingVideo';
+import { Mobile } from '../tools/MediaQuery';
 
 class MainPage extends Component {
   render() {
@@ -10,7 +11,9 @@ class MainPage extends Component {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
-        <LandingVideo />
+        <Mobile>
+          <LandingVideo />
+        </Mobile>
       </motion.div>
     );
   }

@@ -134,7 +134,7 @@ class LandingVideo extends Component<any, State> {
           variants={{ initial: { opacity: 0 }, load: { opacity: 1 } }}
           initial="initial"
           animate={this.state.loaded ? 'load' : 'initial'}
-          transition={{ duration: 1 }}
+          transition={{ duration: 3 }}
           muted
           autoPlay
           loop
