@@ -2,22 +2,37 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../../icons/logo.svg';
-import { Mobile, Pc } from '../tools/MediaQuery';
+import { MobileQuery, PcQuery } from '../../styles';
 
-const MobileLayout = styled(Link)`
+const Layout = styled(Link)`
   display: flex;
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px;
-  padding: 0 32px;
   align-items: center;
   user-select: none;
   cursor: pointer;
 
+  ${MobileQuery} {
+    position: absolute;
+    height: 80px;
+    padding: 0 32px;
+  }
+
+  ${PcQuery} {
+    position: fixed;
+    height: 108px;
+    justify-content: center;
+  }
+
   & > * {
-    margin: 0 24px 0 0;
+    ${MobileQuery} {
+      margin: 0 24px 0 0;
+    }
+
+    ${PcQuery} {
+      margin: 0 32px 0 0;
+    }
 
     :last-child {
       margin: 0;
@@ -25,64 +40,37 @@ const MobileLayout = styled(Link)`
   }
 `;
 
-const MobileIcon = styled.img`
-  width: 22px;
-  height: 24px;
-`;
+const Icon = styled.img`
+  ${MobileQuery} {
+    width: 22px;
+    height: 24px;
+  }
 
-const MobileTitle = styled.div`
-  font-weight: 800;
-  font-size: 20px;
-`;
-
-const PcLayout = styled(Link)`
-  display: flex;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 108px;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-  cursor: pointer;
-
-  & > * {
-    margin: 0 32px 0 0;
-
-    :last-child {
-      margin: 0;
-    }
+  ${PcQuery} {
+    width: 28px;
+    height: 30px;
   }
 `;
 
-const PcIcon = styled.img`
-  width: 33px;
-  height: 36px;
-`;
-
-const PcTitle = styled.div`
+const Title = styled.div`
   font-weight: 800;
-  font-size: 28px;
+
+  ${MobileQuery} {
+    font-size: 20px;
+  }
+
+  ${PcQuery} {
+    font-size: 28px;
+  }
 `;
 
 class Header extends Component {
   render() {
     return (
-      <>
-        <Mobile>
-          <MobileLayout to="/">
-            <MobileIcon src={Logo} />
-            <MobileTitle>IZFLIX</MobileTitle>
-          </MobileLayout>
-        </Mobile>
-        <Pc>
-          <PcLayout to="/">
-            <PcIcon src={Logo} />
-            <PcTitle>IZFLIX</PcTitle>
-          </PcLayout>
-        </Pc>
-      </>
+      <Layout to="/">
+        <Icon src={Logo} />
+        <Title>IZFLIX</Title>
+      </Layout>
     );
   }
 }
