@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { HideOverflow, MobileQuery, PcQuery } from '../../styles';
+import LoaderIcon from '../../icons/loading.svg';
+import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
 
 const Layout = styled.div`
   position: relative;
@@ -22,6 +23,7 @@ const Video = styled(motion.video)`
   position: absolute;
   object-fit: cover;
   object-position: center;
+  background: ${Color.BACKGROUND};
 
   ${MobileQuery} {
     left: -64px;
@@ -108,6 +110,37 @@ const Description = styled.div`
   }
 `;
 
+const Loader = styled.img<{ active: boolean }>`
+  position: absolute;
+  transition: opacity 1s;
+  animation: spin 2s infinite linear;
+  opacity: ${({ active }) => (active ? 1 : 0)};
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  ${MobileQuery} {
+    width: 32px;
+    height: 32px;
+    left: calc(50% - 16px);
+    top: calc(50% - 16px);
+  }
+
+  ${PcQuery} {
+    width: 72px;
+    height: 72px;
+    left: calc(50% - 36px);
+    top: calc(50% - 36px);
+  }
+`;
+
 const src = 'https://v.iz-cdn.kro.kr/one_the_story/day1/mise_en_scene#t=30';
 
 interface State {
@@ -140,6 +173,7 @@ class LandingVideo extends Component<any, State> {
           loop
         />
         <Cover />
+        <Loader src={LoaderIcon} active={!this.state.loaded} />
         <Description>
           <p>인기 동영상</p>
           <p>Mise-en-Scene</p>

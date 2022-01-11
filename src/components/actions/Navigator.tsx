@@ -54,7 +54,7 @@ const PcLayout = styled.div`
 const MenuItem = styled.div<{ active: boolean }>`
   display: inline-block;
 
-  padding: 0 0 2px 0;
+  padding: 4px 4px 2px 4px;
   background-image: linear-gradient(${Color.WHITE}, ${Color.WHITE});
   background-position: 0 100%;
   background-size: 0% 2px;
