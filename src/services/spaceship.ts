@@ -1,0 +1,73 @@
+import NodeCache from 'node-cache';
+
+interface CacheOptions {
+  key: string;
+  expire: number;
+}
+
+class SpaceshipClass {
+  private cache: NodeCache = new NodeCache();
+
+  constructor(private baseUrl: string) {}
+
+  private async request<T extends ApiResponse>(
+    method: Method,
+    path: string,
+    payload: any = {}
+  ): Promise<T> {
+    const options: RequestInit = { method };
+
+    if (method !== 'GET' && payload) {
+      options.body = JSON.stringify(payload);
+      options.headers = { 'Content-Type': 'application/json' };
+    }
+
+    let data: T;
+
+    try {
+      const response = await fetch(this.baseUrl + path, options);
+      data = await response.json();
+    } catch (e: any) {
+      if (!e.json)
+        return { ok: false, message: '네트워크 연결이 원할하지 않습니다' } as T;
+
+      data = await e.json();
+    }
+
+    return data;
+  }
+
+  private async get<T extends ApiResponse>(
+    path: string,
+    cacheOption?: CacheOptions
+  ): Promise<T> {
+    if (cacheOption) {
+      const cache = this.cache.get<T>(cacheOption.key);
+      if (cache) return cache;
+    }
+
+    const response = await this.request<T>('GET', path);
+    if (response.ok && cacheOption) {
+      this.cache.set(cacheOption.key, response, cacheOption.expire);
+    }
+
+    return response;
+  }
+
+  private post<T extends ApiResponse>(path: string, data: any): Promise<T> {
+    return this.request<T>('POST', path, data);
+  }
+
+  public streamVideo(id: string): Promise<ApiResponse.Video.Stream> {
+    return this.get(`/video/${id}`);
+  }
+
+  public getAllPlaylists(): Promise<ApiResponse.Feed.Playlist.GetAllPlaylists> {
+    return this.get('/feed/playlist');
+  }
+}
+
+const baseUrl = process.env.REACT_APP_API_BASE!;
+
+const Spaceship = new SpaceshipClass(baseUrl);
+export default Spaceship;

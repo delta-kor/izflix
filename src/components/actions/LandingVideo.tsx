@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import LoaderIcon from '../../icons/loading.svg';
+import Spaceship from '../../services/spaceship';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
 
 const Layout = styled.div`
@@ -143,8 +144,6 @@ const Loader = styled.img<{ active: boolean }>`
   }
 `;
 
-const src = 'https://v.iz-cdn.kro.kr/one_the_story/day1/mise_en_scene#t=30';
-
 interface State {
   loaded: boolean;
 }
@@ -153,12 +152,28 @@ class LandingVideo extends Component<any, State> {
   state: State = { loaded: false };
   videoRef = React.createRef<HTMLVideoElement>();
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const videoElement = this.videoRef.current!;
     videoElement.onloadedmetadata = () => {
       this.setState({ loaded: true });
     };
-    videoElement.src = src;
+
+    const playlist = await this.getPlaylist();
+    if (playlist) {
+      const videoId = playlist.videos[0];
+      const video = await Spaceship.streamVideo(videoId);
+
+      if (!video.ok) return alert(video.message);
+      videoElement.src = video.url;
+    }
+  };
+
+  getPlaylist = async () => {
+    const response = await Spaceship.getAllPlaylists();
+    if (!response.ok) return alert(response.message);
+
+    const playlist = response.playlists.find((playlist) => playlist.featured)!;
+    return playlist;
   };
 
   render() {
