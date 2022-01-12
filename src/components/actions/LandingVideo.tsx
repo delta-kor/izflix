@@ -172,8 +172,7 @@ class LandingVideo extends Component<any, State> {
     const response = await Spaceship.getAllPlaylists();
     if (!response.ok) return alert(response.message);
 
-    const playlist = response.playlists.find((playlist) => playlist.featured)!;
-    return playlist;
+    return response.playlists.find((playlist) => playlist.featured)!;
   };
 
   render() {

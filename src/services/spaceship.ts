@@ -1,5 +1,7 @@
 import NodeCache from 'node-cache';
 
+const expireTime = 60 * 5;
+
 interface CacheOptions {
   key: string;
   expire: number;
@@ -59,11 +61,17 @@ class SpaceshipClass {
   }
 
   public streamVideo(id: string): Promise<ApiResponse.Video.Stream> {
-    return this.get(`/video/${id}`);
+    return this.get(`/video/${id}`, {
+      key: `stream_video_${id}`,
+      expire: expireTime,
+    });
   }
 
   public getAllPlaylists(): Promise<ApiResponse.Feed.Playlist.GetAllPlaylists> {
-    return this.get('/feed/playlist');
+    return this.get('/feed/playlist', {
+      key: 'get_all_playlists',
+      expire: expireTime,
+    });
   }
 }
 
