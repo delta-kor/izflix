@@ -125,13 +125,14 @@ const Description = styled.div`
 
     ${MobileQuery} {
       width: 70%;
+      max-width: 328px;
       height: 28px;
       margin: 0 0 8px 0;
     }
 
     ${PcQuery} {
-      width: 30%;
-      max-width: 328px;
+      width: 40%;
+      max-width: 388px;
       height: 48px;
       margin: 0 0 12px 0;
     }
@@ -142,13 +143,13 @@ const Description = styled.div`
     border-radius: 4px;
 
     ${MobileQuery} {
-      width: 25%;
+      width: 30%;
       height: 16px;
     }
 
     ${PcQuery} {
       width: 25%;
-      max-width: 146px;
+      max-width: 246px;
       height: 28px;
     }
   }
