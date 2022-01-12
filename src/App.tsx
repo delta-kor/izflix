@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Header from './components/actions/Header';
 import LandingVideo from './components/actions/LandingVideo';
 import Navigator from './components/actions/Navigator';
+import Popup from './components/actions/Popup';
 import CategoryPage from './components/pages/CategoryPage';
 import MainPage from './components/pages/MainPage';
 import MusicPage from './components/pages/MusicPage';
@@ -13,6 +14,7 @@ const App = (): JSX.Element => {
 
   return (
     <div>
+      <Popup />
       <Header />
       <Pc>
         <LandingVideo />

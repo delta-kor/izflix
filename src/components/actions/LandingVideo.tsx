@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import LoaderIcon from '../../icons/loading.svg';
 import Spaceship from '../../services/spaceship';
+import Transmitter from '../../services/transmitter';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
 
 const Layout = styled.div`
@@ -163,14 +164,14 @@ class LandingVideo extends Component<any, State> {
       const videoId = playlist.videos[0];
       const video = await Spaceship.streamVideo(videoId);
 
-      if (!video.ok) return alert(video.message);
+      if (!video.ok) return Transmitter.emit('popup', video.message);
       videoElement.src = video.url;
     }
   };
 
   getPlaylist = async () => {
     const response = await Spaceship.getAllPlaylists();
-    if (!response.ok) return alert(response.message);
+    if (!response.ok) return void Transmitter.emit('popup', response.message);
 
     return response.playlists.find((playlist) => playlist.featured)!;
   };
