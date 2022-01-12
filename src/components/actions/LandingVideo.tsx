@@ -115,6 +115,8 @@ const Loader = styled.img<{ active: boolean }>`
   transition: opacity 1s;
   animation: spin 2s infinite linear;
   opacity: ${({ active }) => (active ? 1 : 0)};
+  user-select: none;
+  z-index: 5;
 
   @keyframes spin {
     0% {
