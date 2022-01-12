@@ -25,6 +25,13 @@ namespace ApiResponse {
 interface IPlaylist {
   id: string;
   title: string;
-  videos: string[];
+  videos: IVideoItem[];
   featured: boolean;
+}
+
+interface IVideoItem {
+  id: string;
+  title: string;
+  description: string;
+  duration: number;
 }

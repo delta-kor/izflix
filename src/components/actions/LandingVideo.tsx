@@ -88,11 +88,15 @@ const Description = styled.div`
     font-weight: 800;
 
     ${MobileQuery} {
+      height: 28px;
+      line-height: 28px;
       font-size: 24px;
       margin: 0 0 8px 0;
     }
 
     ${PcQuery} {
+      height: 48px;
+      line-height: 48px;
       font-size: 42px;
       margin: 0 0 12px 0;
     }
@@ -103,11 +107,49 @@ const Description = styled.div`
     opacity: 0.7;
 
     ${MobileQuery} {
+      height: 16px;
+      line-height: 16px;
       font-size: 14px;
     }
 
     ${PcQuery} {
+      height: 28px;
+      line-height: 28px;
       font-size: 24px;
+    }
+  }
+
+  & > div:nth-child(2) {
+    background: ${Color.DARK_GRAY};
+    border-radius: 4px;
+
+    ${MobileQuery} {
+      width: 70%;
+      height: 28px;
+      margin: 0 0 8px 0;
+    }
+
+    ${PcQuery} {
+      width: 30%;
+      max-width: 328px;
+      height: 48px;
+      margin: 0 0 12px 0;
+    }
+  }
+
+  & > div:nth-child(3) {
+    background: ${Color.DARK_GRAY};
+    border-radius: 4px;
+
+    ${MobileQuery} {
+      width: 25%;
+      height: 16px;
+    }
+
+    ${PcQuery} {
+      width: 25%;
+      max-width: 146px;
+      height: 28px;
     }
   }
 `;
@@ -147,10 +189,11 @@ const Loader = styled.img<{ active: boolean }>`
 
 interface State {
   loaded: boolean;
+  video: IVideoItem | null;
 }
 
 class LandingVideo extends Component<any, State> {
-  state: State = { loaded: false };
+  state: State = { loaded: false, video: null };
   videoRef = React.createRef<HTMLVideoElement>();
 
   componentDidMount = async () => {
@@ -160,12 +203,18 @@ class LandingVideo extends Component<any, State> {
     };
 
     const playlist = await this.getPlaylist();
-    if (playlist) {
-      const videoId = playlist.videos[0];
-      const video = await Spaceship.streamVideo(videoId);
 
-      if (!video.ok) return Transmitter.emit('popup', video.message);
-      videoElement.src = video.url;
+    if (playlist) {
+      const length = playlist.videos.length;
+      const random = Math.floor(Math.random() * length);
+      const video = playlist.videos[random];
+      this.setState({ video });
+
+      const videoData = await Spaceship.streamVideo(video.id, 1080);
+      if (!videoData.ok) return Transmitter.emit('popup', videoData.message);
+
+      const startingPoint = Math.round(video.duration * 0.5);
+      videoElement.src = `${videoData.url}#t=${startingPoint}`;
     }
   };
 
@@ -193,8 +242,17 @@ class LandingVideo extends Component<any, State> {
         <Loader src={LoaderIcon} active={!this.state.loaded} />
         <Description>
           <p>인기 동영상</p>
-          <p>Mise-en-Scene</p>
-          <p>ONE, THE STORY Day 1</p>
+          {this.state.video ? (
+            <>
+              <p>{this.state.video.title}</p>
+              <p>{this.state.video.description}</p>
+            </>
+          ) : (
+            <>
+              <div />
+              <div />
+            </>
+          )}
         </Description>
       </Layout>
     );

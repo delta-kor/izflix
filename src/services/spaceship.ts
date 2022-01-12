@@ -60,8 +60,11 @@ class SpaceshipClass {
     return this.request<T>('POST', path, data);
   }
 
-  public streamVideo(id: string): Promise<ApiResponse.Video.Stream> {
-    return this.get(`/video/${id}`, {
+  public streamVideo(
+    id: string,
+    quality: number = 1080
+  ): Promise<ApiResponse.Video.Stream> {
+    return this.get(`/video/${id}?quality=${quality}`, {
       key: `stream_video_${id}`,
       expire: expireTime,
     });
