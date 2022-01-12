@@ -1,6 +1,7 @@
 import NodeCache from 'node-cache';
 
 const expireTime = 60 * 5;
+const promiseExpireTime = 10;
 
 interface CacheOptions {
   key: string;
@@ -44,11 +45,23 @@ class SpaceshipClass {
     cacheOption?: CacheOptions
   ): Promise<T> {
     if (cacheOption) {
+      const promiseCache = this.cache.get<Promise<T>>(
+        cacheOption.key + '::promise'
+      );
+      if (promiseCache) {
+        const resolved = await promiseCache;
+        if (resolved.ok) return resolved;
+      }
+
       const cache = this.cache.get<T>(cacheOption.key);
       if (cache) return cache;
     }
 
-    const response = await this.request<T>('GET', path);
+    const promise = this.request<T>('GET', path);
+    if (cacheOption)
+      this.cache.set(cacheOption.key + '::promise', promise, promiseExpireTime);
+
+    const response = await promise;
     if (response.ok && cacheOption) {
       this.cache.set(cacheOption.key, response, cacheOption.expire);
     }
@@ -75,6 +88,10 @@ class SpaceshipClass {
       key: 'get_all_playlists',
       expire: expireTime,
     });
+  }
+
+  public getThumbnail(id: string): string {
+    return `${this.baseUrl}/thumbnail/${id}`;
   }
 }
 

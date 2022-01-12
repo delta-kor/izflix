@@ -14,6 +14,7 @@ const MobileLayout = styled.div`
   background: ${Color.BACKGROUND};
   justify-content: center;
   align-items: center;
+  z-index: 20;
 
   & > * {
     margin: 0 48px 0 0;

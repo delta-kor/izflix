@@ -236,7 +236,7 @@ class LandingVideo extends Component<any, State> {
           animate={this.state.loaded ? 'load' : 'initial'}
           transition={{ duration: 3 }}
           muted
-          autoPlay
+          // autoPlay
           loop
         />
         <Cover />

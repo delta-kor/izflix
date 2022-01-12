@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Component } from 'react';
 import LandingVideo from '../actions/LandingVideo';
+import PlaylistMenu from '../menus/PlaylistMenu';
 import { Mobile } from '../tools/MediaQuery';
 
 class MainPage extends Component {
@@ -14,6 +15,7 @@ class MainPage extends Component {
         <Mobile>
           <LandingVideo />
         </Mobile>
+        <PlaylistMenu /> 
       </motion.div>
     );
   }
