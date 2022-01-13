@@ -6,8 +6,8 @@ import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
 import {
   Color,
+  Constants,
   HideOverflow,
-  MobileLimit,
   MobileQuery,
   PcQuery,
 } from '../../styles';
@@ -252,9 +252,8 @@ class LandingVideo extends Component<any, State> {
     const videoElement = this.videoRef.current;
     if (!videoElement) return false;
 
-    const width = window.innerWidth;
     const scrollLimit =
-      videoElement.clientHeight - (width > MobileLimit ? 96 : 80);
+      videoElement.clientHeight - (Constants.IS_PC() ? 96 : 80);
 
     if (window.scrollY > scrollLimit) {
       videoElement.pause();

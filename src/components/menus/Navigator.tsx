@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { Color } from '../../styles';
@@ -36,9 +37,10 @@ const Icon = styled.svg`
   }
 `;
 
-const PcLayout = styled.div`
+const PcLayout = styled(motion.div)`
   display: flex;
-  width: 100%;
+  margin: 0 auto;
+  width: 480px;
   height: 64px;
   justify-content: center;
   align-items: center;
@@ -127,7 +129,7 @@ const Navigator = () => {
         </MobileLayout>
       </Mobile>
       <Pc>
-        <PcLayout>
+        <PcLayout layoutId="navigator" transition={{ duration: 0.1 }}>
           <Link to="/">
             <MenuItem active={active === 0}>HOME</MenuItem>
           </Link>

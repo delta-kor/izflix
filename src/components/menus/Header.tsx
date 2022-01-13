@@ -2,9 +2,10 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../../icons/logo.svg';
-import { Color, MobileLimit, MobileQuery, PcQuery } from '../../styles';
+import { Color, Constants, MobileQuery, PcQuery } from '../../styles';
+import Navigator from './Navigator';
 
-const Layout = styled(Link)<{ float: boolean }>`
+const Layout = styled(Link)<{ float: number }>`
   display: flex;
   position: fixed;
   top: 0;
@@ -74,10 +75,11 @@ const Title = styled.div`
 
 interface State {
   float: boolean;
+  stick: boolean;
 }
 
 class Header extends Component<any, State> {
-  state: State = { float: false };
+  state: State = { float: false, stick: false };
 
   componentDidMount = () => {
     document.addEventListener('scroll', this.onScroll);
@@ -88,26 +90,26 @@ class Header extends Component<any, State> {
   };
 
   onScroll = () => {
+    if (Constants.IS_PC())
+      this.setState({
+        stick: window.scrollY > Constants.HEADER_STICK_LIMIT() - 96,
+      });
+
     const scrollTop = window.scrollY;
-    const width = window.innerWidth;
-    const height = window.innerHeight;
     let scrollLimit = 0;
 
-    if (window.location.pathname === '/' && width > MobileLimit)
-      scrollLimit = height - 180 - 96;
+    if (window.location.pathname === '/' && Constants.IS_PC())
+      scrollLimit = Constants.HEADER_STICK_LIMIT() - 96;
 
-    if (scrollTop > scrollLimit) {
-      this.setState({ float: true });
-    } else {
-      this.setState({ float: false });
-    }
+    this.setState({ float: scrollTop > scrollLimit });
   };
 
   render() {
     return (
-      <Layout to="/" float={this.state.float}>
+      <Layout to="/" float={this.state.float ? 1 : 0}>
         <Icon src={Logo} />
         <Title>IZFLIX</Title>
+        {this.state.stick && <Navigator />}
       </Layout>
     );
   }

@@ -1,25 +1,46 @@
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import Header from './components/menus/Header';
+import styled from 'styled-components';
 import LandingVideo from './components/actions/LandingVideo';
-import Navigator from './components/menus/Navigator';
 import Popup from './components/actions/Popup';
+import Header from './components/menus/Header';
+import Navigator from './components/menus/Navigator';
 import CategoryPage from './components/pages/CategoryPage';
 import MainPage from './components/pages/MainPage';
 import MusicPage from './components/pages/MusicPage';
 import { Pc } from './components/tools/MediaQuery';
+import { Constants } from './styles';
+
+const NavigatorBlock = styled.div`
+  width: 100%;
+  height: 64px;
+`;
 
 const App = (): JSX.Element => {
   const location = useLocation();
+  const [headerSticked, setHeaderSticked] = useState(false);
+
+  const navigatorController = () => {
+    if (Constants.IS_PC())
+      setHeaderSticked(window.scrollY > Constants.HEADER_STICK_LIMIT() - 96);
+  };
+
+  useEffect(() => {
+    document.addEventListener('scroll', navigatorController);
+    return () => {
+      document.removeEventListener('scroll', navigatorController);
+    };
+  }, []);
 
   return (
-    <div>
+    <AnimateSharedLayout>
       <Popup />
       <Header />
       <Pc>
         <LandingVideo />
       </Pc>
-      <Navigator />
+      {headerSticked ? <NavigatorBlock /> : <Navigator />}
       <AnimatePresence exitBeforeEnter>
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<MainPage />} />
@@ -27,7 +48,7 @@ const App = (): JSX.Element => {
           <Route path="/category" element={<CategoryPage />} />
         </Routes>
       </AnimatePresence>
-    </div>
+    </AnimateSharedLayout>
   );
 };
 
