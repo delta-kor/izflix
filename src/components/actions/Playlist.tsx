@@ -3,7 +3,13 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import LeftArrowIcon from '../../icons/arrow-left.svg';
 import RightArrowIcon from '../../icons/arrow-right.svg';
-import { Color, MobileQuery, PcQuery, TabletQuery } from '../../styles';
+import {
+  Color,
+  HideOverflow,
+  MobileQuery,
+  PcQuery,
+  TabletQuery,
+} from '../../styles';
 import { Pc } from '../tools/MediaQuery';
 import PlaylistVideo from './PlaylistVideo';
 
@@ -12,22 +18,23 @@ const Layout = styled.div`
   width: 100%;
 
   ${MobileQuery} {
-    margin: 24px 0 0 0;
+    margin: 24px 0 48px 0;
   }
 
   ${PcQuery} {
     max-width: 1416px;
-    margin: 24px auto 0 auto;
+    margin: 24px auto 72px auto;
     padding: 0 32px;
   }
 `;
 
 const Title = styled.div`
   font-weight: bold;
+  ${HideOverflow};
 
   ${MobileQuery} {
     font-size: 16px;
-    margin: 0 0 16px 32px;
+    margin: 0 32px 16px 32px;
   }
 
   ${PcQuery} {

@@ -32,7 +32,7 @@ const Placeholder = styled.div<{ active: boolean }>`
   left: 0;
   width: 100%;
   background: ${Color.DARK_GRAY};
-  border-radius: 4px;
+  border-radius: 6px;
   opacity: ${({ active }) => (!active ? 1 : 0)};
   transition: 0.5s opacity;
 
@@ -51,7 +51,7 @@ const Placeholder = styled.div<{ active: boolean }>`
 
 const Thumbnail = styled.img`
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 6px;
   width: 100%;
   opacity: 0;
 

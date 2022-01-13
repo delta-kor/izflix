@@ -200,6 +200,8 @@ class LandingVideo extends Component<any, State> {
   videoRef = React.createRef<HTMLVideoElement>();
 
   componentDidMount = async () => {
+    document.addEventListener('scroll', this.onScroll);
+
     const videoElement = this.videoRef.current!;
     videoElement.onloadedmetadata = () => {
       this.setState({ loaded: true });
@@ -221,6 +223,25 @@ class LandingVideo extends Component<any, State> {
     }
   };
 
+  componentWillUnmount = () => {
+    document.removeEventListener('scroll', this.onScroll);
+  };
+
+  onScroll = () => {
+    const videoElement = this.videoRef.current;
+    if (!videoElement) return false;
+
+    const scrollLimit = videoElement.clientHeight * 0.9;
+
+    if (window.scrollY > scrollLimit) {
+      videoElement.pause();
+    }
+
+    if (window.scrollY <= scrollLimit) {
+      videoElement.play();
+    }
+  };
+
   getPlaylist = async () => {
     const response = await Spaceship.getAllPlaylists();
     if (!response.ok) return void Transmitter.emit('popup', response.message);
@@ -238,7 +259,7 @@ class LandingVideo extends Component<any, State> {
           animate={this.state.loaded ? 'load' : 'initial'}
           transition={{ duration: 3 }}
           muted
-          // autoPlay
+          autoPlay
           loop
         />
         <Cover />

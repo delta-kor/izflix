@@ -30,8 +30,8 @@ class PlaylistMenu extends Component<any, State> {
   render() {
     return (
       <Layout>
-        {this.state.playlists.map((playlist) => (
-          <Playlist playlist={playlist} key={playlist.id} />
+        {this.state.playlists.map((playlist, index) => (
+          <Playlist playlist={playlist} key={index} />
         ))}
       </Layout>
     );
