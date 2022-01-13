@@ -6,6 +6,7 @@ import { MobileQuery, PcQuery } from '../../styles';
 
 const Layout = styled(Link)`
   display: flex;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -15,13 +16,11 @@ const Layout = styled(Link)`
   z-index: 10;
 
   ${MobileQuery} {
-    position: absolute;
     height: 80px;
     padding: 0 32px;
   }
 
   ${PcQuery} {
-    position: fixed;
     height: 108px;
     justify-content: center;
   }
