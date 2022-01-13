@@ -4,7 +4,13 @@ import styled from 'styled-components';
 import LoaderIcon from '../../icons/loading.svg';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
-import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
+import {
+  Color,
+  HideOverflow,
+  MobileLimit,
+  MobileQuery,
+  PcQuery,
+} from '../../styles';
 
 const Layout = styled.div`
   position: relative;
@@ -246,7 +252,9 @@ class LandingVideo extends Component<any, State> {
     const videoElement = this.videoRef.current;
     if (!videoElement) return false;
 
-    const scrollLimit = videoElement.clientHeight - 96;
+    const width = window.innerWidth;
+    const scrollLimit =
+      videoElement.clientHeight - (width > MobileLimit ? 96 : 80);
 
     if (window.scrollY > scrollLimit) {
       videoElement.pause();
@@ -266,7 +274,7 @@ class LandingVideo extends Component<any, State> {
           initial="initial"
           animate={this.state.loaded ? 'load' : 'initial'}
           transition={{ duration: 3 }}
-          // muted
+          muted
           autoPlay
           loop
         />

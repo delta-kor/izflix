@@ -14,18 +14,23 @@ const Layout = styled(Link)<{ float: boolean }>`
   user-select: none;
   cursor: pointer;
   z-index: 10;
-  ${({ float }) =>
-    float ? `background: ${Color.DARK_GRAY};` : 'background: none;'}
-  transition: background 0.2s;
+  transition: background 0.2s, border 0.2s;
+  border-bottom: 1px solid transparent;
 
   ${MobileQuery} {
     height: 80px;
     padding: 0 32px;
+    ${({ float }) =>
+      float
+        ? `background: ${Color.BACKGROUND}; border-bottom: 1px solid ${Color.DARK_GRAY}`
+        : 'background: none;'}
   }
 
   ${PcQuery} {
     height: 96px;
     justify-content: center;
+    ${({ float }) =>
+      float ? `background: ${Color.DARK_GRAY};` : 'background: none;'}
   }
 
   & > * {
