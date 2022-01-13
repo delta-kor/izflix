@@ -1,8 +1,8 @@
 import { AnimatePresence } from 'framer-motion';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import Header from './components/actions/Header';
+import Header from './components/menus/Header';
 import LandingVideo from './components/actions/LandingVideo';
-import Navigator from './components/actions/Navigator';
+import Navigator from './components/menus/Navigator';
 import Popup from './components/actions/Popup';
 import CategoryPage from './components/pages/CategoryPage';
 import MainPage from './components/pages/MainPage';

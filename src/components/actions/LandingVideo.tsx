@@ -16,7 +16,7 @@ const Layout = styled.div`
   }
 
   ${PcQuery} {
-    height: calc(100vh - 120px);
+    height: calc(100vh - 180px);
   }
 `;
 
@@ -214,7 +214,7 @@ class LandingVideo extends Component<any, State> {
       const videoData = await Spaceship.streamVideo(video.id, 1080);
       if (!videoData.ok) return Transmitter.emit('popup', videoData.message);
 
-      const startingPoint = Math.round(video.duration * 0.5);
+      const startingPoint = Math.round(video.duration * 0.55);
       videoElement.src = `${videoData.url}#t=${startingPoint}`;
     }
   };
