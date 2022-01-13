@@ -53,6 +53,7 @@ const Thumbnail = styled.img`
   object-fit: cover;
   border-radius: 4px;
   width: 100%;
+  opacity: 0;
 
   ${MobileQuery} {
     height: 117px;
@@ -115,6 +116,7 @@ class PlaylistVideo extends Component<Props, State> {
   componentDidMount = () => {
     const imageElement = this.imageRef.current!;
     imageElement.onload = () => {
+      imageElement.style.opacity = '1';
       this.setState({ loaded: true });
     };
 

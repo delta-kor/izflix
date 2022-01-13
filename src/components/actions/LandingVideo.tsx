@@ -61,12 +61,14 @@ const Cover = styled.div`
 const Description = styled.div`
   display: flex;
   position: absolute;
-  left: 32px;
+  left: 50%;
   bottom: 24px;
+  transform: translateX(-50%);
   flex-direction: column;
 
   & > p {
     width: calc(100vw - 64px);
+    max-width: calc(1416px - 64px);
     ${HideOverflow}
   }
 
