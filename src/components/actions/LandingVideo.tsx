@@ -210,14 +210,14 @@ class LandingVideo extends Component<any, State> {
       Transmitter.emit('popup', '영상 재생중 오류가 발생했어요');
     };
 
-    this.load();
+    this.loadData();
   };
 
   componentWillUnmount = () => {
     document.removeEventListener('scroll', this.onScroll);
   };
 
-  load = async () => {
+  loadData = async () => {
     const videoElement = this.videoRef.current!;
     const playlist = await this.getPlaylist();
 
@@ -246,7 +246,7 @@ class LandingVideo extends Component<any, State> {
     const videoElement = this.videoRef.current;
     if (!videoElement) return false;
 
-    const scrollLimit = videoElement.clientHeight * 0.9;
+    const scrollLimit = videoElement.clientHeight - 96;
 
     if (window.scrollY > scrollLimit) {
       videoElement.pause();
@@ -266,7 +266,7 @@ class LandingVideo extends Component<any, State> {
           initial="initial"
           animate={this.state.loaded ? 'load' : 'initial'}
           transition={{ duration: 3 }}
-          muted
+          // muted
           autoPlay
           loop
         />

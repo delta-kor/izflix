@@ -228,7 +228,7 @@ class Playlist extends Component<Props> {
                 key="left"
                 {...options}
               >
-                <img src={LeftArrowIcon} />
+                <img src={LeftArrowIcon} alt={'scroll left'} />
               </Arrow>
             )}
             {this.state.arrows[1] && (
@@ -238,7 +238,7 @@ class Playlist extends Component<Props> {
                 key="right"
                 {...options}
               >
-                <img src={RightArrowIcon} />
+                <img src={RightArrowIcon} alt={'scroll right'} />
               </Arrow>
             )}
           </AnimatePresence>

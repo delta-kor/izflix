@@ -2,11 +2,11 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../../icons/logo.svg';
-import { MobileQuery, PcQuery } from '../../styles';
+import { Color, MobileLimit, MobileQuery, PcQuery } from '../../styles';
 
-const Layout = styled(Link)`
+const Layout = styled(Link)<{ float: boolean }>`
   display: flex;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -14,6 +14,9 @@ const Layout = styled(Link)`
   user-select: none;
   cursor: pointer;
   z-index: 10;
+  ${({ float }) =>
+    float ? `background: ${Color.DARK_GRAY};` : 'background: none;'}
+  transition: background 0.2s;
 
   ${MobileQuery} {
     height: 80px;
@@ -21,7 +24,7 @@ const Layout = styled(Link)`
   }
 
   ${PcQuery} {
-    height: 108px;
+    height: 96px;
     justify-content: center;
   }
 
@@ -64,10 +67,40 @@ const Title = styled.div`
   }
 `;
 
-class Header extends Component {
+interface State {
+  float: boolean;
+}
+
+class Header extends Component<any, State> {
+  state: State = { float: false };
+
+  componentDidMount = () => {
+    document.addEventListener('scroll', this.onScroll);
+  };
+
+  componentWillUnmount = () => {
+    document.removeEventListener('scroll', this.onScroll);
+  };
+
+  onScroll = () => {
+    const scrollTop = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    let scrollLimit = 0;
+
+    if (window.location.pathname === '/' && width > MobileLimit)
+      scrollLimit = height - 180 - 96;
+
+    if (scrollTop > scrollLimit) {
+      this.setState({ float: true });
+    } else {
+      this.setState({ float: false });
+    }
+  };
+
   render() {
     return (
-      <Layout to="/">
+      <Layout to="/" float={this.state.float}>
         <Icon src={Logo} />
         <Title>IZFLIX</Title>
       </Layout>

@@ -26,13 +26,20 @@ class MusicMenu extends Component<any, State> {
   };
 
   render() {
+    const placeholder = [];
+    for (let i = 0; i < 51; i++) {
+      placeholder.push(<MusicAccordion key={i} />);
+    }
+
     return (
       <>
         <Mobile>
           <AccordionList>
-            {this.state.musics.map((music) => (
-              <MusicAccordion music={music} />
-            ))}
+            {this.state.musics.length
+              ? this.state.musics.map((music) => (
+                  <MusicAccordion music={music} key={music.id} />
+                ))
+              : placeholder}
           </AccordionList>
         </Mobile>
       </>
