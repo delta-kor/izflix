@@ -90,6 +90,13 @@ class SpaceshipClass {
     });
   }
 
+  public viewAllMusics(): Promise<ApiResponse.Music.ViewAll> {
+    return this.get('/music', {
+      key: 'view_all_musics',
+      expire: expireTime,
+    });
+  }
+
   public getThumbnail(id: string): string {
     return `${this.baseUrl}/thumbnail/${id}`;
   }

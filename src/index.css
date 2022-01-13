@@ -11,10 +11,13 @@
 }
 
 body {
-  padding: 0 0 48px 0;
   background: #070d2d;
   font-family: 'NanumSquare', sans-serif;
   overflow-y: overlay;
+}
+
+body:lang(zh) {
+  font-family: sans-serif;
 }
 
 body::-webkit-scrollbar {

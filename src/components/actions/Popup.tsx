@@ -10,15 +10,15 @@ const Layout = styled(motion.div)`
   background: ${Color.DARK_GRAY};
   border-radius: 8px;
   z-index: 100;
+  border: 2px solid ${Color.PRIMARY};
 
   ${MobileQuery} {
-    bottom: 72px;
+    bottom: 84px;
     left: 12px;
     right: 12px;
   }
 
   ${PcQuery} {
-    border: 2px solid ${Color.PRIMARY};
     bottom: 16px;
     left: 32px;
     right: unset;

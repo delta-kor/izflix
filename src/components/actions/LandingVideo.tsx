@@ -206,7 +206,19 @@ class LandingVideo extends Component<any, State> {
     videoElement.onloadedmetadata = () => {
       this.setState({ loaded: true });
     };
+    videoElement.onerror = () => {
+      Transmitter.emit('popup', '영상 재생중 오류가 발생했어요');
+    };
 
+    this.load();
+  };
+
+  componentWillUnmount = () => {
+    document.removeEventListener('scroll', this.onScroll);
+  };
+
+  load = async () => {
+    const videoElement = this.videoRef.current!;
     const playlist = await this.getPlaylist();
 
     if (playlist) {
@@ -223,8 +235,11 @@ class LandingVideo extends Component<any, State> {
     }
   };
 
-  componentWillUnmount = () => {
-    document.removeEventListener('scroll', this.onScroll);
+  getPlaylist = async () => {
+    const response = await Spaceship.getAllPlaylists();
+    if (!response.ok) return void Transmitter.emit('popup', response.message);
+
+    return response.playlists.find((playlist) => playlist.featured)!;
   };
 
   onScroll = () => {
@@ -240,13 +255,6 @@ class LandingVideo extends Component<any, State> {
     if (window.scrollY <= scrollLimit) {
       videoElement.play();
     }
-  };
-
-  getPlaylist = async () => {
-    const response = await Spaceship.getAllPlaylists();
-    if (!response.ok) return void Transmitter.emit('popup', response.message);
-
-    return response.playlists.find((playlist) => playlist.featured)!;
   };
 
   render() {

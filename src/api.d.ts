@@ -14,6 +14,12 @@ namespace ApiResponse {
     }
   }
 
+  export namespace Music {
+    export interface ViewAll extends ApiResponse {
+      musics: IMusic[];
+    }
+  }
+
   export namespace Video {
     export interface Stream extends ApiResponse {
       url: string;
@@ -27,6 +33,12 @@ interface IPlaylist {
   title: string;
   videos: IVideoItem[];
   featured: boolean;
+}
+
+interface IMusic {
+  id: string;
+  title: string;
+  count: number;
 }
 
 interface IVideoItem {
