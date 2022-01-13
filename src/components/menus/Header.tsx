@@ -101,6 +101,9 @@ class Header extends Component<any, State> {
     if (window.location.pathname === '/' && Constants.IS_PC())
       scrollLimit = Constants.HEADER_STICK_LIMIT() - 96;
 
+    if (window.location.pathname === '/' && Constants.IS_MOBILE())
+      scrollLimit = (window.innerWidth + 64 * 2) * (9 / 16) - 180;
+
     this.setState({ float: scrollTop > scrollLimit });
   };
 

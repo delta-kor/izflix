@@ -32,7 +32,7 @@ class SpaceshipClass {
       data = await response.json();
     } catch (e: any) {
       if (!e.json)
-        return { ok: false, message: '네트워크 연결이 원할하지 않습니다' } as T;
+        return { ok: false, message: '네트워크 연결이 원할하지 않아요' } as T;
 
       data = await e.json();
     }

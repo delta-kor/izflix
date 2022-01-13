@@ -216,6 +216,12 @@ class LandingVideo extends Component<any, State> {
       Transmitter.emit('popup', '영상 재생중 오류가 발생했어요');
     };
 
+    const scrollLimit =
+      videoElement.clientHeight - (Constants.IS_PC() ? 96 : 80);
+
+    if (window.scrollY > scrollLimit) videoElement.pause();
+    else videoElement.play();
+
     this.loadData();
   };
 
@@ -255,13 +261,8 @@ class LandingVideo extends Component<any, State> {
     const scrollLimit =
       videoElement.clientHeight - (Constants.IS_PC() ? 96 : 80);
 
-    if (window.scrollY > scrollLimit) {
-      videoElement.pause();
-    }
-
-    if (window.scrollY <= scrollLimit) {
-      videoElement.play();
-    }
+    if (window.scrollY > scrollLimit) videoElement.pause();
+    else videoElement.play();
   };
 
   render() {
@@ -274,7 +275,6 @@ class LandingVideo extends Component<any, State> {
           animate={this.state.loaded ? 'load' : 'initial'}
           transition={{ duration: 3 }}
           muted
-          autoPlay
           loop
         />
         <Cover />
