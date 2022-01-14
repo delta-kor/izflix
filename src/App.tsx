@@ -25,6 +25,7 @@ const App = (): JSX.Element => {
   const navigatorController = () => {
     if (Constants.IS_PC())
       setHeaderSticked(Constants.IS_HEADER_STICK_POSITION_PC());
+    else setHeaderSticked(false);
   };
 
   useEffect(() => {

@@ -5,9 +5,10 @@ import Constants from '../../constants';
 import Logo from '../../icons/logo.svg';
 import Transmitter from '../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../styles';
+import { Mobile, Pc } from '../tools/MediaQuery';
 import Navigator from './Navigator';
 
-const Layout = styled(Link)<{ $float: boolean; $instant: boolean }>`
+const Layout = styled.div<{ $float: boolean; $instant: boolean }>`
   display: flex;
   position: fixed;
   top: 0;
@@ -15,9 +16,9 @@ const Layout = styled(Link)<{ $float: boolean; $instant: boolean }>`
   width: 100%;
   align-items: center;
   user-select: none;
-  cursor: pointer;
   z-index: 10;
   border-bottom: 1px solid transparent;
+
   ${({ $instant: instant }) =>
     instant
       ? 'transition: border 0.2s;'
@@ -35,6 +36,7 @@ const Layout = styled(Link)<{ $float: boolean; $instant: boolean }>`
   ${PcQuery} {
     height: 96px;
     justify-content: center;
+    cursor: pointer;
     ${({ $float: float }) =>
       float ? `background: ${Color.DARK_GRAY};` : 'background: none;'}
   }
@@ -50,6 +52,19 @@ const Layout = styled(Link)<{ $float: boolean; $instant: boolean }>`
 
     :last-child {
       margin: 0;
+    }
+  }
+`;
+
+const MobileLink = styled(Link)`
+  display: flex;
+  height: 75%;
+  align-items: center;
+  cursor: pointer;
+
+  & > * {
+    ${MobileQuery} {
+      margin: 0 24px 0 0;
     }
   }
 `;
@@ -120,10 +135,19 @@ class Header extends Component<any, State> {
 
   render() {
     return (
-      <Layout to="/" $float={this.state.float} $instant={this.state.instant}>
-        <Icon src={Logo} />
-        <Title>IZFLIX</Title>
-        {this.state.stick && <Navigator />}
+      <Layout $float={this.state.float} $instant={this.state.instant}>
+        <Mobile>
+          <MobileLink to="/">
+            <Icon src={Logo} />
+            <Title>IZFLIX</Title>
+            {this.state.stick && <Navigator />}
+          </MobileLink>
+        </Mobile>
+        <Pc>
+          <Icon src={Logo} />
+          <Title>IZFLIX</Title>
+          {this.state.stick && <Navigator />}
+        </Pc>
       </Layout>
     );
   }
