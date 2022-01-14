@@ -11,6 +11,8 @@ const Layout = styled(motion.div)`
   border-radius: 8px;
   z-index: 100;
   border: 2px solid ${Color.PRIMARY};
+  user-select: none;
+  cursor: pointer;
 
   ${MobileQuery} {
     bottom: 84px;
@@ -45,12 +47,10 @@ class Popup extends Component<any, State> {
 
   componentDidMount = () => {
     Transmitter.on('popup', this.showPopup);
-    document.addEventListener('click', this.hidePopup);
   };
 
   componentWillUnmount = () => {
     Transmitter.removeListener('popup', this.showPopup);
-    document.removeEventListener('click', this.hidePopup);
   };
 
   showPopup = (message: string) => {
@@ -73,6 +73,7 @@ class Popup extends Component<any, State> {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             key="popup"
+            onClick={this.hidePopup}
           >
             <Text>{this.state.message}</Text>
           </Layout>

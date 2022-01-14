@@ -18,6 +18,10 @@ namespace ApiResponse {
     export interface ViewAll extends ApiResponse {
       musics: IMusic[];
     }
+
+    export interface ViewOne extends ApiResponse {
+      videos: IMusicVideoItem[];
+    }
   }
 
   export namespace Video {
@@ -39,6 +43,13 @@ interface IMusic {
   id: string;
   title: string;
   count: number;
+}
+
+interface IMusicVideoItem {
+  id: string;
+  description: string;
+  date: number;
+  duration: number;
 }
 
 interface IVideoItem {

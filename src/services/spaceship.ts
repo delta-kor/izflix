@@ -97,6 +97,13 @@ class SpaceshipClass {
     });
   }
 
+  public viewOneMusic(id: string): Promise<ApiResponse.Music.ViewOne> {
+    return this.get(`/music/${id}`, {
+      key: `view_one_music#${id}`,
+      expire: expireTime,
+    });
+  }
+
   public getThumbnail(id: string): string {
     return `${this.baseUrl}/thumbnail/${id}`;
   }
