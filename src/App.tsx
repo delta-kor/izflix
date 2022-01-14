@@ -10,7 +10,8 @@ import CategoryPage from './components/pages/CategoryPage';
 import MainPage from './components/pages/MainPage';
 import MusicPage from './components/pages/MusicPage';
 import { Pc } from './components/tools/MediaQuery';
-import { Constants } from './styles';
+import Constants from './constants';
+import Transmitter from './services/transmitter';
 
 const NavigatorBlock = styled.div`
   width: 100%;
@@ -23,15 +24,16 @@ const App = (): JSX.Element => {
 
   const navigatorController = () => {
     if (Constants.IS_PC())
-      setHeaderSticked(window.scrollY > Constants.HEADER_STICK_LIMIT() - 96);
+      setHeaderSticked(Constants.IS_HEADER_STICK_POSITION_PC());
   };
 
   useEffect(() => {
-    document.addEventListener('scroll', navigatorController);
+    Transmitter.emit('locationupdate', location.pathname);
+    Transmitter.on('levelscroll', navigatorController);
     return () => {
-      document.removeEventListener('scroll', navigatorController);
+      Transmitter.removeListener('levelscroll', navigatorController);
     };
-  }, []);
+  }, [location]);
 
   return (
     <AnimateSharedLayout>

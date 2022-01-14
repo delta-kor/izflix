@@ -7,18 +7,6 @@ const TabletQuery = `@media (min-width: ${
 }px) and (max-width: ${TabletLimit}px)`;
 const PcQuery = `@media (min-width: ${MobileLimit + 1}px)`;
 
-const Constants = {
-  HEADER_STICK_LIMIT() {
-    return window.innerHeight - 180;
-  },
-  IS_MOBILE() {
-    return window.innerWidth <= MobileLimit;
-  },
-  IS_PC() {
-    return window.innerWidth > MobileLimit;
-  },
-};
-
 const Color = {
   WHITE: '#FFFFFF',
   PRIMARY: '#556FE5',
@@ -37,7 +25,6 @@ export {
   MobileQuery,
   TabletQuery,
   PcQuery,
-  Constants,
   Color,
   HideOverflow,
 };

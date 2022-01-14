@@ -1,16 +1,11 @@
 import { motion } from 'framer-motion';
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Constants from '../../constants';
 import LoaderIcon from '../../icons/loading.svg';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
-import {
-  Color,
-  Constants,
-  HideOverflow,
-  MobileQuery,
-  PcQuery,
-} from '../../styles';
+import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
 
 const Layout = styled.div`
   position: relative;
@@ -206,8 +201,16 @@ class LandingVideo extends Component<any, State> {
   videoRef = React.createRef<HTMLVideoElement>();
 
   componentDidMount = async () => {
-    document.addEventListener('scroll', this.onScroll);
+    Transmitter.on('levelscroll', this.onScroll);
 
+    this.loadData();
+  };
+
+  componentWillUnmount = () => {
+    Transmitter.removeListener('levelscroll', this.onScroll);
+  };
+
+  loadData = async () => {
     const videoElement = this.videoRef.current!;
     videoElement.onloadedmetadata = () => {
       this.setState({ loaded: true });
@@ -216,21 +219,6 @@ class LandingVideo extends Component<any, State> {
       Transmitter.emit('popup', '영상 재생중 오류가 발생했어요');
     };
 
-    const scrollLimit =
-      videoElement.clientHeight - (Constants.IS_PC() ? 96 : 80);
-
-    if (window.scrollY > scrollLimit) videoElement.pause();
-    else videoElement.play();
-
-    this.loadData();
-  };
-
-  componentWillUnmount = () => {
-    document.removeEventListener('scroll', this.onScroll);
-  };
-
-  loadData = async () => {
-    const videoElement = this.videoRef.current!;
     const playlist = await this.getPlaylist();
 
     if (playlist) {
@@ -244,6 +232,8 @@ class LandingVideo extends Component<any, State> {
 
       const startingPoint = Math.round(video.duration * 0.55);
       videoElement.src = `${videoData.url}#t=${startingPoint}`;
+
+      this.onScroll();
     }
   };
 
@@ -258,8 +248,9 @@ class LandingVideo extends Component<any, State> {
     const videoElement = this.videoRef.current;
     if (!videoElement) return false;
 
-    const scrollLimit =
-      videoElement.clientHeight - (Constants.IS_PC() ? 96 : 80);
+    const scrollLimit = Constants.IS_PC()
+      ? Constants.VIDEO_PAUSE_POSITION_PC()
+      : Constants.VIDEO_PAUSE_POSITION_MOBILE();
 
     if (window.scrollY > scrollLimit) videoElement.pause();
     else videoElement.play();
