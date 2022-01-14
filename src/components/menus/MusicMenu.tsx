@@ -2,7 +2,7 @@ import { Component } from 'react';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
-import MusicAccordion from '../actions/MusicAccordion';
+import MusicAccordion from '../actions/accordion/MusicAccordion';
 import { Mobile } from '../tools/MediaQuery';
 
 const AccordionList = styled.div``;

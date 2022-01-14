@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Spaceship from '../../services/spaceship';
+import Spaceship from '../../../services/spaceship';
 import {
   Color,
   HideOverflow,
   MobileQuery,
   PcQuery,
   TabletQuery,
-} from '../../styles';
+} from '../../../styles';
 
 const Layout = styled.div`
   position: relative;

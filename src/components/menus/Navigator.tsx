@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { Color } from '../../styles';
+import { Color, Ease } from '../../styles';
 import { Mobile, Pc } from '../tools/MediaQuery';
 
 const MobileLayout = styled.div`
@@ -129,7 +129,10 @@ const Navigator = () => {
         </MobileLayout>
       </Mobile>
       <Pc>
-        <PcLayout layoutId="navigator" transition={{ duration: 0.1 }}>
+        <PcLayout
+          layoutId="navigator"
+          transition={{ duration: 0.5, ease: Ease }}
+        >
           <Link to="/">
             <MenuItem active={active === 0}>HOME</MenuItem>
           </Link>

@@ -1,15 +1,17 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
-import AccordionIcon from '../../icons/accordion.svg';
-import Spaceship from '../../services/spaceship';
-import Transmitter from '../../services/transmitter';
-import { Color, HideOverflow } from '../../styles';
+import AccordionIcon from '../../../icons/accordion.svg';
+import Spaceship from '../../../services/spaceship';
+import Transmitter from '../../../services/transmitter';
+import { Color, Ease, HideOverflow } from '../../../styles';
 import MusicAccordionItem from './MusicAccordionItem';
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)<{ $active: boolean }>`
   display: flex;
   flex-direction: column;
+  background: ${({ $active }) => ($active ? Color.DARK_GRAY : 'transparent')};
+  transition: background 0.2s;
 `;
 
 const Layout = styled.div`
@@ -29,10 +31,11 @@ const Icon = styled(motion.img)`
 `;
 
 const Title = styled.div`
+  height: 24px;
+  padding: 0 4px 0 0;
   flex-grow: 1;
   font-weight: bold;
   font-size: 20px;
-  height: 24px;
   ${HideOverflow};
 `;
 
@@ -59,14 +62,14 @@ const PlaceholderCount = styled.div`
   border-radius: 4px;
 `;
 
-const ItemWrapper = styled.div`
+const ItemWrapper = styled(motion.div)`
   display: flex;
   flex-direction: column;
   & > * {
     margin: 0 0 12px 0;
 
     :last-child {
-      margin: 0;
+      margin: 0 0 24px 0;
     }
   }
 `;
@@ -100,14 +103,16 @@ class MusicAccordion extends Component<Props, State> {
     const data = await Spaceship.viewOneMusic(this.props.music.id);
     if (!data.ok) return Transmitter.emit('popup', data.message);
 
-    this.setState({ videos: data.videos });
+    const videos = data.videos.sort((a, b) => a.date - b.date);
+
+    this.setState({ videos });
   };
 
   render() {
     const music = this.props.music;
     if (music)
       return (
-        <Wrapper>
+        <Wrapper $active={this.state.expand}>
           <Layout onClick={this.onClick}>
             <Icon
               src={AccordionIcon}
@@ -121,13 +126,25 @@ class MusicAccordion extends Component<Props, State> {
             <Title>{music.title}</Title>
             <Count>{music.count}</Count>
           </Layout>
-          {this.state.expand && (
-            <ItemWrapper>
-              {this.state.videos.map((video) => (
-                <MusicAccordionItem video={video} key={video.id} />
-              ))}
-            </ItemWrapper>
-          )}
+          <AnimatePresence>
+            {this.state.expand && (
+              <ItemWrapper
+                key="content"
+                initial="collapsed"
+                animate="open"
+                exit="collapsed"
+                variants={{
+                  open: { opacity: 1, height: 'auto' },
+                  collapsed: { opacity: 0, height: 0 },
+                }}
+                transition={{ duration: 0.2, ease: Ease }}
+              >
+                {this.state.videos.map((video) => (
+                  <MusicAccordionItem video={video} key={video.id} />
+                ))}
+              </ItemWrapper>
+            )}
+          </AnimatePresence>
         </Wrapper>
       );
     else

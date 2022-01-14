@@ -1,16 +1,16 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import LeftArrowIcon from '../../icons/arrow-left.svg';
-import RightArrowIcon from '../../icons/arrow-right.svg';
+import LeftArrowIcon from '../../../icons/arrow-left.svg';
+import RightArrowIcon from '../../../icons/arrow-right.svg';
 import {
   Color,
   HideOverflow,
   MobileQuery,
   PcQuery,
   TabletQuery,
-} from '../../styles';
-import { Pc } from '../tools/MediaQuery';
+} from '../../../styles';
+import { Pc } from '../../tools/MediaQuery';
 import PlaylistVideo from './PlaylistVideo';
 
 const Layout = styled.div`

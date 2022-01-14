@@ -15,6 +15,8 @@ const Color = {
   BACKGROUND: '#070D2D',
 };
 
+const Ease = [0.04, 0.62, 0.23, 0.98];
+
 const HideOverflow = `overflow:hidden;
 text-overflow:ellipsis;
 white-space:nowrap;`;
@@ -26,5 +28,6 @@ export {
   TabletQuery,
   PcQuery,
   Color,
+  Ease,
   HideOverflow,
 };

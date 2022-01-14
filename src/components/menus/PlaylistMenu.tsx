@@ -2,7 +2,7 @@ import { Component } from 'react';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
-import Playlist from '../actions/Playlist';
+import Playlist from '../actions/playlist/Playlist';
 
 const Layout = styled.div``;
 
