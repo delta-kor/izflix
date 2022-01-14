@@ -212,7 +212,7 @@ class LandingVideo extends Component<any, State> {
 
   loadData = async () => {
     const videoElement = this.videoRef.current!;
-    videoElement.onloadedmetadata = () => {
+    videoElement.oncanplay = () => {
       this.setState({ loaded: true });
     };
     videoElement.onerror = () => {
