@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, UIEvent } from 'react';
 import styled from 'styled-components';
 import { Color } from '../../../styles';
 import MusicAccordionItem from './MusicAccordionItem';
@@ -7,12 +7,12 @@ const Layout = styled.div`
   width: 100vw;
   scroll-snap-align: start;
   flex-shrink: 0;
-  padding: 0 0 12px 0;
+  overflow: hidden;
 
-  & > * {
+  & > div {
     margin: 0 0 12px 0;
 
-    :last-child {
+    :last-of-type {
       margin: 0;
     }
   }
@@ -56,10 +56,41 @@ const Placeholder = styled.div`
   }
 `;
 
+const CarouselWrapper = styled.div`
+  overflow: hidden;
+`;
+
 const CarouselLayout = styled.div`
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const CarouselHandle = styled.span`
+  display: flex;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+
+  & > * {
+    margin: 0 16px 0 0;
+
+    :last-child {
+      margin: 0;
+    }
+  }
+`;
+
+const CarouselHandleItem = styled.div<{ $active: boolean }>`
+  width: 6px;
+  height: 6px;
+  background: ${({ $active }) => ($active ? Color.WHITE : Color.GRAY)};
+  border-radius: 100%;
+  transition: background 0.1s;
 `;
 
 interface Props {
@@ -67,11 +98,33 @@ interface Props {
   count: number;
 }
 
+interface State {
+  page: number;
+}
+
 class MusicAccordionCarousel extends Component<Props> {
+  state: State = { page: 0 };
+
+  onScroll = (e: UIEvent<HTMLDivElement>) => {
+    const element = e.target as HTMLDivElement;
+    const scrollLeft = element.scrollLeft;
+    const elementWidth = element.clientWidth;
+    const page = Math.round(scrollLeft / elementWidth);
+    this.setState({ page });
+  };
+
   render() {
     const videos = this.props.videos;
 
-    if (this.props.videos.length === 0) {
+    const handleItems = [];
+    for (let i = 0; i < this.props.count / 5; i++)
+      handleItems.push(
+        <CarouselHandleItem key={i} $active={this.state.page === i} />
+      );
+
+    const handle = <CarouselHandle>{handleItems}</CarouselHandle>;
+
+    if (videos.length === 0) {
       const count = Math.min(this.props.count, 5);
       const placeholders = [];
 
@@ -85,16 +138,13 @@ class MusicAccordionCarousel extends Component<Props> {
         );
       }
 
-      return <Layout>{placeholders}</Layout>;
-    }
-
-    if (videos.length < 5) {
       return (
-        <Layout>
-          {videos.map((video) => (
-            <MusicAccordionItem video={video} key={video.id} />
-          ))}
-        </Layout>
+        <CarouselWrapper>
+          <CarouselLayout>
+            <Layout>{placeholders}</Layout>
+          </CarouselLayout>
+          {handle}
+        </CarouselWrapper>
       );
     }
 
@@ -104,15 +154,18 @@ class MusicAccordionCarousel extends Component<Props> {
     }
 
     return (
-      <CarouselLayout>
-        {chunked.map((videos) => (
-          <Layout>
-            {videos.map((video) => (
-              <MusicAccordionItem video={video} key={video.id} />
-            ))}
-          </Layout>
-        ))}
-      </CarouselLayout>
+      <CarouselWrapper>
+        <CarouselLayout onScroll={this.onScroll}>
+          {chunked.map((videos, index) => (
+            <Layout key={index}>
+              {videos.map((video) => (
+                <MusicAccordionItem video={video} key={video.id} />
+              ))}
+            </Layout>
+          ))}
+        </CarouselLayout>
+        {handle}
+      </CarouselWrapper>
     );
   }
 }

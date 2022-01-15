@@ -23,6 +23,7 @@ class TransmitterClass extends EventEmitter {
 
   constructor() {
     super();
+    this.setMaxListeners(0);
     this.loadListeners();
   }
 

@@ -2,9 +2,10 @@ import { Component } from 'react';
 import styled from 'styled-components';
 import getDate from '../../../services/date';
 import Spaceship from '../../../services/spaceship';
-import { HideOverflow } from '../../../styles';
+import { Color, HideOverflow } from '../../../styles';
 
 const Layout = styled.div`
+  position: relative;
   display: flex;
   width: 100%;
   height: 44px;
@@ -34,18 +35,42 @@ const Date = styled.div`
   ${HideOverflow};
 `;
 
-const Thumbnail = styled.img`
+const Thumbnail = styled.img<{ $active: boolean }>`
   width: 78px;
   height: 44px;
   border-radius: 4px;
   margin: 0 0 0 8px;
+  opacity: ${({ $active }) => ($active ? '1' : '0')};
+  transition: opacity 0.2s;
+  z-index: 1;
+`;
+
+const ThumbnailPlaceholder = styled.div`
+  position: absolute;
+  top: 0;
+  right: 32px;
+  width: 78px;
+  height: 44px;
+  border-radius: 4px;
+  background: ${Color.BACKGROUND};
+  z-index: 0;
 `;
 
 interface Props {
   video: IMusicVideoItem;
 }
 
+interface State {
+  loaded: boolean;
+}
+
 class MusicAccordionItem extends Component<Props> {
+  state: State = { loaded: false };
+
+  onLoad = () => {
+    this.setState({ loaded: true });
+  };
+
   render() {
     const video = this.props.video;
 
@@ -55,7 +80,13 @@ class MusicAccordionItem extends Component<Props> {
           <Title>{video.description}</Title>
           <Date>{getDate(video.date)}</Date>
         </Content>
-        <Thumbnail src={Spaceship.getThumbnail(video.id)} />
+        <Thumbnail
+          onLoad={this.onLoad}
+          $active={this.state.loaded}
+          src={Spaceship.getThumbnail(video.id)}
+          loading="lazy"
+        />
+        <ThumbnailPlaceholder />
       </Layout>
     );
   }

@@ -9,10 +9,11 @@ const AccordionList = styled.div``;
 
 interface State {
   musics: IMusic[];
+  selected: string | null;
 }
 
 class MusicMenu extends Component<any, State> {
-  state: State = { musics: [] };
+  state: State = { musics: [], selected: null };
 
   componentDidMount = () => {
     this.loadData();
@@ -37,7 +38,14 @@ class MusicMenu extends Component<any, State> {
           <AccordionList>
             {this.state.musics.length
               ? this.state.musics.map((music) => (
-                  <MusicAccordion music={music} key={music.id} />
+                  <MusicAccordion
+                    music={music}
+                    key={music.id}
+                    expand={this.state.selected === music.id}
+                    setExpand={(expand) =>
+                      this.setState({ selected: expand ? music.id : null })
+                    }
+                  />
                 ))
               : placeholder}
           </AccordionList>

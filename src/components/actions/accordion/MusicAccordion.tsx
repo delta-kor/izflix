@@ -10,7 +10,8 @@ import MusicAccordionCarousel from './MusicAccordionCarousel';
 const Wrapper = styled(motion.div)<{ $active: boolean }>`
   display: flex;
   flex-direction: column;
-  background: ${({ $active }) => ($active ? Color.DARK_GRAY : 'transparent')};
+  background: ${({ $active }) =>
+    $active ? Color.DARK_GRAY : Color.BACKGROUND};
   transition: background 0.2s;
 `;
 
@@ -70,6 +71,8 @@ const ItemWrapper = styled(motion.div)`
 
 interface Props {
   music?: IMusic;
+  expand?: boolean;
+  setExpand?: (expand: boolean) => void;
 }
 
 interface State {
@@ -80,15 +83,28 @@ interface State {
 class MusicAccordion extends Component<Props, State> {
   state: State = { expand: false, videos: [] };
 
-  onClick = () => {
-    const current = this.state.expand;
-    this.setState({ expand: !current });
-
-    if (!current) this.onExpand();
+  componentDidUpdate = (prevProps: Props) => {
+    if (prevProps.expand !== this.props.expand) {
+      if (this.props.expand) {
+        this.expand();
+      } else {
+        this.shrink();
+      }
+    }
   };
 
-  onExpand = async () => {
-    await this.loadData();
+  onClick = () => {
+    const current = this.state.expand;
+    this.props.setExpand && this.props.setExpand(!current);
+  };
+
+  expand = () => {
+    this.setState({ expand: true });
+    this.loadData();
+  };
+
+  shrink = () => {
+    this.setState({ expand: false });
   };
 
   loadData = async () => {
