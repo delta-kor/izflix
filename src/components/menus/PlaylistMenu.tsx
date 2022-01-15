@@ -150,9 +150,7 @@ class PlaylistMenu extends Component<any, State> {
 
   componentDidMount = async () => {
     const playlists = await this.getPlaylist();
-    setTimeout(() => {
-      if (playlists) this.setState({ playlists });
-    }, 1000);
+    if (playlists) this.setState({ playlists });
   };
 
   getPlaylist = async () => {
