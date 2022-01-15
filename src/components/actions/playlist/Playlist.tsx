@@ -33,14 +33,15 @@ const Title = styled.div`
   ${HideOverflow};
 
   ${MobileQuery} {
-    font-size: 16px;
     margin: 0 32px 16px 32px;
+    height: 18px;
+    font-size: 16px;
   }
 
   ${PcQuery} {
-    font-size: 28px;
-    height: 32px;
     margin: 0 0 24px 0;
+    height: 32px;
+    font-size: 28px;
   }
 `;
 
@@ -52,9 +53,6 @@ const VideoWrapper = styled.div`
   ${MobileQuery} {
     padding: 0 0 0 32px;
     scroll-padding: 0 0 0 32px;
-  }
-
-  ${PcQuery} {
   }
 
   & > * {

@@ -73,16 +73,19 @@ const Thumbnail = styled.img`
 const Title = styled.div`
   max-width: 100%;
   font-weight: 800;
+
   ${HideOverflow}
 
   ${MobileQuery} {
-    font-size: 16px;
     margin: 0 0 4px 0;
+    height: 18px;
+    font-size: 16px;
   }
 
   ${PcQuery} {
-    font-size: 24px;
     margin: 0 0 8px 0;
+    font-size: 24px;
+    height: 28px;
   }
 `;
 
@@ -93,10 +96,12 @@ const Description = styled.div`
   ${HideOverflow}
 
   ${MobileQuery} {
+    height: 14px;
     font-size: 12px;
   }
 
   ${PcQuery} {
+    height: 18px;
     font-size: 16px;
   }
 `;
