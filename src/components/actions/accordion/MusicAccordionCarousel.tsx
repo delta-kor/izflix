@@ -1,4 +1,4 @@
-import { Component, UIEvent } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Color } from '../../../styles';
 import MusicAccordionItem from './MusicAccordionItem';
@@ -72,12 +72,12 @@ const CarouselLayout = styled.div`
 
 const CarouselHandle = styled.span`
   display: flex;
-  height: 32px;
+  height: 42px;
   justify-content: center;
   align-items: center;
 
   & > * {
-    margin: 0 16px 0 0;
+    margin: 0 4px 0 0;
 
     :last-child {
       margin: 0;
@@ -89,6 +89,8 @@ const CarouselHandleItem = styled.div<{ $active: boolean }>`
   width: 6px;
   height: 6px;
   background: ${({ $active }) => ($active ? Color.WHITE : Color.GRAY)};
+  border: 6px solid ${Color.DARK_GRAY};
+  box-sizing: content-box;
   border-radius: 100%;
   transition: background 0.1s;
 `;
@@ -104,13 +106,20 @@ interface State {
 
 class MusicAccordionCarousel extends Component<Props> {
   state: State = { page: 0 };
+  scrollRef = React.createRef<HTMLDivElement>();
 
-  onScroll = (e: UIEvent<HTMLDivElement>) => {
-    const element = e.target as HTMLDivElement;
+  onScroll = () => {
+    const element = this.scrollRef.current!;
     const scrollLeft = element.scrollLeft;
     const elementWidth = element.clientWidth;
     const page = Math.round(scrollLeft / elementWidth);
     this.setState({ page });
+  };
+
+  onHandleClick = (page: number) => {
+    const element = this.scrollRef.current!;
+    const elementWidth = element.clientWidth;
+    element.scrollTo({ left: elementWidth * page, behavior: 'smooth' });
   };
 
   render() {
@@ -119,7 +128,11 @@ class MusicAccordionCarousel extends Component<Props> {
     const handleItems = [];
     for (let i = 0; i < this.props.count / 5; i++)
       handleItems.push(
-        <CarouselHandleItem key={i} $active={this.state.page === i} />
+        <CarouselHandleItem
+          key={i}
+          $active={this.state.page === i}
+          onClick={() => this.onHandleClick(i)}
+        />
       );
 
     const handle = <CarouselHandle>{handleItems}</CarouselHandle>;
@@ -155,7 +168,7 @@ class MusicAccordionCarousel extends Component<Props> {
 
     return (
       <CarouselWrapper>
-        <CarouselLayout onScroll={this.onScroll}>
+        <CarouselLayout onScroll={this.onScroll} ref={this.scrollRef}>
           {chunked.map((videos, index) => (
             <Layout key={index}>
               {videos.map((video) => (
