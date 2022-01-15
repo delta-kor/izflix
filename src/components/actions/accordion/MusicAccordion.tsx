@@ -5,7 +5,7 @@ import AccordionIcon from '../../../icons/accordion.svg';
 import Spaceship from '../../../services/spaceship';
 import Transmitter from '../../../services/transmitter';
 import { Color, Ease, HideOverflow } from '../../../styles';
-import MusicAccordionItem from './MusicAccordionItem';
+import MusicAccordionCarousel from './MusicAccordionCarousel';
 
 const Wrapper = styled(motion.div)<{ $active: boolean }>`
   display: flex;
@@ -65,13 +65,7 @@ const PlaceholderCount = styled.div`
 const ItemWrapper = styled(motion.div)`
   display: flex;
   flex-direction: column;
-  & > * {
-    margin: 0 0 12px 0;
-
-    :last-child {
-      margin: 0 0 24px 0;
-    }
-  }
+  height: auto;
 `;
 
 interface Props {
@@ -129,7 +123,6 @@ class MusicAccordion extends Component<Props, State> {
           <AnimatePresence>
             {this.state.expand && (
               <ItemWrapper
-                key="content"
                 initial="collapsed"
                 animate="open"
                 exit="collapsed"
@@ -139,9 +132,10 @@ class MusicAccordion extends Component<Props, State> {
                 }}
                 transition={{ duration: 0.2, ease: Ease }}
               >
-                {this.state.videos.map((video) => (
-                  <MusicAccordionItem video={video} key={video.id} />
-                ))}
+                <MusicAccordionCarousel
+                  videos={this.state.videos}
+                  count={music.count}
+                />
               </ItemWrapper>
             )}
           </AnimatePresence>

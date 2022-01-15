@@ -19,6 +19,7 @@ const Content = styled.div`
 `;
 
 const Title = styled.div`
+  height: 16px;
   font-weight: bold;
   font-size: 14px;
   margin: 0 0 6px 0;
@@ -26,6 +27,7 @@ const Title = styled.div`
 `;
 
 const Date = styled.div`
+  height: 14px;
   font-weight: normal;
   font-size: 12px;
   opacity: 0.7;
