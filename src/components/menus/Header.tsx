@@ -47,7 +47,7 @@ const Layout = styled.div<{ $float: boolean; $instant: boolean }>`
     }
 
     ${PcQuery} {
-      margin: 0 32px 0 0;
+      margin: 0 16px 0 0;
     }
 
     :last-child {
@@ -56,7 +56,7 @@ const Layout = styled.div<{ $float: boolean; $instant: boolean }>`
   }
 `;
 
-const MobileLink = styled(Link)`
+const HomeLink = styled(Link)`
   display: flex;
   height: 75%;
   align-items: center;
@@ -65,6 +65,14 @@ const MobileLink = styled(Link)`
   & > * {
     ${MobileQuery} {
       margin: 0 24px 0 0;
+    }
+
+    ${PcQuery} {
+      margin: 0 32px 0 0;
+    }
+
+    :last-child {
+      margin: 0;
     }
   }
 `;
@@ -137,15 +145,16 @@ class Header extends Component<any, State> {
     return (
       <Layout $float={this.state.float} $instant={this.state.instant}>
         <Mobile>
-          <MobileLink to="/">
+          <HomeLink to="/">
             <Icon src={Logo} />
             <Title>IZFLIX</Title>
-            {this.state.stick && <Navigator />}
-          </MobileLink>
+          </HomeLink>
         </Mobile>
         <Pc>
-          <Icon src={Logo} />
-          <Title>IZFLIX</Title>
+          <HomeLink to="/">
+            <Icon src={Logo} />
+            <Title>IZFLIX</Title>
+          </HomeLink>
           {this.state.stick && <Navigator />}
         </Pc>
       </Layout>
