@@ -99,6 +99,20 @@ class MusicSelector extends Component<Props> {
   scrollRef = React.createRef<HTMLDivElement>();
   lastScrollTime = 0;
 
+  componentDidMount = () => {
+    this.autoSelect();
+  };
+
+  componentDidUpdate = () => {
+    this.autoSelect();
+  };
+
+  autoSelect = () => {
+    if (!this.props.selected && this.props.musics.length) {
+      this.props.setSelected(this.props.musics[0].id);
+    }
+  };
+
   moveLeft = () => {
     const element = this.scrollRef.current!;
     const elementWidth = element.clientWidth;
