@@ -9,7 +9,7 @@ const Constants = {
   },
 
   HEADER_STICK_POSITION_MOBILE() {
-    return this.LANDING_VIDEO_HEIGHT_MOBILE() - 180;
+    return this.LANDING_VIDEO_HEIGHT_MOBILE() - 172;
   },
   HEADER_STICK_POSITION_PC() {
     return this.LANDING_VIDEO_HEIGHT_PC() - 96;
