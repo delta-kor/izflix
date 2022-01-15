@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
 import MusicAccordion from '../actions/accordion/MusicAccordion';
-import { Mobile } from '../tools/MediaQuery';
+import MusicSelector from '../actions/MusicSelector';
+import { Mobile, Pc } from '../tools/MediaQuery';
 
 const AccordionList = styled.div``;
 
@@ -50,6 +51,13 @@ class MusicMenu extends Component<any, State> {
               : placeholder}
           </AccordionList>
         </Mobile>
+        <Pc>
+          <MusicSelector
+            musics={this.state.musics}
+            selected={this.state.selected}
+            setSelected={(selected) => this.setState({ selected })}
+          />
+        </Pc>
       </>
     );
   }
