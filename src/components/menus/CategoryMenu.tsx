@@ -50,7 +50,7 @@ const Placeholder = styled.div`
   }
 
   & > *:nth-child(2) {
-    flex-grow: 1;
+    width: 50%;
     border-radius: 4px;
     background: ${Color.DARK_GRAY};
 
@@ -66,6 +66,10 @@ const Placeholder = styled.div`
   }
 
   & > *:nth-child(3) {
+    flex-grow: 1;
+  }
+
+  & > *:nth-child(4) {
     flex-shrink: 0;
     border-radius: 4px;
     background: ${Color.DARK_GRAY};
@@ -127,6 +131,7 @@ class CategoryMenu extends Component<Props, State> {
     for (let i = 0; i < 20; i++) {
       placeholders.push(
         <Placeholder key={i}>
+          <div />
           <div />
           <div />
           <div />

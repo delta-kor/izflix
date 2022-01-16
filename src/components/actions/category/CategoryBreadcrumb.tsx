@@ -8,10 +8,11 @@ const Layout = styled.div`
   display: flex;
   width: 100%;
   padding: 0 32px;
-  margin: 0 0 16px 0;
+  margin: 0 0 4px 0;
   align-items: center;
   flex-flow: row wrap;
   line-height: 32px;
+  min-height: 64px;
 
   & > * {
     margin: 0 4px 0 0;
