@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
+import { getDuration } from '../../../services/time';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled(Link)`
@@ -117,7 +118,7 @@ class CategoryFile extends Component<Props, State> {
         />
         <ThumbnailPlaceholder />
         <Title>{file.title}</Title>
-        <Count>{file.duration}</Count>
+        <Count>{getDuration(file.duration)}</Count>
       </Layout>
     );
   }

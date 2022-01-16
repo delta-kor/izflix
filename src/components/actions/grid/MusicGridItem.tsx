@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import styled from 'styled-components';
-import getDate from '../../../services/date';
 import Spaceship from '../../../services/spaceship';
+import { getDate } from '../../../services/time';
 import { Color, HideOverflow } from '../../../styles';
 
 const Layout = styled.div`
