@@ -90,9 +90,11 @@ const Navigator = () => {
     case '/music':
       active = 1;
       break;
-    case '/category':
-      active = 2;
-      break;
+    default:
+      if (location.pathname.startsWith('/category')) {
+        active = 2;
+        break;
+      }
   }
 
   return (

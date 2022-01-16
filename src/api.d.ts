@@ -30,6 +30,28 @@ namespace ApiResponse {
       duration: number;
     }
   }
+
+  export namespace Category {
+    export interface ViewAll extends ApiResponse {
+      type: 'parent';
+      path: string[];
+      folders: ICategoryFolder[];
+    }
+
+    interface Parent extends ApiResponse {
+      type: 'parent';
+      path: string[];
+      folders: ICategoryFolder[];
+    }
+
+    interface Children extends ApiResponse {
+      type: 'children';
+      path: string[];
+      files: ICategoryFile[];
+    }
+
+    export type ViewOne = Parent | Children;
+  }
 }
 
 interface IPlaylist {
@@ -57,4 +79,16 @@ interface IVideoItem {
   title: string;
   description: string;
   duration: number;
+}
+
+interface ICategoryFolder {
+  title: string;
+  path: string;
+  count: number;
+}
+
+interface ICategoryFile {
+  title: string;
+  path: string;
+  count: number;
 }

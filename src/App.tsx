@@ -48,7 +48,9 @@ const App = (): JSX.Element => {
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<MainPage />} />
           <Route path="/music" element={<MusicPage />} />
+
           <Route path="/category" element={<CategoryPage />} />
+          <Route path="/category/:path" element={<CategoryPage />} />
         </Routes>
       </AnimatePresence>
     </AnimateSharedLayout>

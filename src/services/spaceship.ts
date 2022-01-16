@@ -104,6 +104,20 @@ class SpaceshipClass {
     });
   }
 
+  public viewAllCategory(): Promise<ApiResponse.Category.ViewAll> {
+    return this.get('/category', {
+      key: 'view_all_category',
+      expire: expireTime,
+    });
+  }
+
+  public viewOneCategory(path: string): Promise<ApiResponse.Category.ViewOne> {
+    return this.get(`/category/${path}`, {
+      key: `view_all_category#${path}`,
+      expire: expireTime,
+    });
+  }
+
   public getThumbnail(id: string): string {
     return `${this.baseUrl}/thumbnail/${id}`;
   }
