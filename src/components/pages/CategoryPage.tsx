@@ -1,14 +1,10 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Component } from 'react';
-import { Params } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
-import Spaceship from '../../services/spaceship';
-import Transmitter from '../../services/transmitter';
 import { MobileQuery } from '../../styles';
 import CategoryBreadcrumb from '../actions/category/CategoryBreadcrumb';
-import CategoryFile from '../actions/category/CategoryFile';
-import CategoryFolder from '../actions/category/CategoryFolder';
-import withParams from '../tools/Params';
+import CategoryMenu from '../menus/CategoryMenu';
 
 const Page = styled(motion.div)`
   ${MobileQuery} {
@@ -16,44 +12,14 @@ const Page = styled(motion.div)`
   }
 `;
 
-interface Props {
-  params: Params<string>;
-}
+interface Props {}
 
 interface State {
   path: IPath[];
-  folders: ICategoryFolder[];
-  files: ICategoryFile[];
 }
 
 class CategoryPage extends Component<Props, State> {
-  state: State = { path: [], folders: [], files: [] };
-
-  componentDidMount = () => {
-    this.loadData();
-  };
-
-  loadData = () => {
-    const path = this.props.params.path;
-    if (!path) this.loadAllCategory();
-    else this.loadOneCategory();
-  };
-
-  loadAllCategory = async () => {
-    const data = await Spaceship.viewAllCategory();
-    if (!data.ok) return Transmitter.emit('popup', data.message);
-    this.setState({ folders: data.folders, path: data.path });
-  };
-
-  loadOneCategory = async () => {
-    const path = this.props.params.path!;
-    const data = await Spaceship.viewOneCategory(path);
-    if (!data.ok) return Transmitter.emit('popup', data.message);
-
-    if (data.type === 'parent')
-      this.setState({ folders: data.folders, path: data.path });
-    else this.setState({ files: data.files, path: data.path });
-  };
+  state: State = { path: [] };
 
   render() {
     return (
@@ -62,17 +28,16 @@ class CategoryPage extends Component<Props, State> {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
-        <CategoryBreadcrumb key="breakcrumb" path={this.state.path} />
-
-        {this.state.folders.map((folder) => (
-          <CategoryFolder key={folder.path} folder={folder} />
-        ))}
-        {this.state.files.map((file) => (
-          <CategoryFile key={file.id} file={file} />
-        ))}
+        <CategoryBreadcrumb path={this.state.path} />
+        <AnimatePresence exitBeforeEnter>
+          <Routes key={window.location.pathname}>
+            <Route path="" element={<CategoryMenu />} />
+            <Route path=":path" element={<CategoryMenu />} />
+          </Routes>
+        </AnimatePresence>
       </Page>
     );
   }
 }
 
-export default withParams(CategoryPage);
+export default CategoryPage;

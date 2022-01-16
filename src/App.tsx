@@ -45,12 +45,13 @@ const App = (): JSX.Element => {
       </Pc>
       {headerSticked ? <NavigatorBlock /> : <Navigator />}
       <AnimatePresence exitBeforeEnter>
-        <Routes location={location} key={location.pathname}>
+        <Routes
+          location={location}
+          key={location.pathname.split('/').splice(1, 1).join('/')}
+        >
           <Route path="/" element={<MainPage />} />
           <Route path="/music" element={<MusicPage />} />
-
-          <Route path="/category" element={<CategoryPage />} />
-          <Route path="/category/:path" element={<CategoryPage />} />
+          <Route path="/category/*" element={<CategoryPage />} />
         </Routes>
       </AnimatePresence>
     </AnimateSharedLayout>
