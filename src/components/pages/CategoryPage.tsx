@@ -2,13 +2,21 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
-import { MobileQuery } from '../../styles';
+import { MobileQuery, PcQuery } from '../../styles';
 import CategoryBreadcrumb from '../actions/category/CategoryBreadcrumb';
 import CategoryMenu from '../menus/CategoryMenu';
 
 const Page = styled(motion.div)`
+  width: 100%;
+  max-width: 1416px;
+  margin: 0 auto;
+
   ${MobileQuery} {
     padding: 80px 0 72px 0;
+  }
+
+  ${PcQuery} {
+    padding: 0 0 64px 0;
   }
 `;
 

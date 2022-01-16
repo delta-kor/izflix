@@ -2,36 +2,67 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import FolderIcon from '../../../icons/folder.svg';
-import { HideOverflow } from '../../../styles';
+import { HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled(Link)`
   display: flex;
   width: 100%;
-  height: 54px;
-  padding: 0 32px;
   align-items: center;
+
+  ${MobileQuery} {
+    height: 54px;
+    padding: 0 32px 0 28px;
+  }
+
+  ${PcQuery} {
+    height: 72px;
+    padding: 0 32px 0 28px;
+  }
 `;
 
 const Icon = styled.img`
   display: block;
-  width: 30px;
-  height: 30px;
   flex-shrink: 0;
+
+  ${MobileQuery} {
+    height: 30px;
+    width: 30px;
+  }
+
+  ${PcQuery} {
+    height: 36px;
+    width: 36px;
+  }
 `;
 
 const Title = styled.div`
   font-weight: bold;
-  font-size: 20px;
   flex-grow: 1;
-  margin: 0 20px;
   ${HideOverflow};
+
+  ${MobileQuery} {
+    font-size: 20px;
+    margin: 0 20px;
+  }
+
+  ${PcQuery} {
+    font-size: 24px;
+    margin: 0 32px;
+  }
 `;
 
 const Count = styled.div`
   flex-shrink: 0;
   font-weight: normal;
-  font-size: 14px;
   opacity: 0.7;
+
+  ${MobileQuery} {
+    font-size: 14px;
+  }
+
+  ${PcQuery} {
+    font-size: 20px;
+  }
 `;
 
 interface Props {

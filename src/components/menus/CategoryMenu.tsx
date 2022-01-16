@@ -8,7 +8,9 @@ import CategoryFile from '../actions/category/CategoryFile';
 import CategoryFolder from '../actions/category/CategoryFolder';
 import withParams from '../tools/Params';
 
-const Page = styled(motion.div)``;
+const Page = styled(motion.div)`
+  width: 100%;
+`;
 
 interface Props {
   params: Params<string>;

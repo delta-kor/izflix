@@ -2,14 +2,22 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import BreakcrumbIcon from '../../../icons/breadcrumb.svg';
+import { MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled.div`
   display: flex;
   width: 100%;
-  height: 28px;
-  padding: 0 32px 0 26px;
+  padding: 0 32px;
   margin: 0 0 16px 0;
   align-items: center;
+
+  ${MobileQuery} {
+    height: 28px;
+  }
+
+  ${PcQuery} {
+    height: 32px;
+  }
 
   & > * {
     margin: 0 4px 0 0;
@@ -21,13 +29,27 @@ const Layout = styled.div`
 `;
 
 const Icon = styled.img`
-  width: 24px;
-  height: 24px;
+  ${MobileQuery} {
+    width: 24px;
+    height: 24px;
+  }
+
+  ${PcQuery} {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 const Text = styled(Link)`
   font-weight: normal;
-  font-size: 16px;
+
+  ${MobileQuery} {
+    font-size: 16px;
+  }
+
+  ${PcQuery} {
+    font-size: 20px;
+  }
 `;
 
 interface Props {
