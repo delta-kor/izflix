@@ -9,6 +9,8 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  user-select: none;
+  cursor: pointer;
 `;
 
 const Thumbnail = styled.img<{ $active: boolean }>`
@@ -21,6 +23,7 @@ const Thumbnail = styled.img<{ $active: boolean }>`
   opacity: ${({ $active }) => ($active ? '1' : '0')};
   transition: opacity 0.2s;
   z-index: 1;
+  user-drag: none;
 `;
 
 const ThumbnailPlaceholder = styled.div`
