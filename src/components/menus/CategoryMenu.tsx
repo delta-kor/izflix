@@ -12,16 +12,16 @@ const Page = styled(motion.div)``;
 
 interface Props {
   params: Params<string>;
+  setPath(path: IPath[]): void;
 }
 
 interface State {
-  path: IPath[];
   folders: ICategoryFolder[];
   files: ICategoryFile[];
 }
 
 class CategoryMenu extends Component<Props, State> {
-  state: State = { path: [], folders: [], files: [] };
+  state: State = { folders: [], files: [] };
 
   componentDidMount = () => {
     this.loadData();
@@ -36,7 +36,8 @@ class CategoryMenu extends Component<Props, State> {
   loadAllCategory = async () => {
     const data = await Spaceship.viewAllCategory();
     if (!data.ok) return Transmitter.emit('popup', data.message);
-    this.setState({ folders: data.folders, path: data.path });
+    this.setState({ folders: data.folders });
+    this.props.setPath(data.path);
   };
 
   loadOneCategory = async () => {
@@ -44,9 +45,9 @@ class CategoryMenu extends Component<Props, State> {
     const data = await Spaceship.viewOneCategory(path);
     if (!data.ok) return Transmitter.emit('popup', data.message);
 
-    if (data.type === 'parent')
-      this.setState({ folders: data.folders, path: data.path });
-    else this.setState({ files: data.files, path: data.path });
+    if (data.type === 'parent') this.setState({ folders: data.folders });
+    else this.setState({ files: data.files });
+    this.props.setPath(data.path);
   };
 
   render() {
@@ -55,6 +56,7 @@ class CategoryMenu extends Component<Props, State> {
         exit={{ opacity: 0 }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
+        transition={{ duration: 0.2 }}
       >
         {this.state.folders.map((folder) => (
           <CategoryFolder key={folder.path} folder={folder} />

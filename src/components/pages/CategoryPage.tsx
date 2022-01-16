@@ -20,8 +20,11 @@ interface State {
 
 class CategoryPage extends Component<Props, State> {
   state: State = { path: [] };
-
   render() {
+    const Menu = (
+      <CategoryMenu setPath={(path: IPath[]) => this.setState({ path })} />
+    );
+
     return (
       <Page
         exit={{ opacity: 0 }}
@@ -31,8 +34,8 @@ class CategoryPage extends Component<Props, State> {
         <CategoryBreadcrumb path={this.state.path} />
         <AnimatePresence exitBeforeEnter>
           <Routes key={window.location.pathname}>
-            <Route path="" element={<CategoryMenu />} />
-            <Route path=":path" element={<CategoryMenu />} />
+            <Route path="" element={Menu} />
+            <Route path=":path" element={Menu} />
           </Routes>
         </AnimatePresence>
       </Page>
