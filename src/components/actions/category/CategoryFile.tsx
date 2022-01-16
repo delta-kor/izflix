@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import FolderIcon from '../../../icons/folder.svg';
+import Spaceship from '../../../services/spaceship';
 import { HideOverflow } from '../../../styles';
 
 const Layout = styled(Link)`
@@ -12,18 +12,20 @@ const Layout = styled(Link)`
   align-items: center;
 `;
 
-const Icon = styled.img`
+const Thumbnail = styled.img`
   display: block;
-  width: 30px;
-  height: 30px;
+  height: 36px;
+  width: 36px;
+  object-fit: cover;
   flex-shrink: 0;
+  border-radius: 4px;
 `;
 
 const Title = styled.div`
   font-weight: bold;
   font-size: 20px;
   flex-grow: 1;
-  margin: 0 20px;
+  margin: 0 20px 0 14px;
   ${HideOverflow};
 `;
 
@@ -35,21 +37,21 @@ const Count = styled.div`
 `;
 
 interface Props {
-  folder: ICategoryFolder;
+  file: ICategoryFile;
 }
 
-class CategoryFolder extends Component<Props> {
+class CategoryFile extends Component<Props> {
   render() {
-    const folder = this.props.folder;
+    const file = this.props.file;
 
     return (
-      <Layout to={`/category/${folder.path}`}>
-        <Icon src={FolderIcon} />
-        <Title>{folder.title}</Title>
-        <Count>{folder.count} 개</Count>
+      <Layout to={`/`}>
+        <Thumbnail src={Spaceship.getThumbnail(file.id)} />
+        <Title>{file.title}</Title>
+        <Count>{file.duration}</Count>
       </Layout>
     );
   }
 }
 
-export default CategoryFolder;
+export default CategoryFile;

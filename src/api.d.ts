@@ -89,6 +89,7 @@ interface ICategoryFolder {
 
 interface ICategoryFile {
   title: string;
-  path: string;
-  count: number;
+  id: string;
+  date: number;
+  duration: number;
 }

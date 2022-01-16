@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
 import { MobileQuery } from '../../styles';
+import CategoryFile from '../actions/category/CategoryFile';
 import CategoryFolder from '../actions/category/CategoryFolder';
 import withParams from '../tools/Params';
 
@@ -60,6 +61,9 @@ class CategoryPage extends Component<Props, State> {
       >
         {this.state.folders.map((folder) => (
           <CategoryFolder key={folder.path} folder={folder} />
+        ))}
+        {this.state.files.map((file) => (
+          <CategoryFile key={file.id} file={file} />
         ))}
       </Page>
     );
