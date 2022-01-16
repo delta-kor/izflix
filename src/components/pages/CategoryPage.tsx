@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
 import { MobileQuery } from '../../styles';
+import CategoryBreadcrumb from '../actions/category/CategoryBreadcrumb';
 import CategoryFile from '../actions/category/CategoryFile';
 import CategoryFolder from '../actions/category/CategoryFolder';
 import withParams from '../tools/Params';
@@ -20,12 +21,13 @@ interface Props {
 }
 
 interface State {
+  path: string[];
   folders: ICategoryFolder[];
   files: ICategoryFile[];
 }
 
 class CategoryPage extends Component<Props, State> {
-  state: State = { folders: [], files: [] };
+  state: State = { path: [], folders: [], files: [] };
 
   componentDidMount = () => {
     this.loadData();
@@ -40,7 +42,7 @@ class CategoryPage extends Component<Props, State> {
   loadAllCategory = async () => {
     const data = await Spaceship.viewAllCategory();
     if (!data.ok) return Transmitter.emit('popup', data.message);
-    this.setState({ folders: data.folders });
+    this.setState({ folders: data.folders, path: data.path });
   };
 
   loadOneCategory = async () => {
@@ -48,8 +50,9 @@ class CategoryPage extends Component<Props, State> {
     const data = await Spaceship.viewOneCategory(path);
     if (!data.ok) return Transmitter.emit('popup', data.message);
 
-    if (data.type === 'parent') this.setState({ folders: data.folders });
-    else this.setState({ files: data.files });
+    if (data.type === 'parent')
+      this.setState({ folders: data.folders, path: data.path });
+    else this.setState({ files: data.files, path: data.path });
   };
 
   render() {
@@ -59,6 +62,8 @@ class CategoryPage extends Component<Props, State> {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
+        <CategoryBreadcrumb key="breakcrumb" path={this.state.path} />
+
         {this.state.folders.map((folder) => (
           <CategoryFolder key={folder.path} folder={folder} />
         ))}
