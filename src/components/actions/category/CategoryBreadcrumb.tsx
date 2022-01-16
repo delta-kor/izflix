@@ -10,14 +10,8 @@ const Layout = styled.div`
   padding: 0 32px;
   margin: 0 0 16px 0;
   align-items: center;
-
-  ${MobileQuery} {
-    height: 28px;
-  }
-
-  ${PcQuery} {
-    height: 32px;
-  }
+  flex-flow: row wrap;
+  line-height: 32px;
 
   & > * {
     margin: 0 4px 0 0;
@@ -41,6 +35,7 @@ const Icon = styled.img`
 `;
 
 const Text = styled(Link)`
+  margin: 0 4px 0 0;
   font-weight: normal;
 
   ${MobileQuery} {
@@ -52,6 +47,11 @@ const Text = styled(Link)`
   }
 `;
 
+const Block = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 interface Props {
   path: IPath[];
 }
@@ -59,20 +59,24 @@ interface Props {
 class CategoryBreadcrumb extends Component<Props> {
   render() {
     const contents = [
-      <Text to={`/category`} key={`text 0`}>
-        전체
-      </Text>,
-      <Icon src={BreakcrumbIcon} key={`icon 0`} />,
+      <Block>
+        <Text to={`/category`} key={`text 0`}>
+          전체
+        </Text>
+        <Icon src={BreakcrumbIcon} key={`icon 0`} />
+      </Block>,
     ];
 
     let index: number = 1;
     for (const path of this.props.path) {
       contents.push(
-        <Text to={`/category/${path.path}`} key={`text ${index}`}>
-          {path.name}
-        </Text>
+        <Block>
+          <Text to={`/category/${path.path}`} key={`text ${index}`}>
+            {path.name}
+          </Text>
+          <Icon src={BreakcrumbIcon} key={`icon ${index}`} />
+        </Block>
       );
-      contents.push(<Icon src={BreakcrumbIcon} key={`icon ${index}`} />);
       index++;
     }
 
