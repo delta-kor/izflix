@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import LeftChevronIcon from '../../icons/chevron-left.svg';
 import RightChevronIcon from '../../icons/chevron-right.svg';
 import { Color } from '../../styles';
+import MusicGrid from './grid/MusicGrid';
+
+const Wrapper = styled.div``;
 
 const Layout = styled.div`
   display: flex;
@@ -76,13 +79,13 @@ const Chip = styled.div<{ $active: boolean }>`
   scroll-snap-align: start;
   flex-shrink: 0;
 
-  & > div:nth-child(1) {
+  & > span:nth-child(1) {
     font-weight: bold;
     font-size: 20px;
     margin: 0 16px 0 0;
   }
 
-  & > div:nth-child(2) {
+  & > span:nth-child(2) {
     font-weight: normal;
     font-size: 16px;
     opacity: 0.7;
@@ -95,7 +98,13 @@ interface Props {
   setSelected(selected: string): void;
 }
 
-class MusicSelector extends Component<Props> {
+interface State {
+  count: number;
+}
+
+class MusicSelector extends Component<Props, State> {
+  state: State = { count: 24 };
+
   scrollRef = React.createRef<HTMLDivElement>();
   lastScrollTime = 0;
 
@@ -109,7 +118,12 @@ class MusicSelector extends Component<Props> {
 
   autoSelect = () => {
     if (!this.props.selected && this.props.musics.length) {
-      this.props.setSelected(this.props.musics[0].id);
+      const firstMusic = this.props.musics[0];
+      const id = firstMusic.id;
+      const count = firstMusic.count;
+
+      this.props.setSelected(id);
+      this.setState({ count });
     }
   };
 
@@ -151,37 +165,51 @@ class MusicSelector extends Component<Props> {
     this.lastScrollTime = Date.now();
   };
 
-  onChipClick = (id: string) => (e: MouseEvent) => {
-    const element = e.target as HTMLDivElement;
+  onChipClick = (id: string, count: number) => (e: MouseEvent) => {
+    let element = e.target as HTMLElement;
+    if (element instanceof HTMLSpanElement) element = element.parentElement!;
+
+    const parent = this.scrollRef.current!;
+
     this.props.setSelected(id);
-    element.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+    this.setState({ count });
+
+    const x = element.offsetLeft;
+    const left = parent.getBoundingClientRect().left;
+
+    const position = x - left;
+    const width = parent.clientWidth;
+
+    parent.scrollTo({ left: position - width / 2, behavior: 'smooth' });
   };
 
   render() {
     return (
-      <Layout>
-        <ControlButton onClick={this.moveLeft}>
-          <img src={LeftChevronIcon} />
-        </ControlButton>
-        <CenterMenu>
-          <ChipsWrapper ref={this.scrollRef}>
-            {this.props.musics.map((music) => (
-              <Chip
-                key={music.id}
-                $active={this.props.selected === music.id}
-                data-id={music.id}
-                onClick={this.onChipClick(music.id)}
-              >
-                <div>{music.title}</div>
-                <div>{music.count}</div>
-              </Chip>
-            ))}
-          </ChipsWrapper>
-        </CenterMenu>
-        <ControlButton onClick={this.moveRight}>
-          <img src={RightChevronIcon} />
-        </ControlButton>
-      </Layout>
+      <Wrapper>
+        <Layout>
+          <ControlButton onClick={this.moveLeft}>
+            <img src={LeftChevronIcon} />
+          </ControlButton>
+          <CenterMenu>
+            <ChipsWrapper ref={this.scrollRef}>
+              {this.props.musics.map((music) => (
+                <Chip
+                  key={music.id}
+                  $active={this.props.selected === music.id}
+                  onClick={this.onChipClick(music.id, music.count)}
+                >
+                  <span>{music.title}</span>
+                  <span>{music.count}</span>
+                </Chip>
+              ))}
+            </ChipsWrapper>
+          </CenterMenu>
+          <ControlButton onClick={this.moveRight}>
+            <img src={RightChevronIcon} />
+          </ControlButton>
+        </Layout>
+        <MusicGrid selected={this.props.selected} count={this.state.count} />
+      </Wrapper>
     );
   }
 }
