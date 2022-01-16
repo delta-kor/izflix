@@ -2,9 +2,10 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
-import { HideOverflow, MobileQuery, PcQuery } from '../../../styles';
+import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled(Link)`
+  position: relative;
   display: flex;
   width: 100%;
   align-items: center;
@@ -20,11 +21,32 @@ const Layout = styled(Link)`
   }
 `;
 
-const Thumbnail = styled.img`
+const Thumbnail = styled.img<{ $active: boolean }>`
   display: block;
   object-fit: cover;
   flex-shrink: 0;
   border-radius: 4px;
+  opacity: ${({ $active }) => ($active ? '1' : '0')};
+  transition: opacity 0.2s;
+  z-index: 1;
+
+  ${MobileQuery} {
+    height: 36px;
+    width: 36px;
+  }
+
+  ${PcQuery} {
+    height: 48px;
+    width: 48px;
+  }
+`;
+
+const ThumbnailPlaceholder = styled.div`
+  position: absolute;
+  left: 28px;
+  background: ${Color.DARK_GRAY};
+  border-radius: 4px;
+  z-index: 0;
 
   ${MobileQuery} {
     height: 36px;
@@ -71,13 +93,25 @@ interface Props {
   file: ICategoryFile;
 }
 
-class CategoryFile extends Component<Props> {
+interface State {
+  active: boolean;
+}
+
+class CategoryFile extends Component<Props, State> {
+  state: State = { active: false };
+
   render() {
     const file = this.props.file;
 
     return (
       <Layout to={`/`}>
-        <Thumbnail src={Spaceship.getThumbnail(file.id)} />
+        <Thumbnail
+          $active={this.state.active}
+          onLoad={() => this.setState({ active: true })}
+          src={Spaceship.getThumbnail(file.id)}
+          loading="lazy"
+        />
+        <ThumbnailPlaceholder />
         <Title>{file.title}</Title>
         <Count>{file.duration}</Count>
       </Layout>
