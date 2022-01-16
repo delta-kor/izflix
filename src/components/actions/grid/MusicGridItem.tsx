@@ -74,6 +74,7 @@ class MusicGridItem extends Component<Props, State> {
           onLoad={this.onLoad}
           $active={this.state.loaded}
           src={Spaceship.getThumbnail(music.id)}
+          loading="lazy"
         />
         <ThumbnailPlaceholder />
         <Title>{music.description}</Title>
