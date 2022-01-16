@@ -65,13 +65,15 @@ const Title = styled.div`
   ${HideOverflow};
 
   ${MobileQuery} {
-    font-size: 20px;
+    height: 24px;
     margin: 0 20px 0 14px;
+    font-size: 20px;
   }
 
   ${PcQuery} {
-    font-size: 24px;
+    height: 28px;
     margin: 0 32px 0 22px;
+    font-size: 24px;
   }
 `;
 
@@ -81,10 +83,12 @@ const Count = styled.div`
   opacity: 0.7;
 
   ${MobileQuery} {
+    height: 16px;
     font-size: 14px;
   }
 
   ${PcQuery} {
+    height: 24px;
     font-size: 20px;
   }
 `;

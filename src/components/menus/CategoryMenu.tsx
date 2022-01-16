@@ -4,12 +4,82 @@ import { Params } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
+import { Color, MobileQuery, PcQuery } from '../../styles';
 import CategoryFile from '../actions/category/CategoryFile';
 import CategoryFolder from '../actions/category/CategoryFolder';
 import withParams from '../tools/Params';
 
 const Page = styled(motion.div)`
   width: 100%;
+  ${PcQuery} {
+    min-height: calc(100vh - 120px - 108px);
+  }
+`;
+
+const Placeholder = styled.div`
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+
+  ${MobileQuery} {
+    height: 54px;
+    padding: 0 32px 0 28px;
+  }
+
+  ${PcQuery} {
+    height: 72px;
+    padding: 0 32px 0 28px;
+  }
+
+  & > *:nth-child(1) {
+    display: block;
+    flex-shrink: 0;
+    border-radius: 4px;
+    background: ${Color.DARK_GRAY};
+
+    ${MobileQuery} {
+      height: 36px;
+      width: 36px;
+    }
+
+    ${PcQuery} {
+      height: 48px;
+      width: 48px;
+    }
+  }
+
+  & > *:nth-child(2) {
+    flex-grow: 1;
+    border-radius: 4px;
+    background: ${Color.DARK_GRAY};
+
+    ${MobileQuery} {
+      height: 24px;
+      margin: 0 20px 0 14px;
+    }
+
+    ${PcQuery} {
+      height: 28px;
+      margin: 0 32px 0 22px;
+    }
+  }
+
+  & > *:nth-child(3) {
+    flex-shrink: 0;
+    border-radius: 4px;
+    background: ${Color.DARK_GRAY};
+
+    ${MobileQuery} {
+      height: 24px;
+      width: 36px;
+    }
+
+    ${PcQuery} {
+      height: 24px;
+      width: 48px;
+    }
+  }
 `;
 
 interface Props {
@@ -53,6 +123,17 @@ class CategoryMenu extends Component<Props, State> {
   };
 
   render() {
+    const placeholders = [];
+    for (let i = 0; i < 20; i++) {
+      placeholders.push(
+        <Placeholder key={i}>
+          <div />
+          <div />
+          <div />
+        </Placeholder>
+      );
+    }
+
     return (
       <Page
         exit={{ opacity: 0 }}
@@ -60,6 +141,7 @@ class CategoryMenu extends Component<Props, State> {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.2 }}
       >
+        {!this.state.folders.length && !this.state.files.length && placeholders}
         {this.state.folders.map((folder) => (
           <CategoryFolder key={folder.path} folder={folder} />
         ))}
