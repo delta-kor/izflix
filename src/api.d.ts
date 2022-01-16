@@ -34,19 +34,19 @@ namespace ApiResponse {
   export namespace Category {
     export interface ViewAll extends ApiResponse {
       type: 'parent';
-      path: string[];
+      path: IPath[];
       folders: ICategoryFolder[];
     }
 
     interface Parent extends ApiResponse {
       type: 'parent';
-      path: string[];
+      path: IPath[];
       folders: ICategoryFolder[];
     }
 
     interface Children extends ApiResponse {
       type: 'children';
-      path: string[];
+      path: IPath[];
       files: ICategoryFile[];
     }
 
@@ -92,4 +92,9 @@ interface ICategoryFile {
   id: string;
   date: number;
   duration: number;
+}
+
+interface IPath {
+  name: string;
+  path: string;
 }

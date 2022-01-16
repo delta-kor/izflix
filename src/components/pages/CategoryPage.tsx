@@ -21,7 +21,7 @@ interface Props {
 }
 
 interface State {
-  path: string[];
+  path: IPath[];
   folders: ICategoryFolder[];
   files: ICategoryFile[];
 }
