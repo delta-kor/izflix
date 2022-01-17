@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Component } from 'react';
-import { Params } from 'react-router-dom';
+import { Navigate, Params } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
@@ -94,12 +94,13 @@ interface Props {
 interface State {
   folders: ICategoryFolder[];
   files: ICategoryFile[];
+  error: boolean;
 }
 
 const childrenCountMap: Map<string, number> = new Map();
 
 class CategoryMenu extends Component<Props, State> {
-  state: State = { folders: [], files: [] };
+  state: State = { folders: [], files: [], error: false };
 
   componentDidMount = () => {
     this.loadData();
@@ -113,7 +114,7 @@ class CategoryMenu extends Component<Props, State> {
 
   loadAllCategory = async () => {
     const data = await Spaceship.viewAllCategory();
-    if (!data.ok) return Transmitter.emit('popup', data.message);
+    if (!data.ok) return this.onLoadError(data.message);
 
     for (let folder of data.folders)
       childrenCountMap.set(folder.path, folder.children);
@@ -125,7 +126,7 @@ class CategoryMenu extends Component<Props, State> {
   loadOneCategory = async () => {
     const path = this.props.params.path!;
     const data = await Spaceship.viewOneCategory(path);
-    if (!data.ok) return Transmitter.emit('popup', data.message);
+    if (!data.ok) return this.onLoadError(data.message);
 
     if (data.type === 'parent') {
       this.setState({ folders: data.folders });
@@ -134,6 +135,11 @@ class CategoryMenu extends Component<Props, State> {
     } else this.setState({ files: data.files });
 
     this.props.setPath(data.path);
+  };
+
+  onLoadError = (message?: string) => {
+    Transmitter.emit('popup', message);
+    this.setState({ error: true });
   };
 
   render() {
@@ -159,6 +165,7 @@ class CategoryMenu extends Component<Props, State> {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.2 }}
       >
+        {this.state.error && <Navigate to="/category" />}
         {!this.state.folders.length && !this.state.files.length && placeholders}
         {this.state.folders.map((folder) => (
           <CategoryFolder key={folder.path} folder={folder} />
