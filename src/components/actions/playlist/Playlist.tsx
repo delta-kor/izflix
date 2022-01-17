@@ -90,6 +90,7 @@ const Arrow = styled(motion.div)<{ direction: 'left' | 'right' }>`
   background: ${Color.WHITE};
   user-select: none;
   cursor: pointer;
+  z-index: 2;
 
   ${PcQuery} {
     width: 48px;
@@ -214,7 +215,11 @@ class Playlist extends Component<Props> {
         <Title>{this.props.playlist.title}</Title>
         <VideoWrapper ref={this.scrollRef}>
           {this.props.playlist.videos.map((video) => (
-            <PlaylistVideo video={video} key={video.id} />
+            <PlaylistVideo
+              key={video.id}
+              video={video}
+              playlistId={this.props.playlist.id}
+            />
           ))}
         </VideoWrapper>
         <Pc>

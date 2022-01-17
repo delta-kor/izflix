@@ -32,6 +32,13 @@ const Constants = {
     return window.scrollY <= 0;
   },
 
+  TOP_ROUTE(location: any = window.location) {
+    return '/' + location.pathname.split('/')[1];
+  },
+  IS_VIDEO_PAGE(location: any = window.location) {
+    return !['/', '/music', '/category'].includes(this.TOP_ROUTE(location));
+  },
+
   IS_MAIN() {
     return window.location.pathname === '/';
   },

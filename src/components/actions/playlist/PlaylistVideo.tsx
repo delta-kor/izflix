@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
 import {
@@ -9,8 +10,10 @@ import {
   TabletQuery,
 } from '../../../styles';
 
-const Layout = styled.div`
+const Layout = styled(Link)`
   position: relative;
+  display: flex;
+  flex-direction: column;
   user-select: none;
 
   ${MobileQuery} {
@@ -26,15 +29,14 @@ const Layout = styled.div`
   }
 `;
 
-const Placeholder = styled.div<{ active: boolean }>`
+const Placeholder = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   background: ${Color.DARK_GRAY};
   border-radius: 6px;
-  opacity: ${({ active }) => (!active ? 1 : 0)};
-  transition: 0.5s opacity;
+  z-index: 0;
 
   ${MobileQuery} {
     height: 117px;
@@ -49,11 +51,13 @@ const Placeholder = styled.div<{ active: boolean }>`
   }
 `;
 
-const Thumbnail = styled.img`
+const Thumbnail = styled.img<{ $active: boolean }>`
   object-fit: cover;
   border-radius: 6px;
   width: 100%;
-  opacity: 0;
+  opacity: ${({ $active }) => ($active ? 1 : 0)};
+  transition: opacity 0.2s;
+  z-index: 1;
 
   ${MobileQuery} {
     height: 117px;
@@ -108,6 +112,7 @@ const Description = styled.div`
 
 interface Props {
   video: IVideoItem;
+  playlistId: string;
 }
 
 interface State {
@@ -116,25 +121,19 @@ interface State {
 
 class PlaylistVideo extends Component<Props, State> {
   state: State = { loaded: false };
-  imageRef = React.createRef<HTMLImageElement>();
-
-  componentDidMount = () => {
-    const imageElement = this.imageRef.current!;
-    imageElement.onload = () => {
-      imageElement.style.opacity = '1';
-      this.setState({ loaded: true });
-    };
-
-    imageElement.src = Spaceship.getThumbnail(this.props.video.id);
-  };
 
   render() {
     const video = this.props.video;
 
     return (
-      <Layout>
-        <Placeholder active={this.state.loaded} />
-        <Thumbnail ref={this.imageRef} loading="lazy" />
+      <Layout to={`/${video.id}?k=playlist&v=${this.props.playlistId}`}>
+        <Placeholder />
+        <Thumbnail
+          onLoad={() => this.setState({ loaded: true })}
+          $active={this.state.loaded}
+          src={Spaceship.getThumbnail(video.id)}
+          loading="lazy"
+        />
         <Title>{video.title}</Title>
         <Description>{video.description}</Description>
       </Layout>

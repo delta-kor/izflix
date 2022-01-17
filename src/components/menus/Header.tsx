@@ -36,7 +36,6 @@ const Layout = styled.div<{ $float: boolean; $instant: boolean }>`
   ${PcQuery} {
     height: 96px;
     justify-content: center;
-    cursor: pointer;
     ${({ $float: float }) =>
       float ? `background: ${Color.DARK_GRAY};` : 'background: none;'}
   }
@@ -60,7 +59,6 @@ const HomeLink = styled(Link)`
   display: flex;
   height: 75%;
   align-items: center;
-  cursor: pointer;
 
   & > * {
     ${MobileQuery} {
