@@ -60,22 +60,18 @@ interface Props {
 class CategoryBreadcrumb extends Component<Props> {
   render() {
     const contents = [
-      <Block>
-        <Text to={`/category`} key={`text 0`}>
-          전체
-        </Text>
-        <Icon src={BreakcrumbIcon} key={`icon 0`} />
+      <Block key="home">
+        <Text to={`/category`}>전체</Text>
+        <Icon src={BreakcrumbIcon} />
       </Block>,
     ];
 
     let index: number = 1;
     for (const path of this.props.path) {
       contents.push(
-        <Block>
-          <Text to={`/category/${path.path}`} key={`text ${index}`}>
-            {path.name}
-          </Text>
-          <Icon src={BreakcrumbIcon} key={`icon ${index}`} />
+        <Block key={path.path}>
+          <Text to={`/category/${path.path}`}>{path.name}</Text>
+          <Icon src={BreakcrumbIcon} />
         </Block>
       );
       index++;

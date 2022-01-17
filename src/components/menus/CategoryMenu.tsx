@@ -96,6 +96,8 @@ interface State {
   files: ICategoryFile[];
 }
 
+const childrenCountMap: Map<string, number> = new Map();
+
 class CategoryMenu extends Component<Props, State> {
   state: State = { folders: [], files: [] };
 
@@ -112,6 +114,10 @@ class CategoryMenu extends Component<Props, State> {
   loadAllCategory = async () => {
     const data = await Spaceship.viewAllCategory();
     if (!data.ok) return Transmitter.emit('popup', data.message);
+
+    for (let folder of data.folders)
+      childrenCountMap.set(folder.path, folder.children);
+
     this.setState({ folders: data.folders });
     this.props.setPath(data.path);
   };
@@ -121,14 +127,21 @@ class CategoryMenu extends Component<Props, State> {
     const data = await Spaceship.viewOneCategory(path);
     if (!data.ok) return Transmitter.emit('popup', data.message);
 
-    if (data.type === 'parent') this.setState({ folders: data.folders });
-    else this.setState({ files: data.files });
+    if (data.type === 'parent') {
+      this.setState({ folders: data.folders });
+      for (let folder of data.folders)
+        childrenCountMap.set(folder.path, folder.children);
+    } else this.setState({ files: data.files });
+
     this.props.setPath(data.path);
   };
 
   render() {
+    const path = this.props.params.path;
+    const count = childrenCountMap.get(path!) || 4;
+
     const placeholders = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < count; i++) {
       placeholders.push(
         <Placeholder key={i}>
           <div />

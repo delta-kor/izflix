@@ -85,6 +85,7 @@ interface ICategoryFolder {
   title: string;
   path: string;
   count: number;
+  children: number;
 }
 
 interface ICategoryFile {
