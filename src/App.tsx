@@ -43,6 +43,9 @@ const App = (): JSX.Element => {
     <AnimateSharedLayout>
       <Popup />
 
+      <Mobile>
+        <Navigator />
+      </Mobile>
       <Pc>
         <Header />
       </Pc>
@@ -61,7 +64,7 @@ const App = (): JSX.Element => {
             <Pc>
               <LandingVideo />
             </Pc>
-            {headerSticked ? <NavigatorBlock /> : <Navigator />}
+            <Pc>{headerSticked ? <NavigatorBlock /> : <Navigator />}</Pc>
           </LandingBlock>
         ) : (
           <LandingBlock

@@ -95,6 +95,9 @@ const Navigator = () => {
         active = 2;
         break;
       }
+
+      active = -1;
+      break;
   }
 
   return (
