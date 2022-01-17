@@ -144,7 +144,7 @@ class CategoryMenu extends Component<Props, State> {
 
   render() {
     const path = this.props.params.path;
-    const count = childrenCountMap.get(path!) || 4;
+    const count = !path ? 4 : childrenCountMap.get(path!) || 24;
 
     const placeholders = [];
     for (let i = 0; i < count; i++) {
