@@ -9,7 +9,8 @@ const Layout = styled.div`
   flex-shrink: 0;
   overflow: hidden;
 
-  & > a {
+  & > a,
+  & > div {
     margin: 0 0 12px 0;
 
     :last-of-type {

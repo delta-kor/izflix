@@ -61,8 +61,8 @@ class VideoPage extends Component<Props, State> {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
+        <Video url={this.state.streamInfo?.url || null} />
         <Mobile>
-          <Video url={this.state.streamInfo?.url || null} />
           <VideoInfo data={this.state.videoInfo} />
           <VideoRecommends id={id} />
         </Mobile>
