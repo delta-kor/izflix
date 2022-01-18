@@ -110,6 +110,7 @@ class Header extends Component<any, State> {
 
   componentDidMount = () => {
     Transmitter.on('levelscroll', this.onScroll);
+    this.onScroll();
   };
 
   componentWillUnmount = () => {

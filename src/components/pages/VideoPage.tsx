@@ -7,6 +7,8 @@ import Transmitter from '../../services/transmitter';
 import { MobileQuery } from '../../styles';
 import Video from '../actions/video/Video';
 import VideoInfo from '../actions/video/VideoInfo';
+import VideoRecommends from '../actions/video/VideoRecommends';
+import { Mobile } from '../tools/MediaQuery';
 import withParams from '../tools/Params';
 
 const Page = styled(motion.div)`
@@ -51,14 +53,19 @@ class VideoPage extends Component<Props, State> {
   };
 
   render() {
+    const id = this.props.params.id!;
+
     return (
       <Page
         exit={{ opacity: 0 }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
-        <Video url={this.state.streamInfo?.url || null} />
-        <VideoInfo data={this.state.videoInfo} />
+        <Mobile>
+          <Video url={this.state.streamInfo?.url || null} />
+          <VideoInfo data={this.state.videoInfo} />
+          <VideoRecommends id={id} />
+        </Mobile>
       </Page>
     );
   }

@@ -4,7 +4,7 @@ import { HideOverflow } from '../../../styles';
 
 const Layout = styled.div`
   display: flex;
-  height: 46px;
+  height: 48px;
   padding: 0 32px;
   margin: 24px 0;
   flex-direction: column;
@@ -12,6 +12,7 @@ const Layout = styled.div`
 `;
 
 const Title = styled.div`
+  height: 24px;
   max-width: 100%;
   font-weight: 800;
   font-size: 20px;
@@ -19,6 +20,7 @@ const Title = styled.div`
 `;
 
 const Description = styled.div`
+  height: 16px;
   max-width: 100%;
   font-weight: bold;
   font-size: 14px;

@@ -97,6 +97,16 @@ class SpaceshipClass {
     });
   }
 
+  public getRecommends(
+    id: string,
+    count: number
+  ): Promise<ApiResponse.Feed.GetRecommends> {
+    return this.get(`/feed/recommends/${id}?count=${count}`, {
+      key: `get_recommends#${id}#${count}`,
+      expire: expireTime,
+    });
+  }
+
   public viewAllMusics(): Promise<ApiResponse.Music.ViewAll> {
     return this.get('/music', {
       key: 'view_all_musics',

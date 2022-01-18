@@ -12,6 +12,10 @@ namespace ApiResponse {
         playlists: IPlaylist[];
       }
     }
+
+    export interface GetRecommends extends ApiResponse {
+      videos: IVideoItem[];
+    }
   }
 
   export namespace Music {
