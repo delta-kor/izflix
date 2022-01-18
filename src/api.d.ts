@@ -29,6 +29,14 @@ namespace ApiResponse {
       url: string;
       duration: number;
     }
+
+    export interface Info extends ApiResponse {
+      title: string;
+      description: string;
+      duration: number;
+      date: number;
+      path: IPath[];
+    }
   }
 
   export namespace Category {

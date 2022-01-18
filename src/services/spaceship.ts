@@ -83,6 +83,13 @@ class SpaceshipClass {
     });
   }
 
+  public getVideoInfo(id: string): Promise<ApiResponse.Video.Info> {
+    return this.get(`/video/${id}/info`, {
+      key: `video_info_${id}`,
+      expire: expireTime,
+    });
+  }
+
   public getAllPlaylists(): Promise<ApiResponse.Feed.Playlist.GetAllPlaylists> {
     return this.get('/feed/playlist', {
       key: 'get_all_playlists',
