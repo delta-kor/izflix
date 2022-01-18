@@ -1,10 +1,11 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
 import { getDate } from '../../../services/time';
 import { Color, HideOverflow } from '../../../styles';
 
-const Layout = styled.div`
+const Layout = styled(Link)`
   position: relative;
   display: flex;
   width: 100%;
@@ -57,6 +58,7 @@ const ThumbnailPlaceholder = styled.div`
 `;
 
 interface Props {
+  musicId: string;
   video: IMusicVideoItem;
 }
 
@@ -75,7 +77,7 @@ class MusicAccordionItem extends Component<Props> {
     const video = this.props.video;
 
     return (
-      <Layout>
+      <Layout to={`/${video.id}?k=music&v=${this.props.musicId}`}>
         <Content>
           <Title>{video.description}</Title>
           <Date>{getDate(video.date)}</Date>

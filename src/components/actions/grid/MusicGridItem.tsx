@@ -1,16 +1,16 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
 import { getDate } from '../../../services/time';
 import { Color, HideOverflow } from '../../../styles';
 
-const Layout = styled.div`
+const Layout = styled(Link)`
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
   user-select: none;
-  cursor: pointer;
 `;
 
 const Thumbnail = styled.img<{ $active: boolean }>`
@@ -54,6 +54,7 @@ const Date = styled.div`
 `;
 
 interface Props {
+  musicId: string;
   video: IMusicVideoItem;
 }
 
@@ -69,19 +70,19 @@ class MusicGridItem extends Component<Props, State> {
   };
 
   render() {
-    const music = this.props.video;
+    const video = this.props.video;
 
     return (
-      <Layout>
+      <Layout to={`/${video.id}?k=music&v=${this.props.musicId}`}>
         <Thumbnail
           onLoad={this.onLoad}
           $active={this.state.loaded}
-          src={Spaceship.getThumbnail(music.id)}
+          src={Spaceship.getThumbnail(video.id)}
           loading="lazy"
         />
         <ThumbnailPlaceholder />
-        <Title>{music.description}</Title>
-        <Date>{getDate(music.date)}</Date>
+        <Title>{video.description}</Title>
+        <Date>{getDate(video.date)}</Date>
       </Layout>
     );
   }

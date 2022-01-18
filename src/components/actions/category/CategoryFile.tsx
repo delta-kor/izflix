@@ -95,6 +95,7 @@ const Count = styled.div`
 `;
 
 interface Props {
+  folderId: string;
   file: ICategoryFile;
 }
 
@@ -109,7 +110,7 @@ class CategoryFile extends Component<Props, State> {
     const file = this.props.file;
 
     return (
-      <Layout to={`/`}>
+      <Layout to={`/${file.id}?k=category&v=${this.props.folderId}`}>
         <Thumbnail
           $active={this.state.active}
           onLoad={() => this.setState({ active: true })}

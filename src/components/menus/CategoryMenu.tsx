@@ -171,7 +171,7 @@ class CategoryMenu extends Component<Props, State> {
           <CategoryFolder key={folder.path} folder={folder} />
         ))}
         {this.state.files.map((file) => (
-          <CategoryFile key={file.id} file={file} />
+          <CategoryFile key={file.id} folderId={path!} file={file} />
         ))}
       </Page>
     );

@@ -149,6 +149,7 @@ class MusicAccordion extends Component<Props, State> {
                 transition={{ duration: 0.2, ease: Ease }}
               >
                 <MusicAccordionCarousel
+                  musicId={this.props.music?.id}
                   videos={this.state.videos}
                   count={music.count}
                 />

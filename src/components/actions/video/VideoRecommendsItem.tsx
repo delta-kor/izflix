@@ -1,9 +1,10 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
 import { HideOverflow } from '../../../styles';
 
-const Layout = styled.div`
+const Layout = styled(Link)`
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -41,7 +42,7 @@ class VideoRecommendsItem extends Component<Props> {
   render() {
     const video = this.props.video;
     return (
-      <Layout>
+      <Layout to={`/${video.id}`}>
         <Thumbnail src={Spaceship.getThumbnail(video.id)} />
         <Title>{video.title}</Title>
         <Description>{video.description}</Description>

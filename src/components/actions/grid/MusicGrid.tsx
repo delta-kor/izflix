@@ -92,7 +92,11 @@ class MusicGrid extends Component<Props, State> {
       <Layout>
         {this.state.videos.length
           ? this.state.videos.map((video) => (
-              <MusicGridItem key={video.id} video={video} />
+              <MusicGridItem
+                key={video.id}
+                musicId={this.props.selected!}
+                video={video}
+              />
             ))
           : placeholders}
       </Layout>

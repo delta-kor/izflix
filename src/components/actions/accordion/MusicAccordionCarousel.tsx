@@ -9,7 +9,7 @@ const Layout = styled.div`
   flex-shrink: 0;
   overflow: hidden;
 
-  & > div {
+  & > a {
     margin: 0 0 12px 0;
 
     :last-of-type {
@@ -96,6 +96,7 @@ const CarouselHandleItem = styled.div<{ $active: boolean }>`
 `;
 
 interface Props {
+  musicId?: string;
   videos: IMusicVideoItem[];
   count: number;
 }
@@ -172,7 +173,11 @@ class MusicAccordionCarousel extends Component<Props> {
           {chunked.map((videos, index) => (
             <Layout key={index}>
               {videos.map((video) => (
-                <MusicAccordionItem video={video} key={video.id} />
+                <MusicAccordionItem
+                  musicId={this.props.musicId!}
+                  video={video}
+                  key={video.id}
+                />
               ))}
             </Layout>
           ))}
