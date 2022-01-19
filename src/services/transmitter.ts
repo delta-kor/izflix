@@ -41,6 +41,7 @@ class TransmitterClass extends EventEmitter {
 
       const positions = [
         0,
+        Constants.VIDEO_HEADER_FLOAT_POSITION_PC(),
         Constants.HEADER_STICK_POSITION_MOBILE(),
         Constants.HEADER_STICK_POSITION_PC(),
         Constants.VIDEO_PAUSE_POSITION_MOBILE(),

@@ -8,7 +8,10 @@ import { Color, MobileQuery, PcQuery } from '../../styles';
 import { Mobile, Pc } from '../tools/MediaQuery';
 import Navigator from './Navigator';
 
-const Layout = styled.div<{ $float: boolean; $instant: boolean }>`
+const Layout = styled.div<{
+  $float: boolean;
+  $instant: boolean;
+}>`
   display: flex;
   position: fixed;
   top: 0;
@@ -106,7 +109,11 @@ interface State {
 }
 
 class Header extends Component<any, State> {
-  state: State = { float: false, stick: false, instant: false };
+  state: State = {
+    float: false,
+    stick: false,
+    instant: false,
+  };
 
   componentDidMount = () => {
     Transmitter.on('levelscroll', this.onScroll);
@@ -119,11 +126,18 @@ class Header extends Component<any, State> {
 
   onScroll = () => {
     if (Constants.IS_PC())
-      this.setState({
-        stick: Constants.IS_HEADER_STICK_POSITION_PC(),
-        float: Constants.IS_HEADER_STICK_POSITION_PC(),
-        instant: false,
-      });
+      if (Constants.IS_VIDEO_PAGE())
+        this.setState({
+          stick: false,
+          float: Constants.IS_VIDEO_HEADER_FLOAT_POSITION_PC(),
+          instant: false,
+        });
+      else
+        this.setState({
+          stick: Constants.IS_HEADER_STICK_POSITION_PC(),
+          float: Constants.IS_HEADER_STICK_POSITION_PC(),
+          instant: false,
+        });
 
     if (Constants.IS_MOBILE())
       if (Constants.IS_MAIN())

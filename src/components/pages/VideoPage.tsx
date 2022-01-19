@@ -4,16 +4,21 @@ import { Params } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
-import { MobileQuery } from '../../styles';
-import Video from '../actions/video/Video';
-import VideoInfo from '../actions/video/VideoInfo';
+import { MobileQuery, PcQuery } from '../../styles';
+import VideoContent from '../actions/video/VideoContent';
 import VideoRecommends from '../actions/video/VideoRecommends';
-import { Mobile } from '../tools/MediaQuery';
 import withParams from '../tools/Params';
 
 const Page = styled(motion.div)`
   ${MobileQuery} {
-    padding: 0 0 64px 0;
+    padding: 0 0 88px 0;
+  }
+
+  ${PcQuery} {
+    padding: 96px 32px 0 32px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1212px;
   }
 `;
 
@@ -55,17 +60,21 @@ class VideoPage extends Component<Props, State> {
   render() {
     const id = this.props.params.id!;
 
+    const videoContent = (
+      <VideoContent
+        streamInfo={this.state.streamInfo}
+        videoInfo={this.state.videoInfo}
+      />
+    );
+
     return (
       <Page
         exit={{ opacity: 0 }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
-        <Video url={this.state.streamInfo?.url || null} />
-        <Mobile>
-          <VideoInfo data={this.state.videoInfo} />
-          <VideoRecommends id={id} />
-        </Mobile>
+        {videoContent}
+        <VideoRecommends id={id} />
       </Page>
     );
   }

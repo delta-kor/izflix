@@ -21,11 +21,19 @@ const Constants = {
     return this.HEADER_STICK_POSITION_PC();
   },
 
+  VIDEO_HEADER_FLOAT_POSITION_PC() {
+    return 32;
+  },
+
   IS_HEADER_STICK_POSITION_MOBILE() {
     return window.scrollY > this.HEADER_STICK_POSITION_MOBILE();
   },
   IS_HEADER_STICK_POSITION_PC() {
     return window.scrollY > this.HEADER_STICK_POSITION_PC();
+  },
+
+  IS_VIDEO_HEADER_FLOAT_POSITION_PC() {
+    return window.scrollY > this.VIDEO_HEADER_FLOAT_POSITION_PC();
   },
 
   IS_ON_TOP() {

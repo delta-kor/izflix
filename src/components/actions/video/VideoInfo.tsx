@@ -1,31 +1,55 @@
 import { Component } from 'react';
 import styled from 'styled-components';
-import { HideOverflow } from '../../../styles';
+import { HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled.div`
   display: flex;
-  height: 48px;
-  padding: 0 32px;
-  margin: 24px 0;
   flex-direction: column;
   justify-content: space-between;
+  margin: 24px 0;
+
+  ${MobileQuery} {
+    height: 48px;
+    padding: 0 32px;
+  }
+
+  ${PcQuery} {
+    height: 68px;
+  }
 `;
 
 const Title = styled.div`
-  height: 24px;
   max-width: 100%;
   font-weight: 800;
-  font-size: 20px;
   ${HideOverflow};
+
+  ${MobileQuery} {
+    height: 24px;
+    font-size: 20px;
+  }
+
+  ${PcQuery} {
+    height: 36px;
+    font-size: 32px;
+  }
 `;
 
 const Description = styled.div`
-  height: 16px;
   max-width: 100%;
-  font-weight: bold;
-  font-size: 14px;
   opacity: 0.7;
   ${HideOverflow};
+
+  ${MobileQuery} {
+    height: 16px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  ${PcQuery} {
+    height: 22px;
+    font-size: 18px;
+    font-weight: normal;
+  }
 `;
 
 interface Props {
