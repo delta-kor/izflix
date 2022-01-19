@@ -26,6 +26,18 @@ const Layout = styled.div`
     margin: 24px auto 72px auto;
     padding: 0 32px;
   }
+
+  &[data-next='true'] {
+    ${PcQuery} {
+      max-width: unset;
+      margin: 0 0 48px 0;
+      padding: unset;
+    }
+
+    ${MobileQuery} {
+      margin: 24px 0 32px 0;
+    }
+  }
 `;
 
 const Title = styled.div`
@@ -42,6 +54,14 @@ const Title = styled.div`
     margin: 0 0 24px 0;
     height: 32px;
     font-size: 28px;
+  }
+
+  &[data-next='true'] {
+    ${PcQuery} {
+      margin: 48px 0 20px 0;
+      font-size: 20px;
+      height: 24px;
+    }
   }
 `;
 
@@ -115,6 +135,28 @@ const Arrow = styled(motion.div)<{ direction: 'left' | 'right' }>`
       direction === 'right' ? 'right: 16px;' : 'left: 16px;'}
   }
 
+  &[data-next='true'] {
+    ${PcQuery} {
+      top: calc(
+        24px + 20px + (((min(100vw - 64px, 1148px) - 24px * 3) / 4) * (9 / 16)) /
+          2
+      );
+
+      ${({ direction }) =>
+        direction === 'right' ? 'right: -24px;' : 'left: -24px;'}
+    }
+
+    ${TabletQuery} {
+      top: calc(
+        24px + 20px + (((min(100vw - 64px, 1148px) - 24px * 2) / 3) * (9 / 16)) /
+          2
+      );
+
+      ${({ direction }) =>
+        direction === 'right' ? 'right: -18px;' : 'left: -18px;'}
+    }
+  }
+
   & > img {
     position: absolute;
     top: 50%;
@@ -134,8 +176,20 @@ const Arrow = styled(motion.div)<{ direction: 'left' | 'right' }>`
   }
 `;
 
-interface Props {
+type Props = PlaylistProps | NextProps;
+
+interface PlaylistProps {
+  type: 'playlist';
   playlist: IPlaylist;
+}
+
+interface NextProps {
+  type: 'next';
+  title: string;
+  description: string;
+  videos: IVideoItem[];
+  urlKey: string;
+  urlValue: string;
 }
 
 interface State {
@@ -210,22 +264,51 @@ class Playlist extends Component<Props> {
       transition: { duration: 0.2 },
     };
 
+    const type = this.props.type;
+    const title =
+      type === 'playlist' ? this.props.playlist.title : '다음 동영상';
+    const id = type === 'playlist' ? this.props.playlist.id : 'next';
+    const videos =
+      type === 'playlist' ? this.props.playlist.videos : this.props.videos;
+
+    if (type === 'next') {
+      videos.forEach((video) => {
+        const title = video.title || (this.props as NextProps).title;
+        const description =
+          video.description || (this.props as NextProps).description;
+        video.title = title;
+        video.description = description;
+      });
+    }
+
     return (
-      <Layout>
-        <Title>{this.props.playlist.title}</Title>
+      <Layout data-next={type === 'next'}>
+        <Title data-next={type === 'next'}>{title}</Title>
         <VideoWrapper ref={this.scrollRef}>
-          {this.props.playlist.videos.map((video) => (
-            <PlaylistVideo
-              key={video.id}
-              video={video}
-              playlistId={this.props.playlist.id}
-            />
-          ))}
+          {videos.map((video) =>
+            type === 'playlist' ? (
+              <PlaylistVideo
+                key={video.id}
+                type="playlist"
+                video={video}
+                playlistId={id}
+              />
+            ) : (
+              <PlaylistVideo
+                key={video.id}
+                type="next"
+                video={video}
+                urlKey={this.props.urlKey}
+                urlValue={this.props.urlValue}
+              />
+            )
+          )}
         </VideoWrapper>
         <Pc>
           <AnimatePresence>
             {this.state.arrows[0] && (
               <Arrow
+                data-next={type === 'next'}
                 direction="left"
                 onClick={this.scrollLeft}
                 key="left"
@@ -236,6 +319,7 @@ class Playlist extends Component<Props> {
             )}
             {this.state.arrows[1] && (
               <Arrow
+                data-next={type === 'next'}
                 direction="right"
                 onClick={this.scrollRight}
                 key="right"

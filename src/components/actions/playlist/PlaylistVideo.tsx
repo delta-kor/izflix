@@ -34,6 +34,7 @@ const Placeholder = styled.div`
   top: 0;
   left: 0;
   width: 100%;
+  aspect-ratio: 16 / 9;
   background: ${Color.DARK_GRAY};
   border-radius: 6px;
   z-index: 0;
@@ -41,20 +42,13 @@ const Placeholder = styled.div`
   ${MobileQuery} {
     height: 117px;
   }
-
-  ${PcQuery} {
-    height: calc(((min(100vw, 1416px) - 32px * 2 - 24px * 3) / 4) * (9 / 16));
-  }
-
-  ${TabletQuery} {
-    height: calc(((min(100vw, 1416px) - 32px * 2 - 24px * 2) / 3) * (9 / 16));
-  }
 `;
 
 const Thumbnail = styled.img<{ $active: boolean }>`
   object-fit: cover;
   border-radius: 6px;
   width: 100%;
+  aspect-ratio: 16 / 9;
   opacity: ${({ $active }) => ($active ? 1 : 0)};
   transition: opacity 0.2s;
   z-index: 1;
@@ -65,12 +59,7 @@ const Thumbnail = styled.img<{ $active: boolean }>`
   }
 
   ${PcQuery} {
-    height: calc(((min(100vw, 1416px) - 32px * 2 - 24px * 3) / 4) * (9 / 16));
     margin: 0 0 16px 0;
-  }
-
-  ${TabletQuery} {
-    height: calc(((min(100vw, 1416px) - 32px * 2 - 24px * 2) / 3) * (9 / 16));
   }
 `;
 
@@ -110,9 +99,19 @@ const Description = styled.div`
   }
 `;
 
-interface Props {
+type Props = PlaylistProps | NextProps;
+
+interface PlaylistProps {
+  type: 'playlist';
   video: IVideoItem;
   playlistId: string;
+}
+
+interface NextProps {
+  type: 'next';
+  video: IVideoItem;
+  urlKey: string;
+  urlValue: string;
 }
 
 interface State {
@@ -124,9 +123,14 @@ class PlaylistVideo extends Component<Props, State> {
 
   render() {
     const video = this.props.video;
+    const type = this.props.type;
+
+    const key = type === 'playlist' ? 'playlist' : this.props.urlKey;
+    const value =
+      type === 'playlist' ? this.props.playlistId : this.props.urlValue;
 
     return (
-      <Layout to={`/${video.id}?k=playlist&v=${this.props.playlistId}`}>
+      <Layout to={`/${video.id}?k=${key}&v=${value}`}>
         <Placeholder />
         <Thumbnail
           onLoad={() => this.setState({ loaded: true })}

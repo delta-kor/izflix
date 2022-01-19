@@ -11,6 +11,13 @@ namespace ApiResponse {
       export interface GetAllPlaylists extends ApiResponse {
         playlists: IPlaylist[];
       }
+
+      export interface GetOnePlaylist extends ApiResponse {
+        id: string;
+        title: string;
+        videos: IVideoItem[];
+        featured: boolean;
+      }
     }
 
     export interface GetRecommends extends ApiResponse {

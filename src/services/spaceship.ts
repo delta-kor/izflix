@@ -97,6 +97,15 @@ class SpaceshipClass {
     });
   }
 
+  public getOnePlaylist(
+    id: string
+  ): Promise<ApiResponse.Feed.Playlist.GetOnePlaylist> {
+    return this.get(`/feed/playlist/${id}`, {
+      key: `get_all_playlists_${id}`,
+      expire: expireTime,
+    });
+  }
+
   public getRecommends(
     id: string,
     count: number

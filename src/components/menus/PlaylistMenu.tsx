@@ -183,7 +183,7 @@ class PlaylistMenu extends Component<any, State> {
       <Layout>
         {this.state.playlists.length
           ? this.state.playlists.map((playlist) => (
-              <Playlist playlist={playlist} key={playlist.id} />
+              <Playlist key={playlist.id} type="playlist" playlist={playlist} />
             ))
           : placeholders}
       </Layout>
