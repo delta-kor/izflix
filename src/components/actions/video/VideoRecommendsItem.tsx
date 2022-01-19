@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
-import { Color, HideOverflow } from '../../../styles';
+import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled(Link)`
   position: relative;
@@ -33,19 +33,38 @@ const ThumbnailPlaceholder = styled.div`
 `;
 
 const Title = styled.div`
-  margin: 0 0 4px 0;
   font-weight: bold;
-  font-size: 16px;
   max-width: 100%;
   ${HideOverflow};
+
+  ${MobileQuery} {
+    height: 18px;
+    margin: 0 0 4px 0;
+    font-size: 16px;
+  }
+
+  ${PcQuery} {
+    height: 24px;
+    margin: 4px 0 6px 0;
+    font-size: 20px;
+  }
 `;
 
 const Description = styled.div`
   font-weight: bold;
-  font-size: 12px;
   max-width: 100%;
   opacity: 0.7;
   ${HideOverflow};
+
+  ${MobileQuery} {
+    height: 14px;
+    font-size: 12px;
+  }
+
+  ${PcQuery} {
+    height: 16px;
+    font-size: 14px;
+  }
 `;
 
 interface Props {
