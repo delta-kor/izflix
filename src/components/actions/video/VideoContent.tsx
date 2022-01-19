@@ -2,12 +2,18 @@ import { Component } from 'react';
 import styled from 'styled-components';
 import DateIcon from '../../../icons/date.svg';
 import { getDate } from '../../../services/time';
-import { MobileQuery, PcQuery } from '../../../styles';
+import { Color, MobileQuery, PcQuery } from '../../../styles';
 import CategoryBreadcrumb from '../category/CategoryBreadcrumb';
 import Video from './Video';
 import VideoInfo from './VideoInfo';
 
-const Layout = styled.div``;
+const Layout = styled.div`
+  border-bottom: 1px solid ${Color.GRAY};
+
+  ${MobileQuery} {
+    padding: 0 0 12px 0;
+  }
+`;
 
 const MetaWrapper = styled.div`
   ${MobileQuery} {

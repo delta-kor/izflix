@@ -15,7 +15,7 @@ const Page = styled(motion.div)`
   }
 
   ${PcQuery} {
-    padding: 96px 32px 0 32px;
+    padding: 96px 32px 64px 32px;
     margin: 0 auto;
     width: 100%;
     max-width: 1212px;
