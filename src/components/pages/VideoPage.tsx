@@ -81,12 +81,14 @@ class VideoPage extends Component<Props, State> {
       const data = await Spaceship.viewOneMusic(value);
       if (!data.ok) return Transmitter.emit('popup', data.message);
       videos.push(
-        ...data.videos.map((video) => ({
-          id: video.id,
-          title: '',
-          description: video.description,
-          duration: video.duration,
-        }))
+        ...data.videos
+          .sort((a, b) => a.date - b.date)
+          .map((video) => ({
+            id: video.id,
+            title: '',
+            description: video.description,
+            duration: video.duration,
+          }))
       );
     }
 
@@ -95,12 +97,14 @@ class VideoPage extends Component<Props, State> {
       if (!data.ok || data.type !== 'children')
         return Transmitter.emit('popup', data.message);
       videos.push(
-        ...data.files.map((file) => ({
-          id: file.id,
-          title: file.title,
-          description: '',
-          duration: file.duration,
-        }))
+        ...data.files
+          .sort((a, b) => a.date - b.date)
+          .map((file) => ({
+            id: file.id,
+            title: file.title,
+            description: '',
+            duration: file.duration,
+          }))
       );
     }
 
