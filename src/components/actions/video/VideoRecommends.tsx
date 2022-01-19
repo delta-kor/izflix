@@ -35,8 +35,16 @@ const Layout = styled.div`
 
 const Title = styled.div`
   font-weight: bold;
-  font-size: 16px;
-  margin: 0 0 16px 0;
+
+  ${MobileQuery} {
+    margin: 24px 0 16px 0;
+    font-size: 16px;
+  }
+
+  ${PcQuery} {
+    margin: 24px 0 20px 0;
+    font-size: 20px;
+  }
 `;
 
 const Placeholder = styled.div`

@@ -6,15 +6,16 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin: 24px 0;
 
   ${MobileQuery} {
     height: 48px;
     padding: 0 32px;
+    margin: 24px 0;
   }
 
   ${PcQuery} {
     height: 68px;
+    margin: 24px 0 0 0;
   }
 `;
 

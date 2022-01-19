@@ -22,6 +22,20 @@ const Layout = styled.div`
       margin: 0;
     }
   }
+
+  &[data-compact='true'] {
+    ${MobileQuery} {
+      padding: 0 32px;
+      line-height: unset;
+      min-height: 32px;
+      margin: 0;
+    }
+
+    ${PcQuery} {
+      padding: 0;
+      margin: 0;
+    }
+  }
 `;
 
 const Icon = styled.img`
@@ -33,6 +47,18 @@ const Icon = styled.img`
   ${PcQuery} {
     width: 32px;
     height: 32px;
+  }
+
+  &[data-compact='true'] {
+    ${MobileQuery} {
+      width: 12px;
+      height: 12px;
+    }
+
+    ${PcQuery} {
+      width: 24px;
+      height: 24px;
+    }
   }
 `;
 
@@ -47,6 +73,16 @@ const Text = styled(Link)`
   ${PcQuery} {
     font-size: 20px;
   }
+
+  &[data-compact='true'] {
+    ${MobileQuery} {
+      font-size: 12px;
+    }
+
+    ${PcQuery} {
+      font-size: 16px;
+    }
+  }
 `;
 
 const Block = styled(motion.div)`
@@ -56,10 +92,13 @@ const Block = styled(motion.div)`
 
 interface Props {
   path: IPath[];
+  compact?: boolean;
 }
 
 class CategoryBreadcrumb extends Component<Props> {
   render() {
+    const isCompact = this.props.compact || false;
+
     const transition = {
       initial: { opacity: 0 },
       animate: { opacity: 1 },
@@ -67,26 +106,31 @@ class CategoryBreadcrumb extends Component<Props> {
       transition: { opacity: { duration: 0.2 } },
     };
 
-    const contents = [
-      <Block key="home" layoutId="home" {...transition}>
-        <Text to={`/category`}>전체</Text>
-        <Icon src={BreakcrumbIcon} />
-      </Block>,
-    ];
+    const contents = [];
 
-    let index: number = 1;
+    const initialBlock = (
+      <Block key="home" layoutId={`home ${isCompact}`} {...transition}>
+        <Text data-compact={isCompact} to={`/category`}>
+          전체
+        </Text>
+        <Icon data-compact={isCompact} src={BreakcrumbIcon} />
+      </Block>
+    );
+    if (!isCompact) contents.push(initialBlock);
+
     for (const path of this.props.path) {
       contents.push(
-        <Block key={path.path} layoutId={path.path} {...transition}>
-          <Text to={`/category/${path.path}`}>{path.name}</Text>
-          <Icon src={BreakcrumbIcon} />
+        <Block key={path.path} layoutId={path.path + isCompact} {...transition}>
+          <Text data-compact={isCompact} to={`/category/${path.path}`}>
+            {path.name}
+          </Text>
+          <Icon data-compact={isCompact} src={BreakcrumbIcon} />
         </Block>
       );
-      index++;
     }
 
     return (
-      <Layout>
+      <Layout data-compact={isCompact}>
         <AnimatePresence>{contents}</AnimatePresence>
       </Layout>
     );
