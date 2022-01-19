@@ -2,19 +2,34 @@ import { Component } from 'react';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
 import Transmitter from '../../../services/transmitter';
+import { MobileQuery, PcQuery } from '../../../styles';
 import VideoRecommendsItem from './VideoRecommendsItem';
 
+const Wrapper = styled.div`
+  ${MobileQuery} {
+    padding: 0 32px;
+  }
+`;
+
 const Layout = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0 32px;
+  ${MobileQuery} {
+    display: flex;
+    flex-direction: column;
 
-  & > * {
-    margin: 0 0 24px 0;
+    & > * {
+      margin: 0 0 24px 0;
 
-    :last-child {
-      margin: 0;
+      :last-child {
+        margin: 0;
+      }
     }
+  }
+
+  ${PcQuery} {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-gap: 36px 48px;
   }
 `;
 
@@ -48,12 +63,14 @@ class VideoRecommends extends Component<Props, State> {
 
   render() {
     return (
-      <Layout>
+      <Wrapper>
         <Title>연관 동영상</Title>
-        {this.state.videos.map((video) => (
-          <VideoRecommendsItem key={video.id} video={video} />
-        ))}
-      </Layout>
+        <Layout>
+          {this.state.videos.map((video) => (
+            <VideoRecommendsItem key={video.id} video={video} />
+          ))}
+        </Layout>
+      </Wrapper>
     );
   }
 }
