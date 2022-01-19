@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import styled from 'styled-components';
-import { HideOverflow, MobileQuery, PcQuery } from '../../../styles';
+import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled.div`
   display: flex;
@@ -52,6 +52,36 @@ const Description = styled.div`
   }
 `;
 
+const TitlePlaceholder = styled.div`
+  width: 80%;
+  max-width: 480px;
+  border-radius: 4px;
+  background: ${Color.DARK_GRAY};
+
+  ${MobileQuery} {
+    height: 24px;
+  }
+
+  ${PcQuery} {
+    height: 36px;
+  }
+`;
+
+const DescriptionPlaceholder = styled.div`
+  width: 50%;
+  max-width: 360px;
+  border-radius: 4px;
+  background: ${Color.DARK_GRAY};
+
+  ${MobileQuery} {
+    height: 16px;
+  }
+
+  ${PcQuery} {
+    height: 22px;
+  }
+`;
+
 interface Props {
   data: ApiResponse.Video.Info | null;
 }
@@ -59,7 +89,14 @@ interface Props {
 class VideoInfo extends Component<Props> {
   render() {
     const data = this.props.data;
-    if (!data) return <Layout></Layout>;
+
+    if (!data)
+      return (
+        <Layout>
+          <TitlePlaceholder />
+          <DescriptionPlaceholder />
+        </Layout>
+      );
 
     return (
       <Layout>

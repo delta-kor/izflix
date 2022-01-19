@@ -54,7 +54,9 @@ class VideoPage extends Component<Props, State> {
   loadVideoInfo = async (id: string) => {
     const data = await Spaceship.getVideoInfo(id);
     if (!data.ok) return Transmitter.emit('popup', data.message);
-    this.setState({ videoInfo: data });
+    setTimeout(() => {
+      this.setState({ videoInfo: data });
+    }, 1000);
   };
 
   render() {
