@@ -165,10 +165,16 @@ interface State {
   streamInfo: ApiResponse.Video.Stream | null;
   videoInfo: ApiResponse.Video.Info | null;
   nextVideo: IVideoItem[];
+  nextError: boolean;
 }
 
 class VideoPage extends Component<Props, State> {
-  state: State = { streamInfo: null, videoInfo: null, nextVideo: [] };
+  state: State = {
+    streamInfo: null,
+    videoInfo: null,
+    nextVideo: [],
+    nextError: false,
+  };
 
   componentDidMount = () => {
     this.loadData();
@@ -206,13 +212,21 @@ class VideoPage extends Component<Props, State> {
 
     if (key === 'playlist') {
       const data = await Spaceship.getOnePlaylist(value);
-      if (!data.ok) return Transmitter.emit('popup', data.message);
+      if (!data.ok) {
+        this.setState({ nextError: true });
+        return Transmitter.emit('popup', data.message);
+      }
+
       videos.push(...data.videos);
     }
 
     if (key === 'music') {
       const data = await Spaceship.viewOneMusic(value);
-      if (!data.ok) return Transmitter.emit('popup', data.message);
+      if (!data.ok) {
+        this.setState({ nextError: true });
+        return Transmitter.emit('popup', data.message);
+      }
+
       videos.push(
         ...data.videos
           .sort((a, b) => a.date - b.date)
@@ -227,8 +241,11 @@ class VideoPage extends Component<Props, State> {
 
     if (key === 'category') {
       const data = await Spaceship.viewOneCategory(value);
-      if (!data.ok || data.type !== 'children')
+      if (!data.ok || data.type !== 'children') {
+        this.setState({ nextError: true });
         return Transmitter.emit('popup', data.message);
+      }
+
       videos.push(
         ...data.files
           .sort((a, b) => a.date - b.date)
@@ -275,7 +292,8 @@ class VideoPage extends Component<Props, State> {
       }
     }
 
-    const isNextEnabled = ['playlist', 'music', 'category'].includes(key!);
+    const isNextEnabled =
+      ['playlist', 'music', 'category'].includes(key!) && !this.state.nextError;
     const isNextLoaded = this.state.nextVideo.length && this.state.videoInfo;
 
     const placeholders = [];
@@ -297,14 +315,18 @@ class VideoPage extends Component<Props, State> {
       >
         {videoContent}
         {isNextLoaded ? (
-          <Playlist
-            type="next"
-            title={this.state.videoInfo!.title}
-            description={this.state.videoInfo!.description}
-            videos={nextVideo}
-            urlKey={key!}
-            urlValue={value!}
-          />
+          nextVideo.length ? (
+            <Playlist
+              type="next"
+              title={this.state.videoInfo!.title}
+              description={this.state.videoInfo!.description}
+              videos={nextVideo}
+              urlKey={key!}
+              urlValue={value!}
+            />
+          ) : (
+            <></>
+          )
         ) : isNextEnabled ? (
           <NextPlaceholder>
             <div>다음 동영상</div>

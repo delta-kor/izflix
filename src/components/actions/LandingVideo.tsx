@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Constants from '../../constants';
 import LoaderIcon from '../../icons/loading.svg';
@@ -59,7 +60,7 @@ const Cover = styled.div`
   }
 `;
 
-const Description = styled.div`
+const Description = styled(Link)`
   display: flex;
   position: absolute;
   left: 50%;
@@ -194,10 +195,11 @@ const Loader = styled.img<{ active: boolean }>`
 interface State {
   loaded: boolean;
   video: IVideoItem | null;
+  playlistId: string | null;
 }
 
 class LandingVideo extends Component<any, State> {
-  state: State = { loaded: false, video: null };
+  state: State = { loaded: false, video: null, playlistId: null };
   videoRef = React.createRef<HTMLVideoElement>();
 
   componentDidMount = async () => {
@@ -222,6 +224,8 @@ class LandingVideo extends Component<any, State> {
     const playlist = await this.getPlaylist();
 
     if (playlist) {
+      this.setState({ playlistId: playlist.id });
+
       const length = playlist.videos.length;
       const random = Math.floor(Math.random() * length);
       const video = playlist.videos[random];
@@ -270,7 +274,13 @@ class LandingVideo extends Component<any, State> {
         />
         <Cover />
         <Loader src={LoaderIcon} active={!this.state.loaded} />
-        <Description>
+        <Description
+          to={
+            this.state.video
+              ? `/${this.state.video.id}?k=playlist&v=${this.state.playlistId}`
+              : '/'
+          }
+        >
           <p>인기 동영상</p>
           {this.state.video ? (
             <>

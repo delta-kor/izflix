@@ -111,7 +111,7 @@ class SpaceshipClass {
     count: number
   ): Promise<ApiResponse.Feed.GetRecommends> {
     return this.get(`/feed/recommends/${id}?count=${count}`, {
-      key: `get_recommends#${id}#${count}`,
+      key: `get_recommends_${id}#${count}`,
       expire: expireTime,
     });
   }
@@ -125,7 +125,7 @@ class SpaceshipClass {
 
   public viewOneMusic(id: string): Promise<ApiResponse.Music.ViewOne> {
     return this.get(`/music/${id}`, {
-      key: `view_one_music#${id}`,
+      key: `view_one_music_${id}`,
       expire: expireTime,
     });
   }
@@ -139,7 +139,7 @@ class SpaceshipClass {
 
   public viewOneCategory(path: string): Promise<ApiResponse.Category.ViewOne> {
     return this.get(`/category/${path}`, {
-      key: `view_all_category#${path}`,
+      key: `view_all_category_${path}`,
       expire: expireTime,
     });
   }
