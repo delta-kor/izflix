@@ -4,7 +4,13 @@ import { Params } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
-import { MobileQuery, PcQuery } from '../../styles';
+import {
+  Color,
+  HideOverflow,
+  MobileQuery,
+  PcQuery,
+  TabletQuery,
+} from '../../styles';
 import Playlist from '../actions/playlist/Playlist';
 import VideoContent from '../actions/video/VideoContent';
 import VideoRecommends from '../actions/video/VideoRecommends';
@@ -20,6 +26,133 @@ const Page = styled(motion.div)`
     margin: 0 auto;
     width: 100%;
     max-width: 1212px;
+  }
+`;
+
+const NextPlaceholder = styled.div`
+  width: 100%;
+
+  ${PcQuery} {
+    margin: 0 0 48px 0;
+  }
+
+  ${MobileQuery} {
+    margin: 24px 0 32px 0;
+  }
+
+  & > *:nth-child(1) {
+    font-weight: bold;
+    ${HideOverflow};
+
+    ${MobileQuery} {
+      margin: 0 32px 16px 32px;
+      height: 18px;
+      font-size: 16px;
+    }
+
+    ${PcQuery} {
+      margin: 48px 0 20px 0;
+      height: 24px;
+      font-size: 20px;
+    }
+  }
+
+  & > *:nth-child(2) {
+    display: flex;
+    overflow-x: hidden;
+
+    ${MobileQuery} {
+      padding: 0 0 0 32px;
+    }
+
+    & > * {
+      flex-shrink: 0;
+
+      ${MobileQuery} {
+        margin: 0 16px 0 0;
+      }
+
+      ${PcQuery} {
+        margin: 0 24px 0 0;
+      }
+
+      :last-child {
+        ${MobileQuery} {
+          margin: 0 32px 0 0;
+        }
+
+        ${PcQuery} {
+          margin: 0;
+        }
+      }
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+`;
+
+const NextVideoPlaceholder = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  ${MobileQuery} {
+    width: 208px;
+  }
+
+  ${PcQuery} {
+    width: calc((100% - 24px * 3) / 4);
+  }
+
+  ${TabletQuery} {
+    width: calc((100% - 24px * 2) / 3);
+  }
+
+  & > *:nth-child(1) {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 6px;
+    background: ${Color.DARK_GRAY};
+
+    ${MobileQuery} {
+      height: 117px;
+      margin: 0 0 8px 0;
+    }
+
+    ${PcQuery} {
+      margin: 0 0 16px 0;
+    }
+  }
+
+  & > *:nth-child(2) {
+    width: 100%;
+    border-radius: 4px;
+    background: ${Color.DARK_GRAY};
+
+    ${MobileQuery} {
+      margin: 0 0 4px 0;
+      height: 18px;
+    }
+
+    ${PcQuery} {
+      margin: 0 0 8px 0;
+      height: 28px;
+    }
+  }
+
+  & > *:nth-child(3) {
+    width: 70%;
+    border-radius: 4px;
+    background: ${Color.DARK_GRAY};
+
+    ${MobileQuery} {
+      height: 14px;
+    }
+
+    ${PcQuery} {
+      height: 18px;
+    }
   }
 `;
 
@@ -142,6 +275,20 @@ class VideoPage extends Component<Props, State> {
       }
     }
 
+    const isNextEnabled = ['playlist', 'music', 'category'].includes(key!);
+    const isNextLoaded = this.state.nextVideo.length && this.state.videoInfo;
+
+    const placeholders = [];
+    for (let i = 0; i < 4; i++) {
+      placeholders.push(
+        <NextVideoPlaceholder key={i}>
+          <div />
+          <div />
+          <div />
+        </NextVideoPlaceholder>
+      );
+    }
+
     return (
       <Page
         exit={{ opacity: 0 }}
@@ -149,15 +296,20 @@ class VideoPage extends Component<Props, State> {
         animate={{ opacity: 1 }}
       >
         {videoContent}
-        {this.state.nextVideo.length && this.state.videoInfo ? (
+        {isNextLoaded ? (
           <Playlist
             type="next"
-            title={this.state.videoInfo.title || ''}
-            description={this.state.videoInfo.description || ''}
+            title={this.state.videoInfo!.title}
+            description={this.state.videoInfo!.description}
             videos={nextVideo}
             urlKey={key!}
             urlValue={value!}
           />
+        ) : isNextEnabled ? (
+          <NextPlaceholder>
+            <div>다음 동영상</div>
+            <div>{placeholders}</div>
+          </NextPlaceholder>
         ) : (
           <></>
         )}

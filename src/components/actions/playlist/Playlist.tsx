@@ -59,8 +59,8 @@ const Title = styled.div`
   &[data-next='true'] {
     ${PcQuery} {
       margin: 48px 0 20px 0;
-      font-size: 20px;
       height: 24px;
+      font-size: 20px;
     }
   }
 `;
