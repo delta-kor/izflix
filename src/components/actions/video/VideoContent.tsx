@@ -27,6 +27,52 @@ const MetaWrapper = styled.div`
   }
 `;
 
+const MetaPlaceholder = styled.div`
+  ${MobileQuery} {
+    height: 50px;
+    padding: 0 32px;
+  }
+
+  ${PcQuery} {
+    display: flex;
+    height: 64px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  & > *:nth-child(1) {
+    border-radius: 4px;
+    background: ${Color.DARK_GRAY};
+
+    ${MobileQuery} {
+      height: 16px;
+      width: 120px;
+    }
+
+    ${PcQuery} {
+      width: 180px;
+      height: 20px;
+      order: 2;
+    }
+  }
+
+  & > *:nth-child(2) {
+    border-radius: 4px;
+    background: ${Color.DARK_GRAY};
+
+    ${MobileQuery} {
+      height: 16px;
+      width: 80%;
+      margin: 10px 0 0 0;
+    }
+
+    ${PcQuery} {
+      width: 50%;
+      height: 20px;
+    }
+  }
+`;
+
 const DateWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -92,7 +138,10 @@ class VideoContent extends Component<Props> {
             />
           </MetaWrapper>
         ) : (
-          <MetaWrapper />
+          <MetaPlaceholder>
+            <div />
+            <div />
+          </MetaPlaceholder>
         )}
       </Layout>
     );
