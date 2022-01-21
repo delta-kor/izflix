@@ -27,8 +27,9 @@ const Content = styled.video<{ $active: boolean }>`
   z-index: 2;
 `;
 
-const Loader = styled.img<{ $active: boolean }>`
+const Loader = styled.img<{ $active: boolean; $loaded: boolean }>`
   position: absolute;
+  display: ${({ $loaded }) => ($loaded ? 'none' : 'block')};
   transition: opacity 0.2s;
   animation: spin 2s infinite linear;
   opacity: ${({ $active: active }) => (active ? 1 : 0)};
@@ -82,7 +83,11 @@ class Video extends Component<Props, State> {
             controls
           />
         )}
-        <Loader $active={!this.props.url} src={LoaderIcon} />
+        <Loader
+          $active={!this.props.url}
+          $loaded={this.state.loaded}
+          src={LoaderIcon}
+        />
       </Layout>
     );
   }
