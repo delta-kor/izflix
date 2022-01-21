@@ -4,12 +4,20 @@ import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled.div`
   display: flex;
+
+  ${MobileQuery} {
+    padding: 0 32px;
+  }
+`;
+
+const Content = styled.div`
+  display: flex;
+  width: 100%;
   flex-direction: column;
   justify-content: space-between;
 
   ${MobileQuery} {
     height: 48px;
-    padding: 0 32px;
     margin: 24px 0;
   }
 
@@ -83,6 +91,29 @@ const DescriptionPlaceholder = styled.div`
   }
 `;
 
+const QualityButton = styled.div`
+  display: inline-block;
+  align-self: center;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+
+  ${MobileQuery} {
+    margin: 0 0 0 8px;
+    padding: 6px 8px;
+    font-size: 12px;
+    background: ${Color.DARK_GRAY};
+  }
+
+  ${PcQuery} {
+    margin: 0 0 0 8px;
+    padding: 12px 16px;
+    font-size: 16px;
+    background: ${Color.GRAY};
+  }
+`;
+
 interface Props {
   data: ApiResponse.Video.Info | null;
 }
@@ -94,15 +125,20 @@ class VideoInfo extends Component<Props> {
     if (!data)
       return (
         <Layout>
-          <TitlePlaceholder />
-          <DescriptionPlaceholder />
+          <Content>
+            <TitlePlaceholder />
+            <DescriptionPlaceholder />
+          </Content>
         </Layout>
       );
 
     return (
       <Layout>
-        <Title>{data.title}</Title>
-        <Description>{data.description}</Description>
+        <Content>
+          <Title>{data.title}</Title>
+          <Description>{data.description}</Description>
+        </Content>
+        <QualityButton>1080p</QualityButton>
       </Layout>
     );
   }
