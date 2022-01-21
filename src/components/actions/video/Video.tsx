@@ -1,11 +1,18 @@
 import { Component } from 'react';
 import styled from 'styled-components';
-import { Color } from '../../../styles';
+import { Color, MobileQuery } from '../../../styles';
 
 const Layout = styled.div`
   width: 100%;
   aspect-ratio: 16 / 9;
   background: ${Color.DARK_GRAY};
+
+  ${MobileQuery} {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
 `;
 
 const Content = styled.video<{ $active: boolean }>`

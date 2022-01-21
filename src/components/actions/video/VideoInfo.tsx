@@ -4,6 +4,7 @@ import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled.div`
   display: flex;
+  width: 100%;
 
   ${MobileQuery} {
     padding: 0 32px;
@@ -12,7 +13,7 @@ const Layout = styled.div`
 
 const Content = styled.div`
   display: flex;
-  width: 100%;
+  width: calc(100% - 64px);
   flex-direction: column;
   justify-content: space-between;
 
@@ -28,7 +29,6 @@ const Content = styled.div`
 `;
 
 const Title = styled.div`
-  max-width: 100%;
   font-weight: 800;
   ${HideOverflow};
 
@@ -44,7 +44,6 @@ const Title = styled.div`
 `;
 
 const Description = styled.div`
-  max-width: 100%;
   opacity: 0.7;
   ${HideOverflow};
 
@@ -92,7 +91,6 @@ const DescriptionPlaceholder = styled.div`
 `;
 
 const QualityButton = styled.div`
-  display: inline-block;
   align-self: center;
   font-weight: bold;
   border-radius: 4px;

@@ -19,7 +19,7 @@ import withParams from '../tools/Params';
 
 const Page = styled(motion.div)`
   ${MobileQuery} {
-    padding: 0 0 88px 0;
+    padding: calc(100vw * (9 / 16)) 0 88px 0;
   }
 
   ${PcQuery} {
