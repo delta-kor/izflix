@@ -1,8 +1,10 @@
 import { Component } from 'react';
 import styled from 'styled-components';
-import { Color, MobileQuery } from '../../../styles';
+import LoaderIcon from '../../../icons/loading-bright.svg';
+import { Color, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled.div`
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   background: ${Color.DARK_GRAY};
@@ -22,6 +24,40 @@ const Content = styled.video<{ $active: boolean }>`
   object-fit: cover;
   opacity: ${({ $active }) => ($active ? '1' : 0)};
   transition: opacity 1s;
+  z-index: 2;
+`;
+
+const Loader = styled.img<{ $active: boolean }>`
+  position: absolute;
+  transition: opacity 0.2s;
+  animation: spin 2s infinite linear;
+  opacity: ${({ $active: active }) => (active ? 1 : 0)};
+  user-select: none;
+  z-index: 1;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  ${MobileQuery} {
+    width: 32px;
+    height: 32px;
+    left: calc(50% - 16px);
+    top: calc(50% - 16px);
+  }
+
+  ${PcQuery} {
+    width: 72px;
+    height: 72px;
+    left: calc(50% - 36px);
+    top: calc(50% - 36px);
+  }
 `;
 
 interface Props {
@@ -46,6 +82,7 @@ class Video extends Component<Props, State> {
             controls
           />
         )}
+        <Loader $active={!this.props.url} src={LoaderIcon} />
       </Layout>
     );
   }

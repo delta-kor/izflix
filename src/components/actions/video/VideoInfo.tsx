@@ -95,6 +95,7 @@ const QualityButton = styled(motion.div)`
   align-self: center;
   font-weight: bold;
   border-radius: 4px;
+  background: ${Color.GRAY};
   cursor: pointer;
   user-select: none;
 
@@ -102,14 +103,12 @@ const QualityButton = styled(motion.div)`
     margin: 0 0 0 8px;
     padding: 6px 10px;
     font-size: 12px;
-    background: ${Color.DARK_GRAY};
   }
 
   ${PcQuery} {
     margin: 0 0 0 8px;
     padding: 12px 16px;
     font-size: 16px;
-    background: ${Color.GRAY};
   }
 `;
 
