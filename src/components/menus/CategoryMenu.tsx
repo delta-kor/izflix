@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Component } from 'react';
 import { Navigate, Params } from 'react-router-dom';
 import styled from 'styled-components';
+import PathFinder from '../../services/path-finder';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../styles';
@@ -97,8 +98,6 @@ interface State {
   error: boolean;
 }
 
-const childrenCountMap: Map<string, number> = new Map();
-
 class CategoryMenu extends Component<Props, State> {
   state: State = { folders: [], files: [], error: false };
 
@@ -117,9 +116,9 @@ class CategoryMenu extends Component<Props, State> {
     if (!data.ok) return this.onLoadError(data.message);
 
     for (const folder of data.folders)
-      childrenCountMap.set(folder.path, folder.children);
+      PathFinder.set(folder.path, folder.children);
 
-    for (const { path, count } of data.path) childrenCountMap.set(path, count);
+    for (const { path, count } of data.path) PathFinder.set(path, count);
 
     this.setState({ folders: data.folders });
     this.props.setPath(data.path);
@@ -133,12 +132,12 @@ class CategoryMenu extends Component<Props, State> {
     if (data.type === 'parent') {
       this.setState({ folders: data.folders });
       for (let folder of data.folders)
-        childrenCountMap.set(folder.path, folder.children);
+        PathFinder.set(folder.path, folder.children);
     } else {
       this.setState({ files: data.files });
     }
 
-    for (const { path, count } of data.path) childrenCountMap.set(path, count);
+    for (const { path, count } of data.path) PathFinder.set(path, count);
 
     this.props.setPath(data.path);
   };
@@ -150,7 +149,7 @@ class CategoryMenu extends Component<Props, State> {
 
   render() {
     const path = this.props.params.path;
-    const count = !path ? 4 : childrenCountMap.get(path!) || 24;
+    const count = !path ? 4 : PathFinder.get(path!) || 24;
 
     const placeholders = [];
     for (let i = 0; i < count; i++) {

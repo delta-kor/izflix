@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Component } from 'react';
 import { Params } from 'react-router-dom';
 import styled from 'styled-components';
+import PathFinder from '../../services/path-finder';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
 import {
@@ -197,6 +198,11 @@ class VideoPage extends Component<Props, State> {
   loadVideoInfo = async (id: string) => {
     const data = await Spaceship.getVideoInfo(id);
     if (!data.ok) return Transmitter.emit('popup', data.message);
+
+    for (const { path, count } of data.path) {
+      PathFinder.set(path, count);
+    }
+
     this.setState({ videoInfo: data });
   };
 
