@@ -39,6 +39,8 @@ namespace ApiResponse {
     export interface Stream extends ApiResponse {
       url: string;
       duration: number;
+      quality: number;
+      qualities: number[];
     }
 
     export interface Info extends ApiResponse {
@@ -117,4 +119,5 @@ interface ICategoryFile {
 interface IPath {
   name: string;
   path: string;
+  count: number;
 }

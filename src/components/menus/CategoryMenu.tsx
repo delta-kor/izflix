@@ -116,8 +116,10 @@ class CategoryMenu extends Component<Props, State> {
     const data = await Spaceship.viewAllCategory();
     if (!data.ok) return this.onLoadError(data.message);
 
-    for (let folder of data.folders)
+    for (const folder of data.folders)
       childrenCountMap.set(folder.path, folder.children);
+
+    for (const { path, count } of data.path) childrenCountMap.set(path, count);
 
     this.setState({ folders: data.folders });
     this.props.setPath(data.path);
@@ -132,7 +134,11 @@ class CategoryMenu extends Component<Props, State> {
       this.setState({ folders: data.folders });
       for (let folder of data.folders)
         childrenCountMap.set(folder.path, folder.children);
-    } else this.setState({ files: data.files });
+    } else {
+      this.setState({ files: data.files });
+    }
+
+    for (const { path, count } of data.path) childrenCountMap.set(path, count);
 
     this.props.setPath(data.path);
   };
