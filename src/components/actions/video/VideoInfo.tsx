@@ -101,7 +101,7 @@ const QualityButton = styled.div`
 
   ${MobileQuery} {
     margin: 0 0 0 8px;
-    padding: 6px 8px;
+    padding: 6px 10px;
     font-size: 12px;
     background: ${Color.DARK_GRAY};
   }
@@ -116,13 +116,15 @@ const QualityButton = styled.div`
 
 interface Props {
   data: ApiResponse.Video.Info | null;
+  streamInfo: ApiResponse.Video.Stream | null;
 }
 
 class VideoInfo extends Component<Props> {
   render() {
     const data = this.props.data;
+    const streamInfo = this.props.streamInfo;
 
-    if (!data)
+    if (!data || !streamInfo)
       return (
         <Layout>
           <Content>
@@ -138,7 +140,7 @@ class VideoInfo extends Component<Props> {
           <Title>{data.title}</Title>
           <Description>{data.description}</Description>
         </Content>
-        <QualityButton>1080p</QualityButton>
+        <QualityButton>{streamInfo.quality}p</QualityButton>
       </Layout>
     );
   }

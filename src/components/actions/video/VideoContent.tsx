@@ -125,7 +125,10 @@ class VideoContent extends Component<Props> {
     return (
       <Layout>
         <Video url={this.props.streamInfo?.url || null} />
-        <VideoInfo data={this.props.videoInfo} />
+        <VideoInfo
+          data={this.props.videoInfo}
+          streamInfo={this.props.streamInfo}
+        />
         {this.props.videoInfo ? (
           <MetaWrapper>
             <DateWrapper>
