@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
@@ -90,7 +91,7 @@ const DescriptionPlaceholder = styled.div`
   }
 `;
 
-const QualityButton = styled.div`
+const QualityButton = styled(motion.div)`
   align-self: center;
   font-weight: bold;
   border-radius: 4px;
@@ -122,7 +123,7 @@ class VideoInfo extends Component<Props> {
     const data = this.props.data;
     const streamInfo = this.props.streamInfo;
 
-    if (!data || !streamInfo)
+    if (!data)
       return (
         <Layout>
           <Content>
@@ -138,7 +139,15 @@ class VideoInfo extends Component<Props> {
           <Title>{data.title}</Title>
           <Description>{data.description}</Description>
         </Content>
-        <QualityButton>{streamInfo.quality}p</QualityButton>
+        {streamInfo && (
+          <QualityButton
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            {streamInfo.quality}p
+          </QualityButton>
+        )}
       </Layout>
     );
   }
