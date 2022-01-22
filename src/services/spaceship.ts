@@ -78,7 +78,7 @@ class SpaceshipClass {
     quality: number = 1080
   ): Promise<ApiResponse.Video.Stream> {
     return this.get(`/video/${id}?quality=${quality}`, {
-      key: `stream_video_${id}`,
+      key: `stream_video_${id}#${quality}`,
       expire: expireTime,
     });
   }

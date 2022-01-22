@@ -167,6 +167,7 @@ interface State {
   videoInfo: ApiResponse.Video.Info | null;
   nextVideo: IVideoItem[];
   nextError: boolean;
+  quality: number;
 }
 
 class VideoPage extends Component<Props, State> {
@@ -175,15 +176,24 @@ class VideoPage extends Component<Props, State> {
     videoInfo: null,
     nextVideo: [],
     nextError: false,
+    quality: 1080,
   };
 
   componentDidMount = () => {
     this.loadData();
   };
 
+  componentDidUpdate = (_: Props, prevState: State) => {
+    if (prevState.quality !== this.state.quality) {
+      const id = this.props.params.id!;
+      const quality = this.state.quality;
+      this.loadStreamInfo(id, quality);
+    }
+  };
+
   loadData = async () => {
     const id = this.props.params.id!;
-    const quality = 1080;
+    const quality = this.state.quality;
     this.loadStreamInfo(id, quality);
     this.loadVideoInfo(id);
     this.loadNextVideo();
@@ -278,6 +288,7 @@ class VideoPage extends Component<Props, State> {
       <VideoContent
         streamInfo={this.state.streamInfo}
         videoInfo={this.state.videoInfo}
+        setQuality={(quality) => this.setState({ quality })}
       />
     );
 

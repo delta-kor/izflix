@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
+import ModalController from '../../../services/modal-controller';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled.div`
@@ -100,7 +101,7 @@ const QualityButton = styled(motion.div)`
   user-select: none;
 
   ${MobileQuery} {
-    margin: 0 0 0 8px;
+    margin: 0 0 0 auto;
     padding: 6px 10px;
     font-size: 12px;
   }
@@ -115,9 +116,29 @@ const QualityButton = styled(motion.div)`
 interface Props {
   data: ApiResponse.Video.Info | null;
   streamInfo: ApiResponse.Video.Stream | null;
+  setQuality(quality: number): void;
 }
 
 class VideoInfo extends Component<Props> {
+  onQualityClicked = async () => {
+    const streamInfo = this.props.streamInfo;
+    if (!streamInfo) return false;
+
+    const content: SelectModalContent[] = [];
+    for (const quality of streamInfo.qualities) {
+      content.push({ id: quality, text: `${quality}p` });
+    }
+
+    const result = await ModalController.fire<number>({
+      type: 'select',
+      title: '화질 선택',
+      content,
+      default: streamInfo.quality,
+    });
+
+    this.props.setQuality(result);
+  };
+
   render() {
     const data = this.props.data;
     const streamInfo = this.props.streamInfo;
@@ -140,6 +161,7 @@ class VideoInfo extends Component<Props> {
         </Content>
         {streamInfo && (
           <QualityButton
+            onClick={this.onQualityClicked}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2 }}

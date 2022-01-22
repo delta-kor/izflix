@@ -9,7 +9,7 @@ const Layout = styled(motion.div)`
   padding: 14px 16px;
   background: ${Color.DARK_GRAY};
   border-radius: 8px;
-  z-index: 100;
+  z-index: 1000;
   border: 2px solid ${Color.PRIMARY};
   user-select: none;
   cursor: pointer;

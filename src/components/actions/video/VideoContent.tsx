@@ -118,6 +118,7 @@ const Date = styled.div`
 interface Props {
   streamInfo: ApiResponse.Video.Stream | null;
   videoInfo: ApiResponse.Video.Info | null;
+  setQuality(quality: number): void;
 }
 
 class VideoContent extends Component<Props> {
@@ -128,6 +129,7 @@ class VideoContent extends Component<Props> {
         <VideoInfo
           data={this.props.videoInfo}
           streamInfo={this.props.streamInfo}
+          setQuality={this.props.setQuality}
         />
         {this.props.videoInfo ? (
           <MetaWrapper>
