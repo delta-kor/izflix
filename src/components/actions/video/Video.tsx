@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
 import LoaderIcon from '../../../icons/loading-bright.svg';
@@ -27,12 +28,9 @@ const Content = styled.video<{ $active: boolean }>`
   z-index: 2;
 `;
 
-const Loader = styled.img<{ $active: boolean; $loaded: boolean }>`
+const Loader = styled(motion.img)`
   position: absolute;
-  display: ${({ $loaded }) => ($loaded ? 'none' : 'block')};
-  transition: opacity 0.2s;
   animation: spin 2s infinite linear;
-  opacity: ${({ $active: active }) => (active ? 1 : 0)};
   user-select: none;
   z-index: 1;
 
@@ -83,11 +81,11 @@ class Video extends Component<Props, State> {
             controls
           />
         )}
-        <Loader
-          $active={!this.props.url}
-          $loaded={this.state.loaded}
-          src={LoaderIcon}
-        />
+        <AnimatePresence>
+          {!this.state.loaded && (
+            <Loader exit={{ opacity: 0 }} src={LoaderIcon} />
+          )}
+        </AnimatePresence>
       </Layout>
     );
   }
