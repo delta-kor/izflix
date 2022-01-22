@@ -26,15 +26,14 @@ class MusicMenu extends Component<any, State> {
     Scroll.savePoint({
       type: 'music',
       selected: this.state.selected,
-      position: Scroll.getPosition(),
     });
   };
 
   loadScroll = () => {
     const scrollData: MusicPageScrollData | null = Scroll.getPoint('music');
     if (!scrollData) return false;
+
     this.setState({ selected: scrollData.selected });
-    Scroll.to(scrollData.position);
   };
 
   loadData = async () => {
