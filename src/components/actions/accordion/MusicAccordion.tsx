@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import AccordionIcon from '../../../icons/accordion.svg';
 import Spaceship from '../../../services/spaceship';
@@ -13,6 +13,8 @@ const Wrapper = styled(motion.div)<{ $active: boolean }>`
   background: ${({ $active }) =>
     $active ? Color.DARK_GRAY : Color.BACKGROUND};
   transition: background 0.2s;
+
+  scroll-margin: 80px 0 0 0;
 `;
 
 const Layout = styled.div`
@@ -81,10 +83,13 @@ interface State {
 
 class MusicAccordion extends Component<Props, State> {
   state: State = { videos: [] };
+  wrapperRef = React.createRef<HTMLDivElement>();
 
   componentDidMount = () => {
     if (this.props.expand) {
       this.loadData();
+      this.wrapperRef.current &&
+        this.wrapperRef.current.scrollIntoView({ block: 'start' });
     }
   };
 
@@ -118,7 +123,7 @@ class MusicAccordion extends Component<Props, State> {
     const music = this.props.music;
     if (music)
       return (
-        <Wrapper $active={!!this.props.expand}>
+        <Wrapper $active={!!this.props.expand} ref={this.wrapperRef}>
           <Layout onClick={this.onClick}>
             <Icon
               src={AccordionIcon}
