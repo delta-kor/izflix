@@ -1,5 +1,5 @@
 import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import LandingVideo from './components/actions/LandingVideo';
@@ -35,8 +35,11 @@ const App = (): JSX.Element => {
     else setHeaderSticked(false);
   };
 
+  const prevPath = useRef(location.pathname);
   useEffect(() => {
-    Transmitter.emit('locationupdate', location.pathname);
+    Transmitter.emit('locationupdate', location.pathname, prevPath.current);
+    prevPath.current = location.pathname;
+
     Transmitter.on('levelscroll', navigatorController);
     return () => {
       Transmitter.removeListener('levelscroll', navigatorController);

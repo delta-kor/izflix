@@ -4,7 +4,7 @@ import Constants from '../constants';
 interface TransmitterEvents {
   popup(message: any): void;
   levelscroll(): void;
-  locationupdate(path: string): void;
+  locationupdate(to: string, from: string): void;
 }
 
 declare interface TransmitterClass {
@@ -60,7 +60,9 @@ class TransmitterClass extends EventEmitter {
   }
 
   private loadLocationListeners() {
-    this.on('locationupdate', () => this.emit('levelscroll'));
+    this.on('locationupdate', (to, from) => {
+      this.emit('levelscroll');
+    });
   }
 }
 

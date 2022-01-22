@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { Params } from 'react-router-dom';
 import styled from 'styled-components';
 import PathFinder from '../../services/path-finder';
+import Scroll from '../../services/scroll';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
 import {
@@ -180,6 +181,7 @@ class VideoPage extends Component<Props, State> {
   };
 
   componentDidMount = () => {
+    Scroll.up();
     this.loadData();
   };
 
