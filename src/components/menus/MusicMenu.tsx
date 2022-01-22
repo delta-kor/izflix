@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import styled from 'styled-components';
+import Scroll from '../../services/scroll';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
 import MusicAccordion from '../actions/accordion/MusicAccordion';
@@ -17,7 +18,23 @@ class MusicMenu extends Component<any, State> {
   state: State = { musics: [], selected: null };
 
   componentDidMount = () => {
+    this.loadScroll();
     this.loadData();
+  };
+
+  componentWillUnmount = () => {
+    Scroll.savePoint({
+      type: 'music',
+      selected: this.state.selected,
+      position: Scroll.getPosition(),
+    });
+  };
+
+  loadScroll = () => {
+    const scrollData: MusicPageScrollData | null = Scroll.getPoint('music');
+    if (!scrollData) return false;
+    this.setState({ selected: scrollData.selected });
+    Scroll.to(scrollData.position);
   };
 
   loadData = async () => {

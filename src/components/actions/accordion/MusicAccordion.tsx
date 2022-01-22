@@ -76,35 +76,31 @@ interface Props {
 }
 
 interface State {
-  expand: boolean;
   videos: IMusicVideoItem[];
 }
 
 class MusicAccordion extends Component<Props, State> {
-  state: State = { expand: false, videos: [] };
+  state: State = { videos: [] };
 
-  componentDidUpdate = (prevProps: Props) => {
-    if (prevProps.expand !== this.props.expand) {
-      if (this.props.expand) {
-        this.expand();
-      } else {
-        this.shrink();
-      }
+  componentDidMount = () => {
+    if (this.props.expand) {
+      this.loadData();
     }
   };
 
   onClick = () => {
-    const current = this.state.expand;
-    this.props.setExpand && this.props.setExpand(!current);
+    const current = this.props.expand;
+    if (current) this.shrink();
+    else this.expand();
   };
 
   expand = () => {
-    this.setState({ expand: true });
+    this.props.setExpand && this.props.setExpand(true);
     this.loadData();
   };
 
   shrink = () => {
-    this.setState({ expand: false });
+    this.props.setExpand && this.props.setExpand(false);
   };
 
   loadData = async () => {
@@ -122,7 +118,7 @@ class MusicAccordion extends Component<Props, State> {
     const music = this.props.music;
     if (music)
       return (
-        <Wrapper $active={this.state.expand}>
+        <Wrapper $active={!!this.props.expand}>
           <Layout onClick={this.onClick}>
             <Icon
               src={AccordionIcon}
@@ -131,13 +127,13 @@ class MusicAccordion extends Component<Props, State> {
                 expand: { transform: 'rotate(180deg)' },
               }}
               initial="initial"
-              animate={this.state.expand ? 'expand' : 'initial'}
+              animate={this.props.expand ? 'expand' : 'initial'}
             />
             <Title>{music.title}</Title>
             <Count>{music.count}</Count>
           </Layout>
           <AnimatePresence>
-            {this.state.expand && (
+            {this.props.expand && (
               <ItemWrapper
                 initial="collapsed"
                 animate="open"
