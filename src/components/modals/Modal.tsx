@@ -1,9 +1,11 @@
+import { motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
 import { Color } from '../../styles';
 import SelectModal from './SelectModal';
 
-const Layout = styled.div`
+const Layout = styled(motion.div)`
+  position: fixed;
   z-index: 500;
 `;
 
@@ -39,7 +41,12 @@ class Modal extends Component<Props> {
     }
 
     return (
-      <Layout>
+      <Layout
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+      >
         <Cover />
         {content}
       </Layout>

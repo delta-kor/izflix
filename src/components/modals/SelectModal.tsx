@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import styled from 'styled-components';
 import ModalController from '../../services/modal-controller';
-import { Color } from '../../styles';
+import { Color, MobileQuery, PcQuery } from '../../styles';
 
 const Layout = styled.div`
   position: fixed;
@@ -46,14 +46,22 @@ const Content = styled.div`
 
 const Chip = styled.div<{ $active: boolean }>`
   display: inline-block;
-  padding: 12px 16px;
+  font-weight: bold;
+  border-radius: 4px;
   background: ${({ $active }) => ($active ? Color.PRIMARY : Color.DARK_GRAY)};
   transition: background 0.2s;
-  border-radius: 4px;
-  font-weight: bold;
-  font-size: 16px;
   cursor: pointer;
   user-select: none;
+
+  ${MobileQuery} {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  ${PcQuery} {
+    padding: 12px 16px;
+    font-size: 16px;
+  }
 `;
 
 const Submit = styled.div`

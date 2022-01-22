@@ -187,6 +187,7 @@ class VideoPage extends Component<Props, State> {
     if (prevState.quality !== this.state.quality) {
       const id = this.props.params.id!;
       const quality = this.state.quality;
+      this.setState({ streamInfo: null });
       this.loadStreamInfo(id, quality);
     }
   };

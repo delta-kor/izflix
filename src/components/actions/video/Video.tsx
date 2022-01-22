@@ -70,6 +70,12 @@ interface State {
 class Video extends Component<Props, State> {
   state: State = { loaded: false };
 
+  componentDidUpdate = (prevProps: Props) => {
+    if (prevProps.url !== this.props.url) {
+      this.setState({ loaded: false });
+    }
+  };
+
   render() {
     return (
       <Layout>

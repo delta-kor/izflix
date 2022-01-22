@@ -54,7 +54,11 @@ const App = (): JSX.Element => {
   return (
     <AnimateSharedLayout>
       <Popup />
-      {modalData && <Modal data={modalData[0]} modalKey={modalData[1]} />}
+      <AnimatePresence>
+        {modalData && (
+          <Modal key="modal" data={modalData[0]} modalKey={modalData[1]} />
+        )}
+      </AnimatePresence>
 
       <Mobile>
         <Navigator />
