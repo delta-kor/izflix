@@ -104,8 +104,7 @@ class ShareModal extends Component<Props> {
 
   render() {
     const data = this.props.data;
-
-    const url = `https://izflix.cf/${data.id}`;
+    const url = `https://izflix.net/${data.id}`;
 
     return (
       <Layout>
