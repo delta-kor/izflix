@@ -44,9 +44,13 @@ const Constants = {
     return '/' + location.pathname.split('/')[1];
   },
   IS_VIDEO_PAGE(location: any = window.location) {
+    return !['/', '/music', '/category', '/info'].includes(
+      this.TOP_ROUTE(location)
+    );
+  },
+  IS_ADDITIONAL_PAGE(location: any = window.location) {
     return !['/', '/music', '/category'].includes(this.TOP_ROUTE(location));
   },
-
   IS_MAIN() {
     return window.location.pathname === '/';
   },

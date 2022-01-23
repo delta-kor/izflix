@@ -8,6 +8,7 @@ import Header from './components/menus/Header';
 import Navigator from './components/menus/Navigator';
 import Modal from './components/modals/Modal';
 import CategoryPage from './components/pages/CategoryPage';
+import InfoPage from './components/pages/InfoPage';
 import MainPage from './components/pages/MainPage';
 import MusicPage from './components/pages/MusicPage';
 import VideoPage from './components/pages/VideoPage';
@@ -30,7 +31,7 @@ const App = (): JSX.Element => {
   const [modalData, setModalData] = useState<[ModalData, number] | null>(null);
 
   const navigatorController = () => {
-    if (Constants.IS_PC() && !Constants.IS_VIDEO_PAGE())
+    if (Constants.IS_PC() && !Constants.IS_ADDITIONAL_PAGE())
       setHeaderSticked(Constants.IS_HEADER_STICK_POSITION_PC());
     else setHeaderSticked(false);
   };
@@ -71,6 +72,29 @@ const App = (): JSX.Element => {
       </Pc>
 
       <AnimatePresence exitBeforeEnter>
+        {!Constants.IS_ADDITIONAL_PAGE() ? (
+          <LandingBlock
+            key="default layout"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <Pc>
+              <LandingVideo />
+            </Pc>
+            <Pc>{headerSticked ? <NavigatorBlock /> : <Navigator />}</Pc>
+          </LandingBlock>
+        ) : (
+          <LandingBlock
+            key="video layout"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          ></LandingBlock>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence exitBeforeEnter>
         {!Constants.IS_VIDEO_PAGE() ? (
           <LandingBlock
             key="default layout"
@@ -81,10 +105,6 @@ const App = (): JSX.Element => {
             <Mobile>
               <Header />
             </Mobile>
-            <Pc>
-              <LandingVideo />
-            </Pc>
-            <Pc>{headerSticked ? <NavigatorBlock /> : <Navigator />}</Pc>
           </LandingBlock>
         ) : (
           <LandingBlock
@@ -103,6 +123,7 @@ const App = (): JSX.Element => {
         >
           <Route path="/" element={<MainPage />} />
           <Route path="/music" element={<MusicPage />} />
+          <Route path="/info" element={<InfoPage />} />
           <Route path="/category/*" element={<CategoryPage />} />
           <Route path="/:id" element={<VideoPage />} />
         </Routes>

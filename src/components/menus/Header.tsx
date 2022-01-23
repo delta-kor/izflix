@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Constants from '../../constants';
+import InfoIcon from '../../icons/info.svg';
 import Logo from '../../icons/logo.svg';
 import Transmitter from '../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../styles';
@@ -24,23 +25,25 @@ const Layout = styled.div<{
 
   ${({ $instant: instant }) =>
     instant
-      ? 'transition: border 0.2s;'
-      : 'transition: border 0.2s, background 0.2s;'};
+      ? 'transition: border 0.2s'
+      : 'transition: border 0.2s, background 0.2s'};
 
   ${MobileQuery} {
     height: 80px;
     padding: 0 32px;
+    justify-content: space-between;
     ${({ $float: float }) =>
       float
-        ? `background: ${Color.BACKGROUND}; border-bottom: 1px solid ${Color.DARK_GRAY}`
-        : 'background: none;'}
+        ? `background: ${Color.BACKGROUND}; 
+           border-bottom: 1px solid ${Color.DARK_GRAY}`
+        : 'background: none'};
   }
 
   ${PcQuery} {
     height: 96px;
     justify-content: center;
     ${({ $float: float }) =>
-      float ? `background: ${Color.DARK_GRAY};` : 'background: none;'}
+      float ? `background: ${Color.DARK_GRAY}` : 'background: none'};
   }
 
   & > * {
@@ -102,6 +105,36 @@ const Title = styled.div`
   }
 `;
 
+const IconMenu = styled.div`
+  display: flex;
+  & > * {
+    margin: 0 8px 0 0;
+
+    :last-child {
+      margin: 0;
+    }
+  }
+
+  ${PcQuery} {
+    position: absolute;
+    right: 48px;
+  }
+`;
+
+const IconItem = styled.img`
+  display: block;
+
+  ${MobileQuery} {
+    width: 20px;
+    height: 20px;
+  }
+
+  ${PcQuery} {
+    width: 28px;
+    height: 28px;
+  }
+`;
+
 interface State {
   float: boolean;
   stick: boolean;
@@ -126,7 +159,7 @@ class Header extends Component<any, State> {
 
   onScroll = () => {
     if (Constants.IS_PC())
-      if (Constants.IS_VIDEO_PAGE())
+      if (Constants.IS_ADDITIONAL_PAGE())
         this.setState({
           stick: false,
           float: Constants.IS_VIDEO_HEADER_FLOAT_POSITION_PC(),
@@ -162,6 +195,11 @@ class Header extends Component<any, State> {
             <Icon src={Logo} />
             <Title>IZFLIX</Title>
           </HomeLink>
+          <IconMenu>
+            <Link to="/info">
+              <IconItem src={InfoIcon} />
+            </Link>
+          </IconMenu>
         </Mobile>
         <Pc>
           <HomeLink to="/">
@@ -169,6 +207,11 @@ class Header extends Component<any, State> {
             <Title>IZFLIX</Title>
           </HomeLink>
           {this.state.stick && <Navigator />}
+          <IconMenu>
+            <Link to="/info">
+              <IconItem src={InfoIcon} />
+            </Link>
+          </IconMenu>
         </Pc>
       </Layout>
     );
