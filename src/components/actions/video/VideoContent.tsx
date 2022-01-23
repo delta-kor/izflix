@@ -149,7 +149,10 @@ class VideoContent extends Component<Props> {
             <div />
           </MetaPlaceholder>
         )}
-        <VideoAction />
+        <VideoAction
+          streamInfo={this.props.streamInfo}
+          videoInfo={this.props.videoInfo}
+        />
       </Layout>
     );
   }

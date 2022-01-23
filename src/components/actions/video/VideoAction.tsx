@@ -59,22 +59,31 @@ const Content = styled.div`
   }
 `;
 
-class VideoAction extends Component {
+interface Props {
+  streamInfo: ApiResponse.Video.Stream | null;
+  videoInfo: ApiResponse.Video.Info | null;
+}
+
+class VideoAction extends Component<Props> {
   onSubtitleClick = () => {
     Transmitter.emit('popup', '제공되는 자막이 없어요');
   };
 
   render() {
+    const download = this.props.streamInfo?.url || '';
+
     return (
       <Layout>
         <Item>
           <Icon src={ShareIcon} />
           <Content>공유</Content>
         </Item>
-        <Item>
-          <Icon src={DownloadIcon} />
-          <Content>다운로드</Content>
-        </Item>
+        <a target="_blank" href={download}>
+          <Item>
+            <Icon src={DownloadIcon} />
+            <Content>다운로드</Content>
+          </Item>
+        </a>
         <Item onClick={this.onSubtitleClick}>
           <Icon src={SubtitleIcon} />
           <Content>자막</Content>
