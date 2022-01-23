@@ -2,6 +2,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
+import Constants from '../../constants';
+import Scroll from '../../services/scroll';
 import { MobileQuery, PcQuery } from '../../styles';
 import CategoryBreadcrumb from '../actions/category/CategoryBreadcrumb';
 import CategoryMenu from '../menus/CategoryMenu';
@@ -28,6 +30,14 @@ interface State {
 
 class CategoryPage extends Component<Props, State> {
   state: State = { path: [] };
+
+  componentDidMount = () => {
+    const point = Constants.LANDING_VIDEO_HEIGHT_PC() - 32;
+    if (Constants.IS_PC()) {
+      if (Scroll.getPosition() > point) Scroll.to(point);
+    }
+  };
+
   render() {
     const Menu = (
       <CategoryMenu setPath={(path: IPath[]) => this.setState({ path })} />

@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
+import Constants from '../../constants';
+import Scroll from '../../services/scroll';
 import { MobileQuery } from '../../styles';
 import MusicMenu from '../menus/MusicMenu';
 
@@ -11,6 +13,13 @@ const Page = styled(motion.div)`
 `;
 
 class MusicPage extends Component {
+  componentDidMount = () => {
+    const point = Constants.LANDING_VIDEO_HEIGHT_PC() - 32;
+    if (Constants.IS_PC()) {
+      if (Scroll.getPosition() > point) Scroll.to(point);
+    }
+  };
+
   render() {
     return (
       <Page
