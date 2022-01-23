@@ -5,6 +5,7 @@ import { getDate } from '../../../services/time';
 import { Color, MobileQuery, PcQuery } from '../../../styles';
 import CategoryBreadcrumb from '../category/CategoryBreadcrumb';
 import Video from './Video';
+import VideoAction from './VideoAction';
 import VideoInfo from './VideoInfo';
 
 const Layout = styled.div`
@@ -148,6 +149,7 @@ class VideoContent extends Component<Props> {
             <div />
           </MetaPlaceholder>
         )}
+        <VideoAction />
       </Layout>
     );
   }
