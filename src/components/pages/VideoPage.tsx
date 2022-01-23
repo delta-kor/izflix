@@ -289,6 +289,7 @@ class VideoPage extends Component<Props, State> {
 
     const videoContent = (
       <VideoContent
+        id={id}
         streamInfo={this.state.streamInfo}
         videoInfo={this.state.videoInfo}
         setQuality={(quality) => this.setState({ quality })}

@@ -1,4 +1,4 @@
-type ModalData = SelectModalData;
+type ModalData = SelectModalData | ShareModalData;
 
 interface SelectModalData {
   type: 'select';
@@ -11,4 +11,9 @@ interface SelectModalData {
 interface SelectModalContent {
   id: any;
   text: string;
+}
+
+interface ShareModalData {
+  type: 'share';
+  id: string;
 }

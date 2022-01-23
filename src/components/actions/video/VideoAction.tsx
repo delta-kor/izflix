@@ -4,6 +4,7 @@ import DownloadIcon from '../../../icons/download.svg';
 import ShareIcon from '../../../icons/share.svg';
 import SubtitleIcon from '../../../icons/subtitle.svg';
 import InfoIcon from '../../../icons/video-info.svg';
+import ModalController from '../../../services/modal-controller';
 import Transmitter from '../../../services/transmitter';
 import { MobileQuery, PcQuery } from '../../../styles';
 
@@ -60,6 +61,7 @@ const Content = styled.div`
 `;
 
 interface Props {
+  id: string;
   streamInfo: ApiResponse.Video.Stream | null;
   videoInfo: ApiResponse.Video.Info | null;
 }
@@ -69,12 +71,16 @@ class VideoAction extends Component<Props> {
     Transmitter.emit('popup', '제공되는 자막이 없어요');
   };
 
+  onShareClick = () => {
+    ModalController.fire({ type: 'share', id: this.props.id });
+  };
+
   render() {
     const download = this.props.streamInfo?.url || '';
 
     return (
       <Layout>
-        <Item>
+        <Item onClick={this.onShareClick}>
           <Icon src={ShareIcon} />
           <Content>공유</Content>
         </Item>

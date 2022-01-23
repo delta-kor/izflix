@@ -3,6 +3,7 @@ import { Component } from 'react';
 import styled from 'styled-components';
 import { Color } from '../../styles';
 import SelectModal from './SelectModal';
+import ShareModal from './ShareModal';
 
 const Layout = styled(motion.div)`
   position: fixed;
@@ -34,6 +35,9 @@ class Modal extends Component<Props> {
     switch (data.type) {
       case 'select':
         content = <SelectModal data={data} modalKey={this.props.modalKey} />;
+        break;
+      case 'share':
+        content = <ShareModal data={data} modalKey={this.props.modalKey} />;
         break;
       default:
         console.error('Empty modal');
