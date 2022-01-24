@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
-import { getDate } from '../../../services/time';
+import { getDate, getDuration } from '../../../services/time';
 import { Color, HideOverflow } from '../../../styles';
 
 const Layout = styled(Link)`
@@ -53,6 +53,20 @@ const Date = styled.div`
   ${HideOverflow};
 `;
 
+const Duration = styled.div`
+  position: absolute;
+  display: inline-block;
+  font-weight: bold;
+  background: ${Color.DARK_GRAY};
+  z-index: 2;
+
+  right: 6px;
+  bottom: 80px;
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 4px;
+`;
+
 interface Props {
   musicId: string;
   video: IMusicVideoItem;
@@ -83,6 +97,7 @@ class MusicGridItem extends Component<Props, State> {
         <ThumbnailPlaceholder />
         <Title>{video.description}</Title>
         <Date>{getDate(video.date)}</Date>
+        <Duration>{getDuration(video.duration)}</Duration>
       </Layout>
     );
   }

@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
+import { getDuration } from '../../../services/time';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled(Link)`
@@ -67,6 +68,30 @@ const Description = styled.div`
   }
 `;
 
+const Duration = styled.div`
+  position: absolute;
+  display: inline-block;
+  font-weight: bold;
+  background: ${Color.DARK_GRAY};
+  z-index: 2;
+
+  ${MobileQuery} {
+    right: 6px;
+    bottom: 54px;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+  }
+
+  ${PcQuery} {
+    right: 6px;
+    bottom: 68px;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+  }
+`;
+
 interface Props {
   video: IVideoItem;
 }
@@ -91,6 +116,7 @@ class VideoRecommendsItem extends Component<Props, State> {
         <ThumbnailPlaceholder />
         <Title>{video.title}</Title>
         <Description>{video.description}</Description>
+        <Duration>{getDuration(video.duration)}</Duration>
       </Layout>
     );
   }

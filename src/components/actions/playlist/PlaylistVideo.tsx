@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
+import { getDuration } from '../../../services/time';
 import {
   Color,
   HideOverflow,
@@ -99,6 +100,30 @@ const Description = styled.div`
   }
 `;
 
+const Duration = styled.div`
+  position: absolute;
+  display: inline-block;
+  font-weight: bold;
+  background: ${Color.DARK_GRAY};
+  z-index: 2;
+
+  ${MobileQuery} {
+    right: 6px;
+    bottom: 50px;
+    padding: 2px 4px;
+    font-size: 10px;
+    border-radius: 2px;
+  }
+
+  ${PcQuery} {
+    right: 6px;
+    bottom: 76px;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+  }
+`;
+
 type Props = PlaylistProps | NextProps;
 
 interface PlaylistProps {
@@ -140,6 +165,7 @@ class PlaylistVideo extends Component<Props, State> {
         />
         <Title>{video.title}</Title>
         <Description>{video.description}</Description>
+        <Duration>{getDuration(video.duration)}</Duration>
       </Layout>
     );
   }
