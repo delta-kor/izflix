@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import DownloadIcon from '../../../icons/download.svg';
 import ShareIcon from '../../../icons/share.svg';
@@ -94,10 +95,12 @@ class VideoAction extends Component<Props> {
           <Icon src={SubtitleIcon} />
           <Content>자막</Content>
         </Item>
-        <Item>
-          <Icon src={InfoIcon} />
-          <Content>영상정보</Content>
-        </Item>
+        <Link to="/info?k=highlight">
+          <Item>
+            <Icon src={InfoIcon} />
+            <Content>영상정보</Content>
+          </Item>
+        </Link>
       </Layout>
     );
   }

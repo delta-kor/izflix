@@ -3,6 +3,7 @@ import { Component } from 'react';
 import styled from 'styled-components';
 import GithubIcon from '../../icons/github.svg';
 import VercelIcon from '../../icons/vercel.svg';
+import Scroll from '../../services/scroll';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
 
 const Page = styled(motion.div)`
@@ -98,15 +99,19 @@ const Vercel = styled.a`
 `;
 
 class InfoPage extends Component {
+  componentDidMount = () => {
+    Scroll.up();
+  };
+
   render() {
     const frontLibraries = [
+      'create-react-app',
       'framer-motion',
       'node-cache',
       'react',
       'react-copy-to-clipboard',
       'react-responsive',
       'react-router-dom',
-      'create-react-app',
       'styled-components',
       'typescript',
       'web-vitals',
@@ -118,7 +123,6 @@ class InfoPage extends Component {
       'class-transformer',
       'class-validator',
       'dotenv',
-      'express',
       'mongoose',
       'node-cache',
     ];
