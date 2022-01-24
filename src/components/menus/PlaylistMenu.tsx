@@ -117,12 +117,12 @@ const PlaceholderVideo = styled.div`
 
     ${MobileQuery} {
       margin: 0 0 4px 0;
-      height: 20px;
+      height: 18px;
     }
 
     ${PcQuery} {
       margin: 0 0 8px 0;
-      height: 30px;
+      height: 28px;
     }
   }
 
@@ -132,11 +132,11 @@ const PlaceholderVideo = styled.div`
     border-radius: 4px;
 
     ${MobileQuery} {
-      height: 16px;
+      height: 14px;
     }
 
     ${PcQuery} {
-      height: 20px;
+      height: 18px;
     }
   }
 `;
