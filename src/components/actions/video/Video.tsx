@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import LoaderIcon from '../../../icons/loading-bright.svg';
 import Transmitter from '../../../services/transmitter';
@@ -68,13 +68,78 @@ interface State {
   loaded: boolean;
 }
 
+let videoUpdatePip: boolean = false;
+
 class Video extends Component<Props, State> {
+  videoRef = React.createRef<HTMLVideoElement>();
   state: State = { loaded: false };
+
+  componentDidMount = () => {
+    Transmitter.on('pip', this.onPipToggle);
+  };
 
   componentDidUpdate = (prevProps: Props) => {
     if (prevProps.url !== this.props.url) {
-      this.setState({ loaded: false });
+      this.onUrlUpdate();
     }
+  };
+
+  componentWillUnmount = () => {
+    Transmitter.removeListener('pip', this.onPipToggle);
+  };
+
+  onUrlUpdate = async () => {
+    this.setState({ loaded: false });
+
+    if (this.isPipMode()) {
+      await this.pipOff(true);
+      videoUpdatePip = true;
+    }
+  };
+
+  isPipMode = () => {
+    return !!document.pictureInPictureElement;
+  };
+
+  onPipToggle = () => {
+    if (!this.isPipMode()) {
+      this.pipOn();
+    } else {
+      this.pipOff();
+    }
+  };
+
+  pipOn = async () => {
+    if (this.isPipMode()) return false;
+    const video = this.videoRef.current;
+    if (!video) return false;
+
+    try {
+      await video.requestPictureInPicture();
+    } catch (e) {
+      Transmitter.emit('popup', 'PIP 요청이 거부되었어요');
+    }
+  };
+
+  pipOff = async (pause: boolean = false) => {
+    videoUpdatePip = false;
+
+    if (!this.isPipMode()) return false;
+    try {
+      if (
+        pause &&
+        document.pictureInPictureElement instanceof HTMLVideoElement
+      ) {
+        document.pictureInPictureElement.pause();
+      }
+
+      await document.exitPictureInPicture();
+    } catch (e) {}
+  };
+
+  onVideoLoad = () => {
+    this.setState({ loaded: true });
+    if (videoUpdatePip) this.pipOn();
   };
 
   onVideoError = () => {
@@ -86,7 +151,8 @@ class Video extends Component<Props, State> {
       <Layout>
         {this.props.url && (
           <Content
-            onCanPlay={() => this.setState({ loaded: true })}
+            ref={this.videoRef}
+            onCanPlay={this.onVideoLoad}
             onError={this.onVideoError}
             src={this.props.url}
             $active={this.state.loaded}

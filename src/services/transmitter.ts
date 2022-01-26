@@ -5,6 +5,7 @@ interface TransmitterEvents {
   popup(message: any): void;
   levelscroll(): void;
   locationupdate(to: string, from: string): void;
+  pip(): void;
 }
 
 declare interface TransmitterClass {

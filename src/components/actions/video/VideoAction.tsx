@@ -2,8 +2,8 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import DownloadIcon from '../../../icons/download.svg';
+import PipIcon from '../../../icons/pip.svg';
 import ShareIcon from '../../../icons/share.svg';
-import SubtitleIcon from '../../../icons/subtitle.svg';
 import InfoIcon from '../../../icons/video-info.svg';
 import ModalController from '../../../services/modal-controller';
 import Transmitter from '../../../services/transmitter';
@@ -68,8 +68,8 @@ interface Props {
 }
 
 class VideoAction extends Component<Props> {
-  onSubtitleClick = () => {
-    Transmitter.emit('popup', '제공되는 자막이 없어요');
+  onPipClick = () => {
+    Transmitter.emit('pip');
   };
 
   onShareClick = () => {
@@ -91,9 +91,9 @@ class VideoAction extends Component<Props> {
             <Content>다운로드</Content>
           </Item>
         </a>
-        <Item onClick={this.onSubtitleClick}>
-          <Icon src={SubtitleIcon} />
-          <Content>자막</Content>
+        <Item onClick={this.onPipClick}>
+          <Icon src={PipIcon} />
+          <Content>PIP</Content>
         </Item>
         <Link to="/info?k=highlight">
           <Item>
