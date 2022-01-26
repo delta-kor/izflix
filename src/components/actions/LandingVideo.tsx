@@ -214,12 +214,6 @@ class LandingVideo extends Component<any, State> {
 
   loadData = async () => {
     const videoElement = this.videoRef.current!;
-    videoElement.oncanplay = () => {
-      this.setState({ loaded: true });
-    };
-    videoElement.onerror = () => {
-      Transmitter.emit('popup', '영상 재생중 오류가 발생했어요');
-    };
 
     const playlist = await this.getPlaylist();
 
@@ -265,6 +259,10 @@ class LandingVideo extends Component<any, State> {
       <Layout>
         <Video
           ref={this.videoRef}
+          onCanPlay={() => this.setState({ loaded: true })}
+          onError={() =>
+            Transmitter.emit('popup', '영상 재생중 오류가 발생했어요')
+          }
           variants={{ initial: { opacity: 0 }, load: { opacity: 1 } }}
           initial="initial"
           animate={this.state.loaded ? 'load' : 'initial'}

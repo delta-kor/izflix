@@ -118,7 +118,10 @@ class Video extends Component<Props, State> {
     try {
       await video.requestPictureInPicture();
     } catch (e) {
-      Transmitter.emit('popup', 'PIP 요청이 거부되었어요');
+      Transmitter.emit(
+        'popup',
+        'PIP 요청이 거부되었어요\n다른 앱 위에 그리기 권한을 허용해주세요'
+      );
     }
   };
 

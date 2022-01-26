@@ -35,6 +35,7 @@ const Layout = styled.div`
 
 const Title = styled.div`
   font-weight: bold;
+  user-select: none;
 
   ${MobileQuery} {
     margin: 24px 0 16px 0;
