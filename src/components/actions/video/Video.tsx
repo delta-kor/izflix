@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
 import LoaderIcon from '../../../icons/loading-bright.svg';
+import Transmitter from '../../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled.div`
@@ -76,12 +77,17 @@ class Video extends Component<Props, State> {
     }
   };
 
+  onVideoError = () => {
+    Transmitter.emit('popup', '영상 재생중 오류가 발생했어요');
+  };
+
   render() {
     return (
       <Layout>
         {this.props.url && (
           <Content
             onCanPlay={() => this.setState({ loaded: true })}
+            onError={this.onVideoError}
             src={this.props.url}
             $active={this.state.loaded}
             controls
