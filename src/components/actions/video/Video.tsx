@@ -76,6 +76,7 @@ class Video extends Component<Props, State> {
 
   componentDidMount = () => {
     Transmitter.on('pip', this.onPipToggle);
+    if (!this.isPipMode()) videoUpdatePip = false;
   };
 
   componentDidUpdate = (prevProps: Props) => {
