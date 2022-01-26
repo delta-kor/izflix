@@ -22,6 +22,7 @@ const Thumbnail = styled.img<{ $active: boolean }>`
   margin: 0 0 20px 0;
   opacity: ${({ $active }) => ($active ? '1' : '0')};
   transition: opacity 0.2s;
+  animation-delay: 0.1s;
   z-index: 1;
   user-drag: none;
 `;

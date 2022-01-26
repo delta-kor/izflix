@@ -52,6 +52,7 @@ const Thumbnail = styled.img<{ $active: boolean }>`
   aspect-ratio: 16 / 9;
   opacity: ${({ $active }) => ($active ? 1 : 0)};
   transition: opacity 0.2s;
+  animation-delay: 0.1s;
   z-index: 1;
 
   ${MobileQuery} {
