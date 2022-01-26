@@ -141,6 +141,11 @@ class Video extends Component<Props, State> {
   onVideoLoad = () => {
     this.setState({ loaded: true });
     if (videoUpdatePip) this.pipOn();
+
+    const video = this.videoRef.current;
+    if (!video) return false;
+
+    video.play();
   };
 
   onVideoError = () => {
