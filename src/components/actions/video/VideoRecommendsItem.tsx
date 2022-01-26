@@ -78,8 +78,8 @@ const Duration = styled.div`
   ${MobileQuery} {
     right: 6px;
     bottom: 54px;
-    padding: 4px 8px;
-    font-size: 12px;
+    padding: 2px 4px;
+    font-size: 10px;
     border-radius: 4px;
   }
 
