@@ -5,6 +5,7 @@ import GithubIcon from '../../icons/github.svg';
 import VercelIcon from '../../icons/vercel.svg';
 import Scroll from '../../services/scroll';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
+import withParams from '../tools/Params';
 
 const Page = styled(motion.div)`
   text-align: center;
@@ -24,11 +25,16 @@ const Wrapper = styled.div`
   }
 `;
 
-const Group = styled.div`
+const Group = styled.div<{ $highlight?: boolean }>`
   display: flex;
   flex-direction: column;
-  padding: 0 32px;
-  margin: 0 0 36px 0;
+  padding: 24px 32px;
+  background: ${({ $highlight }) => ($highlight ? Color.PRIMARY : 'none')};
+  transition: background 0.2s;
+
+  ${PcQuery} {
+    border-radius: 8px;
+  }
 `;
 
 const GroupTitle = styled.div`
@@ -98,7 +104,11 @@ const Vercel = styled.a`
   }
 `;
 
-class InfoPage extends Component {
+interface Props {
+  query: [URLSearchParams];
+}
+
+class InfoPage extends Component<Props> {
   componentDidMount = () => {
     Scroll.up();
   };
@@ -126,6 +136,9 @@ class InfoPage extends Component {
       'mongoose',
       'node-cache',
     ];
+
+    const key = this.props.query[0].get('k');
+    const isHighlight = key === 'highlight';
 
     return (
       <Page
@@ -157,7 +170,7 @@ class InfoPage extends Component {
               </GithubItem>
             </GithubWrapper>
           </Group>
-          <Group>
+          <Group $highlight={isHighlight}>
             <GroupTitle>Video Source</GroupTitle>
             <ItemsWrapper>
               <Item target="_blank" href="https://twitter.com/sns12kr">
@@ -211,4 +224,4 @@ class InfoPage extends Component {
   }
 }
 
-export default InfoPage;
+export default withParams(InfoPage);
