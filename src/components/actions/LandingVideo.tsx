@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Constants from '../../constants';
 import LoaderIcon from '../../icons/loading.svg';
+import Settings from '../../services/settings';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
@@ -251,7 +252,14 @@ class LandingVideo extends Component<any, State> {
       : Constants.VIDEO_PAUSE_POSITION_MOBILE();
 
     if (window.scrollY > scrollLimit) videoElement.pause();
-    else videoElement.play();
+    else this.playVideo();
+  };
+
+  playVideo = () => {
+    const video = this.videoRef.current;
+    if (!video) return false;
+    if (!Settings.getOne('FEATURED_VIDEO_AUTOPLAY')) return false;
+    video.play();
   };
 
   render() {
