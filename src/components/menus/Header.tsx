@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Constants from '../../constants';
 import InfoIcon from '../../icons/info.svg';
 import Logo from '../../icons/logo.svg';
+import SettingsIcon from '../../icons/settings.svg';
 import Transmitter from '../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import { Mobile, Pc } from '../tools/MediaQuery';
@@ -108,7 +109,7 @@ const Title = styled.div`
 const IconMenu = styled.div`
   display: flex;
   & > * {
-    margin: 0 8px 0 0;
+    margin: 0 24px 0 0;
 
     :last-child {
       margin: 0;
@@ -199,6 +200,9 @@ class Header extends Component<any, State> {
             <Link to="/info">
               <IconItem src={InfoIcon} />
             </Link>
+            <Link to="/settings">
+              <IconItem src={SettingsIcon} />
+            </Link>
           </IconMenu>
         </Mobile>
         <Pc>
@@ -210,6 +214,9 @@ class Header extends Component<any, State> {
           <IconMenu>
             <Link to="/info">
               <IconItem src={InfoIcon} />
+            </Link>
+            <Link to="/settings">
+              <IconItem src={SettingsIcon} />
             </Link>
           </IconMenu>
         </Pc>

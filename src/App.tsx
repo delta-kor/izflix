@@ -11,6 +11,7 @@ import CategoryPage from './components/pages/CategoryPage';
 import InfoPage from './components/pages/InfoPage';
 import MainPage from './components/pages/MainPage';
 import MusicPage from './components/pages/MusicPage';
+import SettingsPage from './components/pages/SettingsPage';
 import VideoPage from './components/pages/VideoPage';
 import { Mobile, Pc } from './components/tools/MediaQuery';
 import Constants from './constants';
@@ -124,6 +125,7 @@ const App = (): JSX.Element => {
           <Route path="/" element={<MainPage />} />
           <Route path="/music" element={<MusicPage />} />
           <Route path="/info" element={<InfoPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
           <Route path="/category/*" element={<CategoryPage />} />
           <Route path="/:id" element={<VideoPage />} />
         </Routes>

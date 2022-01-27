@@ -44,7 +44,7 @@ const Constants = {
     return '/' + location.pathname.split('/')[1];
   },
   IS_VIDEO_PAGE(location: any = window.location) {
-    return !['/', '/music', '/category', '/info'].includes(
+    return !['/', '/music', '/category', '/info', '/settings'].includes(
       this.TOP_ROUTE(location)
     );
   },
