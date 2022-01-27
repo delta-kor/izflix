@@ -71,50 +71,50 @@ const App = (): JSX.Element => {
         <Header />
       </Pc>
 
-      <AnimatePresence exitBeforeEnter>
-        {!Constants.IS_ADDITIONAL_PAGE() ? (
-          <LandingBlock
-            key="default layout"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <Pc>
+      <Pc>
+        <AnimatePresence exitBeforeEnter>
+          {!Constants.IS_ADDITIONAL_PAGE() ? (
+            <LandingBlock
+              key="default layout"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
               <LandingVideo />
-            </Pc>
-            <Pc>{headerSticked ? <NavigatorBlock /> : <Navigator />}</Pc>
-          </LandingBlock>
-        ) : (
-          <LandingBlock
-            key="video layout"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          ></LandingBlock>
-        )}
-      </AnimatePresence>
+              {headerSticked ? <NavigatorBlock /> : <Navigator />}
+            </LandingBlock>
+          ) : (
+            <LandingBlock
+              key="video layout"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            ></LandingBlock>
+          )}
+        </AnimatePresence>
+      </Pc>
 
-      <AnimatePresence exitBeforeEnter>
-        {!Constants.IS_VIDEO_PAGE() ? (
-          <LandingBlock
-            key="default layout"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <Mobile>
+      <Mobile>
+        <AnimatePresence exitBeforeEnter>
+          {!Constants.IS_VIDEO_PAGE() ? (
+            <LandingBlock
+              key="default layout"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
               <Header />
-            </Mobile>
-          </LandingBlock>
-        ) : (
-          <LandingBlock
-            key="video layout"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          ></LandingBlock>
-        )}
-      </AnimatePresence>
+            </LandingBlock>
+          ) : (
+            <LandingBlock
+              key="video layout"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            ></LandingBlock>
+          )}
+        </AnimatePresence>
+      </Mobile>
 
       <AnimatePresence exitBeforeEnter>
         <Routes

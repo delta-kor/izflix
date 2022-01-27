@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion';
 import { Component } from 'react';
+import { NavigateFunction } from 'react-router-dom';
 import styled from 'styled-components';
+import BackIcon from '../../../icons/back.svg';
 import ModalController from '../../../services/modal-controller';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
+import withNavigate from '../../tools/Navigate';
 
 const Layout = styled.div`
   display: flex;
@@ -11,22 +14,27 @@ const Layout = styled.div`
   ${MobileQuery} {
     padding: 0 32px;
   }
+
+  ${PcQuery} {
+    margin: 24px 0 0 0;
+  }
 `;
 
 const Content = styled.div`
   display: flex;
-  width: calc(100% - 64px);
+  width: calc(100% - 64px - 16px - 16px);
   flex-direction: column;
   justify-content: space-between;
 
   ${MobileQuery} {
     height: 48px;
     margin: 24px 0;
+    padding: 0 0 0 16px;
   }
 
   ${PcQuery} {
     height: 68px;
-    margin: 24px 0 0 0;
+    padding: 0 0 0 24px;
   }
 `;
 
@@ -113,7 +121,44 @@ const QualityButton = styled(motion.div)`
   }
 `;
 
+const BackButton = styled.div`
+  position: relative;
+  align-self: center;
+  border-radius: 100%;
+  background: ${Color.PRIMARY};
+  cursor: pointer;
+  user-select: none;
+
+  ${MobileQuery} {
+    width: 32px;
+    height: 32px;
+  }
+
+  ${PcQuery} {
+    width: 38px;
+    height: 38px;
+  }
+
+  & > img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    ${MobileQuery} {
+      width: 20px;
+      height: 20px;
+    }
+
+    ${PcQuery} {
+      width: 24px;
+      height: 24px;
+    }
+  }
+`;
+
 interface Props {
+  navigate: NavigateFunction;
   data: ApiResponse.Video.Info | null;
   streamInfo: ApiResponse.Video.Stream | null;
   setQuality(quality: number): void;
@@ -139,13 +184,24 @@ class VideoInfo extends Component<Props> {
     this.props.setQuality(result);
   };
 
+  onBack = () => {
+    this.props.navigate(-1);
+  };
+
   render() {
     const data = this.props.data;
     const streamInfo = this.props.streamInfo;
 
+    const backButton = (
+      <BackButton onClick={this.onBack}>
+        <img src={BackIcon} />
+      </BackButton>
+    );
+
     if (!data)
       return (
         <Layout>
+          {backButton}
           <Content>
             <TitlePlaceholder />
             <DescriptionPlaceholder />
@@ -155,6 +211,7 @@ class VideoInfo extends Component<Props> {
 
     return (
       <Layout>
+        {backButton}
         <Content>
           <Title>{data.title}</Title>
           <Description>{data.description}</Description>
@@ -174,4 +231,4 @@ class VideoInfo extends Component<Props> {
   }
 }
 
-export default VideoInfo;
+export default withNavigate(VideoInfo);
