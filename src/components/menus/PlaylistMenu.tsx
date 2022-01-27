@@ -162,7 +162,7 @@ class PlaylistMenu extends Component<any, State> {
 
   render() {
     const placeholders = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 11; i++) {
       placeholders.push(
         <Placeholder key={i}>
           <div />
