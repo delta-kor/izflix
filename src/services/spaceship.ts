@@ -75,7 +75,7 @@ class SpaceshipClass {
 
   public streamVideo(
     id: string,
-    quality: number = 1080
+    quality: number
   ): Promise<ApiResponse.Video.Stream> {
     return this.get(`/video/${id}?quality=${quality}`, {
       key: `stream_video_${id}#${quality}`,

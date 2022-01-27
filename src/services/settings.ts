@@ -10,7 +10,11 @@ class SettingsClass {
   }
 
   private loadData(): ISettings {
-    const data: ISettings = { FEATURED_VIDEO_AUTOPLAY: true };
+    const data: ISettings = {
+      FEATURED_VIDEO_AUTOPLAY: true,
+      VIDEO_AUTOPLAY: true,
+      DEFAULT_VIDEO_QUALITY: 1080,
+    };
 
     const json = localStorage.getItem(key);
     if (!json) return data;
@@ -21,7 +25,7 @@ class SettingsClass {
       for (const index in savedData) {
         const key = index as keyof ISettings;
         const value = savedData[key] as any;
-        data[key] = value;
+        (<any>data)[key] = value;
       }
 
       return data;
@@ -48,6 +52,10 @@ class SettingsClass {
     this.data = data;
     this.saveData();
     this.loadData();
+  }
+
+  public setOne<K extends keyof ISettings>(key: K, value: ISettings[K]): void {
+    this.data[key] = value;
   }
 }
 

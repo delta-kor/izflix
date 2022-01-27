@@ -4,6 +4,7 @@ import { Params } from 'react-router-dom';
 import styled from 'styled-components';
 import PathFinder from '../../services/path-finder';
 import Scroll from '../../services/scroll';
+import Settings from '../../services/settings';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
 import {
@@ -177,7 +178,7 @@ class VideoPage extends Component<Props, State> {
     videoInfo: null,
     nextVideo: [],
     nextError: false,
-    quality: 1080,
+    quality: Settings.getOne('DEFAULT_VIDEO_QUALITY'),
   };
 
   componentDidMount = () => {

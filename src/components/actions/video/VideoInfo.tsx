@@ -4,6 +4,7 @@ import { NavigateFunction } from 'react-router-dom';
 import styled from 'styled-components';
 import BackIcon from '../../../icons/back.svg';
 import ModalController from '../../../services/modal-controller';
+import Settings from '../../../services/settings';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 import withNavigate from '../../tools/Navigate';
 
@@ -181,6 +182,7 @@ class VideoInfo extends Component<Props> {
       default: streamInfo.quality,
     });
 
+    Settings.setOne('DEFAULT_VIDEO_QUALITY', result);
     this.props.setQuality(result);
   };
 

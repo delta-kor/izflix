@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import LoaderIcon from '../../../icons/loading-bright.svg';
+import Settings from '../../../services/settings';
 import Transmitter from '../../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../../styles';
 
@@ -148,7 +149,7 @@ class Video extends Component<Props, State> {
     const video = this.videoRef.current;
     if (!video) return false;
 
-    video.play();
+    if (Settings.getOne('VIDEO_AUTOPLAY')) video.play();
   };
 
   onVideoError = () => {

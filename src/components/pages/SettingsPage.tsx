@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
+import ModalController from '../../services/modal-controller';
 import Scroll from '../../services/scroll';
 import Settings from '../../services/settings';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
@@ -34,8 +35,8 @@ const Group = styled.div`
   }
 `;
 
-const GroupTitle = styled.div`
-  margin: 0 0 6px 0;
+const GroupTitle = styled.span`
+  margin: 0 0 8px 0;
   font-weight: normal;
   font-size: 14px;
   ${HideOverflow};
@@ -93,6 +94,15 @@ const ToggleAction = styled.div<{ $active: boolean }>`
   box-sizing: content-box;
 `;
 
+const ValueAction = styled.div`
+  flex-shrink: 0;
+  font-weight: normal;
+  font-size: 12px;
+  background: ${Color.GRAY};
+  border-radius: 4px;
+  padding: 6px 8px 6px 8px;
+`;
+
 interface State {
   settings: ISettings;
 }
@@ -119,6 +129,15 @@ class SettingsPage extends Component<any, State> {
     }));
   };
 
+  setValue = (key: keyof ISettings, value: any) => {
+    this.setState((prevState) => ({
+      settings: {
+        ...prevState.settings,
+        [key]: value,
+      },
+    }));
+  };
+
   render() {
     return (
       <Page
@@ -139,6 +158,41 @@ class SettingsPage extends Component<any, State> {
               <ToggleAction
                 $active={this.state.settings.FEATURED_VIDEO_AUTOPLAY}
               />
+            </Item>
+            <Item onClick={this.toggleValue('VIDEO_AUTOPLAY')}>
+              <Content>
+                <ItemTitle>동영상 자동 재생</ItemTitle>
+                <ItemDescription>
+                  자동 재생을 끄면 데이터 사용량을 줄일 수 있어요
+                </ItemDescription>
+              </Content>
+              <ToggleAction $active={this.state.settings.VIDEO_AUTOPLAY} />
+            </Item>
+            <Item
+              onClick={() =>
+                ModalController.fire({
+                  type: 'select',
+                  title: '화질 선택',
+                  content: [
+                    { id: 1080, text: '1080p' },
+                    { id: 720, text: '720p' },
+                    { id: 540, text: '540p' },
+                    { id: 360, text: '360p' },
+                    { id: 240, text: '240p' },
+                  ],
+                  default: this.state.settings.DEFAULT_VIDEO_QUALITY,
+                }).then((value) =>
+                  this.setValue('DEFAULT_VIDEO_QUALITY', value)
+                )
+              }
+            >
+              <Content>
+                <ItemTitle>동영상 화질 기본값</ItemTitle>
+                <ItemDescription>영상 재생 시 기본 화질</ItemDescription>
+              </Content>
+              <ValueAction>
+                {this.state.settings.DEFAULT_VIDEO_QUALITY}p
+              </ValueAction>
             </Item>
           </Group>
         </Wrapper>
