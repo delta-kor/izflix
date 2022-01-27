@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import styled from 'styled-components';
+import Settings from '../../../services/settings';
 import Spaceship from '../../../services/spaceship';
 import Transmitter from '../../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../../styles';
@@ -113,7 +114,8 @@ class VideoRecommends extends Component<Props, State> {
 
   loadData = async () => {
     const id = this.props.id;
-    const data = await Spaceship.getRecommends(id, 12);
+    const count = Settings.getOne('VIDEO_RECOMMEND_COUNT');
+    const data = await Spaceship.getRecommends(id, count);
     if (!data.ok) return Transmitter.emit('popup', data.message);
     this.setState({ videos: data.videos });
   };

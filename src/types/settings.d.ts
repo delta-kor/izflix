@@ -2,4 +2,7 @@ interface ISettings {
   FEATURED_VIDEO_AUTOPLAY: boolean;
   VIDEO_AUTOPLAY: boolean;
   DEFAULT_VIDEO_QUALITY: number;
+  DISPLAY_NEXT_VIDEO: boolean;
+  VIDEO_RECOMMEND_COUNT: number;
+  FEATURED_VIDEO_START_POSITION: number;
 }

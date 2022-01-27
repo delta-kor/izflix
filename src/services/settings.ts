@@ -14,6 +14,9 @@ class SettingsClass {
       FEATURED_VIDEO_AUTOPLAY: true,
       VIDEO_AUTOPLAY: true,
       DEFAULT_VIDEO_QUALITY: 1080,
+      DISPLAY_NEXT_VIDEO: true,
+      VIDEO_RECOMMEND_COUNT: 20,
+      FEATURED_VIDEO_START_POSITION: 0.5,
     };
 
     const json = localStorage.getItem(key);

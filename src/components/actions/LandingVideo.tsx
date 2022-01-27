@@ -229,7 +229,8 @@ class LandingVideo extends Component<any, State> {
       const videoData = await Spaceship.streamVideo(video.id, 1080);
       if (!videoData.ok) return Transmitter.emit('popup', videoData.message);
 
-      const startingPoint = Math.round(video.duration * 0.55);
+      const position = Settings.getOne('FEATURED_VIDEO_START_POSITION');
+      const startingPoint = Math.round(video.duration * position);
       videoElement.src = `${videoData.url}#t=${startingPoint}`;
 
       this.onScroll();

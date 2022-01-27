@@ -221,6 +221,8 @@ class VideoPage extends Component<Props, State> {
   };
 
   loadNextVideo = async () => {
+    if (!Settings.getOne('DISPLAY_NEXT_VIDEO')) return false;
+
     const query = this.props.query[0];
 
     const key = query.get('k');
@@ -315,7 +317,9 @@ class VideoPage extends Component<Props, State> {
     }
 
     const isNextEnabled =
-      ['playlist', 'music', 'category'].includes(key!) && !this.state.nextError;
+      ['playlist', 'music', 'category'].includes(key!) &&
+      !this.state.nextError &&
+      Settings.getOne('DISPLAY_NEXT_VIDEO');
     const isNextLoaded = this.state.nextVideo.length && this.state.videoInfo;
 
     const placeholders = [];

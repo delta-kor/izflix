@@ -95,12 +95,21 @@ const ToggleAction = styled.div<{ $active: boolean }>`
 `;
 
 const ValueAction = styled.div`
+  position: relative;
   flex-shrink: 0;
   font-weight: normal;
-  font-size: 12px;
-  background: ${Color.GRAY};
-  border-radius: 4px;
-  padding: 6px 8px 6px 8px;
+  font-size: 14px;
+
+  ::after {
+    position: absolute;
+    display: block;
+    content: '';
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: ${Color.WHITE};
+  }
 `;
 
 interface State {
@@ -192,6 +201,70 @@ class SettingsPage extends Component<any, State> {
               </Content>
               <ValueAction>
                 {this.state.settings.DEFAULT_VIDEO_QUALITY}p
+              </ValueAction>
+            </Item>
+          </Group>
+          <Group>
+            <GroupTitle>피드</GroupTitle>
+            <Item onClick={this.toggleValue('DISPLAY_NEXT_VIDEO')}>
+              <Content>
+                <ItemTitle>다음 동영상 표시</ItemTitle>
+                <ItemDescription>
+                  동영상 피드에 다음 동영상 표시
+                </ItemDescription>
+              </Content>
+              <ToggleAction $active={this.state.settings.DISPLAY_NEXT_VIDEO} />
+            </Item>
+            <Item
+              onClick={() =>
+                ModalController.fire({
+                  type: 'select',
+                  title: '개수 선택',
+                  content: [
+                    { id: 30, text: '30 개' },
+                    { id: 25, text: '25 개' },
+                    { id: 20, text: '20 개' },
+                    { id: 10, text: '10 개' },
+                    { id: 5, text: '5 개' },
+                  ],
+                  default: this.state.settings.VIDEO_RECOMMEND_COUNT,
+                }).then((value) =>
+                  this.setValue('VIDEO_RECOMMEND_COUNT', value)
+                )
+              }
+            >
+              <Content>
+                <ItemTitle>추천 동영상 개수</ItemTitle>
+                <ItemDescription>추천 동영상 표시 개수</ItemDescription>
+              </Content>
+              <ValueAction>
+                {this.state.settings.VIDEO_RECOMMEND_COUNT} 개
+              </ValueAction>
+            </Item>
+            <Item
+              onClick={() =>
+                ModalController.fire({
+                  type: 'select',
+                  title: '지점 선택',
+                  content: [
+                    { id: 0.2, text: '20%' },
+                    { id: 0.4, text: '40%' },
+                    { id: 0.5, text: '50%' },
+                    { id: 0.6, text: '60%' },
+                    { id: 0.8, text: '80%' },
+                  ],
+                  default: this.state.settings.FEATURED_VIDEO_START_POSITION,
+                }).then((value) =>
+                  this.setValue('FEATURED_VIDEO_START_POSITION', value)
+                )
+              }
+            >
+              <Content>
+                <ItemTitle>인기 동영상 미리보기 재생 지점</ItemTitle>
+                <ItemDescription>미리보기 재생 시작 지점</ItemDescription>
+              </Content>
+              <ValueAction>
+                {this.state.settings.FEATURED_VIDEO_START_POSITION * 100}%
               </ValueAction>
             </Item>
           </Group>
