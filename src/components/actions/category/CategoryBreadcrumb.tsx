@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import BreakcrumbIcon from '../../../icons/breadcrumb.svg';
+import { ReactComponent as BreadcrumbIcon } from '../../../icons/breadcrumb.svg';
 import { MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled.div`
@@ -38,7 +38,7 @@ const Layout = styled.div`
   }
 `;
 
-const Icon = styled.img`
+const Icon = styled(BreadcrumbIcon)`
   ${MobileQuery} {
     width: 24px;
     height: 24px;
@@ -113,7 +113,7 @@ class CategoryBreadcrumb extends Component<Props> {
         <Text data-compact={isCompact} to={`/category`}>
           전체
         </Text>
-        <Icon data-compact={isCompact} src={BreakcrumbIcon} />
+        <Icon data-compact={isCompact} />
       </Block>
     );
     if (!isCompact) contents.push(initialBlock);
@@ -124,7 +124,7 @@ class CategoryBreadcrumb extends Component<Props> {
           <Text data-compact={isCompact} to={`/category/${path.path}`}>
             {path.name}
           </Text>
-          <Icon data-compact={isCompact} src={BreakcrumbIcon} />
+          <Icon data-compact={isCompact} />
         </Block>
       );
     }

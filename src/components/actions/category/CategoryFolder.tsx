@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import FolderIcon from '../../../icons/folder.svg';
+import { ReactComponent as FolderIcon } from '../../../icons/folder.svg';
 import { HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled(Link)`
@@ -20,7 +20,7 @@ const Layout = styled(Link)`
   }
 `;
 
-const Icon = styled.img`
+const Icon = styled(FolderIcon)`
   display: block;
   flex-shrink: 0;
 
@@ -75,7 +75,7 @@ class CategoryFolder extends Component<Props> {
 
     return (
       <Layout to={`/category/${folder.path}`}>
-        <Icon src={FolderIcon} />
+        <Icon />
         <Title>{folder.title}</Title>
         <Count>{folder.count} 개</Count>
       </Layout>
