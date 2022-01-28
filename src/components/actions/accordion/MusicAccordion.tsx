@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import AccordionIcon from '../../../icons/accordion.svg';
+import { ReactComponent as AccordionIcon } from '../../../icons/accordion.svg';
 import Spaceship from '../../../services/spaceship';
 import Transmitter from '../../../services/transmitter';
 import { Color, Ease, HideOverflow } from '../../../styles';
@@ -27,7 +27,7 @@ const Layout = styled.div`
   cursor: pointer;
 `;
 
-const Icon = styled(motion.img)`
+const Icon = styled(motion(AccordionIcon))`
   width: 24px;
   height: 24px;
   margin: 0 12px 0 -6px;
@@ -126,7 +126,6 @@ class MusicAccordion extends Component<Props, State> {
         <Wrapper $active={!!this.props.expand} ref={this.wrapperRef}>
           <Layout onClick={this.onClick}>
             <Icon
-              src={AccordionIcon}
               variants={{
                 initial: { transform: 'rotate(0deg)' },
                 expand: { transform: 'rotate(180deg)' },
@@ -162,7 +161,7 @@ class MusicAccordion extends Component<Props, State> {
     else
       return (
         <Layout>
-          <Icon src={AccordionIcon} />
+          <Icon />
           <PlaceholderTitle />
           <PlaceholderCount />
         </Layout>

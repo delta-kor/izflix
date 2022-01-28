@@ -1,10 +1,10 @@
-import { Component } from 'react';
+import { Component, FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Constants from '../../constants';
-import InfoIcon from '../../icons/info.svg';
-import Logo from '../../icons/logo.svg';
-import SettingsIcon from '../../icons/settings.svg';
+import { ReactComponent as InfoIcon } from '../../icons/info.svg';
+import { ReactComponent as Logo } from '../../icons/logo.svg';
+import { ReactComponent as SettingsIcon } from '../../icons/settings.svg';
 import Transmitter from '../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import { Mobile, Pc } from '../tools/MediaQuery';
@@ -82,7 +82,7 @@ const HomeLink = styled(Link)`
   }
 `;
 
-const Icon = styled.img`
+const Icon = styled(Logo)`
   ${MobileQuery} {
     width: 22px;
     height: 24px;
@@ -108,6 +108,7 @@ const Title = styled.div`
 
 const IconMenu = styled.div`
   display: flex;
+
   & > * {
     margin: 0 24px 0 0;
 
@@ -122,7 +123,7 @@ const IconMenu = styled.div`
   }
 `;
 
-const IconItem = styled.img`
+const IconItemBase = (component: FunctionComponent) => styled(component)`
   display: block;
 
   ${MobileQuery} {
@@ -135,6 +136,9 @@ const IconItem = styled.img`
     height: 28px;
   }
 `;
+
+const InfoIconItem = IconItemBase(InfoIcon);
+const SettingsIconItem = IconItemBase(SettingsIcon);
 
 interface State {
   float: boolean;
@@ -193,30 +197,30 @@ class Header extends Component<any, State> {
       <Layout $float={this.state.float} $instant={this.state.instant}>
         <Mobile>
           <HomeLink to="/">
-            <Icon src={Logo} />
+            <Icon />
             <Title>IZFLIX</Title>
           </HomeLink>
           <IconMenu>
             <Link to="/info">
-              <IconItem src={InfoIcon} />
+              <InfoIconItem />
             </Link>
             <Link to="/settings">
-              <IconItem src={SettingsIcon} />
+              <SettingsIconItem />
             </Link>
           </IconMenu>
         </Mobile>
         <Pc>
           <HomeLink to="/">
-            <Icon src={Logo} />
+            <Icon />
             <Title>IZFLIX</Title>
           </HomeLink>
           {this.state.stick && <Navigator />}
           <IconMenu>
             <Link to="/info">
-              <IconItem src={InfoIcon} />
+              <InfoIconItem />
             </Link>
             <Link to="/settings">
-              <IconItem src={SettingsIcon} />
+              <SettingsIconItem />
             </Link>
           </IconMenu>
         </Pc>
