@@ -34,5 +34,5 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 body::-webkit-scrollbar-thumb:active {
-  background: rgba(69, 75, 107, 0.8);
+  background: rgba(69, 75, 107, 0.95);
 }

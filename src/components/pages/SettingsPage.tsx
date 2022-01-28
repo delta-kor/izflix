@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   ${PcQuery} {
     display: inline-block;
     padding: 96px 0 0 0;
+    min-width: 432px;
     margin: 0 auto;
   }
 `;
