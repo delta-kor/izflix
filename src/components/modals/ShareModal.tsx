@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import styled from 'styled-components';
-import UrlIcon from '../../icons/url.svg';
+import { ReactComponent as UrlIcon } from '../../icons/url.svg';
 import ModalController from '../../services/modal-controller';
 import Transmitter from '../../services/transmitter';
 import { Color, HideOverflow } from '../../styles';
@@ -56,7 +56,7 @@ const Url = styled.div`
   user-select: none;
 `;
 
-const Icon = styled.img`
+const Icon = styled(UrlIcon)`
   width: 20px;
   height: 20px;
   margin: 0 16px 0 0;
@@ -66,7 +66,7 @@ const Text = styled.div`
   width: 100%;
   font-weight: bold;
   font-size: 16px;
-  user-select: all;
+  user-select: auto;
   cursor: text;
   ${HideOverflow};
 `;
@@ -114,7 +114,7 @@ class ShareModal extends Component<Props> {
         <CopyToClipboard text={url} onCopy={this.onCopy}>
           <Content>
             <Url>
-              <Icon src={UrlIcon} />
+              <Icon />
               <Text>{url}</Text>
             </Url>
             <Description>클릭하여 복사</Description>

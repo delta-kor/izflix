@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import styled from 'styled-components';
-import DateIcon from '../../../icons/date.svg';
+import { ReactComponent as DateIcon } from '../../../icons/date.svg';
 import { getDate } from '../../../services/time';
 import { Color, MobileQuery, PcQuery } from '../../../styles';
 import CategoryBreadcrumb from '../category/CategoryBreadcrumb';
@@ -90,7 +90,7 @@ const DateWrapper = styled.div`
   }
 `;
 
-const Icon = styled.img`
+const Icon = styled(DateIcon)`
   ${MobileQuery} {
     width: 14px;
     height: 14px;
@@ -136,7 +136,7 @@ class VideoContent extends Component<Props> {
         {this.props.videoInfo ? (
           <MetaWrapper>
             <DateWrapper>
-              <Icon src={DateIcon} />
+              <Icon />
               <Date>{getDate(this.props.videoInfo.date)}</Date>
             </DateWrapper>
             <CategoryBreadcrumb
