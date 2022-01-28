@@ -20,7 +20,7 @@ const Layout = styled.div`
   padding: 24px 24px 12px 24px;
 
   background: ${Color.BACKGROUND};
-  border: 4px solid ${Color.PRIMARY};
+  border: 2px solid ${Color.PRIMARY};
   border-radius: 8px;
 
   z-index: 500;
@@ -45,7 +45,6 @@ const Content = styled.div`
   flex-direction: column;
   width: 100%;
   cursor: pointer;
-  user-select: none;
 `;
 
 const Url = styled.div`
@@ -54,6 +53,7 @@ const Url = styled.div`
   align-items: center;
   background: ${Color.GRAY};
   border-radius: 4px;
+  user-select: none;
 `;
 
 const Icon = styled.img`
@@ -66,6 +66,8 @@ const Text = styled.div`
   width: 100%;
   font-weight: bold;
   font-size: 16px;
+  user-select: all;
+  cursor: text;
   ${HideOverflow};
 `;
 

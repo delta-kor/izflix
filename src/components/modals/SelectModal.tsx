@@ -17,7 +17,7 @@ const Layout = styled.div`
   padding: 24px 24px 12px 24px;
 
   background: ${Color.BACKGROUND};
-  border: 4px solid ${Color.PRIMARY};
+  border: 2px solid ${Color.PRIMARY};
   border-radius: 8px;
 
   z-index: 500;
