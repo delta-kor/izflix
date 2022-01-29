@@ -38,7 +38,8 @@
     "puppeteerArgs": [
       "--no-sandbox",
       "--disable-setuid-sandbox"
-    ]
+    ],
+    "fixWebpackChunksIssue": false
   },
   "eslintConfig": {
     "extends": [
