@@ -353,6 +353,7 @@ class VideoPage extends Component<Props, State> {
               : '',
             description: 'IZFLIX에서 고화질로 시청하세요',
             url: `https://izflix.net/${id}`,
+            image: videoInfo ? Spaceship.getThumbnail(id) : '',
           }}
         />
         {videoContent}

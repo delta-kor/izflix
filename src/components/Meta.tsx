@@ -10,7 +10,9 @@ class Meta extends Component<Props> {
     const data = this.props.data;
     return (
       <Helmet>
+        <meta property="og:type" content="website" />
         <title>{data.title || 'IZFLIX'}</title>
+        <meta property="og:title" content={data.title || 'IZFLIX'} />
         <meta
           name="description"
           content={
@@ -18,9 +20,6 @@ class Meta extends Component<Props> {
             '콘서트, 음악 방송 고화질 인터넷 스트리밍 & 다시보기'
           }
         />
-
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={data.title || 'IZFLIX'} />
         <meta
           name="og:description"
           content={
@@ -28,6 +27,8 @@ class Meta extends Component<Props> {
             '콘서트, 음악 방송 고화질 인터넷 스트리밍 & 다시보기'
           }
         />
+
+        <meta property="og:image" content={data.image || '/og.png'} />
 
         <link rel="canonical" href={data.url || 'https://izflix.net/'} />
         <meta property="og:url" content={data.url || 'https://izflix.net/'} />
