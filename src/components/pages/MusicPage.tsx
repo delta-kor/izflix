@@ -5,6 +5,7 @@ import Constants from '../../constants';
 import Scroll from '../../services/scroll';
 import { MobileQuery } from '../../styles';
 import MusicMenu from '../menus/MusicMenu';
+import Meta from '../Meta';
 
 const Page = styled(motion.div)`
   ${MobileQuery} {
@@ -27,6 +28,13 @@ class MusicPage extends Component {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
+        <Meta
+          data={{
+            title: '노래 - IZFLIX',
+            description: '노래로 콘서트를 검색하세요',
+            url: 'https://izflix.net/music',
+          }}
+        />
         <MusicMenu />
       </Page>
     );

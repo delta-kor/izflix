@@ -17,6 +17,7 @@ import {
 import Playlist from '../actions/playlist/Playlist';
 import VideoContent from '../actions/video/VideoContent';
 import VideoRecommends from '../actions/video/VideoRecommends';
+import Meta from '../Meta';
 import withParams from '../tools/Params';
 
 const Page = styled(motion.div)`
@@ -333,19 +334,30 @@ class VideoPage extends Component<Props, State> {
       );
     }
 
+    const videoInfo = this.state.videoInfo;
+
     return (
       <Page
         exit={{ opacity: 0 }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
+        <Meta
+          data={{
+            title: videoInfo
+              ? `${videoInfo.title} (${videoInfo.description}) - IZFLIX`
+              : '',
+            description: 'IZFLIX에서 고화질로 시청하세요',
+            url: `https://izflix.net/${id}`,
+          }}
+        />
         {videoContent}
         {isNextLoaded ? (
           nextVideo.length ? (
             <Playlist
               type="next"
-              title={this.state.videoInfo!.title}
-              description={this.state.videoInfo!.description}
+              title={videoInfo!.title}
+              description={videoInfo!.description}
               videos={nextVideo}
               urlKey={key!}
               urlValue={value!}

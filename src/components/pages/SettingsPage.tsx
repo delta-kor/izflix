@@ -5,6 +5,7 @@ import ModalController from '../../services/modal-controller';
 import Scroll from '../../services/scroll';
 import Settings from '../../services/settings';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
+import Meta from '../Meta';
 
 const Page = styled(motion.div)`
   text-align: center;
@@ -155,6 +156,9 @@ class SettingsPage extends Component<any, State> {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
+        <Meta
+          data={{ title: '설정 - IZFLIX', url: `https://izflix.net/settings` }}
+        />
         <Wrapper>
           <Group>
             <GroupTitle>재생</GroupTitle>

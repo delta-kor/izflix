@@ -6,6 +6,7 @@ import LandingVideo from './components/actions/LandingVideo';
 import Popup from './components/actions/Popup';
 import Header from './components/menus/Header';
 import Navigator from './components/menus/Navigator';
+import Meta from './components/Meta';
 import Modal from './components/modals/Modal';
 import CategoryPage from './components/pages/CategoryPage';
 import InfoPage from './components/pages/InfoPage';
@@ -58,6 +59,8 @@ const App = (): JSX.Element => {
 
   return (
     <AnimateSharedLayout>
+      <Meta data={{}} />
+
       <Popup />
       <AnimatePresence>
         {modalData && (

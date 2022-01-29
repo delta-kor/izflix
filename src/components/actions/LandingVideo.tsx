@@ -160,11 +160,11 @@ const Description = styled(Link)`
   }
 `;
 
-const Loader = styled(LoaderIcon)<{ active: boolean }>`
+const Loader = styled(LoaderIcon)<{ $active: boolean }>`
   position: absolute;
   transition: opacity 1s;
   animation: spin 2s infinite linear;
-  opacity: ${({ active }) => (active ? 1 : 0)};
+  opacity: ${({ $active: active }) => (active ? 1 : 0)};
   user-select: none;
   z-index: 5;
 
@@ -280,7 +280,7 @@ class LandingVideo extends Component<any, State> {
           loop
         />
         <Cover />
-        <Loader active={!this.state.loaded} />
+        <Loader $active={!this.state.loaded} />
         <Description
           to={
             this.state.video

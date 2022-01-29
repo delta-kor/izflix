@@ -5,6 +5,7 @@ import GithubIcon from '../../icons/github.svg';
 import VercelIcon from '../../icons/vercel.svg';
 import Scroll from '../../services/scroll';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
+import Meta from '../Meta';
 import withParams from '../tools/Params';
 
 const Page = styled(motion.div)`
@@ -146,6 +147,13 @@ class InfoPage extends Component<Props> {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
+        <Meta
+          data={{
+            title: '정보 - IZFLIX',
+            description: '영상 데이터 정보 & 라이센스',
+            url: `https://izflix.net/info`,
+          }}
+        />
         <Wrapper>
           <Group>
             <GroupTitle>Repository</GroupTitle>
