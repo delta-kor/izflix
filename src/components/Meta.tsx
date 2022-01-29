@@ -11,8 +11,10 @@ class Meta extends Component<Props> {
     return (
       <Helmet>
         <meta property="og:type" content="website" />
+
         <title>{data.title || 'IZFLIX'}</title>
         <meta property="og:title" content={data.title || 'IZFLIX'} />
+
         <meta
           name="description"
           content={
@@ -21,7 +23,7 @@ class Meta extends Component<Props> {
           }
         />
         <meta
-          name="og:description"
+          property="og:description"
           content={
             data.description ||
             '콘서트, 음악 방송 고화질 인터넷 스트리밍 & 다시보기'
