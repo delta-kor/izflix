@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import LeftArrowIcon from '../../../icons/arrow-left.svg';
-import RightArrowIcon from '../../../icons/arrow-right.svg';
+import { ReactComponent as LeftArrowIcon } from '../../../icons/arrow-left.svg';
+import { ReactComponent as RightArrowIcon } from '../../../icons/arrow-right.svg';
 import {
   Color,
   HideOverflow,
@@ -157,7 +157,7 @@ const Arrow = styled(motion.div)<{ direction: 'left' | 'right' }>`
     }
   }
 
-  & > img {
+  & > * {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -314,7 +314,7 @@ class Playlist extends Component<Props> {
                 key="left"
                 {...options}
               >
-                <img src={LeftArrowIcon} alt={'scroll left'} />
+                <LeftArrowIcon />
               </Arrow>
             )}
             {this.state.arrows[1] && (
@@ -325,7 +325,7 @@ class Playlist extends Component<Props> {
                 key="right"
                 {...options}
               >
-                <img src={RightArrowIcon} alt={'scroll right'} />
+                <RightArrowIcon />
               </Arrow>
             )}
           </AnimatePresence>

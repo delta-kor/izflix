@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import LoaderIcon from '../../../icons/loading-bright.svg';
+import { ReactComponent as LoaderIcon } from '../../../icons/loading-bright.svg';
 import Settings from '../../../services/settings';
 import Transmitter from '../../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../../styles';
@@ -30,7 +30,7 @@ const Content = styled.video<{ $active: boolean }>`
   z-index: 2;
 `;
 
-const Loader = styled(motion.img)`
+const Loader = styled(motion(LoaderIcon))`
   position: absolute;
   animation: spin 2s infinite linear;
   user-select: none;
@@ -170,9 +170,7 @@ class Video extends Component<Props, State> {
           />
         )}
         <AnimatePresence>
-          {!this.state.loaded && (
-            <Loader exit={{ opacity: 0 }} src={LoaderIcon} />
-          )}
+          {!this.state.loaded && <Loader exit={{ opacity: 0 }} />}
         </AnimatePresence>
       </Layout>
     );

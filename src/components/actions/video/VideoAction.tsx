@@ -1,10 +1,10 @@
-import { Component } from 'react';
+import { Component, FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import DownloadIcon from '../../../icons/download.svg';
-import PipIcon from '../../../icons/pip.svg';
-import ShareIcon from '../../../icons/share.svg';
-import InfoIcon from '../../../icons/video-info.svg';
+import { ReactComponent as DownloadIcon } from '../../../icons/download.svg';
+import { ReactComponent as PipIcon } from '../../../icons/pip.svg';
+import { ReactComponent as ShareIcon } from '../../../icons/share.svg';
+import { ReactComponent as InfoIcon } from '../../../icons/video-info.svg';
 import ModalController from '../../../services/modal-controller';
 import Transmitter from '../../../services/transmitter';
 import { MobileQuery, PcQuery } from '../../../styles';
@@ -35,7 +35,7 @@ const Item = styled.div`
   user-select: none;
 `;
 
-const Icon = styled.img`
+const IconBase = (component: FunctionComponent) => styled(component)`
   ${MobileQuery} {
     width: 18px;
     height: 18px;
@@ -48,6 +48,11 @@ const Icon = styled.img`
     margin: 0 0 12px 0;
   }
 `;
+
+const DownloadIconItem = IconBase(DownloadIcon);
+const PipIconItem = IconBase(PipIcon);
+const ShareIconItem = IconBase(ShareIcon);
+const InfoIconItem = IconBase(InfoIcon);
 
 const Content = styled.div`
   font-weight: normal;
@@ -82,22 +87,22 @@ class VideoAction extends Component<Props> {
     return (
       <Layout>
         <Item onClick={this.onShareClick}>
-          <Icon src={ShareIcon} />
+          <ShareIconItem />
           <Content>공유</Content>
         </Item>
         <a target="_blank" href={download}>
           <Item>
-            <Icon src={DownloadIcon} />
+            <DownloadIconItem />
             <Content>다운로드</Content>
           </Item>
         </a>
         <Item onClick={this.onPipClick}>
-          <Icon src={PipIcon} />
+          <PipIconItem />
           <Content>PIP</Content>
         </Item>
         <Link to="/info?k=highlight">
           <Item>
-            <Icon src={InfoIcon} />
+            <InfoIconItem />
             <Content>영상정보</Content>
           </Item>
         </Link>

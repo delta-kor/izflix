@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Constants from '../../constants';
-import LoaderIcon from '../../icons/loading.svg';
+import { ReactComponent as LoaderIcon } from '../../icons/loading.svg';
 import Settings from '../../services/settings';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
@@ -160,7 +160,7 @@ const Description = styled(Link)`
   }
 `;
 
-const Loader = styled.img<{ active: boolean }>`
+const Loader = styled(LoaderIcon)<{ active: boolean }>`
   position: absolute;
   transition: opacity 1s;
   animation: spin 2s infinite linear;
@@ -280,7 +280,7 @@ class LandingVideo extends Component<any, State> {
           loop
         />
         <Cover />
-        <Loader src={LoaderIcon} active={!this.state.loaded} />
+        <Loader active={!this.state.loaded} />
         <Description
           to={
             this.state.video

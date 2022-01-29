@@ -1,7 +1,7 @@
 import React, { Component, MouseEvent } from 'react';
 import styled from 'styled-components';
-import LeftChevronIcon from '../../icons/chevron-left.svg';
-import RightChevronIcon from '../../icons/chevron-right.svg';
+import { ReactComponent as LeftChevronIcon } from '../../icons/chevron-left.svg';
+import { ReactComponent as RightChevronIcon } from '../../icons/chevron-right.svg';
 import { Color } from '../../styles';
 import MusicGrid from './grid/MusicGrid';
 
@@ -25,7 +25,7 @@ const ControlButton = styled.div`
   cursor: pointer;
   user-select: none;
 
-  & > img {
+  & > * {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -188,7 +188,7 @@ class MusicSelector extends Component<Props, State> {
       <Wrapper>
         <Layout>
           <ControlButton onClick={this.moveLeft}>
-            <img src={LeftChevronIcon} />
+            <LeftChevronIcon />
           </ControlButton>
           <CenterMenu>
             <ChipsWrapper ref={this.scrollRef}>
@@ -205,7 +205,7 @@ class MusicSelector extends Component<Props, State> {
             </ChipsWrapper>
           </CenterMenu>
           <ControlButton onClick={this.moveRight}>
-            <img src={RightChevronIcon} />
+            <RightChevronIcon />
           </ControlButton>
         </Layout>
         <MusicGrid selected={this.props.selected} count={this.state.count} />

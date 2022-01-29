@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Component } from 'react';
 import { NavigateFunction } from 'react-router-dom';
 import styled from 'styled-components';
-import BackIcon from '../../../icons/back.svg';
+import { ReactComponent as BackIcon } from '../../../icons/back.svg';
 import ModalController from '../../../services/modal-controller';
 import Settings from '../../../services/settings';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
@@ -140,7 +140,7 @@ const BackButton = styled.div`
     height: 38px;
   }
 
-  & > img {
+  & > * {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -196,7 +196,7 @@ class VideoInfo extends Component<Props> {
 
     const backButton = (
       <BackButton onClick={this.onBack}>
-        <img src={BackIcon} />
+        <BackIcon />
       </BackButton>
     );
 
