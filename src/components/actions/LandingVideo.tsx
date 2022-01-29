@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Constants from '../../constants';
 import { ReactComponent as LoaderIcon } from '../../icons/loading.svg';
+import isCrawler from '../../services/crawl';
 import Settings from '../../services/settings';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
@@ -259,6 +260,7 @@ class LandingVideo extends Component<any, State> {
   playVideo = () => {
     const video = this.videoRef.current;
     if (!video) return false;
+    if (isCrawler()) return false;
     if (!Settings.getOne('FEATURED_VIDEO_AUTOPLAY')) return false;
     video.play();
   };
@@ -278,6 +280,7 @@ class LandingVideo extends Component<any, State> {
           transition={{ duration: 3 }}
           muted
           loop
+          crossOrigin="anonymous"
         />
         <Cover />
         <Loader $active={!this.state.loaded} />

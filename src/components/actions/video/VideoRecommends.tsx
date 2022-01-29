@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import styled from 'styled-components';
+import isCrawler from '../../../services/crawl';
 import Settings from '../../../services/settings';
 import Spaceship from '../../../services/spaceship';
 import Transmitter from '../../../services/transmitter';
@@ -109,7 +110,7 @@ class VideoRecommends extends Component<Props, State> {
   state: State = { videos: [] };
 
   componentDidMount = () => {
-    this.loadData();
+    !isCrawler() && this.loadData();
   };
 
   loadData = async () => {

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Component } from 'react';
 import { Params } from 'react-router-dom';
 import styled from 'styled-components';
+import isCrawler from '../../services/crawl';
 import PathFinder from '../../services/path-finder';
 import Scroll from '../../services/scroll';
 import Settings from '../../services/settings';
@@ -199,9 +200,12 @@ class VideoPage extends Component<Props, State> {
   loadData = async () => {
     const id = this.props.params.id!;
     const quality = this.state.quality;
-    this.loadStreamInfo(id, quality);
     this.loadVideoInfo(id);
-    this.loadNextVideo();
+
+    if (!isCrawler()) {
+      this.loadStreamInfo(id, quality);
+      this.loadNextVideo();
+    }
   };
 
   loadStreamInfo = async (id: string, quality: number) => {
