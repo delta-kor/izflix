@@ -22,7 +22,10 @@ const renderStartTime = Date.now();
 render(app, rootElement, hydrate);
 
 async function hydrate() {
-  if (isCrawler()) return false;
+  if (isCrawler()) {
+    document.body.classList.replace('dry', 'hydrated');
+    return true;
+  }
 
   const hydrationTime = Date.now();
   const timeDelta = hydrationTime - renderStartTime;

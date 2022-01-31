@@ -39,7 +39,8 @@
       "--no-sandbox",
       "--disable-setuid-sandbox"
     ],
-    "fixWebpackChunksIssue": false
+    "fixWebpackChunksIssue": false,
+    "removeStyleTags": true
   },
   "eslintConfig": {
     "extends": [
