@@ -2,6 +2,7 @@ type Method = 'GET' | 'POST' | 'DELETE';
 
 interface ApiResponse {
   ok: boolean;
+  status: number;
   message?: string;
 }
 

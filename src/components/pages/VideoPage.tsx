@@ -20,6 +20,7 @@ import VideoContent from '../actions/video/VideoContent';
 import VideoRecommends from '../actions/video/VideoRecommends';
 import Meta from '../Meta';
 import withParams from '../tools/Params';
+import NotFoundPage from './NotFoundPage';
 
 const Page = styled(motion.div)`
   ${MobileQuery} {
@@ -171,6 +172,7 @@ interface State {
   videoInfo: ApiResponse.Video.Info | null;
   nextVideo: IVideoItem[];
   nextError: boolean;
+  videoNotFound: boolean;
   quality: number;
 }
 
@@ -180,6 +182,7 @@ class VideoPage extends Component<Props, State> {
     videoInfo: null,
     nextVideo: [],
     nextError: false,
+    videoNotFound: false,
     quality: Settings.getOne('DEFAULT_VIDEO_QUALITY'),
   };
 
@@ -210,7 +213,10 @@ class VideoPage extends Component<Props, State> {
 
   loadStreamInfo = async (id: string, quality: number) => {
     const data = await Spaceship.streamVideo(id, quality);
-    if (!data.ok) return Transmitter.emit('popup', data.message);
+    if (!data.ok) {
+      this.setState({ videoNotFound: true });
+      return Transmitter.emit('popup', data.message);
+    }
     this.setState({ streamInfo: data });
   };
 
@@ -289,6 +295,8 @@ class VideoPage extends Component<Props, State> {
   };
 
   render() {
+    if (this.state.videoNotFound) return <NotFoundPage />;
+
     const query = this.props.query[0];
     const key = query.get('k');
     const value = query.get('v');

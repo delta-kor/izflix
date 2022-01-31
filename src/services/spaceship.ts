@@ -30,6 +30,7 @@ class SpaceshipClass {
     try {
       const response = await fetch(this.baseUrl + path, options);
       data = await response.json();
+      data.status = response.status;
     } catch (e: any) {
       if (!e.json)
         return { ok: false, message: '네트워크 연결이 원할하지 않아요' } as T;
