@@ -7,7 +7,7 @@ body {
 body.hydrating #root,
 body.snapped #root,
 body.dry #root {
-  display: none;
+  display: none !important;
 }
 
 body.hydrated #root {
