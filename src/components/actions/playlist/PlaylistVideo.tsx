@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import isCrawler from '../../../services/crawl';
 import Spaceship from '../../../services/spaceship';
 import { getDuration } from '../../../services/time';
 import {
@@ -158,12 +159,14 @@ class PlaylistVideo extends Component<Props, State> {
     return (
       <Layout to={`/${video.id}?k=${key}&v=${value}`}>
         <Placeholder />
-        <Thumbnail
-          onLoad={() => this.setState({ loaded: true })}
-          $active={this.state.loaded}
-          src={Spaceship.getThumbnail(video.id)}
-          loading="lazy"
-        />
+        {!isCrawler() && (
+          <Thumbnail
+            onLoad={() => this.setState({ loaded: true })}
+            $active={this.state.loaded}
+            src={Spaceship.getThumbnail(video.id)}
+            loading="lazy"
+          />
+        )}
         <Title>{video.title}</Title>
         <Description>{video.description}</Description>
         <Duration>{getDuration(video.duration)}</Duration>
