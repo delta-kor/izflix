@@ -24,7 +24,7 @@ render(app, rootElement, hydrate);
 async function hydrate() {
   if (isCrawler()) {
     document.body.classList.replace('dry', 'hydrated');
-    document.body.classList.add('snaped');
+    document.body.classList.add('snapped');
     return true;
   }
 
