@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import delay from './delay';
 import GlobalStyle from './GlobalStyle';
 import reportWebVitals from './reportWebVitals';
 import isCrawler from './services/crawl';
@@ -16,12 +17,23 @@ const app = (
 );
 
 const rootElement = document.getElementById('root')!;
-const isHydrationNeeded = !isCrawler();
-render(
-  app,
-  rootElement,
-  () => isHydrationNeeded && rootElement.classList.replace('dry', 'hydrated')
-);
+
+const renderStartTime = Date.now();
+render(app, rootElement, hydrate);
+
+async function hydrate() {
+  if (isCrawler()) return false;
+
+  const hydrationTime = Date.now();
+  const timeDelta = hydrationTime - renderStartTime;
+  if (timeDelta < 2000) {
+    await delay(2000 - timeDelta);
+  }
+
+  document.body.classList.replace('dry', 'hydrating');
+  await delay(200);
+  document.body.classList.replace('hydrating', 'hydrated');
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

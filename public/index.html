@@ -11,23 +11,19 @@
     <meta name="color-scheme" content="dark">
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <link rel="stylesheet" href="%PUBLIC_URL%/prerender.css"/>
     
     <title>IZFLIX</title>
-
-    <style>
-      @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
-
-      body {
-        background: #070d2d;
-      }
-
-      #root.dry {
-        display: none;
-      }
-    </style>
   </head>
-  <body>
+  <body class="dry">
     <noscript>지원하지 않는 브라우저이에요</noscript>
-    <div id="root" class="dry"></div>
+    <div id="root"></div>
+    <div id="splash">
+      <svg id="splash-icon" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 131 38" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M6.10352e-05 3.09091C6.10352e-05 1.38385 1.38391 0 3.09097 0C4.79803 0 6.18188 1.38385 6.18188 3.09091V26.2727C6.18188 27.9798 4.79803 29.3636 3.09097 29.3636C1.38391 29.3636 6.10352e-05 27.9798 6.10352e-05 26.2727V3.09091ZM13.9092 10.8182C13.9092 9.11112 15.293 7.72727 17.0001 7.72727C18.7071 7.72727 20.091 9.11112 20.091 10.8182V34C20.091 35.7071 18.7071 37.0909 17.0001 37.0909C15.293 37.0909 13.9092 35.7071 13.9092 34V10.8182ZM30.9092 0C29.2021 0 27.8182 1.38385 27.8182 3.09091V26.2727C27.8182 27.9798 29.2021 29.3636 30.9092 29.3636C32.6162 29.3636 34.0001 27.9798 34.0001 26.2727V3.09091C34.0001 1.38385 32.6162 0 30.9092 0Z" fill="white"/>
+        <path d="M59.9441 8.77453H63.0161V26.0785H59.9441V8.77453ZM78.833 11.1025L69.353 23.4385H79.289V26.0785H65.561V23.5585L74.921 11.4145H66.137V8.77453H78.833V11.1025ZM81.9987 26.0785V8.77453H93.1347V11.3665H85.0707V16.3105H92.6307V18.9025H85.0707V26.0785H81.9987ZM99.0161 8.77453V23.4865H106.912V26.0785H95.9441V8.77453H99.0161ZM109.327 8.77453H112.399V26.0785H109.327V8.77453ZM124.4 17.1985L129.776 26.0785H126.224L122.264 19.0945L118.424 26.0785H114.968L120.32 17.0305L115.4 8.77453H119.096L122.552 15.1585L126.128 8.77453H129.56L124.4 17.1985Z" fill="white"/>
+      </svg>
+    </div>
   </body>
 </html>

@@ -1,0 +1,61 @@
+body {
+  background: #070d2d;
+}
+
+body.hydrating #root,
+body.dry #root {
+  display: none;
+}
+
+body.hydrated #root {
+  display: block;
+  animation: fadein 0.2s;
+}
+
+body.hydrating #splash,
+body.dry #splash {
+  display: block;
+}
+
+body.hydrated #splash {
+  display: none;
+}
+
+#splash-icon {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10vw;
+  min-width: 120px;
+  opacity: 0;
+}
+
+body.dry #splash-icon {
+  animation: fadein 0.2s forwards;
+  animation-delay: 0.2s;
+}
+
+body.hydrating #splash-icon {
+  animation: fadeout 0.2s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
