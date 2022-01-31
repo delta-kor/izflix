@@ -28,6 +28,8 @@ async function hydrate() {
     return true;
   }
 
+  document.body.classList.remove('snapped');
+
   const hydrationTime = Date.now();
   const timeDelta = hydrationTime - renderStartTime;
   if (timeDelta < 2000) {
