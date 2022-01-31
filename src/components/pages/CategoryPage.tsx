@@ -9,7 +9,7 @@ import CategoryBreadcrumb from '../actions/category/CategoryBreadcrumb';
 import CategoryMenu from '../menus/CategoryMenu';
 import Meta from '../Meta';
 
-const Page = styled(motion.div)`
+const Page = styled(motion.main)`
   width: 100%;
   max-width: 1416px;
   margin: 0 auto;

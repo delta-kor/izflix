@@ -39,7 +39,7 @@ const Content = styled.div`
   }
 `;
 
-const Title = styled.div`
+const Title = styled.h1`
   font-weight: 800;
   ${HideOverflow};
 
@@ -54,7 +54,7 @@ const Title = styled.div`
   }
 `;
 
-const Description = styled.div`
+const Description = styled.p`
   opacity: 0.7;
   ${HideOverflow};
 

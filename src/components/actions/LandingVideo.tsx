@@ -10,7 +10,7 @@ import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
 
-const Layout = styled.div`
+const Layout = styled.aside`
   position: relative;
   width: 100%;
   overflow: hidden;

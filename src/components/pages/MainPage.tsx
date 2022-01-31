@@ -9,7 +9,7 @@ import PlaylistMenu from '../menus/PlaylistMenu';
 import Meta from '../Meta';
 import { Mobile } from '../tools/MediaQuery';
 
-const Page = styled(motion.div)`
+const Page = styled(motion.main)`
   ${MobileQuery} {
     padding: 0 0 64px 0;
   }

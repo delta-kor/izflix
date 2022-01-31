@@ -104,7 +104,7 @@ const Icon = styled(DateIcon)`
   }
 `;
 
-const Date = styled.div`
+const Date = styled.time`
   font-weight: normal;
 
   ${MobileQuery} {

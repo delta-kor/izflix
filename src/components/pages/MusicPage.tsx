@@ -7,7 +7,7 @@ import { MobileQuery } from '../../styles';
 import MusicMenu from '../menus/MusicMenu';
 import Meta from '../Meta';
 
-const Page = styled(motion.div)`
+const Page = styled(motion.main)`
   ${MobileQuery} {
     padding: 80px 0 72px 0;
   }

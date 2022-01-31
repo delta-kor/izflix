@@ -12,7 +12,7 @@ import {
   TabletQuery,
 } from '../../../styles';
 
-const Layout = styled(Link)`
+const Layout = styled.article`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -47,6 +47,7 @@ const Placeholder = styled.div`
 `;
 
 const Thumbnail = styled.img<{ $active: boolean }>`
+  position: relative;
   object-fit: cover;
   border-radius: 6px;
   width: 100%;
@@ -66,7 +67,7 @@ const Thumbnail = styled.img<{ $active: boolean }>`
   }
 `;
 
-const Title = styled.div`
+const Title = styled.h3`
   max-width: 100%;
   font-weight: 800;
 
@@ -85,7 +86,7 @@ const Title = styled.div`
   }
 `;
 
-const Description = styled.div`
+const Description = styled.p`
   max-width: 100%;
   font-weight: bold;
   opacity: 0.7;
@@ -157,19 +158,21 @@ class PlaylistVideo extends Component<Props, State> {
       type === 'playlist' ? this.props.playlistId : this.props.urlValue;
 
     return (
-      <Layout to={`/${video.id}?k=${key}&v=${value}`}>
-        <Placeholder />
-        {!isCrawler() && (
-          <Thumbnail
-            onLoad={() => this.setState({ loaded: true })}
-            $active={this.state.loaded}
-            src={Spaceship.getThumbnail(video.id)}
-            loading="lazy"
-          />
-        )}
-        <Title>{video.title}</Title>
-        <Description>{video.description}</Description>
-        <Duration>{getDuration(video.duration)}</Duration>
+      <Layout>
+        <Link to={`/${video.id}?k=${key}&v=${value}`}>
+          <Placeholder />
+          {!isCrawler() && (
+            <Thumbnail
+              onLoad={() => this.setState({ loaded: true })}
+              $active={this.state.loaded}
+              src={Spaceship.getThumbnail(video.id)}
+              loading="lazy"
+            />
+          )}
+          <Title>{video.title}</Title>
+          <Description>{video.description}</Description>
+          <Duration>{getDuration(video.duration)}</Duration>
+        </Link>
       </Layout>
     );
   }

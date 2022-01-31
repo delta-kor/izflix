@@ -38,7 +38,7 @@ const ThumbnailPlaceholder = styled.div`
   z-index: 0;
 `;
 
-const Title = styled.div`
+const Title = styled.h1`
   height: 28px;
   margin: 0 0 8px 0;
   font-weight: bold;
@@ -46,7 +46,7 @@ const Title = styled.div`
   ${HideOverflow};
 `;
 
-const Date = styled.div`
+const Date = styled.time`
   height: 18px;
   font-weight: normal;
   font-size: 16px;

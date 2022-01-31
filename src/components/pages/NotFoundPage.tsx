@@ -6,7 +6,7 @@ import { ReactComponent as NotFoundIcon } from '../../icons/not-found.svg';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import Meta from '../Meta';
 
-const Page = styled(motion.div)``;
+const Page = styled(motion.main)``;
 
 const Content = styled.div`
   position: fixed;

@@ -22,7 +22,7 @@ import Meta from '../Meta';
 import withParams from '../tools/Params';
 import NotFoundPage from './NotFoundPage';
 
-const Page = styled(motion.div)`
+const Page = styled(motion.main)`
   ${MobileQuery} {
     padding: calc(100vw * (9 / 16)) 0 88px 0;
   }

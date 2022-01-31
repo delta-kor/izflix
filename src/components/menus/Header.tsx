@@ -10,7 +10,7 @@ import { Color, MobileQuery, PcQuery } from '../../styles';
 import { Mobile, Pc } from '../tools/MediaQuery';
 import Navigator from './Navigator';
 
-const Layout = styled.div<{
+const Layout = styled.header<{
   $float: boolean;
   $instant: boolean;
 }>`

@@ -13,7 +13,7 @@ import {
 import { Pc } from '../../tools/MediaQuery';
 import PlaylistVideo from './PlaylistVideo';
 
-const Layout = styled.div`
+const Layout = styled.section`
   position: relative;
   width: 100%;
 
@@ -40,7 +40,7 @@ const Layout = styled.div`
   }
 `;
 
-const Title = styled.div`
+const Title = styled.h2`
   font-weight: bold;
   ${HideOverflow};
 

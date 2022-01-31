@@ -7,7 +7,7 @@ import Settings from '../../services/settings';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
 import Meta from '../Meta';
 
-const Page = styled(motion.div)`
+const Page = styled(motion.main)`
   text-align: center;
 `;
 

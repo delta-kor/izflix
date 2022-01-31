@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Color, Ease } from '../../styles';
 import { Mobile, Pc } from '../tools/MediaQuery';
 
-const MobileLayout = styled.div`
+const MobileLayout = styled.nav`
   position: fixed;
   display: flex;
   bottom: 0;
@@ -37,7 +37,7 @@ const Icon = styled.svg`
   }
 `;
 
-const PcLayout = styled(motion.div)`
+const PcLayout = styled(motion.nav)`
   display: flex;
   margin: 0 auto;
   width: 480px;
