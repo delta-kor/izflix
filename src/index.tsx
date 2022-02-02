@@ -5,7 +5,6 @@ import App from './App';
 import delay from './delay';
 import GlobalStyle from './GlobalStyle';
 import reportWebVitals from './reportWebVitals';
-import register from './service-worker';
 import isCrawler from './services/crawl';
 
 const app = (
@@ -46,5 +45,3 @@ async function hydrate() {
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-
-if (!isCrawler()) register();
