@@ -1,7 +1,10 @@
 import { precacheAndRoute } from 'workbox-precaching';
+import isCrawler from './services/crawl';
 
-// @ts-ignore
-precacheAndRoute(window.self.__WB_MANIFEST);
+if (!isCrawler()) {
+  // @ts-ignore
+  precacheAndRoute(window.self.__WB_MANIFEST);
+}
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
