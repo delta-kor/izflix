@@ -1,4 +1,4 @@
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && navigator.userAgent !== 'ReactSnap') {
   window.addEventListener('load', function () {
     navigator.serviceWorker.register('/sw.js', { scope: '/' });
   });
@@ -17,7 +17,8 @@ self.addEventListener('fetch', function (event) {
     (async function () {
       try {
         const response = await fetch(event.request);
-        const isHtml = response.headers.get('content-type')?.includes('text/html');
+        const type = response.headers.get('content-type');
+        const isHtml = type && type.includes('text/html');
         
         if(response.status === 200 && isHtml) {
           const cache = await caches.open('cache');
