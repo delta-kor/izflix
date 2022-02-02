@@ -47,4 +47,4 @@ async function hydrate() {
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 
-register();
+if (!isCrawler()) register();

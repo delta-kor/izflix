@@ -1,5 +1,8 @@
 import { precacheAndRoute } from 'workbox-precaching';
 
+// @ts-ignore
+precacheAndRoute(window.self.__WB_MANIFEST);
+
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
@@ -23,9 +26,6 @@ export default function register() {
       // serve assets; see https://github.com/facebookincubator/create-react-app/issues/2374
       return;
     }
-
-    // @ts-ignore
-    precacheAndRoute(window.self.__WB_MANIFEST);
 
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
