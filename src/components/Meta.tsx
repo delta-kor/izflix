@@ -31,6 +31,11 @@ class Meta extends Component<Props> {
         />
 
         <meta property="og:image" content={data.image || '/og.png'} />
+        <meta name="twitter:image" content={data.image || '/og.png'} />
+        <meta
+          name="twitter:card"
+          content={data.image ? 'summary_large_image' : 'summary'}
+        />
 
         <link rel="canonical" href={data.url || 'https://izflix.net/'} />
         <meta property="og:url" content={data.url || 'https://izflix.net/'} />
