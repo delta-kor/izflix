@@ -94,19 +94,14 @@ const PlaceholderVideo = styled.div`
     background: ${Color.DARK_GRAY};
     border-radius: 6px;
     width: 100%;
+    aspect-ratio: 16 / 9;
 
     ${MobileQuery} {
-      height: 117px;
       margin: 0 0 8px 0;
     }
 
     ${PcQuery} {
-      height: calc(((min(100vw, 1416px) - 32px * 2 - 24px * 3) / 4) * (9 / 16));
       margin: 0 0 16px 0;
-    }
-
-    ${TabletQuery} {
-      height: calc(((min(100vw, 1416px) - 32px * 2 - 24px * 2) / 3) * (9 / 16));
     }
   }
 

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import isCrawler from '../../../services/crawl';
@@ -14,8 +16,6 @@ import {
 
 const Layout = styled.article`
   position: relative;
-  display: flex;
-  flex-direction: column;
   user-select: none;
 
   ${MobileQuery} {
@@ -29,6 +29,11 @@ const Layout = styled.article`
   ${TabletQuery} {
     width: calc((100% - 24px * 2) / 3);
   }
+`;
+
+const Content = styled(Link)`
+  display: flex;
+  flex-direction: column;
 `;
 
 const Placeholder = styled.div`
@@ -46,28 +51,28 @@ const Placeholder = styled.div`
   }
 `;
 
-const Thumbnail = styled.img<{ $active: boolean }>`
+const Thumbnail = styled(LazyLoadImage)`
   position: relative;
   object-fit: cover;
   border-radius: 6px;
   width: 100%;
   aspect-ratio: 16 / 9;
-  opacity: ${({ $active }) => ($active ? 1 : 0)};
   transition: opacity 0.2s;
   animation-delay: 0.1s;
   z-index: 1;
 
   ${MobileQuery} {
     height: 117px;
-    margin: 0 0 8px 0;
+    margin: 0 0 4px 0;
   }
 
   ${PcQuery} {
-    margin: 0 0 16px 0;
+    margin: 0 0 12px 0;
   }
 `;
 
-const Title = styled.h3`
+const Title = styled.div`
+  display: block;
   max-width: 100%;
   font-weight: 800;
 
@@ -86,7 +91,8 @@ const Title = styled.h3`
   }
 `;
 
-const Description = styled.p`
+const Description = styled.div`
+  display: block;
   max-width: 100%;
   font-weight: bold;
   opacity: 0.7;
@@ -159,20 +165,19 @@ class PlaylistVideo extends Component<Props, State> {
 
     return (
       <Layout>
-        <Link to={`/${video.id}?k=${key}&v=${value}`}>
+        <Content to={`/${video.id}?k=${key}&v=${value}`}>
           <Placeholder />
           {!isCrawler() && (
             <Thumbnail
-              onLoad={() => this.setState({ loaded: true })}
-              $active={this.state.loaded}
               src={Spaceship.getThumbnail(video.id)}
-              loading="lazy"
+              width="100%"
+              effect="opacity"
             />
           )}
           <Title>{video.title}</Title>
           <Description>{video.description}</Description>
           <Duration>{getDuration(video.duration)}</Duration>
-        </Link>
+        </Content>
       </Layout>
     );
   }
