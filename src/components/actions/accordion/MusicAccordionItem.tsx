@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
@@ -36,14 +38,12 @@ const Date = styled.div`
   ${HideOverflow};
 `;
 
-const Thumbnail = styled.img<{ $active: boolean }>`
+const Thumbnail = styled(LazyLoadImage)`
+  position: relative;
   width: 78px;
   height: 44px;
   border-radius: 4px;
   margin: 0 0 0 8px;
-  opacity: ${({ $active }) => ($active ? '1' : '0')};
-  transition: opacity 0.2s;
-  animation-delay: 0.1s;
   z-index: 1;
 `;
 
@@ -63,17 +63,7 @@ interface Props {
   video: IMusicVideoItem;
 }
 
-interface State {
-  loaded: boolean;
-}
-
 class MusicAccordionItem extends Component<Props> {
-  state: State = { loaded: false };
-
-  onLoad = () => {
-    this.setState({ loaded: true });
-  };
-
   render() {
     const video = this.props.video;
 
@@ -84,10 +74,10 @@ class MusicAccordionItem extends Component<Props> {
           <Date>{getDate(video.date)}</Date>
         </Content>
         <Thumbnail
-          onLoad={this.onLoad}
-          $active={this.state.loaded}
           src={Spaceship.getThumbnail(video.id)}
-          loading="lazy"
+          effect="opacity"
+          width="78px"
+          wrapperProps={{ style: { position: 'relative', zIndex: '1' } }}
         />
         <ThumbnailPlaceholder />
       </Layout>

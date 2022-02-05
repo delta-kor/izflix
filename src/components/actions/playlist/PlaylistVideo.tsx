@@ -57,8 +57,6 @@ const Thumbnail = styled(LazyLoadImage)`
   border-radius: 6px;
   width: 100%;
   aspect-ratio: 16 / 9;
-  transition: opacity 0.2s;
-  animation-delay: 0.1s;
   z-index: 1;
 
   ${MobileQuery} {
@@ -148,13 +146,7 @@ interface NextProps {
   urlValue: string;
 }
 
-interface State {
-  loaded: boolean;
-}
-
-class PlaylistVideo extends Component<Props, State> {
-  state: State = { loaded: false };
-
+class PlaylistVideo extends Component<Props> {
   render() {
     const video = this.props.video;
     const type = this.props.type;
@@ -170,8 +162,8 @@ class PlaylistVideo extends Component<Props, State> {
           {!isCrawler() && (
             <Thumbnail
               src={Spaceship.getThumbnail(video.id)}
-              width="100%"
               effect="opacity"
+              width="100%"
             />
           )}
           <Title>{video.title}</Title>

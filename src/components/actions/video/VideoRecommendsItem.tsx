@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
@@ -10,17 +12,15 @@ const Layout = styled(Link)`
   display: flex;
   width: 100%;
   flex-direction: column;
+  font-size: 0;
 `;
 
-const Thumbnail = styled.img<{ $active: boolean }>`
+const Thumbnail = styled(LazyLoadImage)`
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
   margin: 0 0 12px 0;
   border-radius: 4px;
-  opacity: ${({ $active }) => ($active ? '1' : '0')};
-  transition: opacity 0.2s;
-  animation-delay: 0.1s;
   z-index: 2;
 `;
 
@@ -109,10 +109,12 @@ class VideoRecommendsItem extends Component<Props, State> {
     return (
       <Layout to={`/${video.id}`}>
         <Thumbnail
-          onLoad={() => this.setState({ loaded: true })}
-          $active={this.state.loaded}
           src={Spaceship.getThumbnail(video.id)}
-          loading="lazy"
+          effect="opacity"
+          width="100%"
+          wrapperProps={{
+            style: { zIndex: '2' },
+          }}
         />
         <ThumbnailPlaceholder />
         <Title>{video.title}</Title>

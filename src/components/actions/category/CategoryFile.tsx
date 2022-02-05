@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
@@ -22,14 +24,11 @@ const Layout = styled(Link)`
   }
 `;
 
-const Thumbnail = styled.img<{ $active: boolean }>`
+const Thumbnail = styled(LazyLoadImage)`
   display: block;
   object-fit: cover;
   flex-shrink: 0;
   border-radius: 4px;
-  opacity: ${({ $active }) => ($active ? '1' : '0')};
-  transition: opacity 0.2s;
-  animation-delay: 0.1s;
   z-index: 1;
 
   ${MobileQuery} {
@@ -100,23 +99,16 @@ interface Props {
   file: ICategoryFile;
 }
 
-interface State {
-  active: boolean;
-}
-
-class CategoryFile extends Component<Props, State> {
-  state: State = { active: false };
-
+class CategoryFile extends Component<Props> {
   render() {
     const file = this.props.file;
 
     return (
       <Layout to={`/${file.id}?k=category&v=${this.props.folderId}`}>
         <Thumbnail
-          $active={this.state.active}
-          onLoad={() => this.setState({ active: true })}
           src={Spaceship.getThumbnail(file.id)}
-          loading="lazy"
+          effect="opacity"
+          wrapperProps={{ style: { position: 'relative', zIndex: '1' } }}
         />
         <ThumbnailPlaceholder />
         <Title>{file.title}</Title>

@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
@@ -11,18 +13,16 @@ const Layout = styled(Link)`
   flex-direction: column;
   width: 100%;
   user-select: none;
+  font-size: 0;
 `;
 
-const Thumbnail = styled.img<{ $active: boolean }>`
+const Thumbnail = styled(LazyLoadImage)`
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   border-radius: 4px;
   margin: 0 0 20px 0;
-  opacity: ${({ $active }) => ($active ? '1' : '0')};
-  transition: opacity 0.2s;
-  animation-delay: 0.1s;
   z-index: 1;
   user-drag: none;
 `;
@@ -73,27 +73,19 @@ interface Props {
   video: IMusicVideoItem;
 }
 
-interface State {
-  loaded: boolean;
-}
-
-class MusicGridItem extends Component<Props, State> {
-  state: State = { loaded: false };
-
-  onLoad = () => {
-    this.setState({ loaded: true });
-  };
-
+class MusicGridItem extends Component<Props> {
   render() {
     const video = this.props.video;
 
     return (
       <Layout to={`/${video.id}?k=music&v=${this.props.musicId}`}>
         <Thumbnail
-          onLoad={this.onLoad}
-          $active={this.state.loaded}
           src={Spaceship.getThumbnail(video.id)}
-          loading="lazy"
+          effect="opacity"
+          width="100%"
+          wrapperProps={{
+            style: { zIndex: '1' },
+          }}
         />
         <ThumbnailPlaceholder />
         <Title>{video.description}</Title>
