@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
-import GithubIcon from '../../icons/github.svg';
-import VercelIcon from '../../icons/vercel.svg';
+import { ReactComponent as GithubIcon } from '../../icons/github.svg';
+import { ReactComponent as VercelIcon } from '../../icons/vercel.svg';
 import Scroll from '../../services/scroll';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
 import Meta from '../Meta';
@@ -63,7 +63,7 @@ const GithubItem = styled.a`
   user-select: none;
   cursor: pointer;
 
-  & > img {
+  & > svg {
     width: 20px;
     height: 20px;
     margin: 0 8px 0 0;
@@ -100,8 +100,8 @@ const Vercel = styled.a`
     margin: 0 8px 0 0;
   }
 
-  & > img {
-    width: 64px;
+  & > svg {
+    zoom: 1.2;
   }
 `;
 
@@ -121,8 +121,10 @@ class InfoPage extends Component<Props> {
       'node-cache',
       'react',
       'react-copy-to-clipboard',
+      'react-helmet',
       'react-responsive',
       'react-router-dom',
+      'react-snap',
       'styled-components',
       'typescript',
       'web-vitals',
@@ -162,7 +164,7 @@ class InfoPage extends Component<Props> {
                 target="_blank"
                 href="https://github.com/delta-kor/izflix"
               >
-                <img src={GithubIcon} />
+                <GithubIcon />
                 <p>
                   delta-kor / <b>izflix</b>
                 </p>
@@ -171,7 +173,7 @@ class InfoPage extends Component<Props> {
                 target="_blank"
                 href="https://github.com/delta-kor/video-server"
               >
-                <img src={GithubIcon} />
+                <GithubIcon />
                 <p>
                   delta-kor / <b>video-server</b>
                 </p>
@@ -224,7 +226,7 @@ class InfoPage extends Component<Props> {
           </Group>
           <Vercel target="_blank" href="https://vercel.com/">
             <p>Powered By</p>
-            <img src={VercelIcon} />
+            <VercelIcon />
           </Vercel>
         </Wrapper>
       </Page>
