@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import isCrawler from './services/crawl';
 
 if (!isCrawler()) {
-  ReactGA.initialize('G-S789E94G7D');
+  ReactGA.initialize('UA-219883358-1');
 }
 
 const app = (
