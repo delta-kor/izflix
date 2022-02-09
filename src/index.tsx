@@ -8,6 +8,10 @@ import GlobalStyle from './GlobalStyle';
 import reportWebVitals from './reportWebVitals';
 import isCrawler from './services/crawl';
 
+if (!isCrawler()) {
+  ReactGA.initialize('G-S789E94G7D');
+}
+
 const app = (
   <React.StrictMode>
     <GlobalStyle />
@@ -40,10 +44,6 @@ async function hydrate() {
   document.body.classList.replace('dry', 'hydrating');
   await delay(200);
   document.body.classList.replace('hydrating', 'hydrated');
-}
-
-if (!isCrawler()) {
-  ReactGA.initialize('G-S789E94G7D');
 }
 
 // If you want to start measuring performance in your app, pass a function
