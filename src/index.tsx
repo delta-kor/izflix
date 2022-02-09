@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import ReactGA from 'react-ga';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import delay from './delay';
@@ -39,6 +40,10 @@ async function hydrate() {
   document.body.classList.replace('dry', 'hydrating');
   await delay(200);
   document.body.classList.replace('hydrating', 'hydrated');
+}
+
+if (!isCrawler()) {
+  ReactGA.initialize('G-S789E94G7D');
 }
 
 // If you want to start measuring performance in your app, pass a function
