@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import isCrawler from '../../../services/crawl';
 import Spaceship from '../../../services/spaceship';
 import { getDuration } from '../../../services/time';
+import Tracker from '../../../services/tracker';
 import {
   Color,
   HideOverflow,
@@ -157,7 +158,15 @@ class PlaylistVideo extends Component<Props> {
 
     return (
       <Layout>
-        <Content to={`/${video.id}?k=${key}&v=${value}`}>
+        <Content
+          to={`/${video.id}?k=${key}&v=${value}`}
+          onClick={() =>
+            Tracker.send(
+              type === 'playlist' ? 'playlist_clicked' : 'next_clicked',
+              { video_id: video.id }
+            )
+          }
+        >
           <Placeholder />
           {!isCrawler() && (
             <Thumbnail

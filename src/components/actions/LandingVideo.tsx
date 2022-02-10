@@ -291,7 +291,11 @@ class LandingVideo extends Component<any, State> {
               ? `/${this.state.video.id}?k=playlist&v=${this.state.playlistId}`
               : '/'
           }
-          onClick={() => Tracker.send('Landing', 'Clicked landing video')}
+          onClick={() =>
+            Tracker.send('landing_video_clicked', {
+              video_id: this.state.video?.id || null,
+            })
+          }
         >
           <p>인기 동영상</p>
           {this.state.video ? (

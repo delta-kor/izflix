@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
 import { getDuration } from '../../../services/time';
+import Tracker from '../../../services/tracker';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled(Link)`
@@ -104,7 +105,12 @@ class CategoryFile extends Component<Props> {
     const file = this.props.file;
 
     return (
-      <Layout to={`/${file.id}?k=category&v=${this.props.folderId}`}>
+      <Layout
+        to={`/${file.id}?k=category&v=${this.props.folderId}`}
+        onClick={() =>
+          Tracker.send('category_file_clicked', { file_id: file.id })
+        }
+      >
         <Thumbnail
           src={Spaceship.getThumbnail(file.id)}
           effect="opacity"

@@ -1,8 +1,8 @@
 import ReactGA from 'react-ga4';
 
 class Tracker {
-  public static send(category: string, action: string): void {
-    ReactGA.event({ category, action });
+  public static send(action: string, params: any = {}): void {
+    ReactGA.event({ category: 'event', action, ...params });
   }
 }
 

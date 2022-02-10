@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as BreadcrumbIcon } from '../../../icons/breadcrumb.svg';
+import Tracker from '../../../services/tracker';
 import { MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled.div`
@@ -110,7 +111,15 @@ class CategoryBreadcrumb extends Component<Props> {
 
     const initialBlock = (
       <Block key="home" layoutId={`home ${isCompact}`} {...transition}>
-        <Text data-compact={isCompact} to={`/category`}>
+        <Text
+          data-compact={isCompact}
+          to={`/category`}
+          onClick={() =>
+            Tracker.send('breadcrumb_clicked', {
+              item_path: null,
+            })
+          }
+        >
           전체
         </Text>
         <Icon data-compact={isCompact} />
@@ -121,7 +130,15 @@ class CategoryBreadcrumb extends Component<Props> {
     for (const path of this.props.path) {
       contents.push(
         <Block key={path.path} layoutId={path.path + isCompact} {...transition}>
-          <Text data-compact={isCompact} to={`/category/${path.path}`}>
+          <Text
+            data-compact={isCompact}
+            to={`/category/${path.path}`}
+            onClick={() =>
+              Tracker.send('breadcrumb_clicked', {
+                item_path: path.path,
+              })
+            }
+          >
             {path.name}
           </Text>
           <Icon data-compact={isCompact} />

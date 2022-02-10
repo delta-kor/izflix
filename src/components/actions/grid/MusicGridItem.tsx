@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
 import { getDate, getDuration } from '../../../services/time';
+import Tracker from '../../../services/tracker';
 import { Color, HideOverflow } from '../../../styles';
 
 const Layout = styled(Link)`
@@ -78,7 +79,12 @@ class MusicGridItem extends Component<Props> {
     const video = this.props.video;
 
     return (
-      <Layout to={`/${video.id}?k=music&v=${this.props.musicId}`}>
+      <Layout
+        to={`/${video.id}?k=music&v=${this.props.musicId}`}
+        onClick={() =>
+          Tracker.send('music_grid_clicked', { video_id: video.id })
+        }
+      >
         <Thumbnail
           src={Spaceship.getThumbnail(video.id)}
           effect="opacity"

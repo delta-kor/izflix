@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as FolderIcon } from '../../../icons/folder.svg';
+import Tracker from '../../../services/tracker';
 import { HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled(Link)`
@@ -74,7 +75,12 @@ class CategoryFolder extends Component<Props> {
     const folder = this.props.folder;
 
     return (
-      <Layout to={`/category/${folder.path}`}>
+      <Layout
+        to={`/category/${folder.path}`}
+        onClick={() =>
+          Tracker.send('category_folder_clicked', { folder_path: folder.path })
+        }
+      >
         <Icon />
         <Title>{folder.title}</Title>
         <Count>{folder.count} 개</Count>

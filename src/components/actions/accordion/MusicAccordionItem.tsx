@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
 import { getDate } from '../../../services/time';
+import Tracker from '../../../services/tracker';
 import { Color, HideOverflow } from '../../../styles';
 
 const Layout = styled(Link)`
@@ -68,7 +69,14 @@ class MusicAccordionItem extends Component<Props> {
     const video = this.props.video;
 
     return (
-      <Layout to={`/${video.id}?k=music&v=${this.props.musicId}`}>
+      <Layout
+        to={`/${video.id}?k=music&v=${this.props.musicId}`}
+        onClick={() =>
+          Tracker.send('music_accordion_clicked', {
+            music_id: this.props.musicId,
+          })
+        }
+      >
         <Content>
           <Title>{video.description}</Title>
           <Date>{getDate(video.date)}</Date>
