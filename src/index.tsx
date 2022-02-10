@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import delay from './delay';
@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import isCrawler from './services/crawl';
 
 if (!isCrawler()) {
-  ReactGA.initialize('UA-219883358-1');
+  ReactGA.initialize('G-S789E94G7D');
 }
 
 const app = (

@@ -1,6 +1,6 @@
 import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import LandingVideo from './components/actions/LandingVideo';
@@ -46,7 +46,7 @@ const App = (): JSX.Element => {
     prevPath.current = location.pathname;
 
     ReactGA.set({ page: location.pathname });
-    ReactGA.pageview(location.pathname);
+    ReactGA.send({ hitType: 'pageview', page: location.pathname });
 
     Transmitter.on('levelscroll', navigatorController);
     return () => {

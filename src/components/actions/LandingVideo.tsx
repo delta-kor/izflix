@@ -7,6 +7,7 @@ import { ReactComponent as LoaderIcon } from '../../icons/loading.svg';
 import isCrawler from '../../services/crawl';
 import Settings from '../../services/settings';
 import Spaceship from '../../services/spaceship';
+import Tracker from '../../services/tracker';
 import Transmitter from '../../services/transmitter';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
 
@@ -290,6 +291,7 @@ class LandingVideo extends Component<any, State> {
               ? `/${this.state.video.id}?k=playlist&v=${this.state.playlistId}`
               : '/'
           }
+          onClick={() => Tracker.send('Landing', 'Clicked landing video')}
         >
           <p>인기 동영상</p>
           {this.state.video ? (
