@@ -3,6 +3,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import styled from 'styled-components';
 import { ReactComponent as UrlIcon } from '../../icons/url.svg';
 import ModalController from '../../services/modal-controller';
+import Tracker from '../../services/tracker';
 import Transmitter from '../../services/transmitter';
 import { Color, HideOverflow } from '../../styles';
 
@@ -102,6 +103,9 @@ class ShareModal extends Component<Props> {
 
   onCopy = () => {
     Transmitter.emit('popup', '클립보드에 복사되었습니다');
+    Tracker.send('share_copied', {
+      video_id: this.props.data.id,
+    });
   };
 
   render() {

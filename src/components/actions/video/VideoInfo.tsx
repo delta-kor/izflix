@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { ReactComponent as BackIcon } from '../../../icons/back.svg';
 import ModalController from '../../../services/modal-controller';
 import Settings from '../../../services/settings';
+import Tracker from '../../../services/tracker';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 import withNavigate from '../../tools/Navigate';
 
@@ -169,6 +170,7 @@ class VideoInfo extends Component<Props> {
   onQualityClicked = async () => {
     const streamInfo = this.props.streamInfo;
     if (!streamInfo) return false;
+    const from = streamInfo.quality;
 
     const content: SelectModalContent[] = [];
     for (const quality of streamInfo.qualities) {
@@ -184,10 +186,17 @@ class VideoInfo extends Component<Props> {
 
     Settings.setOne('DEFAULT_VIDEO_QUALITY', result);
     this.props.setQuality(result);
+
+    const to = result;
+    Tracker.send('video_quality_change', {
+      quality_from: from,
+      quality_to: to,
+    });
   };
 
   onBack = () => {
     this.props.navigate(-1);
+    Tracker.send('video_back');
   };
 
   render() {

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../../services/spaceship';
 import { getDuration } from '../../../services/time';
+import Tracker from '../../../services/tracker';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../../styles';
 
 const Layout = styled(Link)`
@@ -107,7 +108,14 @@ class VideoRecommendsItem extends Component<Props, State> {
   render() {
     const video = this.props.video;
     return (
-      <Layout to={`/${video.id}`}>
+      <Layout
+        to={`/${video.id}`}
+        onClick={() =>
+          Tracker.send('video_recommend_clicked', {
+            video_id: video.id,
+          })
+        }
+      >
         <Thumbnail
           src={Spaceship.getThumbnail(video.id)}
           effect="opacity"

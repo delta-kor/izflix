@@ -6,6 +6,7 @@ import { ReactComponent as PipIcon } from '../../../icons/pip.svg';
 import { ReactComponent as ShareIcon } from '../../../icons/share.svg';
 import { ReactComponent as InfoIcon } from '../../../icons/video-info.svg';
 import ModalController from '../../../services/modal-controller';
+import Tracker from '../../../services/tracker';
 import Transmitter from '../../../services/transmitter';
 import { MobileQuery, PcQuery } from '../../../styles';
 
@@ -75,10 +76,12 @@ interface Props {
 class VideoAction extends Component<Props> {
   onPipClick = () => {
     Transmitter.emit('pip');
+    Tracker.send('video_pip', { video_id: this.props.id });
   };
 
   onShareClick = () => {
     ModalController.fire({ type: 'share', id: this.props.id });
+    Tracker.send('video_share', { video_id: this.props.id });
   };
 
   render() {
@@ -90,7 +93,15 @@ class VideoAction extends Component<Props> {
           <ShareIconItem />
           <Content>공유</Content>
         </Item>
-        <a target="_blank" href={download}>
+        <a
+          target="_blank"
+          href={download}
+          onClick={() =>
+            Tracker.send('video_download', {
+              video_id: this.props.id,
+            })
+          }
+        >
           <Item>
             <DownloadIconItem />
             <Content>다운로드</Content>
@@ -100,7 +111,14 @@ class VideoAction extends Component<Props> {
           <PipIconItem />
           <Content>PIP</Content>
         </Item>
-        <Link to="/info?k=highlight">
+        <Link
+          to="/info?k=highlight"
+          onClick={() =>
+            Tracker.send('video_info', {
+              video_id: this.props.id,
+            })
+          }
+        >
           <Item>
             <InfoIconItem />
             <Content>영상정보</Content>
