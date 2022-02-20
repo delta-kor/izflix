@@ -28,13 +28,14 @@ class TransmitterClass extends EventEmitter {
     this.loadListeners();
   }
 
-  private loadListeners() {
+  private loadListeners(): void {
     this.loadScrollListeners();
     this.loadLocationListeners();
+    this.loadResizeListeners();
   }
 
-  private loadScrollListeners() {
-    document.addEventListener('scroll', (e) => {
+  private loadScrollListeners(): void {
+    document.addEventListener('scroll', () => {
       const currentScroll = window.scrollY;
 
       const max = Math.max(this.lastScroll, currentScroll);
@@ -60,8 +61,14 @@ class TransmitterClass extends EventEmitter {
     });
   }
 
-  private loadLocationListeners() {
+  private loadLocationListeners(): void {
     this.on('locationupdate', (to, from) => {
+      this.emit('levelscroll');
+    });
+  }
+
+  private loadResizeListeners(): void {
+    window.addEventListener('resize', () => {
       this.emit('levelscroll');
     });
   }
