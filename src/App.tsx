@@ -1,6 +1,5 @@
 import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import ReactGA from 'react-ga4';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import LandingVideo from './components/actions/LandingVideo';
@@ -19,6 +18,7 @@ import VideoPage from './components/pages/VideoPage';
 import { Mobile, Pc } from './components/tools/MediaQuery';
 import Constants from './constants';
 import ModalController from './services/modal-controller';
+import Tracker from './services/tracker';
 import Transmitter from './services/transmitter';
 
 const NavigatorBlock = styled.div`
@@ -45,8 +45,7 @@ const App = (): JSX.Element => {
     Transmitter.emit('locationupdate', location.pathname, prevPath.current);
     prevPath.current = location.pathname;
 
-    ReactGA.set({ page: location.pathname });
-    ReactGA.send({ hitType: 'pageview', page: location.pathname });
+    Tracker.page(location.pathname);
 
     Transmitter.on('levelscroll', navigatorController);
     return () => {
