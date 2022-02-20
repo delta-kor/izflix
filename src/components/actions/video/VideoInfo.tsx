@@ -160,6 +160,7 @@ const BackButton = styled.div`
 `;
 
 interface Props {
+  id: string;
   navigate: NavigateFunction;
   data: ApiResponse.Video.Info | null;
   streamInfo: ApiResponse.Video.Stream | null;
@@ -189,6 +190,7 @@ class VideoInfo extends Component<Props> {
 
     const to = result;
     Tracker.send('video_quality_change', {
+      video_id: this.props.id,
       quality_from: from,
       quality_to: to,
     });
@@ -196,7 +198,9 @@ class VideoInfo extends Component<Props> {
 
   onBack = () => {
     this.props.navigate(-1);
-    Tracker.send('video_back');
+    Tracker.send('video_back', {
+      video_id: this.props.id,
+    });
   };
 
   render() {

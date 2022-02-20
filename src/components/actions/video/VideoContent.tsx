@@ -129,6 +129,7 @@ class VideoContent extends Component<Props> {
       <Layout>
         <Video url={this.props.streamInfo?.url || null} />
         <VideoInfo
+        id={this.props.id}
           data={this.props.videoInfo}
           streamInfo={this.props.streamInfo}
           setQuality={this.props.setQuality}
