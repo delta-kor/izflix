@@ -1,11 +1,16 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { Component } from 'react';
+import { NavigateFunction } from 'react-router-dom';
 import styled from 'styled-components';
+import delay from '../../../delay';
 import { ReactComponent as LoaderIcon } from '../../../icons/loading-bright.svg';
 import Settings from '../../../services/settings';
+import Spaceship from '../../../services/spaceship';
 import Tracker from '../../../services/tracker';
 import Transmitter from '../../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../../styles';
+import withNavigate from '../../tools/Navigate';
+import withParams from '../../tools/Params';
 
 const Layout = styled.div`
   position: relative;
@@ -62,20 +67,94 @@ const Loader = styled(motion(LoaderIcon))`
   }
 `;
 
+const NextWrapper = styled(motion.div)`
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: ${Color.DARK_GRAY}f0;
+  row-gap: 24px;
+  cursor: pointer;
+  user-select: none;
+`;
+
+const NextHeader = styled.div`
+  font-weight: bold;
+  font-size: 24px;
+`;
+
+const NextThumbnail = styled.img`
+  width: 30%;
+  aspect-ratio: 16 / 9;
+  border-radius: 4px;
+`;
+
+const NextContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+`;
+
+const NextTitle = styled.div`
+  font-weight: bold;
+  font-size: 20px;
+`;
+
+const NextDescription = styled.div`
+  font-weight: normal;
+  font-size: 14px;
+`;
+
+const NextProgress = styled.div`
+  width: 30%;
+  height: 4px;
+  background: ${Color.GRAY};
+  border-radius: 4px;
+  overflow: hidden;
+`;
+
+const NextIndicator = styled.div`
+  width: 0;
+  height: 100%;
+  background: ${Color.WHITE};
+  border-radius: 4px;
+  animation: countdown 3s forwards linear;
+
+  @keyframes countdown {
+    from {
+      width: 0;
+    }
+
+    to {
+      width: 100%;
+    }
+  }
+`;
+
 interface Props {
   id: string;
   url: string | null;
+  nextVideo: IVideoItem | null;
+  query: [URLSearchParams];
+  navigate: NavigateFunction;
 }
 
 interface State {
   loaded: boolean;
+  next: boolean;
 }
 
 let videoUpdatePip: boolean = false;
 
 class Video extends Component<Props, State> {
   videoRef = React.createRef<HTMLVideoElement>();
-  state: State = { loaded: false };
+  state: State = { loaded: false, next: false };
 
   componentDidMount = () => {
     Transmitter.on('pip', this.onPipToggle);
@@ -160,6 +239,7 @@ class Video extends Component<Props, State> {
 
   onVideoEnd = () => {
     Tracker.send('video_end', { video_id: this.props.id });
+    if (this.props.nextVideo) this.startNextCountdown();
   };
 
   onVideoPause = () => {
@@ -174,6 +254,32 @@ class Video extends Component<Props, State> {
       video_id: this.props.id,
       video_time: this.videoRef.current!.currentTime,
     });
+  };
+
+  startNextCountdown = async () => {
+    this.setState({ next: true });
+    await delay(3000);
+    if (!this.state.next) return false;
+    this.goNext();
+  };
+
+  goNext = () => {
+    const query = this.props.query[0];
+
+    let url: string = `/${this.props.nextVideo!.id}`;
+
+    const key = query.get('k');
+    const value = query.get('v');
+
+    if (key && value) {
+      const search = new URLSearchParams();
+      search.set('k', key);
+      search.set('v', value);
+
+      url += '?' + search.toString();
+    }
+
+    this.props.navigate(url);
   };
 
   render() {
@@ -193,11 +299,34 @@ class Video extends Component<Props, State> {
           />
         )}
         <AnimatePresence>
-          {!this.state.loaded && <Loader exit={{ opacity: 0 }} />}
+          {this.state.next && this.props.nextVideo && (
+            <NextWrapper
+              key="next"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={this.goNext}
+            >
+              <NextHeader>다음 동영상</NextHeader>
+              <NextThumbnail
+                src={Spaceship.getThumbnail(this.props.nextVideo.id)}
+              />
+              <NextContent>
+                <NextTitle>{this.props.nextVideo.title}</NextTitle>
+                <NextDescription>
+                  {this.props.nextVideo.description}
+                </NextDescription>
+              </NextContent>
+              <NextProgress>
+                <NextIndicator />
+              </NextProgress>
+            </NextWrapper>
+          )}
+          {!this.state.loaded && <Loader key="loader" exit={{ opacity: 0 }} />}
         </AnimatePresence>
       </Layout>
     );
   }
 }
 
-export default Video;
+export default withParams(withNavigate(Video));

@@ -171,6 +171,7 @@ interface State {
   streamInfo: ApiResponse.Video.Stream | null;
   videoInfo: ApiResponse.Video.Info | null;
   nextVideo: IVideoItem[];
+  recommends: IVideoItem[];
   nextError: boolean;
   videoNotFound: boolean;
   quality: number;
@@ -181,6 +182,7 @@ class VideoPage extends Component<Props, State> {
     streamInfo: null,
     videoInfo: null,
     nextVideo: [],
+    recommends: [],
     nextError: false,
     videoNotFound: false,
     quality: Settings.getOne('DEFAULT_VIDEO_QUALITY'),
@@ -208,6 +210,7 @@ class VideoPage extends Component<Props, State> {
     if (!isCrawler()) {
       this.loadStreamInfo(id, quality);
       this.loadNextVideo();
+      this.loadRecommends(id);
     }
   };
 
@@ -294,6 +297,13 @@ class VideoPage extends Component<Props, State> {
     this.setState({ nextVideo: videos });
   };
 
+  loadRecommends = async (id: string) => {
+    const count = Settings.getOne('VIDEO_RECOMMEND_COUNT');
+    const data = await Spaceship.getRecommends(id, count);
+    if (!data.ok) return Transmitter.emit('popup', data.message);
+    this.setState({ recommends: data.videos });
+  };
+
   render() {
     if (this.state.videoNotFound) return <NotFoundPage />;
 
@@ -302,15 +312,6 @@ class VideoPage extends Component<Props, State> {
     const value = query.get('v');
 
     const id = this.props.params.id!;
-
-    const videoContent = (
-      <VideoContent
-        id={id}
-        streamInfo={this.state.streamInfo}
-        videoInfo={this.state.videoInfo}
-        setQuality={(quality) => this.setState({ quality })}
-      />
-    );
 
     const nextVideo: IVideoItem[] = [];
     if (!this.state.videoInfo) nextVideo.push(...this.state.nextVideo);
@@ -328,6 +329,18 @@ class VideoPage extends Component<Props, State> {
         index++;
       }
     }
+
+    const selectedNextVideo = nextVideo[0] || this.state.recommends[0] || null;
+
+    const videoContent = (
+      <VideoContent
+        id={id}
+        streamInfo={this.state.streamInfo}
+        videoInfo={this.state.videoInfo}
+        setQuality={(quality) => this.setState({ quality })}
+        nextVideo={selectedNextVideo}
+      />
+    );
 
     const isNextEnabled =
       ['playlist', 'music', 'category'].includes(key!) &&
@@ -386,7 +399,7 @@ class VideoPage extends Component<Props, State> {
         ) : (
           <></>
         )}
-        <VideoRecommends id={id} />
+        <VideoRecommends id={id} videos={this.state.recommends} />
       </Page>
     );
   }

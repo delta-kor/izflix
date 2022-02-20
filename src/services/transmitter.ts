@@ -3,6 +3,7 @@ import Constants from '../constants';
 
 interface TransmitterEvents {
   popup(message: any): void;
+  nextvideo(video: IVideoItem): void;
   levelscroll(): void;
   locationupdate(to: string, from: string): void;
   pip(): void;

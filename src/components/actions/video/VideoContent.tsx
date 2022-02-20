@@ -121,13 +121,18 @@ interface Props {
   streamInfo: ApiResponse.Video.Stream | null;
   videoInfo: ApiResponse.Video.Info | null;
   setQuality(quality: number): void;
+  nextVideo: IVideoItem | null;
 }
 
 class VideoContent extends Component<Props> {
   render() {
     return (
       <Layout>
-        <Video id={this.props.id} url={this.props.streamInfo?.url || null} />
+        <Video
+          id={this.props.id}
+          url={this.props.streamInfo?.url || null}
+          nextVideo={this.props.nextVideo}
+        />
         <VideoInfo
           id={this.props.id}
           data={this.props.videoInfo}

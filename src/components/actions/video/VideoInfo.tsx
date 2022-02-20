@@ -161,10 +161,10 @@ const BackButton = styled.div`
 
 interface Props {
   id: string;
-  navigate: NavigateFunction;
   data: ApiResponse.Video.Info | null;
   streamInfo: ApiResponse.Video.Stream | null;
   setQuality(quality: number): void;
+  navigate: NavigateFunction;
 }
 
 class VideoInfo extends Component<Props> {

@@ -1,9 +1,5 @@
 import { Component } from 'react';
 import styled from 'styled-components';
-import isCrawler from '../../../services/crawl';
-import Settings from '../../../services/settings';
-import Spaceship from '../../../services/spaceship';
-import Transmitter from '../../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../../styles';
 import VideoRecommendsItem from './VideoRecommendsItem';
 
@@ -100,27 +96,10 @@ const Placeholder = styled.div`
 
 interface Props {
   id: string;
-}
-
-interface State {
   videos: IVideoItem[];
 }
 
-class VideoRecommends extends Component<Props, State> {
-  state: State = { videos: [] };
-
-  componentDidMount = () => {
-    !isCrawler() && this.loadData();
-  };
-
-  loadData = async () => {
-    const id = this.props.id;
-    const count = Settings.getOne('VIDEO_RECOMMEND_COUNT');
-    const data = await Spaceship.getRecommends(id, count);
-    if (!data.ok) return Transmitter.emit('popup', data.message);
-    this.setState({ videos: data.videos });
-  };
-
+class VideoRecommends extends Component<Props> {
   render() {
     const placeholders = [];
     for (let i = 0; i < 12; i++) {
@@ -137,8 +116,8 @@ class VideoRecommends extends Component<Props, State> {
       <Wrapper>
         <Title>연관 동영상</Title>
         <Layout>
-          {this.state.videos.length
-            ? this.state.videos.map((video) => (
+          {this.props.videos.length
+            ? this.props.videos.map((video) => (
                 <VideoRecommendsItem key={video.id} video={video} />
               ))
             : placeholders}
