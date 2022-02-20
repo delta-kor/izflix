@@ -216,16 +216,16 @@ class VideoPage extends Component<Props, State> {
 
   loadStreamInfo = async (id: string, quality: number) => {
     const data = await Spaceship.streamVideo(id, quality);
-    if (!data.ok) {
-      this.setState({ videoNotFound: true });
-      return Transmitter.emit('popup', data.message);
-    }
+    if (!data.ok) return Transmitter.emit('popup', data.message);
     this.setState({ streamInfo: data });
   };
 
   loadVideoInfo = async (id: string) => {
     const data = await Spaceship.getVideoInfo(id);
-    if (!data.ok) return Transmitter.emit('popup', data.message);
+    if (!data.ok) {
+      this.setState({ videoNotFound: true });
+      return Transmitter.emit('popup', data.message);
+    }
 
     for (const { path, count } of data.path) {
       PathFinder.set(path, count);
