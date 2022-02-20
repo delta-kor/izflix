@@ -127,9 +127,9 @@ class VideoContent extends Component<Props> {
   render() {
     return (
       <Layout>
-        <Video url={this.props.streamInfo?.url || null} />
+        <Video id={this.props.id} url={this.props.streamInfo?.url || null} />
         <VideoInfo
-        id={this.props.id}
+          id={this.props.id}
           data={this.props.videoInfo}
           streamInfo={this.props.streamInfo}
           setQuality={this.props.setQuality}

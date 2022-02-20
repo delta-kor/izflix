@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as LoaderIcon } from '../../../icons/loading-bright.svg';
 import Settings from '../../../services/settings';
+import Tracker from '../../../services/tracker';
 import Transmitter from '../../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../../styles';
 
@@ -62,6 +63,7 @@ const Loader = styled(motion(LoaderIcon))`
 `;
 
 interface Props {
+  id: string;
   url: string | null;
 }
 
@@ -156,6 +158,24 @@ class Video extends Component<Props, State> {
     Transmitter.emit('popup', '영상 재생중 오류가 발생했어요');
   };
 
+  onVideoEnd = () => {
+    Tracker.send('video_end', { video_id: this.props.id });
+  };
+
+  onVideoPause = () => {
+    Tracker.send('video_pause', {
+      video_id: this.props.id,
+      video_time: this.videoRef.current!.currentTime,
+    });
+  };
+
+  onVideoPlay = () => {
+    Tracker.send('video_play', {
+      video_id: this.props.id,
+      video_time: this.videoRef.current!.currentTime,
+    });
+  };
+
   render() {
     return (
       <Layout>
@@ -164,6 +184,9 @@ class Video extends Component<Props, State> {
             ref={this.videoRef}
             onCanPlay={this.onVideoLoad}
             onError={this.onVideoError}
+            onPlay={this.onVideoPlay}
+            onEnded={this.onVideoEnd}
+            onPause={this.onVideoPause}
             src={this.props.url}
             $active={this.state.loaded}
             controls
