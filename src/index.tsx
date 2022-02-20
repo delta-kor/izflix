@@ -1,16 +1,14 @@
 import React from 'react';
 import { render } from 'react-dom';
-import ReactGA from 'react-ga4';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import delay from './delay';
 import GlobalStyle from './GlobalStyle';
 import reportWebVitals from './reportWebVitals';
 import isCrawler from './services/crawl';
+import Tracker from './services/tracker';
 
-if (!isCrawler()) {
-  ReactGA.initialize('G-S789E94G7D');
-}
+Tracker.initialize();
 
 const app = (
   <React.StrictMode>
