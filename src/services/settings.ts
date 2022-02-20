@@ -17,6 +17,9 @@ class SettingsClass {
       DISPLAY_NEXT_VIDEO: true,
       VIDEO_RECOMMEND_COUNT: 20,
       FEATURED_VIDEO_START_POSITION: 0.5,
+      NEXT_VIDEO_AUTOPLAY: true,
+      NEXT_VIDEO_AUTOPLAY_COUNTDOWN: 5,
+      NEXT_VIDEO_INSTANT_PIP: true,
     };
 
     const json = localStorage.getItem(key);

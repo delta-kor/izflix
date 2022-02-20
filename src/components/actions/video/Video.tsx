@@ -78,53 +78,102 @@ const NextWrapper = styled(motion.div)`
   justify-content: center;
   align-items: center;
   background: ${Color.DARK_GRAY}f0;
-  row-gap: 24px;
-  cursor: pointer;
   user-select: none;
+
+  ${PcQuery} {
+    row-gap: 24px;
+  }
+
+  ${MobileQuery} {
+    row-gap: 18px;
+  }
 `;
 
 const NextHeader = styled.div`
   font-weight: bold;
-  font-size: 24px;
+
+  ${PcQuery} {
+    font-size: 24px;
+  }
+
+  ${MobileQuery} {
+    font-size: 18px;
+  }
 `;
 
 const NextThumbnail = styled.img`
-  width: 30%;
-  aspect-ratio: 16 / 9;
   border-radius: 4px;
+  cursor: pointer;
+  aspect-ratio: 16 / 9;
+
+  ${PcQuery} {
+    width: 100%;
+  }
+
+  ${MobileQuery} {
+    width: 30%;
+  }
 `;
 
 const NextContent = styled.div`
   display: flex;
+  cursor: pointer;
   flex-direction: column;
-  align-items: center;
-  row-gap: 10px;
+
+  ${PcQuery} {
+    align-items: center;
+    row-gap: 10px;
+  }
+
+  ${MobileQuery} {
+    row-gap: 8px;
+  }
 `;
 
 const NextTitle = styled.div`
   font-weight: bold;
-  font-size: 20px;
+
+  ${PcQuery} {
+    font-size: 20px;
+  }
+
+  ${MobileQuery} {
+    font-size: 14px;
+  }
 `;
 
 const NextDescription = styled.div`
   font-weight: normal;
-  font-size: 14px;
+
+  ${PcQuery} {
+    font-size: 14px;
+  }
+
+  ${MobileQuery} {
+    font-size: 12px;
+  }
 `;
 
 const NextProgress = styled.div`
-  width: 30%;
   height: 4px;
   background: ${Color.GRAY};
   border-radius: 4px;
   overflow: hidden;
+
+  ${PcQuery} {
+    width: 30%;
+  }
+  ${MobileQuery} {
+    width: 50%;
+  }
 `;
 
-const NextIndicator = styled.div`
+const NextIndicator = styled.div<{ $length: number }>`
   width: 0;
   height: 100%;
   background: ${Color.WHITE};
   border-radius: 4px;
-  animation: countdown 3s forwards linear;
+  animation: countdown ${({ $length }) => $length}s forwards linear;
 
   @keyframes countdown {
     from {
@@ -134,6 +183,32 @@ const NextIndicator = styled.div`
     to {
       width: 100%;
     }
+  }
+`;
+
+const NextDismiss = styled.div`
+  width: 30%;
+  font-weight: normal;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+`;
+
+const NextMenu = styled.div`
+  display: flex;
+
+  ${PcQuery} {
+    width: 30%;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 24px;
+  }
+
+  ${MobileQuery} {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    column-gap: 16px;
   }
 `;
 
@@ -155,6 +230,7 @@ let videoUpdatePip: boolean = false;
 class Video extends Component<Props, State> {
   videoRef = React.createRef<HTMLVideoElement>();
   state: State = { loaded: false, next: false };
+  unmounted: boolean = false;
 
   componentDidMount = () => {
     Transmitter.on('pip', this.onPipToggle);
@@ -169,6 +245,7 @@ class Video extends Component<Props, State> {
 
   componentWillUnmount = () => {
     Transmitter.removeListener('pip', this.onPipToggle);
+    this.unmounted = true;
   };
 
   onUrlUpdate = async () => {
@@ -257,10 +334,17 @@ class Video extends Component<Props, State> {
   };
 
   startNextCountdown = async () => {
+    if (!Settings.getOne('NEXT_VIDEO_AUTOPLAY')) return false;
+    if (this.isPipMode() && Settings.getOne('NEXT_VIDEO_INSTANT_PIP'))
+      return this.goNext();
     this.setState({ next: true });
-    await delay(3000);
-    if (!this.state.next) return false;
+    await delay(Settings.getOne('NEXT_VIDEO_AUTOPLAY_COUNTDOWN') * 1000);
+    if (!this.state.next || this.unmounted) return false;
     this.goNext();
+  };
+
+  stopNextCountdown = () => {
+    this.setState({ next: false });
   };
 
   goNext = () => {
@@ -305,21 +389,26 @@ class Video extends Component<Props, State> {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={this.goNext}
             >
               <NextHeader>다음 동영상</NextHeader>
-              <NextThumbnail
-                src={Spaceship.getThumbnail(this.props.nextVideo.id)}
-              />
-              <NextContent>
-                <NextTitle>{this.props.nextVideo.title}</NextTitle>
-                <NextDescription>
-                  {this.props.nextVideo.description}
-                </NextDescription>
-              </NextContent>
+              <NextMenu>
+                <NextThumbnail
+                  src={Spaceship.getThumbnail(this.props.nextVideo.id)}
+                  onClick={this.goNext}
+                />
+                <NextContent onClick={this.goNext}>
+                  <NextTitle>{this.props.nextVideo.title}</NextTitle>
+                  <NextDescription>
+                    {this.props.nextVideo.description}
+                  </NextDescription>
+                </NextContent>
+              </NextMenu>
               <NextProgress>
-                <NextIndicator />
+                <NextIndicator
+                  $length={Settings.getOne('NEXT_VIDEO_AUTOPLAY_COUNTDOWN')}
+                />
               </NextProgress>
+              <NextDismiss onClick={this.stopNextCountdown}>취소</NextDismiss>
             </NextWrapper>
           )}
           {!this.state.loaded && <Loader key="loader" exit={{ opacity: 0 }} />}

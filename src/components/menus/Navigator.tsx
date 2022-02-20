@@ -13,6 +13,7 @@ const MobileLayout = styled.nav`
   width: 100%;
   height: 72px;
   background: ${Color.BACKGROUND};
+  border-top: 1px solid ${Color.DARK_GRAY};
   justify-content: center;
   align-items: center;
   z-index: 20;

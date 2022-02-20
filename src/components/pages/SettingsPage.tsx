@@ -202,7 +202,7 @@ class SettingsPage extends Component<any, State> {
             >
               <Content>
                 <ItemTitle>동영상 화질 기본값</ItemTitle>
-                <ItemDescription>영상 재생 시 기본 화질</ItemDescription>
+                <ItemDescription>동영상 재생 시 기본 화질</ItemDescription>
               </Content>
               <ValueAction>
                 {this.state.settings.DEFAULT_VIDEO_QUALITY}p
@@ -271,6 +271,54 @@ class SettingsPage extends Component<any, State> {
               <ValueAction>
                 {this.state.settings.FEATURED_VIDEO_START_POSITION * 100}%
               </ValueAction>
+            </Item>
+            <Item onClick={this.toggleValue('NEXT_VIDEO_AUTOPLAY')}>
+              <Content>
+                <ItemTitle>다음 동영상 자동 재생</ItemTitle>
+                <ItemDescription>
+                  재생이 끝난 후 다음 동영상을 자동으로 재생해요
+                </ItemDescription>
+              </Content>
+              <ToggleAction $active={this.state.settings.NEXT_VIDEO_AUTOPLAY} />
+            </Item>
+            <Item
+              onClick={() =>
+                ModalController.fire({
+                  type: 'select',
+                  title: '지속 시간 선택',
+                  content: [
+                    { id: 0, text: '즉시' },
+                    { id: 1, text: '1초' },
+                    { id: 3, text: '3초' },
+                    { id: 5, text: '5초' },
+                    { id: 7, text: '7초' },
+                  ],
+                  default: this.state.settings.NEXT_VIDEO_AUTOPLAY_COUNTDOWN,
+                }).then((value) =>
+                  this.setValue('NEXT_VIDEO_AUTOPLAY_COUNTDOWN', value)
+                )
+              }
+            >
+              <Content>
+                <ItemTitle>다음 동영상 재생 지속 시간</ItemTitle>
+                <ItemDescription>
+                  다음 동영상 메뉴 자동 응답 시간
+                </ItemDescription>
+              </Content>
+              <ValueAction>
+                {this.state.settings.NEXT_VIDEO_AUTOPLAY_COUNTDOWN}초
+              </ValueAction>
+            </Item>
+            <Item onClick={this.toggleValue('NEXT_VIDEO_INSTANT_PIP')}>
+              <Content>
+                <ItemTitle>PIP 모드에서 다음 동영상 즉시 재생</ItemTitle>
+                <ItemDescription>
+                  PIP 모드에서 재생이 끝난 후 다음 동영상을 즉시 재생해요
+                </ItemDescription>
+              </Content>
+              <ToggleAction
+                $active={this.state.settings.NEXT_VIDEO_INSTANT_PIP}
+              />
             </Item>
           </Group>
         </Wrapper>
