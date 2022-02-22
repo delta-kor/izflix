@@ -272,9 +272,6 @@ class LandingVideo extends Component<any, State> {
         <Video
           ref={this.videoRef}
           onCanPlay={() => this.setState({ loaded: true })}
-          onError={() =>
-            Transmitter.emit('popup', '영상 재생중 오류가 발생했어요')
-          }
           variants={{ initial: { opacity: 0 }, load: { opacity: 1 } }}
           initial="initial"
           animate={this.state.loaded ? 'load' : 'initial'}
