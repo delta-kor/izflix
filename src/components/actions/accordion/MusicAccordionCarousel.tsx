@@ -86,12 +86,19 @@ const CarouselHandle = styled.span`
   }
 `;
 
+const CarouselHandleWrapper = styled.div`
+  position: relative;
+  width: 18px;
+  height: 18px;
+`;
+
 const CarouselHandleItem = styled.div<{ $active: boolean }>`
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 6px;
   height: 6px;
   background: ${({ $active }) => ($active ? Color.WHITE : Color.GRAY)};
-  border: 6px solid ${Color.DARK_GRAY};
-  box-sizing: content-box;
   border-radius: 100%;
   transition: background 0.1s;
 `;
@@ -130,11 +137,9 @@ class MusicAccordionCarousel extends Component<Props> {
     const handleItems = [];
     for (let i = 0; i < this.props.count / 5; i++)
       handleItems.push(
-        <CarouselHandleItem
-          key={i}
-          $active={this.state.page === i}
-          onClick={() => this.onHandleClick(i)}
-        />
+        <CarouselHandleWrapper key={i} onClick={() => this.onHandleClick(i)}>
+          <CarouselHandleItem $active={this.state.page === i} />
+        </CarouselHandleWrapper>
       );
 
     const handle = <CarouselHandle>{handleItems}</CarouselHandle>;
