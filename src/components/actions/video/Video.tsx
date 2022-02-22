@@ -2,7 +2,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { Component } from 'react';
 import { NavigateFunction } from 'react-router-dom';
 import styled from 'styled-components';
-import delay from '../../../delay';
 import { ReactComponent as LoaderIcon } from '../../../icons/loading-bright.svg';
 import Settings from '../../../services/settings';
 import Spaceship from '../../../services/spaceship';
@@ -231,6 +230,7 @@ class Video extends Component<Props, State> {
   videoRef = React.createRef<HTMLVideoElement>();
   state: State = { loaded: false, next: false };
   unmounted: boolean = false;
+  timeout: any;
 
   componentDidMount = () => {
     Transmitter.on('pip', this.onPipToggle);
@@ -339,12 +339,18 @@ class Video extends Component<Props, State> {
     if (this.isPipMode() && Settings.getOne('NEXT_VIDEO_INSTANT_PIP'))
       return this.goNext();
     this.setState({ next: true });
-    await delay(Settings.getOne('NEXT_VIDEO_AUTOPLAY_COUNTDOWN') * 1000);
-    if (!this.state.next || this.unmounted) return false;
-    this.goNext();
+
+    clearTimeout(this.timeout);
+
+    const delay = Settings.getOne('NEXT_VIDEO_AUTOPLAY_COUNTDOWN') * 1000;
+    this.timeout = setTimeout(() => {
+      if (!this.state.next || this.unmounted) return false;
+      this.goNext();
+    }, delay);
   };
 
   stopNextCountdown = () => {
+    clearTimeout(this.timeout);
     this.setState({ next: false });
   };
 
