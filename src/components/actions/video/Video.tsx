@@ -252,7 +252,9 @@ class Video extends Component<Props, State> {
     this.setState({ loaded: false });
 
     if (this.isPipMode()) {
-      await this.pipOff(true);
+      if (document.pictureInPictureElement instanceof HTMLVideoElement) {
+        document.pictureInPictureElement.pause();
+      }
       videoUpdatePip = true;
     }
   };
@@ -270,7 +272,6 @@ class Video extends Component<Props, State> {
   };
 
   pipOn = async () => {
-    if (this.isPipMode()) return false;
     const video = this.videoRef.current;
     if (!video) return false;
 
