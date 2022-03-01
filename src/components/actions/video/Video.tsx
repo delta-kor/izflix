@@ -345,6 +345,7 @@ class Video extends Component<Props, State> {
     const delay = Settings.getOne('NEXT_VIDEO_AUTOPLAY_COUNTDOWN') * 1000;
     this.timeout = setTimeout(() => {
       if (!this.state.next || this.unmounted) return false;
+      Tracker.send('video_next', { next_type: 'auto' });
       this.goNext();
     }, delay);
   };
@@ -371,6 +372,11 @@ class Video extends Component<Props, State> {
     }
 
     this.props.navigate(url);
+  };
+
+  onNextClick = () => {
+    Tracker.send('video_next', { next_type: 'manual' });
+    this.goNext();
   };
 
   render() {
@@ -401,9 +407,9 @@ class Video extends Component<Props, State> {
               <NextMenu>
                 <NextThumbnail
                   src={Spaceship.getThumbnail(this.props.nextVideo.id)}
-                  onClick={this.goNext}
+                  onClick={this.onNextClick}
                 />
-                <NextContent onClick={this.goNext}>
+                <NextContent onClick={this.onNextClick}>
                   <NextTitle>{this.props.nextVideo.title}</NextTitle>
                   <NextDescription>
                     {this.props.nextVideo.description}
