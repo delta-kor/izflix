@@ -3,6 +3,7 @@ import isCrawler from './crawl';
 
 class Tracker {
   private static isActivated(): boolean {
+    if (window.location.host !== 'izflix.net') return false;
     return !isCrawler() && process.env.NODE_ENV !== 'development';
   }
 
