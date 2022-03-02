@@ -18,9 +18,10 @@ self.addEventListener('fetch', function (event) {
       try {
         const response = await fetch(event.request);
         const type = response.headers.get('content-type');
-        const isHtml = type && type.includes('text/html');
+        const cacheType = ['text/html', 'font/woff', 'text/css'];
+        const isCacheType = type && cacheType.some((value) => type.includes(value));
         
-        if(response.status === 200 && isHtml) {
+        if(response.status === 200 && isCacheType) {
           const cache = await caches.open('cache');
           cache.put(event.request.url, response.clone());
         }

@@ -1,3 +1,31 @@
+@font-face {
+  font-family: 'NanumSquare';
+  font-weight: 400;
+  src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/NanumSquareR.woff)
+    format('truetype');
+}
+
+@font-face {
+  font-family: 'NanumSquare';
+  font-weight: 700;
+  src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/NanumSquareB.woff)
+    format('truetype');
+}
+
+@font-face {
+  font-family: 'NanumSquare';
+  font-weight: 800;
+  src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/NanumSquareEB.woff)
+    format('truetype');
+}
+
+@font-face {
+  font-family: 'NanumSquare';
+  font-weight: 300;
+  src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/NanumSquareL.woff)
+    format('truetype');
+}
+
 body {
   background: #070d2d;
 }
