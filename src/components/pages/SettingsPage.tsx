@@ -5,6 +5,7 @@ import ModalController from '../../services/modal-controller';
 import Scroll from '../../services/scroll';
 import Settings from '../../services/settings';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
+import Back from '../actions/Back';
 import Meta from '../Meta';
 
 const Page = styled(motion.main)`
@@ -160,6 +161,7 @@ class SettingsPage extends Component<any, State> {
           data={{ title: '설정 - IZFLIX', url: `https://izflix.net/settings` }}
         />
         <Wrapper>
+          <Back />
           <Group>
             <GroupTitle>재생</GroupTitle>
             <Item onClick={this.toggleValue('FEATURED_VIDEO_AUTOPLAY')}>

@@ -5,6 +5,7 @@ import { ReactComponent as GithubIcon } from '../../icons/github.svg';
 import { ReactComponent as VercelIcon } from '../../icons/vercel.svg';
 import Scroll from '../../services/scroll';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
+import Back from '../actions/Back';
 import Meta from '../Meta';
 import withParams from '../tools/Params';
 
@@ -157,6 +158,7 @@ class InfoPage extends Component<Props> {
           }}
         />
         <Wrapper>
+          <Back />
           <Group>
             <GroupTitle>Repository</GroupTitle>
             <GithubWrapper>
