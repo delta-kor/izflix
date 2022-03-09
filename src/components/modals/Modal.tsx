@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
 import { Color } from '../../styles';
+import InfoModal from './InfoModal';
 import SelectModal from './SelectModal';
 import ShareModal from './ShareModal';
 
@@ -38,6 +39,9 @@ class Modal extends Component<Props> {
         break;
       case 'share':
         content = <ShareModal data={data} modalKey={this.props.modalKey} />;
+        break;
+      case 'info':
+        content = <InfoModal data={data} modalKey={this.props.modalKey} />;
         break;
       default:
         console.error('Empty modal');

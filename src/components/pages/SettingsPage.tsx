@@ -321,6 +321,16 @@ class SettingsPage extends Component<any, State> {
               />
             </Item>
           </Group>
+          <Group>
+            <GroupTitle>알림</GroupTitle>
+            <Item onClick={this.toggleValue('$_TRAFFIC_ALERT')}>
+              <Content>
+                <ItemTitle>사용량 안내 표시</ItemTitle>
+                <ItemDescription>영상 재생시 사용량 안내 표시</ItemDescription>
+              </Content>
+              <ToggleAction $active={!this.state.settings.$_TRAFFIC_ALERT} />
+            </Item>
+          </Group>
         </Wrapper>
       </Page>
     );

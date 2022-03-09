@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { Params } from 'react-router-dom';
 import styled from 'styled-components';
 import isCrawler from '../../services/crawl';
+import ModalController from '../../services/modal-controller';
 import PathFinder from '../../services/path-finder';
 import Scroll from '../../services/scroll';
 import Settings from '../../services/settings';
@@ -226,6 +227,15 @@ class VideoPage extends Component<Props, State> {
       this.setState({ videoNotFound: true });
       return Transmitter.emit('popup', data.message);
     }
+
+    if (!Settings.getOne('$_TRAFFIC_ALERT'))
+      ModalController.fire({
+        type: 'info',
+        title:
+          '서버 사용량 증가로 일부 영상에서 끊김 현상이 발생 할 수 있습니다.',
+        description:
+          'Mnet 엠카운트다운, MBC every1 쇼챔피언, W Korea LOVE YOUR W',
+      }).then(() => Settings.setOne('$_TRAFFIC_ALERT', true));
 
     for (const { path, count } of data.path) {
       PathFinder.set(path, count);

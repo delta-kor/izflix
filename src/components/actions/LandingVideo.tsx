@@ -228,7 +228,10 @@ class LandingVideo extends Component<any, State> {
       const video = playlist.videos[random];
       this.setState({ video });
 
-      const videoData = await Spaceship.streamVideo(video.id, 1080);
+      const videoData = await Spaceship.streamVideo(
+        video.id,
+        Settings.getOne('DEFAULT_VIDEO_QUALITY')
+      );
       if (!videoData.ok) return Transmitter.emit('popup', videoData.message);
 
       const position = Settings.getOne('FEATURED_VIDEO_START_POSITION');
