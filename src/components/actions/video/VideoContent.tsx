@@ -132,6 +132,9 @@ class VideoContent extends Component<Props> {
           id={this.props.id}
           url={this.props.streamInfo?.url || null}
           nextVideo={this.props.nextVideo}
+          is4K={
+            Math.max.apply(Math, this.props.streamInfo?.qualities || []) >= 2160
+          }
         />
         <VideoInfo
           id={this.props.id}
