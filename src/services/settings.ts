@@ -21,6 +21,7 @@ class SettingsClass {
       NEXT_VIDEO_AUTOPLAY_COUNTDOWN: 5,
       NEXT_VIDEO_INSTANT_PIP: true,
       $_TRAFFIC_ALERT: false,
+      $_4K_ALERT: false,
     };
 
     const json = localStorage.getItem(key);

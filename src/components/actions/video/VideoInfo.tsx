@@ -210,6 +210,18 @@ class VideoInfo extends Component<Props> {
     Settings.setOne('DEFAULT_VIDEO_QUALITY', Math.min(result, 1080));
     this.props.setQuality(result);
 
+    if (result >= 1440) {
+      if (!Settings.getOne('$_4K_ALERT')) {
+        ModalController.fire({
+          type: 'info',
+          title:
+            '브라우저 환경에 따라 초고화질 영상 재생이 지원되지 않을 수 있어요',
+          description: '영상 재생 오류 시 화질을 조정하고 새로고침 하세요',
+        });
+        Settings.setOne('$_4K_ALERT', true);
+      }
+    }
+
     const to = result;
     Tracker.send('video_quality_change', {
       video_id: this.props.id,

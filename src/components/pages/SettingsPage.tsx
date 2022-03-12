@@ -332,6 +332,15 @@ class SettingsPage extends Component<any, State> {
               </Content>
               <ToggleAction $active={!this.state.settings.$_TRAFFIC_ALERT} />
             </Item>
+            <Item onClick={this.toggleValue('$_4K_ALERT')}>
+              <Content>
+                <ItemTitle>초고화질 안내 표시</ItemTitle>
+                <ItemDescription>
+                  초고화질 영상 재생시 안내 표시
+                </ItemDescription>
+              </Content>
+              <ToggleAction $active={!this.state.settings.$_4K_ALERT} />
+            </Item>
           </Group>
         </Wrapper>
       </Page>

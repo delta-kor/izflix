@@ -9,4 +9,5 @@ interface ISettings {
   NEXT_VIDEO_AUTOPLAY_COUNTDOWN: number;
   NEXT_VIDEO_INSTANT_PIP: boolean;
   $_TRAFFIC_ALERT: boolean;
+  $_4K_ALERT: boolean;
 }

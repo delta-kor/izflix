@@ -36,13 +36,16 @@ const Title = styled.div`
   font-weight: bold;
   font-size: 20px;
   line-height: 28px;
+  white-space: pre-wrap;
 `;
 
 const Description = styled.div`
   width: 100%;
   font-weight: normal;
   font-size: 14px;
+  line-height: 22px;
   opacity: 0.7;
+  white-space: pre-wrap;
 `;
 
 const Submit = styled.div`
