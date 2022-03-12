@@ -50,7 +50,6 @@ namespace ApiResponse {
       duration: number;
       date: number;
       path: IPath[];
-      is_4k: boolean;
     }
   }
 
