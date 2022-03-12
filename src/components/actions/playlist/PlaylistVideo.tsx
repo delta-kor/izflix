@@ -177,7 +177,7 @@ class PlaylistVideo extends Component<Props> {
           )}
           <Title>{video.title}</Title>
           <Description>{video.description}</Description>
-          <Duration>{getDuration(video.duration)}</Duration>
+          <Duration>{getDuration(video.duration, video.is_4k)}</Duration>
         </Content>
       </Layout>
     );

@@ -281,6 +281,7 @@ class VideoPage extends Component<Props, State> {
             title: '',
             description: video.description,
             duration: video.duration,
+            is_4k: video.is_4k,
           }))
       );
     }
@@ -300,6 +301,7 @@ class VideoPage extends Component<Props, State> {
             title: file.title,
             description: '',
             duration: file.duration,
+            is_4k: file.is_4k,
           }))
       );
     }

@@ -118,7 +118,7 @@ class CategoryFile extends Component<Props> {
         />
         <ThumbnailPlaceholder />
         <Title>{file.title}</Title>
-        <Count>{getDuration(file.duration)}</Count>
+        <Count>{getDuration(file.duration, file.is_4k)}</Count>
       </Layout>
     );
   }

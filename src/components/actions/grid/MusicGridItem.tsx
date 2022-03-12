@@ -96,7 +96,7 @@ class MusicGridItem extends Component<Props> {
         <ThumbnailPlaceholder />
         <Title>{video.description}</Title>
         <Date>{getDate(video.date)}</Date>
-        <Duration>{getDuration(video.duration)}</Duration>
+        <Duration>{getDuration(video.duration, video.is_4k)}</Duration>
       </Layout>
     );
   }

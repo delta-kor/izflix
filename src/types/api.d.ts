@@ -94,6 +94,7 @@ interface IMusicVideoItem {
   description: string;
   date: number;
   duration: number;
+  is_4k: boolean;
 }
 
 interface IVideoItem {
@@ -101,6 +102,7 @@ interface IVideoItem {
   title: string;
   description: string;
   duration: number;
+  is_4k: boolean;
 }
 
 interface ICategoryFolder {
@@ -115,6 +117,7 @@ interface ICategoryFile {
   id: string;
   date: number;
   duration: number;
+  is_4k: boolean;
 }
 
 interface IPath {
