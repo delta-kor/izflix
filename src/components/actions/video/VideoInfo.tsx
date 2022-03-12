@@ -103,6 +103,7 @@ const DescriptionPlaceholder = styled.div`
 `;
 
 const QualityButton = styled(motion.div)`
+  position: relative;
   align-self: center;
   font-weight: bold;
   border-radius: 4px;
@@ -120,6 +121,27 @@ const QualityButton = styled(motion.div)`
     margin: 0 0 0 8px;
     padding: 12px 16px;
     font-size: 16px;
+  }
+`;
+
+const UHDIncidator = styled.div`
+  position: absolute;
+  padding: 2px 4px;
+  font-weight: bold;
+  border-radius: 4px;
+  background: ${Color.PRIMARY};
+  transform: translate(50%, -50%);
+
+  ${PcQuery} {
+    top: 4px;
+    right: 4px;
+    font-size: 12px;
+  }
+
+  ${MobileQuery} {
+    top: 0;
+    right: 4px;
+    font-size: 8px;
   }
 `;
 
@@ -185,7 +207,7 @@ class VideoInfo extends Component<Props> {
       default: streamInfo.quality,
     });
 
-    Settings.setOne('DEFAULT_VIDEO_QUALITY', result);
+    Settings.setOne('DEFAULT_VIDEO_QUALITY', Math.min(result, 1080));
     this.props.setQuality(result);
 
     const to = result;
@@ -238,6 +260,10 @@ class VideoInfo extends Component<Props> {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
           >
+            {streamInfo.quality < 2160 &&
+              Math.max.apply(Math, streamInfo.qualities) >= 2160 && (
+                <UHDIncidator>4K 지원</UHDIncidator>
+              )}
             {streamInfo.quality}p
           </QualityButton>
         )}
