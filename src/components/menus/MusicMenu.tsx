@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import styled from 'styled-components';
+import Constants from '../../constants';
 import Scroll from '../../services/scroll';
 import Spaceship from '../../services/spaceship';
 import Transmitter from '../../services/transmitter';
@@ -31,7 +32,10 @@ class MusicMenu extends Component<any, State> {
 
   loadScroll = () => {
     const scrollData: MusicPageScrollData | null = Scroll.getPoint('music');
-    if (!scrollData) return false;
+    if (!scrollData) {
+      if (Constants.IS_MOBILE()) Scroll.up();
+      return false;
+    }
 
     this.setState({ selected: scrollData.selected });
   };
