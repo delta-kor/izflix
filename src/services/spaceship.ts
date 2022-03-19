@@ -29,13 +29,21 @@ class SpaceshipClass {
 
     try {
       const response = await fetch(this.baseUrl + path, options);
+
+      if (
+        !response.ok &&
+        !response.headers.get('Content-Type')!.includes('application/json')
+      )
+        return {
+          ok: false,
+          message:
+            '서버 사용량이 많아 접속이 지연되고 있습니다\n잠시후 다시 시도해주세요',
+        } as T;
+
       data = await response.json();
       data.status = response.status;
     } catch (e: any) {
-      if (!e.json)
-        return { ok: false, message: '네트워크 연결이 원할하지 않아요' } as T;
-
-      data = await e.json();
+      return { ok: false, message: '네트워크 연결이 원할하지 않아요' } as T;
     }
 
     return data;
