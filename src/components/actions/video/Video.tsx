@@ -316,7 +316,7 @@ class Video extends Component<Props, State> {
     Transmitter.emit(
       'popup',
       this.props.is4K
-        ? '고화질 영상을 지원하지 않는 환경이에요\n화질을 조정하고 새로고침 하세요'
+        ? '초고화질 영상을 지원하지 않는 환경이에요\n화질을 조정하고 새로고침 하세요'
         : '영상 재생중 오류가 발생했어요'
     );
   };
