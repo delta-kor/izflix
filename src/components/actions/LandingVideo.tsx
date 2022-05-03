@@ -281,6 +281,7 @@ class LandingVideo extends Component<any, State> {
           transition={{ duration: 3 }}
           muted
           loop
+          playsInline
           crossOrigin="anonymous"
         />
         <Cover />
