@@ -391,13 +391,14 @@ class Video extends Component<Props, State> {
         {this.props.url && (
           <Content
             ref={this.videoRef}
-            onCanPlay={this.onVideoLoad}
+            onLoadedMetadata={this.onVideoLoad}
             onError={this.onVideoError}
             onPlay={this.onVideoPlay}
             onEnded={this.onVideoEnd}
             onPause={this.onVideoPause}
             src={this.props.url}
             $active={this.state.loaded}
+            preload={'metadata'}
             playsInline
             controls
           />
