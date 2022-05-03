@@ -398,6 +398,7 @@ class Video extends Component<Props, State> {
             onPause={this.onVideoPause}
             src={this.props.url}
             $active={this.state.loaded}
+            playsInline
             controls
           />
         )}
