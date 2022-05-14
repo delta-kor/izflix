@@ -10,4 +10,5 @@ interface ISettings {
   NEXT_VIDEO_INSTANT_PIP: boolean;
   $_TRAFFIC_ALERT: boolean;
   $_4K_ALERT: boolean;
+  $_LIVE_TOKEN: string | null;
 }

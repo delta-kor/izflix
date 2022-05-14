@@ -22,6 +22,7 @@ class SettingsClass {
       NEXT_VIDEO_INSTANT_PIP: true,
       $_TRAFFIC_ALERT: false,
       $_4K_ALERT: false,
+      $_LIVE_TOKEN: null,
     };
 
     const json = localStorage.getItem(key);
