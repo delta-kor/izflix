@@ -10,6 +10,7 @@ import Meta from './components/Meta';
 import Modal from './components/modals/Modal';
 import CategoryPage from './components/pages/CategoryPage';
 import InfoPage from './components/pages/InfoPage';
+import LivePage from './components/pages/LivePage';
 import MainPage from './components/pages/MainPage';
 import MusicPage from './components/pages/MusicPage';
 import NotFoundPage from './components/pages/NotFoundPage';
@@ -72,12 +73,18 @@ const App = (): JSX.Element => {
         )}
       </AnimatePresence>
 
-      <Mobile>
-        <Navigator />
-      </Mobile>
-      <Pc>
-        <Header />
-      </Pc>
+      {!Constants.IS_BLANK_PAGE() ? (
+        <>
+          <Mobile>
+            <Navigator />
+          </Mobile>
+          <Pc>
+            <Header />
+          </Pc>
+        </>
+      ) : (
+        <></>
+      )}
 
       <Pc>
         <AnimatePresence exitBeforeEnter>
@@ -135,6 +142,7 @@ const App = (): JSX.Element => {
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/category/*" element={<CategoryPage />} />
           <Route path="/:id" element={<VideoPage />} />
+          <Route path="/live" element={<LivePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AnimatePresence>

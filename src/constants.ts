@@ -51,8 +51,11 @@ const Constants = {
   IS_ADDITIONAL_PAGE(location: any = window.location) {
     return !['/', '/music', '/category'].includes(this.TOP_ROUTE(location));
   },
-  IS_MAIN() {
-    return window.location.pathname === '/';
+  IS_MAIN(location: any = window.location) {
+    return location.pathname === '/';
+  },
+  IS_BLANK_PAGE(location: any = window.location) {
+    return location.pathname === '/live';
   },
 
   IS_MOBILE() {
