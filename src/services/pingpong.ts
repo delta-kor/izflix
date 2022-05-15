@@ -115,6 +115,9 @@ class Pingpong extends EventEmitter {
         case 'user-sync':
           this.onUserSync(data as any);
           break;
+        case 'live-user-sync':
+          this.onLiveUserSync(data as any);
+          break;
         case 'user-connect':
           this.onUserConnect(data as any);
           break;
@@ -131,9 +134,12 @@ class Pingpong extends EventEmitter {
   private onUserSync(packet: ServerPacket.UserSync): void {
     const users = packet.data;
     this.emit('usersync', users);
-    if (packet.packet_id === null) {
-      this.emit('userconnect', ...users);
-    }
+  }
+
+  private onLiveUserSync(packet: ServerPacket.LiveUserSync): void {
+    const users = packet.data;
+    this.emit('usersync', users);
+    this.emit('userconnect', ...users);
   }
 
   private onUserConnect(packet: ServerPacket.UserConnect): void {

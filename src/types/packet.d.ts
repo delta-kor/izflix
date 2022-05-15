@@ -49,6 +49,10 @@ namespace ServerPacket {
     id: string;
   }
 
+  export interface LiveUserSync extends ServerPacketBase<'live-user-sync'> {
+    data: UserInfo[];
+  }
+
   export interface UserSync extends ServerPacketBase<'user-sync'> {
     data: UserInfo[];
   }
