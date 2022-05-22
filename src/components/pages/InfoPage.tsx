@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as GithubIcon } from '../../icons/github.svg';
-import { ReactComponent as VercelIcon } from '../../icons/vercel.svg';
 import Scroll from '../../services/scroll';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
 import Back from '../actions/Back';
@@ -117,12 +116,12 @@ class InfoPage extends Component<Props> {
 
   render() {
     const frontLibraries = [
-      'create-react-app',
       'framer-motion',
       'node-cache',
       'react',
       'react-copy-to-clipboard',
       'react-helmet',
+      'react-lazy-load-image-component',
       'react-responsive',
       'react-router-dom',
       'react-snap',
@@ -137,8 +136,19 @@ class InfoPage extends Component<Props> {
       'class-transformer',
       'class-validator',
       'dotenv',
+      'fluent-ffmpeg',
       'mongoose',
       'node-cache',
+      'ws',
+    ];
+
+    const fanchantLibraries = [
+      'axios',
+      'framer-motion',
+      'next',
+      'react',
+      'react-responsive',
+      'styled-components',
     ];
 
     const key = this.props.query[0].get('k');
@@ -153,7 +163,7 @@ class InfoPage extends Component<Props> {
         <Meta
           data={{
             title: '정보 - IZFLIX',
-            description: '영상 데이터 정보 & 라이센스',
+            description: '웹 애플리케이션 정보',
             url: `https://izflix.net/info`,
           }}
         />
@@ -173,6 +183,15 @@ class InfoPage extends Component<Props> {
               </GithubItem>
               <GithubItem
                 target="_blank"
+                href="https://github.com/delta-kor/izflix-fanchant"
+              >
+                <GithubIcon />
+                <p>
+                  delta-kor / <b>izflix-fanchant</b>
+                </p>
+              </GithubItem>
+              <GithubItem
+                target="_blank"
                 href="https://github.com/delta-kor/video-server"
               >
                 <GithubIcon />
@@ -182,7 +201,7 @@ class InfoPage extends Component<Props> {
               </GithubItem>
             </GithubWrapper>
           </Group>
-          <Group $highlight={isHighlight}>
+          {/* <Group $highlight={isHighlight}>
             <GroupTitle>Video Source</GroupTitle>
             <ItemsWrapper>
               <Item target="_blank" href="https://twitter.com/sns12kr">
@@ -197,11 +216,25 @@ class InfoPage extends Component<Props> {
               <Item>위즈아이</Item>
               <Item>센세</Item>
             </ItemsWrapper>
-          </Group>
+          </Group> */}
           <Group>
             <GroupTitle>Open Source License (Front End)</GroupTitle>
             <ItemsWrapper>
               {frontLibraries.map((key) => (
+                <Item
+                  key={key}
+                  target="_blank"
+                  href={`https://www.npmjs.com/package/${key}`}
+                >
+                  {key}
+                </Item>
+              ))}
+            </ItemsWrapper>
+          </Group>
+          <Group>
+            <GroupTitle>Open Source License (Fanchant Client)</GroupTitle>
+            <ItemsWrapper>
+              {fanchantLibraries.map((key) => (
                 <Item
                   key={key}
                   target="_blank"
@@ -226,9 +259,8 @@ class InfoPage extends Component<Props> {
               ))}
             </ItemsWrapper>
           </Group>
-          <Vercel target="_blank" href="https://vercel.com/">
-            <p>Powered By</p>
-            <VercelIcon />
+          <Vercel target="_blank" href="http://lt2.kr/">
+            <p>Livifyed by lt2.kr</p>
           </Vercel>
         </Wrapper>
       </Page>
