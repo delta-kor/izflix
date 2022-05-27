@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as DownloadIcon } from '../../../icons/download.svg';
 import { ReactComponent as PipIcon } from '../../../icons/pip.svg';
+import { ReactComponent as InfoIcon } from '../../../icons/settings.svg';
 import { ReactComponent as ShareIcon } from '../../../icons/share.svg';
-import { ReactComponent as InfoIcon } from '../../../icons/video-info.svg';
 import ModalController from '../../../services/modal-controller';
 import Tracker from '../../../services/tracker';
 import Transmitter from '../../../services/transmitter';
@@ -112,7 +112,7 @@ class VideoAction extends Component<Props> {
           <Content>PIP</Content>
         </Item>
         <Link
-          to="/info?k=highlight"
+          to="/settings"
           onClick={() =>
             Tracker.send('video_info', {
               video_id: this.props.id,
@@ -121,7 +121,7 @@ class VideoAction extends Component<Props> {
         >
           <Item>
             <InfoIconItem />
-            <Content>영상정보</Content>
+            <Content>재생설정</Content>
           </Item>
         </Link>
       </Layout>
