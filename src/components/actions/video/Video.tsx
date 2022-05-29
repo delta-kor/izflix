@@ -234,6 +234,7 @@ class Video extends Component<Props, State> {
   unmounted: boolean = false;
   timeout: any;
   startTime: number = 0;
+  lastBeacon: number = Date.now();
 
   componentDidMount = () => {
     Transmitter.on('pip', this.onPipToggle);
@@ -358,6 +359,13 @@ class Video extends Component<Props, State> {
     if (video.paused) return false;
 
     const current = video.currentTime;
+
+    const now = Date.now();
+    if (now - this.lastBeacon > 3 * 1000) {
+      this.lastBeacon = now;
+      Spaceship.videoBeacon(this.props.id, Math.round(current));
+    }
+
     const delta = Math.max(0, current - this.startTime);
     Playtime.add(this.props.id, delta);
 

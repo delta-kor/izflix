@@ -99,6 +99,14 @@ class SpaceshipClass {
     });
   }
 
+  public videoBeacon(id: string, time: number): void {
+    try {
+      fetch(this.baseUrl + `/video/${id}/beacon?time=${time}`);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   public getAllPlaylists(): Promise<ApiResponse.Feed.Playlist.GetAllPlaylists> {
     return this.get('/feed/playlist', {
       key: 'get_all_playlists',
