@@ -1,5 +1,6 @@
 import EventEmitter from 'events';
 import Constants from '../constants';
+import Spaceship from './spaceship';
 
 interface TransmitterEvents {
   popup(message: any): void;
@@ -64,6 +65,7 @@ class TransmitterClass extends EventEmitter {
 
   private loadLocationListeners(): void {
     this.on('locationupdate', (to, from) => {
+      if (to === '/') Spaceship.refreshUserRecommends(20);
       this.emit('levelscroll');
     });
   }
