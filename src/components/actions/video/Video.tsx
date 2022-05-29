@@ -360,10 +360,12 @@ class Video extends Component<Props, State> {
 
     const current = video.currentTime;
 
-    const now = Date.now();
-    if (now - this.lastBeacon > 3 * 1000) {
-      this.lastBeacon = now;
-      Spaceship.videoBeacon(this.props.id, Math.round(current));
+    if (process.env.NODE_ENV === 'production') {
+      const now = Date.now();
+      if (now - this.lastBeacon > 3 * 1000) {
+        this.lastBeacon = now;
+        Spaceship.videoBeacon(this.props.id, Math.round(current));
+      }
     }
 
     const delta = Math.max(0, current - this.startTime);

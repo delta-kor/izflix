@@ -21,8 +21,13 @@ namespace ApiResponse {
       }
     }
 
-    export interface GetRecommends extends ApiResponse {
+    export interface GetVideoRecommends extends ApiResponse {
       videos: IVideoItem[];
+    }
+
+    export interface GetUserRecommends extends ApiResponse {
+      videos: IVideoItem[];
+      emotion: number[];
     }
   }
 
@@ -81,6 +86,7 @@ interface IPlaylist {
   title: string;
   videos: IVideoItem[];
   featured: boolean;
+  recommend?: boolean;
 }
 
 interface IMusic {

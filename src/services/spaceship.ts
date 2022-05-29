@@ -1,4 +1,5 @@
 import NodeCache from 'node-cache';
+import Playtime from './playtime';
 
 const expireTime = 60 * 5;
 const promiseExpireTime = 10;
@@ -78,8 +79,34 @@ class SpaceshipClass {
     return response;
   }
 
-  private post<T extends ApiResponse>(path: string, data: any): Promise<T> {
-    return this.request<T>('POST', path, data);
+  private async post<T extends ApiResponse>(
+    path: string,
+    data: any,
+    cacheOption?: CacheOptions
+  ): Promise<T> {
+    if (cacheOption) {
+      const promiseCache = this.cache.get<Promise<T>>(
+        cacheOption.key + '::promise'
+      );
+      if (promiseCache) {
+        const resolved = await promiseCache;
+        if (resolved.ok) return resolved;
+      }
+
+      const cache = this.cache.get<T>(cacheOption.key);
+      if (cache) return cache;
+    }
+
+    const promise = this.request<T>('POST', path, data);
+    if (cacheOption)
+      this.cache.set(cacheOption.key + '::promise', promise, promiseExpireTime);
+
+    const response = await promise;
+    if (response.ok && cacheOption) {
+      this.cache.set(cacheOption.key, response, cacheOption.expire);
+    }
+
+    return response;
   }
 
   public streamVideo(
@@ -123,14 +150,35 @@ class SpaceshipClass {
     });
   }
 
-  public getRecommends(
+  public getVideoRecommends(
     id: string,
     count: number
-  ): Promise<ApiResponse.Feed.GetRecommends> {
+  ): Promise<ApiResponse.Feed.GetVideoRecommends> {
     return this.get(`/feed/recommends/${id}?count=${count}`, {
       key: `get_recommends_${id}#${count}`,
       expire: expireTime,
     });
+  }
+
+  public getUserRecommends(
+    count: number
+  ): Promise<ApiResponse.Feed.GetUserRecommends> {
+    const playtime = Playtime.get().slice(-50);
+    const data = { data: playtime };
+    if (playtime.length)
+      return this.post(`/feed/recommends?count=${count}`, data, {
+        key: `get_recommends_#${count}`,
+        expire: expireTime,
+      });
+    else
+      return new Promise((res) => {
+        res({ ok: true, status: 200, videos: [], emotion: [0, 0, 0, 0] });
+      });
+  }
+
+  public refreshUserRecommends(count: number): void {
+    this.cache.del(`get_recommends_#${count}`);
+    this.cache.del(`get_recommends_#${count}::promise`);
   }
 
   public viewAllMusics(): Promise<ApiResponse.Music.ViewAll> {

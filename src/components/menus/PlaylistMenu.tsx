@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import styled from 'styled-components';
+import ModalController from '../../services/modal-controller';
 import Spaceship from '../../services/spaceship';
+import Tracker from '../../services/tracker';
 import Transmitter from '../../services/transmitter';
 import { Color, MobileQuery, PcQuery, TabletQuery } from '../../styles';
 import Playlist from '../actions/playlist/Playlist';
@@ -138,14 +140,38 @@ const PlaceholderVideo = styled.div`
 
 interface State {
   playlists: IPlaylist[];
+  emotion: number[];
 }
 
 class PlaylistMenu extends Component<any, State> {
-  state: State = { playlists: [] };
+  state: State = { playlists: [], emotion: [0, 0, 0, 0] };
 
   componentDidMount = async () => {
-    const playlists = await this.getPlaylist();
-    if (playlists) this.setState({ playlists });
+    this.load();
+  };
+
+  load = async () => {
+    const playlistsPromise = this.getPlaylist();
+    const recommendsPromise = this.getRecommends();
+    const result = await Promise.all([playlistsPromise, recommendsPromise]);
+
+    if (result[0] && result[1]) {
+      const playlists = result[0] as any;
+      const recommends = result[1] as any;
+
+      const recommendsPlaylist: IPlaylist = {
+        id: 'recommends',
+        title: '추천 동영상',
+        videos: recommends,
+        featured: false,
+        recommend: true,
+      };
+
+      const output: IPlaylist[] = recommends.length
+        ? [recommendsPlaylist, ...playlists]
+        : [...playlists];
+      this.setState({ playlists: output });
+    }
   };
 
   getPlaylist = async () => {
@@ -153,6 +179,14 @@ class PlaylistMenu extends Component<any, State> {
     if (!response.ok) return void Transmitter.emit('popup', response.message);
 
     return response.playlists.filter((playlist) => !playlist.featured);
+  };
+
+  getRecommends = async () => {
+    const response = await Spaceship.getUserRecommends(20);
+    if (!response.ok) return void Transmitter.emit('popup', response.message);
+
+    this.setState({ emotion: response.emotion });
+    return response.videos;
   };
 
   render() {
@@ -174,12 +208,47 @@ class PlaylistMenu extends Component<any, State> {
       );
     }
 
+    const emotions = this.state.emotion || [0, 0, 0, 0];
+    const infoText = `최근 시청한 영상에 따라 추천 동영상을 선정해요
+
+EXCITEMENT : ${(emotions[0] * 100).toFixed(2)}%
+AMUSEMENT : ${(emotions[1] * 100).toFixed(2)}%
+RELAXATION : ${(emotions[2] * 100).toFixed(2)}%
+SADNESS : ${(emotions[3] * 100).toFixed(2)}%`;
+
     return (
       <Layout>
         {this.state.playlists.length
-          ? this.state.playlists.map((playlist) => (
-              <Playlist key={playlist.id} type="playlist" playlist={playlist} />
-            ))
+          ? this.state.playlists.map((playlist) => {
+              if (playlist.recommend)
+                return (
+                  <Playlist
+                    key={playlist.id}
+                    type="playlist"
+                    playlist={playlist}
+                    onReload={() => {
+                      Spaceship.refreshUserRecommends(20);
+                      this.load();
+                    }}
+                    onInfo={() => {
+                      Tracker.send('recommend_info');
+                      ModalController.fire({
+                        type: 'info',
+                        title: '추천 동영상',
+                        description: infoText,
+                      });
+                    }}
+                  />
+                );
+              else
+                return (
+                  <Playlist
+                    key={playlist.id}
+                    type="playlist"
+                    playlist={playlist}
+                  />
+                );
+            })
           : placeholders}
       </Layout>
     );

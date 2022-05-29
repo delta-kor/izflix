@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as LeftArrowIcon } from '../../../icons/arrow-left.svg';
 import { ReactComponent as RightArrowIcon } from '../../../icons/arrow-right.svg';
+import { ReactComponent as DataIcon } from '../../../icons/data.svg';
+import { ReactComponent as ReloadIcon } from '../../../icons/reload.svg';
 import {
   Color,
   HideOverflow,
@@ -62,6 +64,44 @@ const Title = styled.h2`
       height: 24px;
       font-size: 20px;
     }
+  }
+`;
+
+const Reload = styled(ReloadIcon)`
+  position: absolute;
+  cursor: pointer;
+
+  ${MobileQuery} {
+    top: -2px;
+    right: 64px;
+    width: 18px;
+    height: 18px;
+  }
+
+  ${PcQuery} {
+    top: 4px;
+    right: 72px;
+    width: 24px;
+    height: 24px;
+  }
+`;
+
+const Data = styled(DataIcon)`
+  position: absolute;
+  cursor: pointer;
+
+  ${MobileQuery} {
+    top: -2px;
+    right: 32px;
+    width: 18px;
+    height: 18px;
+  }
+
+  ${PcQuery} {
+    top: 4px;
+    right: 32px;
+    width: 24px;
+    height: 24px;
   }
 `;
 
@@ -176,7 +216,10 @@ const Arrow = styled(motion.div)<{ direction: 'left' | 'right' }>`
   }
 `;
 
-type Props = PlaylistProps | NextProps;
+type Props = (PlaylistProps | NextProps) & {
+  onReload?(): void;
+  onInfo?(): void;
+};
 
 interface PlaylistProps {
   type: 'playlist';
@@ -199,6 +242,20 @@ interface State {
 class Playlist extends Component<Props> {
   state: State = { arrows: [false, true] };
   scrollRef = React.createRef<HTMLDivElement>();
+
+  componentDidUpdate = (prevProps: Props) => {
+    const element = this.scrollRef.current;
+    if (!element) return false;
+
+    if (prevProps.type !== 'playlist' || this.props.type !== 'playlist')
+      return false;
+    if (prevProps.playlist !== this.props.playlist) {
+      element.scrollTo({
+        left: 0,
+        behavior: 'auto',
+      });
+    }
+  };
 
   componentDidMount = () => {
     const element = this.scrollRef.current!;
@@ -270,6 +327,7 @@ class Playlist extends Component<Props> {
     const id = type === 'playlist' ? this.props.playlist.id : 'next';
     const videos =
       type === 'playlist' ? this.props.playlist.videos : this.props.videos;
+    const isRecommend = type === 'playlist' && this.props.playlist.recommend;
 
     if (type === 'next') {
       videos.forEach((video) => {
@@ -284,6 +342,14 @@ class Playlist extends Component<Props> {
     return (
       <Layout data-next={type === 'next'}>
         <Title data-next={type === 'next'}>{title}</Title>
+        {isRecommend && (
+          <>
+            <Reload
+              onClick={() => this.props.onReload && this.props.onReload()}
+            />
+            <Data onClick={() => this.props.onInfo && this.props.onInfo()} />
+          </>
+        )}
         <VideoWrapper ref={this.scrollRef}>
           {videos.map((video) =>
             type === 'playlist' ? (

@@ -257,13 +257,23 @@ class VideoPage extends Component<Props, State> {
     const videos: IVideoItem[] = [];
 
     if (key === 'playlist') {
-      const data = await Spaceship.getOnePlaylist(value);
-      if (!data.ok) {
-        this.setState({ nextError: true });
-        return Transmitter.emit('popup', data.message);
-      }
+      if (value === 'recommends') {
+        const data = await Spaceship.getUserRecommends(20);
+        if (!data.ok) {
+          this.setState({ nextError: true });
+          return Transmitter.emit('popup', data.message);
+        }
 
-      videos.push(...data.videos);
+        videos.push(...data.videos);
+      } else {
+        const data = await Spaceship.getOnePlaylist(value);
+        if (!data.ok) {
+          this.setState({ nextError: true });
+          return Transmitter.emit('popup', data.message);
+        }
+
+        videos.push(...data.videos);
+      }
     }
 
     if (key === 'music') {
@@ -311,7 +321,7 @@ class VideoPage extends Component<Props, State> {
 
   loadRecommends = async (id: string) => {
     const count = Settings.getOne('VIDEO_RECOMMEND_COUNT');
-    const data = await Spaceship.getRecommends(id, count);
+    const data = await Spaceship.getVideoRecommends(id, count);
     if (!data.ok) return Transmitter.emit('popup', data.message);
     this.setState({ recommends: data.videos });
   };
