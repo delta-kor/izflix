@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { NavigateFunction } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as LoaderIcon } from '../../../icons/loading-bright.svg';
+import Playtime from '../../../services/playtime';
 import Settings from '../../../services/settings';
 import Spaceship from '../../../services/spaceship';
 import Tracker from '../../../services/tracker';
@@ -232,6 +233,7 @@ class Video extends Component<Props, State> {
   state: State = { loaded: false, next: false };
   unmounted: boolean = false;
   timeout: any;
+  startTime: number = 0;
 
   componentDidMount = () => {
     Transmitter.on('pip', this.onPipToggle);
@@ -331,6 +333,11 @@ class Video extends Component<Props, State> {
       video_id: this.props.id,
       video_time: this.videoRef.current!.currentTime,
     });
+
+    const video = this.videoRef.current;
+    if (!video) return false;
+
+    this.startTime = video.currentTime;
   };
 
   onVideoPlay = () => {
@@ -338,6 +345,23 @@ class Video extends Component<Props, State> {
       video_id: this.props.id,
       video_time: this.videoRef.current!.currentTime,
     });
+
+    const video = this.videoRef.current;
+    if (!video) return false;
+
+    this.startTime = video.currentTime;
+  };
+
+  onVideoTimeUpdate = () => {
+    const video = this.videoRef.current;
+    if (!video) return false;
+    if (video.paused) return false;
+
+    const current = video.currentTime;
+    const delta = Math.max(0, current - this.startTime);
+    Playtime.add(this.props.id, delta);
+
+    this.startTime = current;
   };
 
   startNextCountdown = async () => {
@@ -395,6 +419,7 @@ class Video extends Component<Props, State> {
             onError={this.onVideoError}
             onPlay={this.onVideoPlay}
             onEnded={this.onVideoEnd}
+            onTimeUpdate={this.onVideoTimeUpdate}
             onPause={this.onVideoPause}
             src={this.props.url}
             $active={this.state.loaded}
