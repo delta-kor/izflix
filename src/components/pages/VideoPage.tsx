@@ -16,6 +16,7 @@ import {
   PcQuery,
   TabletQuery,
 } from '../../styles';
+import Ad from '../actions/Ad';
 import Playlist from '../actions/playlist/Playlist';
 import VideoContent from '../actions/video/VideoContent';
 import VideoRecommends from '../actions/video/VideoRecommends';
@@ -161,6 +162,11 @@ const NextVideoPlaceholder = styled.div`
       height: 18px;
     }
   }
+`;
+
+const AdSection = styled.div`
+  padding: 4px 0;
+  border-bottom: 1px solid ${Color.GRAY};
 `;
 
 interface Props {
@@ -400,6 +406,9 @@ class VideoPage extends Component<Props, State> {
           }}
         />
         {videoContent}
+        <AdSection>
+          <Ad />
+        </AdSection>
         {isNextLoaded ? (
           nextVideo.length ? (
             <Playlist

@@ -109,6 +109,10 @@ class SpaceshipClass {
     return response;
   }
 
+  public getAllAds(): Promise<ApiResponse.Ad.GetAll> {
+    return this.get('/ad', { key: 'get_all_ads', expire: expireTime });
+  }
+
   public streamVideo(
     id: string,
     quality: number

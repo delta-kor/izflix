@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Constants from '../../constants';
 import Scroll from '../../services/scroll';
 import { Color, MobileQuery } from '../../styles';
+import Ad from '../actions/Ad';
 import LandingVideo from '../actions/LandingVideo';
 import PlaylistMenu from '../menus/PlaylistMenu';
 import Meta from '../Meta';
@@ -65,10 +66,7 @@ class MainPage extends Component {
         <Mobile>
           <LandingVideo />
         </Mobile>
-        <LinkMenu href={'https://fanchant.izflix.net'}>
-          <LinkMenuTitle>아이즈원 응원법 연습</LinkMenuTitle>
-          <LinkMenuDescription>https://fanchant.izflix.net</LinkMenuDescription>
-        </LinkMenu>
+        <Ad />
         <PlaylistMenu />
       </Page>
     );

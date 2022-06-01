@@ -7,6 +7,12 @@ interface ApiResponse {
 }
 
 namespace ApiResponse {
+  export namespace Ad {
+    export interface GetAll extends ApiResponse {
+      ads: IAd[];
+    }
+  }
+
   export namespace Feed {
     export namespace Playlist {
       export interface GetAllPlaylists extends ApiResponse {
@@ -79,6 +85,13 @@ namespace ApiResponse {
 
     export type ViewOne = Parent | Children;
   }
+}
+
+interface IAd {
+  id: string;
+  title: string;
+  description: string;
+  link: string;
 }
 
 interface IPlaylist {
