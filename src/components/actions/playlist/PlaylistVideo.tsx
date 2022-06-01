@@ -156,6 +156,8 @@ class PlaylistVideo extends Component<Props> {
     const value =
       type === 'playlist' ? this.props.playlistId : this.props.urlValue;
 
+    const playlistId = type === 'playlist' ? this.props.playlistId : 'next';
+
     return (
       <Layout>
         <Content
@@ -163,7 +165,7 @@ class PlaylistVideo extends Component<Props> {
           onClick={() =>
             Tracker.send(
               type === 'playlist' ? 'playlist_clicked' : 'next_clicked',
-              { video_id: video.id }
+              { video_id: video.id, playlist_id: playlistId }
             )
           }
         >
