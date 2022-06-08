@@ -149,7 +149,7 @@ class CategoryMenu extends Component<Props, State> {
 
   render() {
     const path = this.props.params.path;
-    const count = !path ? 4 : PathFinder.get(path!) || 24;
+    const count = !path ? 5 : PathFinder.get(path!) || 24;
 
     const placeholders = [];
     for (let i = 0; i < count; i++) {
