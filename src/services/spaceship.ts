@@ -44,7 +44,7 @@ class SpaceshipClass {
       data = await response.json();
       data.status = response.status;
     } catch (e: any) {
-      return { ok: false, message: '네트워크 연결이 원할하지 않아요' } as T;
+      return { ok: false, message: '네트워크 연결에 문제가 발생했으며, 현재 복구중에 있습니다/n잠시후 다시 시도해주세요' } as T;
     }
 
     return data;
