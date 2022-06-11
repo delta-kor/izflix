@@ -170,7 +170,7 @@ class CategoryMenu extends Component<Props, State> {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.2 }}
       >
-        {this.state.error && <Navigate to="/category" />}
+        // {this.state.error && <Navigate to="/category" />}
         {!this.state.folders.length && !this.state.files.length && placeholders}
         {this.state.folders.map((folder) => (
           <CategoryFolder key={folder.path} folder={folder} />
