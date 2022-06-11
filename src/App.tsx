@@ -61,6 +61,14 @@ const App = (): JSX.Element => {
 
   useEffect(() => ModalController.subscribe(onModalUpdate), []);
   useEffect(() => () => ModalController.unsubscribe(onModalUpdate), []);
+  useEffect(() => {
+    ModalController.fire({
+      type: 'info',
+      title: '접속 지연 안내',
+      description:
+        '네트워크 연결에 문제가 발생했으며,\n현재 복구중에 있습니다\n잠시후 다시 시도해주세요',
+    });
+  });
 
   return (
     <AnimateSharedLayout>
