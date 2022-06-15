@@ -12,10 +12,10 @@ function padNumber(number: number): string {
 
 export function getDuration(number: number, is4K: boolean = false): string {
   const minutes = ((number / 60) | 0) % 60;
-  const seconds = number - minutes * 60;
+  const seconds = number - ((number / 60) | 0) * 60;
   const hours = (number / 60 / 60) | 0;
   const result = hours
-    ? `${hours}:${padNumber(minutes)}:${padNumber(seconds)}}`
+    ? `${hours}:${padNumber(minutes)}:${padNumber(seconds)}`
     : `${minutes}:${padNumber(seconds)}`;
   return is4K ? `4K | ${result}` : result;
 }
