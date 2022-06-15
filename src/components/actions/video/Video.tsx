@@ -367,7 +367,7 @@ class Video extends Component<Props, State> {
         Spaceship.videoBeacon(
           this.props.id,
           Math.round(current),
-          Playtime.total()
+          Math.round(Playtime.total())
         );
       }
     }
