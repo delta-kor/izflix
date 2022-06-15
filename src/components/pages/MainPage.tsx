@@ -3,8 +3,7 @@ import { Component } from 'react';
 import styled from 'styled-components';
 import Constants from '../../constants';
 import Scroll from '../../services/scroll';
-import { Color, MobileQuery } from '../../styles';
-import Ad from '../actions/Ad';
+import { MobileQuery } from '../../styles';
 import LandingVideo from '../actions/LandingVideo';
 import PlaylistMenu from '../menus/PlaylistMenu';
 import Meta from '../Meta';
@@ -14,31 +13,6 @@ const Page = styled(motion.main)`
   ${MobileQuery} {
     padding: 0 0 64px 0;
   }
-`;
-
-const LinkMenu = styled.a`
-  display: flex;
-  flex-direction: column;
-  row-gap: 8px;
-  width: calc(100vw - 64px);
-  max-width: 720px;
-  margin: 8px auto;
-  padding: 16px 16px;
-  background: ${Color.DARK_GRAY};
-  border-radius: 6px;
-`;
-
-const LinkMenuTitle = styled.div`
-  font-size: 16px;
-  font-weight: bold;
-  color: ${Color.WHITE};
-`;
-
-const LinkMenuDescription = styled.div`
-  font-size: 14px;
-  font-weight: normal;
-  color: ${Color.WHITE};
-  opacity: 0.7;
 `;
 
 class MainPage extends Component {
@@ -66,7 +40,6 @@ class MainPage extends Component {
         <Mobile>
           <LandingVideo />
         </Mobile>
-        <Ad />
         <PlaylistMenu />
       </Page>
     );
