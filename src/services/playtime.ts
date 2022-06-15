@@ -39,6 +39,17 @@ class Playtime {
     data.push([id, delta]);
     Playtime.set(data);
   }
+
+  public static total(): number {
+    const data = Playtime.get();
+
+    let total: number = 0;
+    for (const item of data) {
+      total += item[1];
+    }
+
+    return total;
+  }
 }
 
 export default Playtime;

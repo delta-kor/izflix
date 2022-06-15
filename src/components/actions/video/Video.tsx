@@ -364,7 +364,11 @@ class Video extends Component<Props, State> {
       const now = Date.now();
       if (now - this.lastBeacon > 3 * 1000) {
         this.lastBeacon = now;
-        Spaceship.videoBeacon(this.props.id, Math.round(current));
+        Spaceship.videoBeacon(
+          this.props.id,
+          Math.round(current),
+          Playtime.total()
+        );
       }
     }
 

@@ -6,9 +6,16 @@ export function getDate(number: number): string {
   return `${year}년 ${month}월 ${dayOfMonth}일`;
 }
 
+function padNumber(number: number): string {
+  return number.toString().padStart(2, '0');
+}
+
 export function getDuration(number: number, is4K: boolean = false): string {
-  const minutes = (number / 60) | 0;
+  const minutes = ((number / 60) | 0) % 60;
   const seconds = number - minutes * 60;
-  const result = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  const hours = (number / 60 / 60) | 0;
+  const result = hours
+    ? `${hours}:${padNumber(minutes)}:${padNumber(seconds)}}`
+    : `${minutes}:${padNumber(seconds)}`;
   return is4K ? `4K | ${result}` : result;
 }

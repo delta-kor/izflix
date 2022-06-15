@@ -130,9 +130,9 @@ class SpaceshipClass {
     });
   }
 
-  public videoBeacon(id: string, time: number): void {
+  public videoBeacon(id: string, time: number, total: number): void {
     try {
-      fetch(this.baseUrl + `/video/${id}/beacon?time=${time}`);
+      fetch(this.baseUrl + `/video/${id}/beacon?time=${time}&total=${total}`);
     } catch (e) {
       console.error(e);
     }
