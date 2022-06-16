@@ -11,6 +11,7 @@ function padNumber(number: number): string {
 }
 
 export function getDuration(number: number, is4K: boolean = false): string {
+  number = Math.round(number);
   const minutes = ((number / 60) | 0) % 60;
   const seconds = number - ((number / 60) | 0) * 60;
   const hours = (number / 60 / 60) | 0;
@@ -18,4 +19,30 @@ export function getDuration(number: number, is4K: boolean = false): string {
     ? `${hours}:${padNumber(minutes)}:${padNumber(seconds)}`
     : `${minutes}:${padNumber(seconds)}`;
   return is4K ? `4K | ${result}` : result;
+}
+
+export function getHumanDuration(number: number): string {
+  number = Math.round(number);
+
+  if (number < 60) {
+    return `${number}초`;
+  }
+
+  if (number < 60 * 60) {
+    const minutes = (number / 60) | 0;
+    const seconds = number % 60;
+    return seconds === 0 ? `${minutes}분` : `${minutes}분 ${seconds}초`;
+  }
+
+  const hours = (number / 3600) | 0;
+  const minutes = ((number % 3600) / 60) | 0;
+  const seconds = (number % 3600) % 60 | 0;
+
+  let result: string = '';
+  result += `${hours}시간`;
+
+  if (minutes) result += ` ${minutes}분`;
+  if (seconds) result += ` ${seconds}초`;
+
+  return result;
 }
