@@ -50,6 +50,17 @@ class Playtime {
 
     return total;
   }
+
+  public static count(): number {
+    const data = Playtime.get();
+    return data.length;
+  }
+
+  public static rank(count: number): [string, number][] {
+    const data = Playtime.get();
+    const ranked = data.sort((a, b) => b[1] - a[1]);
+    return ranked.slice(0, count);
+  }
 }
 
 export default Playtime;

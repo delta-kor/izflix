@@ -130,6 +130,13 @@ class SpaceshipClass {
     });
   }
 
+  public getVideoList(ids: string[]): Promise<ApiResponse.Video.List> {
+    return this.get(`/video/list?ids=${ids.join(',')}`, {
+      key: `video_list_${ids.join(',')}`,
+      expire: expireTime,
+    });
+  }
+
   public videoBeacon(id: string, time: number, total: number): void {
     try {
       fetch(this.baseUrl + `/video/${id}/beacon?time=${time}&total=${total}`);
@@ -183,6 +190,16 @@ class SpaceshipClass {
   public refreshUserRecommends(count: number): void {
     this.cache.del(`get_recommends_#${count}`);
     this.cache.del(`get_recommends_#${count}::promise`);
+  }
+
+  public getEmotion(): Promise<ApiResponse.Feed.GetEmotion> {
+    const playtime = Playtime.get().slice(-50);
+    const data = { data: playtime };
+    if (playtime.length) return this.post(`/feed/emotion`, data);
+    else
+      return new Promise((res) => {
+        res({ ok: true, status: 200, emotion: [0, 0, 0, 0] });
+      });
   }
 
   public viewAllMusics(): Promise<ApiResponse.Music.ViewAll> {

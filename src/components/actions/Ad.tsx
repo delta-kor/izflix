@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ReactComponent as LinkIcon } from '../../icons/link.svg';
 import Spaceship from '../../services/spaceship';
 import Tracker from '../../services/tracker';
+import Transmitter from '../../services/transmitter';
 import { Color, HideOverflow, MobileQuery, PcQuery } from '../../styles';
 
 const Layout = styled.a`
@@ -82,6 +83,8 @@ class Ad extends Component<any, State> {
 
   componentDidMount = async () => {
     const response = await Spaceship.getAllAds();
+    if (!response.ok) return void Transmitter.emit('popup', response.message);
+
     const ads = response.ads;
     const ad = ads[(Math.random() * ads.length) | 0];
     this.setState({ ad });

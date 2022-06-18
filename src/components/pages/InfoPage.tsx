@@ -22,6 +22,7 @@ const Wrapper = styled.div`
   ${PcQuery} {
     display: inline-block;
     padding: 96px 0 0 0;
+    min-width: 642px;
     margin: 0 auto;
   }
 `;
@@ -201,22 +202,6 @@ class InfoPage extends Component<Props> {
               </GithubItem>
             </GithubWrapper>
           </Group>
-          {/* <Group $highlight={isHighlight}>
-            <GroupTitle>Video Source</GroupTitle>
-            <ItemsWrapper>
-              <Item target="_blank" href="https://twitter.com/sns12kr">
-                슨스 (@sns12kr)
-              </Item>
-              <Item target="_blank" href="https://twitter.com/Greezman5">
-                Shubby (@Greezman5)
-              </Item>
-              <Item>Russell</Item>
-              <Item>DDOLVU</Item>
-              <Item>벚꽃엔딩_48</Item>
-              <Item>위즈아이</Item>
-              <Item>센세</Item>
-            </ItemsWrapper>
-          </Group> */}
           <Group>
             <GroupTitle>Open Source License (Front End)</GroupTitle>
             <ItemsWrapper>

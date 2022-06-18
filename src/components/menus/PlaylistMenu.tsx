@@ -1,5 +1,8 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { ReactComponent as SettingsIcon } from '../../icons/settings.svg';
+import { ReactComponent as StatsIcon } from '../../icons/stats.svg';
 import ModalController from '../../services/modal-controller';
 import Spaceship from '../../services/spaceship';
 import Tracker from '../../services/tracker';
@@ -138,6 +141,68 @@ const PlaceholderVideo = styled.div`
   }
 `;
 
+const ButtonMenuWrapper = styled.div`
+  display: flex;
+  column-gap: 16px;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0 32px;
+
+  ${MobileQuery} {
+    margin: -16px 0 32px 0;
+  }
+
+  ${PcQuery} {
+    max-width: 1416px;
+    margin: -32px auto 36px auto;
+  }
+`;
+
+const ButtonMenu = styled(Link)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  max-width: 204px;
+  background: ${Color.DARK_GRAY};
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+
+  ${MobileQuery} {
+    padding: 16px 24px;
+  }
+
+  ${PcQuery} {
+    padding: 18px 30px;
+  }
+
+  & > svg {
+    ${MobileQuery} {
+      width: 16px;
+      height: 16px;
+    }
+
+    ${PcQuery} {
+      width: 20px;
+      height: 20px;
+    }
+  }
+`;
+
+const ButtonMenuText = styled.div`
+  font-weight: 700;
+  color: ${Color.WHITE};
+
+  ${MobileQuery} {
+    font-size: 14px;
+  }
+
+  ${PcQuery} {
+    font-size: 18px;
+  }
+`;
+
 interface State {
   playlists: IPlaylist[];
   emotion: number[];
@@ -190,6 +255,19 @@ class PlaylistMenu extends Component<any, State> {
   };
 
   render() {
+    const menu = (
+      <ButtonMenuWrapper>
+        <ButtonMenu to={'/stats'}>
+          <ButtonMenuText>통계</ButtonMenuText>
+          <StatsIcon />
+        </ButtonMenu>
+        <ButtonMenu to={'/settings'}>
+          <ButtonMenuText>설정</ButtonMenuText>
+          <SettingsIcon />
+        </ButtonMenu>
+      </ButtonMenuWrapper>
+    );
+
     const placeholders = [];
     for (let i = 0; i < 11; i++) {
       placeholders.push(
@@ -216,42 +294,39 @@ AMUSEMENT : ${(emotions[1] * 100).toFixed(2)}%
 RELAXATION : ${(emotions[2] * 100).toFixed(2)}%
 SADNESS : ${(emotions[3] * 100).toFixed(2)}%`;
 
-    return (
-      <Layout>
-        {this.state.playlists.length
-          ? this.state.playlists.map((playlist) => {
-              if (playlist.recommend)
-                return (
-                  <Playlist
-                    key={playlist.id}
-                    type="playlist"
-                    playlist={playlist}
-                    onReload={() => {
-                      Spaceship.refreshUserRecommends(20);
-                      this.load();
-                    }}
-                    onInfo={() => {
-                      Tracker.send('recommend_info');
-                      ModalController.fire({
-                        type: 'info',
-                        title: '추천 동영상',
-                        description: infoText,
-                      });
-                    }}
-                  />
-                );
-              else
-                return (
-                  <Playlist
-                    key={playlist.id}
-                    type="playlist"
-                    playlist={playlist}
-                  />
-                );
-            })
-          : placeholders}
-      </Layout>
-    );
+    const playlists = this.state.playlists.map((playlist) => {
+      if (playlist.recommend)
+        return (
+          <>
+            <Playlist
+              key={playlist.id}
+              type="playlist"
+              playlist={playlist}
+              onReload={() => {
+                Spaceship.refreshUserRecommends(20);
+                this.load();
+              }}
+              onInfo={() => {
+                Tracker.send('recommend_info');
+                ModalController.fire({
+                  type: 'info',
+                  title: '추천 동영상',
+                  description: infoText,
+                });
+              }}
+            />
+          </>
+        );
+      else
+        return (
+          <Playlist key={playlist.id} type="playlist" playlist={playlist} />
+        );
+    });
+
+    const list = this.state.playlists.length ? playlists : placeholders;
+    list.splice(1, 0, menu);
+
+    return <Layout>{list}</Layout>;
   }
 }
 

@@ -35,6 +35,10 @@ namespace ApiResponse {
       videos: IVideoItem[];
       emotion: number[];
     }
+
+    export interface GetEmotion extends ApiResponse {
+      emotion: number[];
+    }
   }
 
   export namespace Music {
@@ -61,6 +65,10 @@ namespace ApiResponse {
       duration: number;
       date: number;
       path: IPath[];
+    }
+
+    export interface List extends ApiResponse {
+      data: IVideoInfo[];
     }
   }
 
@@ -143,4 +151,11 @@ interface IPath {
   name: string;
   path: string;
   count: number;
+}
+
+interface IVideoInfo {
+  id: string;
+  title: string;
+  description: string;
+  duration: number;
 }

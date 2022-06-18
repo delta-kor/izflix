@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   ${PcQuery} {
     display: inline-block;
     padding: 96px 0 0 0;
-    min-width: 432px;
+    min-width: 642px;
     margin: 0 auto;
   }
 `;
@@ -39,7 +39,7 @@ const Group = styled.div`
 `;
 
 const GroupTitle = styled.span`
-  margin: 0 0 8px 0;
+  margin: 0 0 16px 0;
   font-weight: normal;
   font-size: 14px;
   ${HideOverflow};
