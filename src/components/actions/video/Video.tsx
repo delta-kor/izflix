@@ -372,7 +372,7 @@ class Video extends Component<Props, State> {
       }
     }
 
-    const delta = Math.min(Math.max(0, current - this.startTime), 3);
+    const delta = Math.min(Math.max(0, current - this.startTime), 1);
     Playtime.add(this.props.id, delta);
 
     this.startTime = current;
