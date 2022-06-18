@@ -256,7 +256,7 @@ class PlaylistMenu extends Component<any, State> {
 
   render() {
     const menu = (
-      <ButtonMenuWrapper>
+      <ButtonMenuWrapper key={'button menu'}>
         <ButtonMenu to={'/stats'}>
           <ButtonMenuText>통계</ButtonMenuText>
           <StatsIcon />
@@ -297,25 +297,23 @@ SADNESS : ${(emotions[3] * 100).toFixed(2)}%`;
     const playlists = this.state.playlists.map((playlist) => {
       if (playlist.recommend)
         return (
-          <>
-            <Playlist
-              key={playlist.id}
-              type="playlist"
-              playlist={playlist}
-              onReload={() => {
-                Spaceship.refreshUserRecommends(20);
-                this.load();
-              }}
-              onInfo={() => {
-                Tracker.send('recommend_info');
-                ModalController.fire({
-                  type: 'info',
-                  title: '추천 동영상',
-                  description: infoText,
-                });
-              }}
-            />
-          </>
+          <Playlist
+            key={playlist.id}
+            type="playlist"
+            playlist={playlist}
+            onReload={() => {
+              Spaceship.refreshUserRecommends(20);
+              this.load();
+            }}
+            onInfo={() => {
+              Tracker.send('recommend_info');
+              ModalController.fire({
+                type: 'info',
+                title: '추천 동영상',
+                description: infoText,
+              });
+            }}
+          />
         );
       else
         return (
