@@ -257,11 +257,23 @@ class PlaylistMenu extends Component<any, State> {
   render() {
     const menu = (
       <ButtonMenuWrapper key={'button menu'}>
-        <ButtonMenu to={'/stats'}>
+        <ButtonMenu
+          to={'/stats'}
+          onClick={() =>
+            Tracker.send('button_menu_clicked', { button_menu_type: 'stats' })
+          }
+        >
           <ButtonMenuText>통계</ButtonMenuText>
           <StatsIcon />
         </ButtonMenu>
-        <ButtonMenu to={'/settings'}>
+        <ButtonMenu
+          to={'/settings'}
+          onClick={() =>
+            Tracker.send('button_menu_clicked', {
+              button_menu_type: 'settings',
+            })
+          }
+        >
           <ButtonMenuText>설정</ButtonMenuText>
           <SettingsIcon />
         </ButtonMenu>
