@@ -16,6 +16,7 @@ PageTitles.set('/playlist/:id', 'Playlist');
 interface PageInfo {
   title: string;
   params: string[];
+  isMain: boolean;
 }
 
 class PageManager {
@@ -26,7 +27,7 @@ class PageManager {
       if (result) {
         const title = PageTitles.get(path)!;
         const params = result.slice(1);
-        return { title, params };
+        return { title, params, isMain: path === '/' };
       }
     }
 

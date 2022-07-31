@@ -2,6 +2,7 @@ import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import { Component } from 'react';
 import { Routes } from 'react-router-dom';
 import Meta from './components/Meta';
+import Header from './components/organisms/Header';
 import withLocation, { WithLocationParams } from './components/tools/WithLocation';
 
 interface Props extends WithLocationParams {}
@@ -13,6 +14,8 @@ class App extends Component<Props> {
     return (
       <AnimateSharedLayout>
         <Meta data={{}} />
+
+        <Header />
 
         <AnimatePresence exitBeforeEnter>
           <Routes

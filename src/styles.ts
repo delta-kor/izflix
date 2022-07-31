@@ -13,10 +13,35 @@ const Color = {
   BACKGROUND: '#070D2D',
 };
 
+const Text = {
+  HEADLINE_1: `font-size: 24px; font-weight: 800;`,
+  HEADLINE_2: `font-size: 20px; font-weight: 800;`,
+  HEADLINE_3: `font-size: 18px; font-weight: 700;`,
+  SUBTITLE_1: `font-size: 16px; font-weight: 700;`,
+  SUBTITLE_2: `font-size: 14px; font-weight: 700;`,
+  BODY_1: `font-size: 16px; font-weight: 400;`,
+  BODY_2: `font-size: 14px; font-weight: 400;`,
+  BODY_3: `font-size: 12px; font-weight: 400;`,
+  CAPTION: `font-size:12px; font-weight: 400;`,
+  EX_HEADLINE_1: `font-size: 32px; font-weight: 800;`,
+  EX_SUBTITLE_1: `font-size: 20px; font-weight: 700;`,
+  EX_CAPTION: `font-size: 18px; font-weight: 400;`,
+};
+
 const Ease = [0.04, 0.62, 0.23, 0.98];
 
 const HideOverflow = `overflow:hidden;
 text-overflow:ellipsis;
 white-space:nowrap;`;
 
-export { MobileLimit, TabletLimit, MobileQuery, TabletQuery, PcQuery, Color, Ease, HideOverflow };
+export {
+  MobileLimit,
+  TabletLimit,
+  MobileQuery,
+  PcQuery,
+  TabletQuery,
+  Color,
+  Text,
+  Ease,
+  HideOverflow,
+};
