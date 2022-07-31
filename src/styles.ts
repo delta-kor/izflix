@@ -5,6 +5,9 @@ const MobileQuery = `@media (max-width: ${MobileLimit}px)`;
 const TabletQuery = `@media (min-width: ${MobileLimit + 1}px) and (max-width: ${TabletLimit}px)`;
 const PcQuery = `@media (min-width: ${MobileLimit + 1}px)`;
 
+const PcStretchLimitInner = 1546;
+const PcStretchLimitOuter = PcStretchLimitInner + 132 * 2;
+
 const Color = {
   WHITE: '#FFFFFF',
   PRIMARY: '#556FE5',
@@ -23,7 +26,7 @@ const Text = {
   BODY_2: `font-size: 14px; font-weight: 400;`,
   BODY_3: `font-size: 12px; font-weight: 400;`,
   CAPTION: `font-size:12px; font-weight: 400;`,
-  EX_HEADLINE_1: `font-size: 32px; font-weight: 800;`,
+  EX_HEADLINE_1: `font-size: 30px; font-weight: 800;`,
   EX_SUBTITLE_1: `font-size: 20px; font-weight: 700;`,
   EX_CAPTION: `font-size: 18px; font-weight: 400;`,
 };
@@ -40,6 +43,8 @@ export {
   MobileQuery,
   PcQuery,
   TabletQuery,
+  PcStretchLimitInner,
+  PcStretchLimitOuter,
   Color,
   Text,
   Ease,

@@ -12,11 +12,12 @@ PageTitles.set('/category/:id', 'Category');
 PageTitles.set('/calendar', 'Calendar');
 PageTitles.set('/playlist', 'Playlist');
 PageTitles.set('/playlist/:id', 'Playlist');
+PageTitles.set('/live', 'Live');
 
 interface PageInfo {
   title: string;
   params: string[];
-  isMain: boolean;
+  type: 'main' | 'submain' | 'children';
 }
 
 class PageManager {
@@ -27,7 +28,9 @@ class PageManager {
       if (result) {
         const title = PageTitles.get(path)!;
         const params = result.slice(1);
-        return { title, params, isMain: path === '/' };
+        const type =
+          path === '/' ? 'main' : ['/vod', '/profile'].includes(path) ? 'submain' : 'children';
+        return { title, params, type };
       }
     }
 

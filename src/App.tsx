@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { Routes } from 'react-router-dom';
 import Meta from './components/Meta';
 import Header from './components/organisms/Header';
+import Navigator from './components/organisms/Navigator';
 import withLocation, { WithLocationParams } from './components/tools/WithLocation';
 
 interface Props extends WithLocationParams {}
@@ -16,6 +17,7 @@ class App extends Component<Props> {
         <Meta data={{}} />
 
         <Header />
+        <Navigator />
 
         <AnimatePresence exitBeforeEnter>
           <Routes

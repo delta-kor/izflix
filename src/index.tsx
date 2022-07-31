@@ -21,7 +21,9 @@ const app = (
 
 const rootElement = document.getElementById('root')!;
 
+const minimumDelay = 0;
 const renderStartTime = Date.now();
+
 render(app, rootElement, hydrate);
 
 async function hydrate() {
@@ -35,8 +37,8 @@ async function hydrate() {
 
   const hydrationTime = Date.now();
   const timeDelta = hydrationTime - renderStartTime;
-  if (timeDelta < 2000) {
-    await delay(2000 - timeDelta);
+  if (timeDelta < minimumDelay) {
+    await delay(minimumDelay - timeDelta);
   }
 
   document.body.classList.replace('dry', 'hydrating');
