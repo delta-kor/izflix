@@ -2,9 +2,7 @@ const MobileLimit = 767;
 const TabletLimit = 1080;
 
 const MobileQuery = `@media (max-width: ${MobileLimit}px)`;
-const TabletQuery = `@media (min-width: ${
-  MobileLimit + 1
-}px) and (max-width: ${TabletLimit}px)`;
+const TabletQuery = `@media (min-width: ${MobileLimit + 1}px) and (max-width: ${TabletLimit}px)`;
 const PcQuery = `@media (min-width: ${MobileLimit + 1}px)`;
 
 const Color = {
@@ -21,13 +19,4 @@ const HideOverflow = `overflow:hidden;
 text-overflow:ellipsis;
 white-space:nowrap;`;
 
-export {
-  MobileLimit,
-  TabletLimit,
-  MobileQuery,
-  TabletQuery,
-  PcQuery,
-  Color,
-  Ease,
-  HideOverflow,
-};
+export { MobileLimit, TabletLimit, MobileQuery, TabletQuery, PcQuery, Color, Ease, HideOverflow };

@@ -38,8 +38,7 @@ namespace ServerPacket {
     message: string;
   }
 
-  export interface MultipleConnect
-    extends ServerPacketBase<'multiple-connect'> {}
+  export interface MultipleConnect extends ServerPacketBase<'multiple-connect'> {}
 
   export interface UserConnect extends ServerPacketBase<'user-connect'> {
     user_info: UserInfo;

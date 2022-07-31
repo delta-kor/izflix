@@ -1,155 +1,28 @@
-import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
-import LandingVideo from './components/actions/LandingVideo';
-import Popup from './components/actions/Popup';
-import Header from './components/menus/Header';
-import Navigator from './components/menus/Navigator';
+import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import { Component } from 'react';
+import { Routes } from 'react-router-dom';
 import Meta from './components/Meta';
-import Modal from './components/modals/Modal';
-import CategoryPage from './components/pages/CategoryPage';
-import InfoPage from './components/pages/InfoPage';
-import LivePage from './components/pages/LivePage';
-import MainPage from './components/pages/MainPage';
-import MusicPage from './components/pages/MusicPage';
-import NotFoundPage from './components/pages/NotFoundPage';
-import SettingsPage from './components/pages/SettingsPage';
-import StatsPage from './components/pages/StatsPage';
-import VideoPage from './components/pages/VideoPage';
-import { Mobile, Pc } from './components/tools/MediaQuery';
-import Constants from './constants';
-import ModalController from './services/modal-controller';
-import Tracker from './services/tracker';
-import Transmitter from './services/transmitter';
+import withLocation, { WithLocationParams } from './components/tools/WithLocation';
 
-const NavigatorBlock = styled.div`
-  width: 100%;
-  height: 64px;
-`;
+interface Props extends WithLocationParams {}
 
-const LandingBlock = styled(motion.div)``;
+class App extends Component<Props> {
+  render() {
+    const location = this.props.location;
 
-const App = (): JSX.Element => {
-  const location = useLocation();
+    return (
+      <AnimateSharedLayout>
+        <Meta data={{}} />
 
-  const [headerSticked, setHeaderSticked] = useState(false);
-  const [modalData, setModalData] = useState<[ModalData, number] | null>(null);
-
-  const navigatorController = () => {
-    if (Constants.IS_PC() && !Constants.IS_ADDITIONAL_PAGE())
-      setHeaderSticked(Constants.IS_HEADER_STICK_POSITION_PC());
-    else setHeaderSticked(false);
-  };
-
-  const prevPath = useRef(location.pathname);
-  useEffect(() => {
-    Transmitter.emit('locationupdate', location.pathname, prevPath.current);
-    prevPath.current = location.pathname;
-
-    Tracker.page(location.pathname);
-
-    Transmitter.on('levelscroll', navigatorController);
-    return () => {
-      Transmitter.removeListener('levelscroll', navigatorController);
-    };
-  }, [location]);
-
-  function onModalUpdate(data: ModalData | null, key: number) {
-    if (!data) return setModalData(null);
-    setModalData([data, key]);
+        <AnimatePresence exitBeforeEnter>
+          <Routes
+            location={location}
+            key={location.pathname.split('/').splice(1, 1).join('/')}
+          ></Routes>
+        </AnimatePresence>
+      </AnimateSharedLayout>
+    );
   }
+}
 
-  useEffect(() => ModalController.subscribe(onModalUpdate), []);
-  useEffect(() => () => ModalController.unsubscribe(onModalUpdate), []);
-
-  return (
-    <AnimateSharedLayout>
-      <Meta data={{}} />
-
-      <Popup />
-      <AnimatePresence>
-        {modalData && (
-          <Modal key="modal" data={modalData[0]} modalKey={modalData[1]} />
-        )}
-      </AnimatePresence>
-
-      {!Constants.IS_BLANK_PAGE() ? (
-        <>
-          <Mobile>
-            <Navigator />
-          </Mobile>
-          <Pc>
-            <Header />
-          </Pc>
-        </>
-      ) : (
-        <></>
-      )}
-
-      <Pc>
-        <AnimatePresence exitBeforeEnter>
-          {!Constants.IS_ADDITIONAL_PAGE() ? (
-            <LandingBlock
-              key="default layout"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <LandingVideo />
-              {headerSticked ? <NavigatorBlock /> : <Navigator />}
-            </LandingBlock>
-          ) : (
-            <LandingBlock
-              key="video layout"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            ></LandingBlock>
-          )}
-        </AnimatePresence>
-      </Pc>
-
-      <Mobile>
-        <AnimatePresence exitBeforeEnter>
-          {!Constants.IS_VIDEO_PAGE() ? (
-            <LandingBlock
-              key="default layout"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <Header />
-            </LandingBlock>
-          ) : (
-            <LandingBlock
-              key="video layout"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            ></LandingBlock>
-          )}
-        </AnimatePresence>
-      </Mobile>
-
-      <AnimatePresence exitBeforeEnter>
-        <Routes
-          location={location}
-          key={location.pathname.split('/').splice(1, 1).join('/')}
-        >
-          <Route path="/" element={<MainPage />} />
-          <Route path="/music" element={<MusicPage />} />
-          <Route path="/info" element={<InfoPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/stats" element={<StatsPage />} />
-          <Route path="/category/*" element={<CategoryPage />} />
-          <Route path="/live" element={<LivePage />} />
-          <Route path="/:id" element={<VideoPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </AnimatePresence>
-    </AnimateSharedLayout>
-  );
-};
-
-export default App;
+export default withLocation(App);

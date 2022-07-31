@@ -1,4 +1,4 @@
-type Method = 'GET' | 'POST' | 'DELETE';
+type VideoType = 'performance' | 'vod';
 
 interface ApiResponse {
   ok: boolean;
@@ -6,156 +6,32 @@ interface ApiResponse {
   message?: string;
 }
 
-namespace ApiResponse {
-  export namespace Ad {
-    export interface GetAll extends ApiResponse {
-      ads: IAd[];
-    }
-  }
-
-  export namespace Feed {
-    export namespace Playlist {
-      export interface GetAllPlaylists extends ApiResponse {
-        playlists: IPlaylist[];
-      }
-
-      export interface GetOnePlaylist extends ApiResponse {
-        id: string;
-        title: string;
-        videos: IVideoItem[];
-        featured: boolean;
-      }
-    }
-
-    export interface GetVideoRecommends extends ApiResponse {
-      videos: IVideoItem[];
-    }
-
-    export interface GetUserRecommends extends ApiResponse {
-      videos: IVideoItem[];
-      emotion: number[];
-    }
-
-    export interface GetEmotion extends ApiResponse {
-      emotion: number[];
-    }
-  }
-
-  export namespace Music {
-    export interface ViewAll extends ApiResponse {
-      musics: IMusic[];
-    }
-
-    export interface ViewOne extends ApiResponse {
-      videos: IMusicVideoItem[];
-    }
-  }
-
-  export namespace Video {
-    export interface Stream extends ApiResponse {
-      url: string;
-      duration: number;
-      quality: number;
-      qualities: number[];
-    }
-
-    export interface Info extends ApiResponse {
-      title: string;
-      description: string;
-      duration: number;
-      date: number;
-      path: IPath[];
-    }
-
-    export interface List extends ApiResponse {
-      data: IVideoInfo[];
-    }
-  }
-
-  export namespace Category {
-    export interface ViewAll extends ApiResponse {
-      type: 'parent';
-      path: IPath[];
-      folders: ICategoryFolder[];
-    }
-
-    interface Parent extends ApiResponse {
-      type: 'parent';
-      path: IPath[];
-      folders: ICategoryFolder[];
-    }
-
-    interface Children extends ApiResponse {
-      type: 'children';
-      path: IPath[];
-      files: ICategoryFile[];
-    }
-
-    export type ViewOne = Parent | Children;
-  }
-}
-
-interface IAd {
-  id: string;
-  title: string;
-  description: string;
-  link: string;
-}
-
 interface IPlaylist {
   id: string;
+  label: string;
+  type: VideoType;
   title: string;
-  videos: IVideoItem[];
+  description: string;
+  video: IVideo[];
   featured: boolean;
-  recommend?: boolean;
+  order: number;
 }
 
-interface IMusic {
+interface IVideo {
   id: string;
+  type: VideoType;
   title: string;
-  count: number;
-}
-
-interface IMusicVideoItem {
-  id: string;
   description: string;
-  date: number;
+  date: Date;
+  category: [string, string, string];
   duration: number;
   is_4k: boolean;
 }
 
-interface IVideoItem {
-  id: string;
-  title: string;
-  description: string;
-  duration: number;
-  is_4k: boolean;
-}
-
-interface ICategoryFolder {
-  title: string;
-  path: string;
-  count: number;
-  children: number;
-}
-
-interface ICategoryFile {
-  title: string;
-  id: string;
-  date: number;
-  duration: number;
-  is_4k: boolean;
-}
-
-interface IPath {
-  name: string;
-  path: string;
-  count: number;
-}
-
-interface IVideoInfo {
-  id: string;
-  title: string;
-  description: string;
-  duration: number;
+namespace ApiResponse {
+  namespace Playlist {
+    interface ReadAll extends ApiResponse {
+      playlists: IPlaylist[];
+    }
+  }
 }

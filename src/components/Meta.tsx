@@ -17,25 +17,16 @@ class Meta extends Component<Props> {
 
         <meta
           name="description"
-          content={
-            data.description ||
-            '콘서트, 음악 방송 고화질 인터넷 스트리밍 & 다시보기'
-          }
+          content={data.description || '콘서트, 음악 방송 고화질 인터넷 스트리밍 & 다시보기'}
         />
         <meta
           property="og:description"
-          content={
-            data.description ||
-            '콘서트, 음악 방송 고화질 인터넷 스트리밍 & 다시보기'
-          }
+          content={data.description || '콘서트, 음악 방송 고화질 인터넷 스트리밍 & 다시보기'}
         />
 
         <meta property="og:image" content={data.image || '/og.png'} />
         <meta name="twitter:image" content={data.image || '/og.png'} />
-        <meta
-          name="twitter:card"
-          content={data.image ? 'summary_large_image' : 'summary'}
-        />
+        <meta name="twitter:card" content={data.image ? 'summary_large_image' : 'summary'} />
 
         <link rel="canonical" href={data.url || 'https://izflix.net/'} />
         <meta property="og:url" content={data.url || 'https://izflix.net/'} />

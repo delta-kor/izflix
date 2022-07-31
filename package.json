@@ -12,6 +12,7 @@
     "@types/react-dom": "^17.0.9",
     "framer-motion": "^5.5.6",
     "node-cache": "^5.1.2",
+    "path-to-regexp": "^6.2.1",
     "react": "^17.0.2",
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^17.0.2",
@@ -30,8 +31,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postbuild": "react-snap"
+    "eject": "react-scripts eject"
   },
   "reactSnap": {
     "include": [
@@ -63,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "@types/path-to-regexp": "^1.7.0",
     "@types/react-copy-to-clipboard": "^5.0.2",
     "@types/react-helmet": "^6.1.5",
     "@types/react-lazy-load-image-component": "^1.5.2",

@@ -1,5 +1,4 @@
 import NodeCache from 'node-cache';
-import Playtime from './playtime';
 
 const expireTime = 60 * 5;
 const promiseExpireTime = 10;
@@ -15,7 +14,7 @@ class SpaceshipClass {
   constructor(private baseUrl: string) {}
 
   private async request<T extends ApiResponse>(
-    method: Method,
+    method: 'GET' | 'POST' | 'DELETE' | 'PUT',
     path: string,
     payload: any = {}
   ): Promise<T> {
@@ -31,14 +30,10 @@ class SpaceshipClass {
     try {
       const response = await fetch(this.baseUrl + path, options);
 
-      if (
-        !response.ok &&
-        !response.headers.get('Content-Type')!.includes('application/json')
-      )
+      if (!response.ok && !response.headers.get('Content-Type')!.includes('application/json'))
         return {
           ok: false,
-          message:
-            '서버 사용량이 많아 접속이 지연되고 있습니다\n잠시후 다시 시도해주세요',
+          message: '서버 사용량이 많아 접속이 지연되고 있습니다\n잠시후 다시 시도해주세요',
         } as T;
 
       data = await response.json();
@@ -50,14 +45,9 @@ class SpaceshipClass {
     return data;
   }
 
-  private async get<T extends ApiResponse>(
-    path: string,
-    cacheOption?: CacheOptions
-  ): Promise<T> {
+  private async get<T extends ApiResponse>(path: string, cacheOption?: CacheOptions): Promise<T> {
     if (cacheOption) {
-      const promiseCache = this.cache.get<Promise<T>>(
-        cacheOption.key + '::promise'
-      );
+      const promiseCache = this.cache.get<Promise<T>>(cacheOption.key + '::promise');
       if (promiseCache) {
         const resolved = await promiseCache;
         if (resolved.ok) return resolved;
@@ -68,8 +58,7 @@ class SpaceshipClass {
     }
 
     const promise = this.request<T>('GET', path);
-    if (cacheOption)
-      this.cache.set(cacheOption.key + '::promise', promise, promiseExpireTime);
+    if (cacheOption) this.cache.set(cacheOption.key + '::promise', promise, promiseExpireTime);
 
     const response = await promise;
     if (response.ok && cacheOption) {
@@ -85,9 +74,7 @@ class SpaceshipClass {
     cacheOption?: CacheOptions
   ): Promise<T> {
     if (cacheOption) {
-      const promiseCache = this.cache.get<Promise<T>>(
-        cacheOption.key + '::promise'
-      );
+      const promiseCache = this.cache.get<Promise<T>>(cacheOption.key + '::promise');
       if (promiseCache) {
         const resolved = await promiseCache;
         if (resolved.ok) return resolved;
@@ -98,8 +85,7 @@ class SpaceshipClass {
     }
 
     const promise = this.request<T>('POST', path, data);
-    if (cacheOption)
-      this.cache.set(cacheOption.key + '::promise', promise, promiseExpireTime);
+    if (cacheOption) this.cache.set(cacheOption.key + '::promise', promise, promiseExpireTime);
 
     const response = await promise;
     if (response.ok && cacheOption) {
@@ -109,123 +95,11 @@ class SpaceshipClass {
     return response;
   }
 
-  public getAllAds(): Promise<ApiResponse.Ad.GetAll> {
-    return this.get('/ad', { key: 'get_all_ads', expire: expireTime });
-  }
-
-  public streamVideo(
-    id: string,
-    quality: number
-  ): Promise<ApiResponse.Video.Stream> {
-    return this.get(`/video/${id}?quality=${quality}`, {
-      key: `stream_video_${id}#${quality}`,
-      expire: expireTime,
-    });
-  }
-
-  public getVideoInfo(id: string): Promise<ApiResponse.Video.Info> {
-    return this.get(`/video/${id}/info`, {
-      key: `video_info_${id}`,
-      expire: expireTime,
-    });
-  }
-
-  public getVideoList(ids: string[]): Promise<ApiResponse.Video.List> {
-    return this.get(`/video/list?ids=${ids.join(',')}`, {
-      key: `video_list_${ids.join(',')}`,
-      expire: expireTime,
-    });
-  }
-
-  public videoBeacon(id: string, time: number, total: number): void {
-    try {
-      fetch(this.baseUrl + `/video/${id}/beacon?time=${time}&total=${total}`);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  public getAllPlaylists(): Promise<ApiResponse.Feed.Playlist.GetAllPlaylists> {
-    return this.get('/feed/playlist', {
-      key: 'get_all_playlists',
-      expire: expireTime,
-    });
-  }
-
-  public getOnePlaylist(
-    id: string
-  ): Promise<ApiResponse.Feed.Playlist.GetOnePlaylist> {
-    return this.get(`/feed/playlist/${id}`, {
-      key: `get_all_playlists_${id}`,
-      expire: expireTime,
-    });
-  }
-
-  public getVideoRecommends(
-    id: string,
-    count: number
-  ): Promise<ApiResponse.Feed.GetVideoRecommends> {
-    return this.get(`/feed/recommends/${id}?count=${count}`, {
-      key: `get_recommends_${id}#${count}`,
-      expire: expireTime,
-    });
-  }
-
-  public getUserRecommends(
-    count: number
-  ): Promise<ApiResponse.Feed.GetUserRecommends> {
-    const playtime = Playtime.get().slice(-50);
-    const data = { data: playtime };
-    if (playtime.length)
-      return this.post(`/feed/recommends?count=${count}`, data, {
-        key: `get_recommends_#${count}`,
-        expire: expireTime,
-      });
-    else
-      return new Promise((res) => {
-        res({ ok: true, status: 200, videos: [], emotion: [0, 0, 0, 0] });
-      });
-  }
-
-  public refreshUserRecommends(count: number): void {
-    this.cache.del(`get_recommends_#${count}`);
-    this.cache.del(`get_recommends_#${count}::promise`);
-  }
-
-  public getEmotion(): Promise<ApiResponse.Feed.GetEmotion> {
-    const playtime = Playtime.get().slice(-50);
-    const data = { data: playtime };
-    if (playtime.length) return this.post(`/feed/emotion`, data);
-    else
-      return new Promise((res) => {
-        res({ ok: true, status: 200, emotion: [0, 0, 0, 0] });
-      });
-  }
-
-  public viewAllMusics(): Promise<ApiResponse.Music.ViewAll> {
-    return this.get('/music', {
-      key: 'view_all_musics',
-      expire: expireTime,
-    });
-  }
-
-  public viewOneMusic(id: string): Promise<ApiResponse.Music.ViewOne> {
-    return this.get(`/music/${id}`, {
-      key: `view_one_music_${id}`,
-      expire: expireTime,
-    });
-  }
-
-  public viewAllCategory(): Promise<ApiResponse.Category.ViewAll> {
-    return this.get('/category', {
-      key: 'view_all_category',
-      expire: expireTime,
-    });
-  }
-
-  public viewOneCategory(path: string): Promise<ApiResponse.Category.ViewOne> {
-    return this.get(`/category/${path}`, {
-      key: `view_all_category_${path}`,
+  public async readAllPlaylists(
+    type: 'performance' | 'vod'
+  ): Promise<ApiResponse.Playlist.ReadAll> {
+    return this.get(`/playlist/${type}`, {
+      key: `read_all_playlists::${type}`,
       expire: expireTime,
     });
   }
