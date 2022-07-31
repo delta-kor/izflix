@@ -4,12 +4,11 @@ class SettingsClass {
   private data: ISettings;
 
   constructor() {
-    const data = this.loadData();
-    this.data = data;
+    this.data = SettingsClass.loadData();
     this.saveData();
   }
 
-  private loadData(): ISettings {
+  private static loadData(): ISettings {
     const data: ISettings = {
       FEATURED_VIDEO_AUTOPLAY: true,
       VIDEO_AUTOPLAY: true,
@@ -33,8 +32,7 @@ class SettingsClass {
 
       for (const index in savedData) {
         const key = index as keyof ISettings;
-        const value = savedData[key] as any;
-        (<any>data)[key] = value;
+        (<any>data)[key] = savedData[key] as any;
       }
 
       return data;
@@ -60,13 +58,13 @@ class SettingsClass {
   public setAll(data: ISettings): void {
     this.data = data;
     this.saveData();
-    this.loadData();
+    SettingsClass.loadData();
   }
 
   public setOne<K extends keyof ISettings>(key: K, value: ISettings[K]): void {
     this.data[key] = value;
     this.saveData();
-    this.loadData();
+    SettingsClass.loadData();
   }
 }
 

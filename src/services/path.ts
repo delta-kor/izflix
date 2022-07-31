@@ -1,3 +1,5 @@
+import { pathToRegexp } from 'path-to-regexp';
+
 const PageTitles = new Map<string, string>();
 
 PageTitles.set('/', 'IZFLIX');

@@ -11,6 +11,7 @@ export default async function getTicket() {
     const data = await response.json();
 
     if (!data.ok) throw new Error();
+
     return data.ticket;
   } catch (e) {
     Transmitter.emit(
