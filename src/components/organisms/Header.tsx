@@ -3,7 +3,16 @@ import { Component } from 'react';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import PageManager from '../../services/page-manager';
-import { Color, HideOverflow, MobileQuery, PcQuery, PcStretchLimitOuter, Text } from '../../styles';
+import {
+  Color,
+  HideOverflow,
+  MobileQuery,
+  MobileTopMargin,
+  PcQuery,
+  PcStretchLimitOuter,
+  PcTopMargin,
+  Text,
+} from '../../styles';
 import withLocation, { WithLocationParams } from '../tools/WithLocation';
 import withNavigate, { WithNavigateParams } from '../tools/WithNavigate';
 
@@ -18,12 +27,14 @@ const Layout = styled.div`
 
   ${MobileQuery} {
     width: 100%;
+    height: ${MobileTopMargin}px;
 
     padding: 24px 28px;
     gap: 16px;
   }
 
   ${PcQuery} {
+    height: ${PcTopMargin}px;
     left: 112px;
     right: 0;
 

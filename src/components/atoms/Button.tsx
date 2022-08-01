@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import Icon, { IconType } from '../../icons/Icon';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 
-const Layout = styled.div<{ $color: string }>`
+const Layout = styled.div<{ $color: string; $fluid: boolean }>`
   display: inline-flex;
   justify-content: center;
   align-items: center;
+
+  flex-grow: ${({ $fluid }) => ($fluid ? 1 : 0)};
 
   background: ${({ $color }) => $color};
   border-radius: 8px;
@@ -15,7 +17,7 @@ const Layout = styled.div<{ $color: string }>`
   user-select: none;
 
   ${MobileQuery} {
-    padding: 12px 18px;
+    padding: 14px 18px;
     gap: 10px;
   }
 
@@ -39,6 +41,8 @@ const Content = styled.div`
 `;
 
 const ActionIcon = styled(Icon)`
+  flex-shrink: 0;
+
   ${MobileQuery} {
     width: 14px;
     height: 14px;
@@ -53,15 +57,20 @@ const ActionIcon = styled(Icon)`
 interface Props {
   color: string;
   icon?: IconType;
+  fluid?: boolean;
   onClick?(): void;
 }
 
 class Button extends Component<Props, any> {
+  onClick = () => {
+    this.props.onClick && this.props.onClick();
+  };
+
   render() {
-    const { children, color, icon } = this.props;
+    const { children, color, icon, fluid } = this.props;
 
     return (
-      <Layout $color={color}>
+      <Layout $color={color} $fluid={fluid!!} onClick={this.onClick}>
         <Content>{children}</Content>
         {icon && <ActionIcon type={icon} color={Color.WHITE} />}
       </Layout>

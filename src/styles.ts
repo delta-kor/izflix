@@ -5,8 +5,12 @@ const MobileQuery = `@media (max-width: ${MobileLimit}px)`;
 const TabletQuery = `@media (min-width: ${MobileLimit + 1}px) and (max-width: ${TabletLimit}px)`;
 const PcQuery = `@media (min-width: ${MobileLimit + 1}px)`;
 
-const PcStretchLimitInner = 1200;
+const PcStretchLimitInner = 1240;
 const PcStretchLimitOuter = PcStretchLimitInner + 132 * 2;
+
+const MobileTopMargin = 80;
+const PcTopMargin = 100;
+const PcLeftMargin = 112;
 
 const Color = {
   WHITE: '#FFFFFF',
@@ -14,6 +18,7 @@ const Color = {
   GRAY: '#454B6B',
   DARK_GRAY: '#161A36',
   BACKGROUND: '#070D2D',
+  TRANSPARENT: 'transparent',
 };
 
 const Text = {
@@ -37,6 +42,8 @@ const HideOverflow = `overflow:hidden;
 text-overflow:ellipsis;
 white-space:nowrap;`;
 
+const PcInnerPadding = `max(132px, calc((100vw - ${PcLeftMargin}px - ${PcStretchLimitInner}px) / 2))`;
+
 export {
   MobileLimit,
   TabletLimit,
@@ -45,8 +52,12 @@ export {
   TabletQuery,
   PcStretchLimitInner,
   PcStretchLimitOuter,
+  MobileTopMargin,
+  PcTopMargin,
+  PcLeftMargin,
   Color,
   Text,
   Ease,
   HideOverflow,
+  PcInnerPadding,
 };

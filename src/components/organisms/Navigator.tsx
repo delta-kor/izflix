@@ -2,7 +2,7 @@ import { Component } from 'react';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import PageManager from '../../services/page-manager';
-import { Color, MobileQuery, PcQuery } from '../../styles';
+import { Color, MobileQuery, PcLeftMargin, PcQuery } from '../../styles';
 import withLocation, { WithLocationParams } from '../tools/WithLocation';
 import withNavigate, { WithNavigateParams } from '../tools/WithNavigate';
 
@@ -28,10 +28,10 @@ const Layout = styled.div`
     bottom: 0;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 58px 0;
+    gap: 58px;
 
     height: 100%;
-    width: 112px;
+    width: ${PcLeftMargin}px;
     padding: 72px 0;
     background: ${Color.DARK_GRAY};
   }

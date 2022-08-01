@@ -1,15 +1,15 @@
 import { motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
-import { MobileQuery, PcQuery } from '../../styles';
+import { MobileQuery, MobileTopMargin, PcLeftMargin, PcQuery, PcTopMargin } from '../../styles';
 
 const Layout = styled(motion.div)`
   ${MobileQuery} {
-    padding: 80px 0 0 0;
+    padding: ${MobileTopMargin}px 0 0 0;
   }
 
   ${PcQuery} {
-    padding: 100px 0 0 112px;
+    padding: ${PcTopMargin}px 0 0 ${PcLeftMargin}px;
   }
 `;
 
