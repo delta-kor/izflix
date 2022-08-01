@@ -22,7 +22,6 @@ import { ReactComponent as SettingsSvg } from '../icons/svg/settings.svg';
 import { ReactComponent as ShareSvg } from '../icons/svg/share.svg';
 import { ReactComponent as TvSvg } from '../icons/svg/tv.svg';
 import { ReactComponent as UserSvg } from '../icons/svg/user.svg';
-import { Color } from '../styles';
 
 const IconMap = {
   add: AddSvg,
@@ -51,24 +50,21 @@ const IconMap = {
 };
 
 interface Props {
-  iconId: keyof typeof IconMap;
-  color?: string;
+  type: keyof typeof IconMap;
+  color: string;
   className?: string;
 }
 
 class Icon extends Component<Props, any> {
-  static defaultProps = {
-    color: Color.WHITE,
-  };
-
   render() {
-    const Item = IconMap[this.props.iconId];
+    const Item = IconMap[this.props.type];
     if (!Item) throw new Error('Icon not found');
 
     const className = this.props.className;
 
-    return <Item className={className} fill={this.props.color!} />;
+    return <Item className={className} fill={this.props.color} />;
   }
 }
 
+export type IconType = keyof typeof IconMap;
 export default Icon;

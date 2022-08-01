@@ -5,7 +5,7 @@ const MobileQuery = `@media (max-width: ${MobileLimit}px)`;
 const TabletQuery = `@media (min-width: ${MobileLimit + 1}px) and (max-width: ${TabletLimit}px)`;
 const PcQuery = `@media (min-width: ${MobileLimit + 1}px)`;
 
-const PcStretchLimitInner = 1440;
+const PcStretchLimitInner = 1200;
 const PcStretchLimitOuter = PcStretchLimitInner + 132 * 2;
 
 const Color = {

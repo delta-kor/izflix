@@ -116,7 +116,7 @@ class Header extends Component<WithLocationParams & WithNavigateParams, any> {
               animate={{ opacity: 1 }}
               key={'header_icon'}
             >
-              <HeaderIcon iconId={pageType === 'main' ? 'izflix' : 'left'} />
+              <HeaderIcon type={pageType === 'main' ? 'izflix' : 'left'} color={Color.WHITE} />
             </IconClickBox>
           )}
           <Content layoutId={'header_title'} key={'header_title'}>
@@ -127,7 +127,7 @@ class Header extends Component<WithLocationParams & WithNavigateParams, any> {
             layoutId={'header_search'}
             key={'header_search'}
           >
-            <SearchIcon iconId={'search'} />
+            <SearchIcon type={'search'} color={Color.WHITE} />
           </IconClickBox>
         </Layout>
       );
