@@ -1,12 +1,12 @@
 import { Component } from 'react';
-import LandingVideo from '../molecules/LandingVideo';
+import MainTemplate from '../templates/MainTemplate';
 import Page from './Page';
 
 class MainPage extends Component<any, any> {
   render() {
     return (
       <Page>
-        <LandingVideo />
+        <MainTemplate />
       </Page>
     );
   }
