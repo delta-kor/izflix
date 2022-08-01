@@ -76,16 +76,22 @@ class Navigator extends Component<WithLocationParams & WithNavigateParams, any> 
       return (
         <Layout>
           <ItemClickBox onClick={() => this.onItemClick('/')}>
-            <Item id={'home'} color={location.pathname === '/' ? Color.WHITE : Color.GRAY} />
+            <Item iconId={'home'} color={location.pathname === '/' ? Color.WHITE : Color.GRAY} />
           </ItemClickBox>
           <ItemClickBox onClick={() => this.onItemClick('/vod')}>
-            <Item id={'tv'} color={location.pathname === '/vod' ? Color.WHITE : Color.GRAY} />
+            <Item iconId={'tv'} color={location.pathname === '/vod' ? Color.WHITE : Color.GRAY} />
           </ItemClickBox>
           <ItemClickBox onClick={() => this.onItemClick('/live')}>
-            <Item id={'chat'} color={location.pathname === '/live' ? Color.WHITE : Color.GRAY} />
+            <Item
+              iconId={'chat'}
+              color={location.pathname === '/live' ? Color.WHITE : Color.GRAY}
+            />
           </ItemClickBox>
           <ItemClickBox onClick={() => this.onItemClick('/profile')}>
-            <Item id={'user'} color={location.pathname === '/profile' ? Color.WHITE : Color.GRAY} />
+            <Item
+              iconId={'user'}
+              color={location.pathname === '/profile' ? Color.WHITE : Color.GRAY}
+            />
           </ItemClickBox>
         </Layout>
       );

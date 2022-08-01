@@ -5,7 +5,7 @@ interface Props {
   data: Partial<IMeta>;
 }
 
-class Meta extends Component<Props> {
+class Meta extends Component<Props, any> {
   render() {
     const data = this.props.data;
     return (

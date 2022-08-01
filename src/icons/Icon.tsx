@@ -51,7 +51,7 @@ const IconMap = {
 };
 
 interface Props {
-  id: keyof typeof IconMap;
+  iconId: keyof typeof IconMap;
   color?: string;
   className?: string;
 }
@@ -62,7 +62,7 @@ class Icon extends Component<Props, any> {
   };
 
   render() {
-    const Item = IconMap[this.props.id];
+    const Item = IconMap[this.props.iconId];
     if (!Item) throw new Error('Icon not found');
 
     const className = this.props.className;
