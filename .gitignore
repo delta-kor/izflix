@@ -29,3 +29,5 @@ yarn-error.log*
 .env.production
 
 video-rank.json
+
+.prettierrc

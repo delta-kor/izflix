@@ -114,7 +114,6 @@ class Header extends Component<WithLocationParams & WithNavigateParams, any> {
               layoutId={'header_icon'}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
               key={'header_icon'}
             >
               <HeaderIcon id={pageType === 'main' ? 'izflix' : 'left'} />

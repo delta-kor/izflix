@@ -17,8 +17,10 @@ const Layout = styled.div`
     justify-content: space-between;
 
     width: 100%;
-    padding: 14px 56px;
+    padding: 16px 52px;
     background: ${Color.BACKGROUND};
+
+    border-top: 1px solid ${Color.DARK_GRAY};
   }
 
   ${PcQuery} {
@@ -42,8 +44,8 @@ const Item = styled(Icon)`
   transform: translate(-50%, -50%);
 
   ${MobileQuery} {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
   }
 
   ${PcQuery} {
@@ -55,8 +57,8 @@ const Item = styled(Icon)`
 const ItemClickBox = styled.div`
   position: relative;
 
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
 
   cursor: pointer;
 `;
