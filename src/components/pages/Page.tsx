@@ -4,12 +4,17 @@ import styled from 'styled-components';
 import { MobileQuery, MobileTopMargin, PcLeftMargin, PcQuery, PcTopMargin } from '../../styles';
 
 const Layout = styled(motion.div)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
   ${MobileQuery} {
-    padding: ${MobileTopMargin}px 0 0 0;
+    margin: ${MobileTopMargin}px 0 0 0;
   }
 
   ${PcQuery} {
-    padding: ${PcTopMargin}px 0 0 ${PcLeftMargin}px;
+    margin: ${PcTopMargin}px 0 0 ${PcLeftMargin}px;
   }
 `;
 

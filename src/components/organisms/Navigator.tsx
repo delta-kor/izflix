@@ -61,6 +61,18 @@ const ItemClickBox = styled.div`
   height: 52px;
 
   cursor: pointer;
+
+  & svg {
+    transition: fill 0.2s;
+  }
+
+  &:hover svg:not([fill='${Color.WHITE}']) {
+    fill: ${Color.GRAY_HOVER};
+  }
+
+  &:active svg:not([fill='${Color.WHITE}']) {
+    fill: ${Color.GRAY_ACTIVE};
+  }
 `;
 
 class Navigator extends Component<WithLocationParams & WithNavigateParams, any> {

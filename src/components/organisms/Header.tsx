@@ -25,6 +25,8 @@ const Layout = styled.div`
   align-items: center;
   user-select: none;
 
+  z-index: 10;
+
   ${MobileQuery} {
     width: 100%;
     height: ${MobileTopMargin}px;
@@ -97,9 +99,10 @@ const SearchIcon = styled(Icon)`
 const IconClickBox = styled(motion.div)`
   position: relative;
   flex-shrink: 0;
-  cursor: pointer;
   width: 32px;
   height: 32px;
+
+  cursor: pointer;
 `;
 
 class Header extends Component<WithLocationParams & WithNavigateParams, any> {
@@ -137,6 +140,8 @@ class Header extends Component<WithLocationParams & WithNavigateParams, any> {
             onClick={this.onSearchIconClick}
             layoutId={'header_search'}
             key={'header_search'}
+            whileHover={{ scale: 1.15 }}
+            whileTap={{ scale: 1.05 }}
           >
             <SearchIcon type={'search'} color={Color.WHITE} />
           </IconClickBox>

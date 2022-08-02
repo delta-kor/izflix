@@ -1,9 +1,10 @@
+import { motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
 import Icon, { IconType } from '../../icons/Icon';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 
-const Layout = styled.div<{ $color: string; $fluid: boolean }>`
+const Layout = styled(motion.div)<{ $color: string; $fluid: boolean }>`
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -70,7 +71,13 @@ class Button extends Component<Props, any> {
     const { children, color, icon, fluid } = this.props;
 
     return (
-      <Layout $color={color} $fluid={fluid!!} onClick={this.onClick}>
+      <Layout
+        $color={color}
+        $fluid={fluid!!}
+        onClick={this.onClick}
+        whileHover={{ scale: 1.15 }}
+        whileTap={{ scale: 1.05 }}
+      >
         <Content>{children}</Content>
         {icon && <ActionIcon type={icon} color={Color.WHITE} />}
       </Layout>

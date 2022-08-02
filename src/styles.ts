@@ -19,6 +19,9 @@ const Color = {
   DARK_GRAY: '#161A36',
   BACKGROUND: '#070D2D',
   TRANSPARENT: 'transparent',
+
+  GRAY_HOVER: '#606895',
+  GRAY_ACTIVE: '#969BBB',
 };
 
 const Text = {

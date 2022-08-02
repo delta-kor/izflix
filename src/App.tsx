@@ -21,7 +21,7 @@ class App extends Component<Props> {
         <Header />
         <Navigator />
 
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence>
           <Routes location={location} key={location.pathname.split('/').splice(1, 1).join('/')}>
             <Route path="/" element={<MainPage />} />
             <Route path="/vod" element={<VodPage />} />
