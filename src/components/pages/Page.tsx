@@ -7,7 +7,7 @@ const Layout = styled(motion.div)`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  right: 0;
 
   ${MobileQuery} {
     margin: ${MobileTopMargin}px 0 0 0;

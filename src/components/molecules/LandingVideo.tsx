@@ -19,8 +19,6 @@ const Layout = styled.div`
   justify-content: flex-end;
   align-items: stretch;
 
-  user-select: none;
-
   ${MobileQuery} {
     gap: 16px;
     height: 320px;
