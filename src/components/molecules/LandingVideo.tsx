@@ -127,7 +127,7 @@ const Video = styled.video`
 
   left: 0;
   width: 100%;
-  height: 120%;
+  height: 129%;
 
   object-fit: cover;
   object-position: center;
@@ -138,7 +138,7 @@ const Cover = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 120%;
+  height: 130%;
   background: linear-gradient(180deg, rgba(7, 13, 45, 0.2) 0%, rgba(7, 13, 45, 1) 100%);
 `;
 

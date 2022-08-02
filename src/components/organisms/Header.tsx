@@ -9,6 +9,7 @@ import {
   MobileQuery,
   MobileTopMargin,
   PcInnerPadding,
+  PcLeftMargin,
   PcQuery,
   PcTopMargin,
   Text,
@@ -39,7 +40,8 @@ const Layout = styled.div`
 
   ${PcQuery} {
     height: ${PcTopMargin}px;
-    left: 112px;
+    width: calc(100% - ${PcLeftMargin}px);
+    margin: 0 0 0 ${PcLeftMargin}px;
 
     padding: 32px ${PcInnerPadding};
     gap: 32px;
