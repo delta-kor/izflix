@@ -1,4 +1,4 @@
-import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Meta from './components/Meta';
@@ -15,19 +15,19 @@ class App extends Component<Props> {
     const location = this.props.location;
 
     return (
-      <AnimateSharedLayout>
+      <>
         <Meta data={{}} />
 
         <Header />
         <Navigator />
 
-        <AnimatePresence>
+        <AnimatePresence exitBeforeEnter>
           <Routes location={location} key={location.pathname.split('/').splice(1, 1).join('/')}>
             <Route path="/" element={<MainPage />} />
             <Route path="/vod" element={<VodPage />} />
           </Routes>
         </AnimatePresence>
-      </AnimateSharedLayout>
+      </>
     );
   }
 }

@@ -4,11 +4,6 @@ import styled from 'styled-components';
 import { MobileQuery, MobileTopMargin, PcLeftMargin, PcQuery, PcTopMargin } from '../../styles';
 
 const Layout = styled(motion.div)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-
   ${MobileQuery} {
     margin: ${MobileTopMargin}px 0 0 0;
   }
@@ -27,9 +22,9 @@ class Page extends Component<Props, any> {
     return (
       <Layout
         className={this.props.className}
-        exit={{ opacity: 0 }}
+        exit={{ opacity: 0, transition: { duration: 0.25 } }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        animate={{ opacity: 1, transition: { duration: 0.25 } }}
       >
         {this.props.children}
       </Layout>

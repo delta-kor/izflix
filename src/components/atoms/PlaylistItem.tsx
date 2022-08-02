@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import { Color, HideOverflow, MobileQuery, PcQuery, Text } from '../../styles';
 import { Mobile, Pc } from '../tools/MediaQuery';
+import withNavigate, { WithNavigateParams } from '../tools/WithNavigate';
 import SmoothImage from './SmoothImage';
 
 const Layout = styled(motion.div)`
@@ -64,11 +65,18 @@ const TitlePlaceholder = styled.div`
   }
 `;
 
-interface Props {
+interface Props extends WithNavigateParams {
   playlist?: IPlaylist;
 }
 
 class PlaylistItem extends Component<Props, any> {
+  onClick = () => {
+    const playlist = this.props.playlist;
+    if (playlist) {
+      this.props.navigate(`/playlist/${playlist.id}`);
+    }
+  };
+
   render() {
     const playlist = this.props.playlist;
 
@@ -78,13 +86,13 @@ class PlaylistItem extends Component<Props, any> {
     return (
       <>
         <Pc>
-          <Layout whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.05 }}>
+          <Layout onTap={this.onClick} whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.05 }}>
             <Thumbnail src={thumbnail} />
             {title ? <Title>{title}</Title> : <TitlePlaceholder />}
           </Layout>
         </Pc>
         <Mobile>
-          <Layout>
+          <Layout onTap={this.onClick}>
             <Thumbnail src={thumbnail} />
             {title ? <Title>{title}</Title> : <TitlePlaceholder />}
           </Layout>
@@ -94,4 +102,4 @@ class PlaylistItem extends Component<Props, any> {
   }
 }
 
-export default PlaylistItem;
+export default withNavigate<Props>(PlaylistItem);

@@ -45,7 +45,7 @@ const HideOverflow = `overflow:hidden;
 text-overflow:ellipsis;
 white-space:nowrap;`;
 
-const PcInnerPadding = `max(132px, calc((100vw - ${PcLeftMargin}px - ${PcStretchLimitInner}px) / 2))`;
+const PcInnerPadding = `max(32px, calc((100vw - ${PcLeftMargin}px - ${PcStretchLimitInner}px) / 2))`;
 
 const HideScrollbar = '&::-webkit-scrollbar { display: none; }';
 

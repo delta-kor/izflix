@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { AnimateSharedLayout, motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
@@ -8,8 +8,8 @@ import {
   HideOverflow,
   MobileQuery,
   MobileTopMargin,
+  PcInnerPadding,
   PcQuery,
-  PcStretchLimitOuter,
   PcTopMargin,
   Text,
 } from '../../styles';
@@ -21,6 +21,8 @@ const Layout = styled.div`
   display: flex;
 
   top: 0;
+  left: 0;
+  width: 100%;
 
   align-items: center;
   user-select: none;
@@ -40,11 +42,8 @@ const Layout = styled.div`
     left: 112px;
     right: 0;
 
-    padding: 32px 132px;
+    padding: 32px ${PcInnerPadding};
     gap: 32px;
-
-    max-width: ${PcStretchLimitOuter}px;
-    margin: 0 auto;
   }
 `;
 
@@ -125,21 +124,17 @@ class Header extends Component<WithLocationParams & WithNavigateParams, any> {
           {pageType !== 'submain' && (
             <IconClickBox
               onClick={() => this.onHeaderIconClick(pageType === 'main')}
-              layoutId={'header_icon'}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              key={'header_icon'}
             >
               <HeaderIcon type={pageType === 'main' ? 'izflix' : 'left'} color={Color.WHITE} />
             </IconClickBox>
           )}
-          <Content layoutId={'header_title'} key={'header_title'}>
-            {title}
-          </Content>
+          <AnimateSharedLayout>
+            <Content layoutId={'header_title'}>{title}</Content>
+          </AnimateSharedLayout>
           <IconClickBox
             onClick={this.onSearchIconClick}
-            layoutId={'header_search'}
-            key={'header_search'}
             whileHover={{ scale: 1.15 }}
             whileTap={{ scale: 1.05 }}
           >
