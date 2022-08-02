@@ -73,7 +73,7 @@ class PlaylistItem extends Component<Props, any> {
   onClick = () => {
     const playlist = this.props.playlist;
     if (playlist) {
-      this.props.navigate(`/playlist/${playlist.id}`);
+      this.props.navigate(`/playlist/${playlist.id}`, {});
     }
   };
 

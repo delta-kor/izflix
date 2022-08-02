@@ -79,7 +79,10 @@ const ItemClickBox = styled.div`
 
 class Navigator extends Component<WithLocationParams & WithNavigateParams, any> {
   onItemClick = (path: string) => {
-    this.props.navigate(path);
+    const location = this.props.location;
+    const pageInfo = PageManager.getPageInfo(location.pathname);
+    const replace = pageInfo!! && pageInfo.type === 'main';
+    this.props.navigate(path, { replace });
   };
 
   render() {
