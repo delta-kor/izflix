@@ -6,6 +6,7 @@ import { Color, HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from 
 const Layout = styled.div`
   display: flex;
   align-items: center;
+  z-index: 1;
 
   ${MobileQuery} {
     padding: 8px 32px;

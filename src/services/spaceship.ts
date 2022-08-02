@@ -1,4 +1,5 @@
 import NodeCache from 'node-cache';
+import delay from '../delay';
 
 const expireTime = 60 * 5;
 const promiseExpireTime = 10;
@@ -18,6 +19,8 @@ class SpaceshipClass {
     path: string,
     payload: any = {}
   ): Promise<T> {
+    if (process.env.NODE_ENV === 'development') await delay(1500);
+
     const options: RequestInit = { method };
 
     if (method !== 'GET' && payload) {

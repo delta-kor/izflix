@@ -12,6 +12,8 @@ const Layout = styled.div`
   left: 0;
   align-items: center;
 
+  z-index: 10;
+
   ${MobileQuery} {
     bottom: 0;
     justify-content: space-between;
