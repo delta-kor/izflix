@@ -8,10 +8,12 @@ import {
   PcInnerPadding,
   PcQuery,
   PcTopMargin,
+  Placeholder,
   Text,
 } from '../../styles';
 import Button from '../atoms/Button';
 import withDevice, { WithDeviceParams } from '../tools/WithDevice';
+import withNavigate, { WithNavigateParams } from '../tools/WithNavigate';
 
 const Layout = styled.div`
   display: flex;
@@ -77,29 +79,78 @@ const Description = styled.div`
   }
 `;
 
+const TitlePlaceholder = styled.div`
+  ${MobileQuery} {
+    width: 70%;
+    ${Placeholder.HEADLINE_1};
+  }
+
+  ${PcQuery} {
+    width: 50%;
+    ${Placeholder.EX_HEADLINE_1};
+  }
+`;
+
+const DescriptionPlaceholder = styled.div`
+  width: 30%;
+
+  ${MobileQuery} {
+    ${Placeholder.SUBTITLE_1};
+  }
+
+  ${PcQuery} {
+    ${Placeholder.EX_SUBTITLE_1};
+  }
+`;
+
 const Action = styled.div`
   display: flex;
   gap: 16px;
 `;
 
-interface Props extends WithDeviceParams {}
+interface Props {
+  data: ApiResponse.Playlist.ReadFeatured | null;
+}
 
-class LandingVideo extends Component<Props, any> {
+class LandingVideo extends Component<Props & WithDeviceParams & WithNavigateParams, any> {
+  onActionClick = (type: 'play' | 'playlist') => {
+    const data = this.props.data;
+    if (!data) return false;
+
+    if (type === 'play') {
+      this.props.navigate(`/${data.video.id}`);
+    } else {
+      this.props.navigate(`/playlist/${data.playlist_id}`);
+    }
+  };
+
   render() {
+    const data = this.props.data;
+    const video = data && data.video;
+
+    const title = video && video.title;
+    const description = video && video.description;
+
     return (
       <Layout>
         <Content>
-          <Title>하늘 위로</Title>
-          <Description>EYES ON ME in SEOUL Day 3</Description>
+          {title ? <Title>{title}</Title> : <TitlePlaceholder />}
+          {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
         </Content>
         <Action>
-          <Button color={Color.PRIMARY} icon={'play'} fluid={this.props.device === 'mobile'}>
+          <Button
+            color={Color.PRIMARY}
+            icon={'play'}
+            fluid={this.props.device === 'mobile'}
+            onClick={() => this.onActionClick('play')}
+          >
             재생하기
           </Button>
           <Button
             color={Color.TRANSPARENT}
             icon={'playlist'}
             fluid={this.props.device === 'mobile'}
+            onClick={() => this.onActionClick('playlist')}
           >
             인기 동영상
           </Button>
@@ -109,4 +160,4 @@ class LandingVideo extends Component<Props, any> {
   }
 }
 
-export default withDevice(LandingVideo);
+export default withNavigate<Props>(withDevice(LandingVideo));

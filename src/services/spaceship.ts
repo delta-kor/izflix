@@ -107,6 +107,15 @@ class SpaceshipClass {
     });
   }
 
+  public async readFeatured(
+    type: 'performance' | 'vod'
+  ): Promise<ApiResponse.Playlist.ReadFeatured> {
+    return this.get(`/playlist/${type}/featured`, {
+      key: `read_featured::${type}`,
+      expire: expireTime,
+    });
+  }
+
   public getThumbnail(id: string): string {
     return `${this.baseUrl}/thumbnail/${id}`;
   }

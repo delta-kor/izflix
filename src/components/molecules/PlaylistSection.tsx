@@ -39,11 +39,11 @@ const ItemList = styled.div`
   }
 `;
 
-interface Props extends WithNavigateParams {
+interface Props {
   playlists: IPlaylist[];
 }
 
-class PlaylistSection extends Component<Props, any> {
+class PlaylistSection extends Component<Props & WithNavigateParams, any> {
   onSectionTitleClick = () => {
     this.props.navigate('/playlist');
   };

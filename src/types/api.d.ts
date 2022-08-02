@@ -34,5 +34,11 @@ namespace ApiResponse {
     interface ReadAll extends ApiResponse {
       playlists: IPlaylist[];
     }
+
+    interface ReadFeatured extends ApiResponse {
+      playlist_id: string;
+      video: IVideo;
+      url: string;
+    }
   }
 }

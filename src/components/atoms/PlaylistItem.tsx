@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
-import { Color, HideOverflow, MobileQuery, PcQuery, Text } from '../../styles';
+import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import { Mobile, Pc } from '../tools/MediaQuery';
 import withNavigate, { WithNavigateParams } from '../tools/WithNavigate';
 import SmoothImage from './SmoothImage';
@@ -53,23 +53,21 @@ const Title = styled.div`
 
 const TitlePlaceholder = styled.div`
   width: 70%;
-  background: ${Color.DARK_GRAY};
-  border-radius: 4px;
 
   ${MobileQuery} {
-    height: 18px;
+    ${Placeholder.SUBTITLE_2};
   }
 
   ${PcQuery} {
-    height: 20px;
+    ${Placeholder.SUBTITLE_1};
   }
 `;
 
-interface Props extends WithNavigateParams {
+interface Props {
   playlist?: IPlaylist;
 }
 
-class PlaylistItem extends Component<Props, any> {
+class PlaylistItem extends Component<Props & WithNavigateParams, any> {
   onClick = () => {
     const playlist = this.props.playlist;
     if (playlist) {

@@ -8,9 +8,9 @@ import MainPage from './components/pages/MainPage';
 import VodPage from './components/pages/VodPage';
 import withLocation, { WithLocationParams } from './components/tools/WithLocation';
 
-interface Props extends WithLocationParams {}
+interface Props {}
 
-class App extends Component<Props> {
+class App extends Component<Props & WithLocationParams> {
   render() {
     const location = this.props.location;
 

@@ -5,11 +5,13 @@ import Page from './Page';
 
 interface State {
   playlists: IPlaylist[];
+  featured: ApiResponse.Playlist.ReadFeatured | null;
 }
 
 class MainPage extends Component<any, State> {
   state: State = {
     playlists: [],
+    featured: null,
   };
 
   componentDidMount = () => {
@@ -18,6 +20,7 @@ class MainPage extends Component<any, State> {
 
   loadData = () => {
     this.loadPlaylists();
+    this.loadFeatured();
   };
 
   loadPlaylists = async () => {
@@ -28,12 +31,19 @@ class MainPage extends Component<any, State> {
     this.setState({ playlists });
   };
 
+  loadFeatured = async () => {
+    const response = await Spaceship.readFeatured('performance');
+    if (!response.ok) return false;
+
+    this.setState({ featured: response });
+  };
+
   render() {
-    const { playlists } = this.state;
+    const { playlists, featured } = this.state;
 
     return (
       <Page>
-        <MainTemplate playlists={playlists} />
+        <MainTemplate playlists={playlists} featured={featured} />
       </Page>
     );
   }

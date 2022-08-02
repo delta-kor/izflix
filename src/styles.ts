@@ -39,6 +39,19 @@ const Text = {
   EX_CAPTION: `font-size: 18px; font-weight: 400;`,
 };
 
+const Placeholder = {
+  HEADLINE_1: `height: 28px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
+  HEADLINE_2: `height: 24px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
+  HEADLINE_3: `height: 22px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
+  SUBTITLE_1: `height: 20px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
+  SUBTITLE_2: `height: 18px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
+  BODY_1: `height: 20px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
+  BODY_2: `height: 18px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
+  BODY_3: `height: 14px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
+  EX_HEADLINE_1: `height: 36px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
+  EX_SUBTITLE_1: `height: 24px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
+};
+
 const Ease = [0.04, 0.62, 0.23, 0.98];
 
 const HideOverflow = `overflow:hidden;
@@ -62,6 +75,7 @@ export {
   PcLeftMargin,
   Color,
   Text,
+  Placeholder,
   Ease,
   HideOverflow,
   PcInnerPadding,
