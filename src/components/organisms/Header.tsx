@@ -40,7 +40,6 @@ const Layout = styled.div`
   ${PcQuery} {
     height: ${PcTopMargin}px;
     left: 112px;
-    right: 0;
 
     padding: 32px ${PcInnerPadding};
     gap: 32px;

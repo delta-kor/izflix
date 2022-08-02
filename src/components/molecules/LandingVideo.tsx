@@ -16,6 +16,7 @@ import withDevice, { WithDeviceParams } from '../tools/WithDevice';
 import withNavigate, { WithNavigateParams } from '../tools/WithNavigate';
 
 const Layout = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -39,6 +40,7 @@ const Layout = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  z-index: 1;
 
   ${MobileQuery} {
     gap: 8px;
@@ -106,6 +108,38 @@ const DescriptionPlaceholder = styled.div`
 const Action = styled.div`
   display: flex;
   gap: 16px;
+  z-index: 1;
+`;
+
+const VideoWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  z-index: 0;
+`;
+
+const Video = styled.video`
+  position: absolute;
+  top: 0;
+
+  left: 0;
+  width: 100%;
+  height: 120%;
+
+  object-fit: cover;
+  object-position: center;
+`;
+
+const Cover = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  background: linear-gradient(180deg, rgba(7, 13, 45, 0.2) 0%, rgba(7, 13, 45, 1) 100%);
 `;
 
 interface Props {
@@ -130,9 +164,14 @@ class LandingVideo extends Component<Props & WithDeviceParams & WithNavigatePara
 
     const title = video && video.title;
     const description = video && video.description;
+    const url = data && data.url;
 
     return (
       <Layout>
+        <VideoWrapper>
+          {url && <Video src={url + '#t=60'} muted autoPlay />}
+          <Cover />
+        </VideoWrapper>
         <Content>
           {title ? <Title>{title}</Title> : <TitlePlaceholder />}
           {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
