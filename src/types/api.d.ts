@@ -15,6 +15,7 @@ interface IPlaylist {
   video: IVideo[];
   featured: boolean;
   order: number;
+  thumbnail: string;
 }
 
 interface IVideo {

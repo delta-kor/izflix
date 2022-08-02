@@ -72,13 +72,13 @@ class PlaylistItem extends Component<Props, any> {
   render() {
     const playlist = this.props.playlist;
 
-    const thumbnail = playlist && Spaceship.getThumbnail(playlist.video[0].id);
+    const thumbnail = playlist && Spaceship.getThumbnail(playlist.thumbnail);
     const title = playlist && playlist.title;
 
     return (
       <>
         <Pc>
-          <Layout whileHover={{ scale: 1.15 }} whileTap={{ scale: 1.05 }}>
+          <Layout whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.05 }}>
             <Thumbnail src={thumbnail} />
             {title ? <Title>{title}</Title> : <TitlePlaceholder />}
           </Layout>

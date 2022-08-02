@@ -75,7 +75,7 @@ class Button extends Component<Props, any> {
         $color={color}
         $fluid={fluid!!}
         onClick={this.onClick}
-        whileHover={{ scale: 1.15 }}
+        whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 1.05 }}
       >
         <Content>{children}</Content>

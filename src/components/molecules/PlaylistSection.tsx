@@ -4,6 +4,7 @@ import { HideScrollbar, MobileQuery, PcInnerPadding, PcQuery } from '../../style
 import PlaylistItem from '../atoms/PlaylistItem';
 import SectionTitle from '../atoms/SectionTitle';
 import Repeat from '../tools/Repeat';
+import withNavigate, { WithNavigateParams } from '../tools/WithNavigate';
 
 const Layout = styled.div`
   display: flex;
@@ -38,17 +39,23 @@ const ItemList = styled.div`
   }
 `;
 
-interface Props {
+interface Props extends WithNavigateParams {
   playlists: IPlaylist[];
 }
 
 class PlaylistSection extends Component<Props, any> {
+  onSectionTitleClick = () => {
+    this.props.navigate('/playlist');
+  };
+
   render() {
     const playlists = this.props.playlists;
 
     return (
       <Layout>
-        <SectionTitle action={'전체보기'}>재생목록</SectionTitle>
+        <SectionTitle action={'전체보기'} onActionClick={this.onSectionTitleClick}>
+          재생목록
+        </SectionTitle>
         <ItemList>
           {playlists.length ? (
             playlists.map(data => <PlaylistItem playlist={data} key={data.id} />)
@@ -61,4 +68,4 @@ class PlaylistSection extends Component<Props, any> {
   }
 }
 
-export default PlaylistSection;
+export default withNavigate<Props>(PlaylistSection);

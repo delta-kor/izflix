@@ -13,7 +13,7 @@ class MainTemplate extends Component<Props, any> {
     return (
       <>
         <LandingVideo />
-        <PlaylistSection playlists={playlists}/>
+        <PlaylistSection playlists={playlists} />
       </>
     );
   }
