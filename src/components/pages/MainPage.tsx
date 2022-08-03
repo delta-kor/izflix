@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import HttpException from '../../exceptions/HttpException';
-import Filter from '../../filters/Filter';
+import HttpException from '../../exceptions/http-exception';
+import Evoke from '../../filters/evoke';
 import Spaceship from '../../services/spaceship';
 import MainTemplate from '../templates/MainTemplate';
 import Page from './Page';
@@ -21,7 +21,7 @@ class MainPage extends Component<any, State> {
   };
 
   loadData = () => {
-    Filter(this.loadPlaylists(), this.loadFeatured());
+    Evoke(this.loadPlaylists, this.loadFeatured);
   };
 
   loadPlaylists = async () => {

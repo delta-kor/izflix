@@ -41,7 +41,7 @@ const ItemList = styled.div`
 
   ${PcQuery} {
     gap: 48px 16px;
-    height: 264px;
+    height: 268px;
     flex-wrap: wrap;
     justify-content: space-between;
 
