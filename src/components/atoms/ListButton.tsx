@@ -9,7 +9,6 @@ const Layout = styled(SmoothBox)<{ $color: string; $fluid: boolean }>`
 
   & > .content {
     display: flex;
-    justify-content: center;
     align-items: center;
 
     background: ${({ $color }) => $color};
@@ -20,7 +19,7 @@ const Layout = styled(SmoothBox)<{ $color: string; $fluid: boolean }>`
 
     ${MobileQuery} {
       padding: 14px 18px;
-      gap: 10px;
+      gap: 12px;
     }
 
     ${PcQuery} {
@@ -31,6 +30,7 @@ const Layout = styled(SmoothBox)<{ $color: string; $fluid: boolean }>`
 `;
 
 const Content = styled.div`
+  flex-grow: 1;
   font-weight: 700;
   color: ${Color.WHITE};
 
@@ -47,8 +47,8 @@ const ActionIcon = styled(Icon)`
   flex-shrink: 0;
 
   ${MobileQuery} {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
   }
 
   ${PcQuery} {
@@ -58,13 +58,17 @@ const ActionIcon = styled(Icon)`
 `;
 
 interface Props {
+  icon: IconType;
   color: string;
-  icon?: IconType;
   fluid?: boolean;
   onClick?: MouseEventHandler;
 }
 
-class Button extends Component<Props, any> {
+class ListButton extends Component<Props, any> {
+  static defaultProps: Partial<Props> = {
+    fluid: true,
+  };
+
   onClick: MouseEventHandler = e => {
     e.preventDefault();
     this.props.onClick && this.props.onClick(e);
@@ -75,11 +79,11 @@ class Button extends Component<Props, any> {
 
     return (
       <Layout $color={color} $fluid={fluid!!} hover={1.1} tap={0.9} onClick={this.onClick}>
+        <ActionIcon type={icon} color={Color.WHITE} />
         <Content>{children}</Content>
-        {icon && <ActionIcon type={icon} color={Color.WHITE} />}
       </Layout>
     );
   }
 }
 
-export default Button;
+export default ListButton;

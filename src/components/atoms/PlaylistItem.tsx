@@ -26,7 +26,7 @@ const Layout = styled(SmoothBox)`
 
     ${PcQuery} {
       gap: 12px;
-      width: 180px;
+      width: 150px;
     }
   }
 `;

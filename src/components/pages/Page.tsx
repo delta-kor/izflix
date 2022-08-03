@@ -6,10 +6,12 @@ import { MobileQuery, MobileTopMargin, PcLeftMargin, PcQuery, PcTopMargin } from
 const Layout = styled(motion.div)`
   ${MobileQuery} {
     margin: ${MobileTopMargin}px 0 0 0;
+    padding: 0 0 120px 0;
   }
 
   ${PcQuery} {
     margin: ${PcTopMargin}px 0 0 ${PcLeftMargin}px;
+    padding: 0 0 96px 0;
   }
 `;
 

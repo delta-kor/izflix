@@ -3,18 +3,18 @@ import styled from 'styled-components';
 import { Color, HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 
-const Layout = styled.div`
+const Layout = styled.div<{ $fluid: boolean }>`
   display: flex;
   align-items: center;
   z-index: 1;
 
   ${MobileQuery} {
-    padding: 8px 32px;
+    padding: 8px ${({ $fluid }) => ($fluid ? '0' : '32px')};
     gap: 8px;
   }
 
   ${PcQuery} {
-    padding: 8px ${PcInnerPadding};
+    padding: 8px ${({ $fluid }) => ($fluid ? '0' : PcInnerPadding)};
     gap: 8px;
   }
 `;
@@ -53,20 +53,21 @@ const Action = styled(SmoothBox)`
 
 interface Props {
   action?: string;
-  onActionClick?(): void;
+  onActionClick?: MouseEventHandler;
+  fluid?: boolean;
 }
 
 class SectionTitle extends Component<Props, any> {
   onActionClick: MouseEventHandler = e => {
     e.preventDefault();
-    this.props.onActionClick && this.props.onActionClick();
+    this.props.onActionClick && this.props.onActionClick(e);
   };
 
   render() {
-    const { children, action } = this.props;
+    const { children, action, fluid } = this.props;
 
     return (
-      <Layout>
+      <Layout $fluid={fluid!!}>
         <Content>{children}</Content>
         {action && (
           <Action hover={1.1} tap={0.9} onClick={this.onActionClick}>

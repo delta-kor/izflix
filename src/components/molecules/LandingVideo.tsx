@@ -170,7 +170,7 @@ class LandingVideo extends Component<Props & WithDeviceParams & WithNavigatePara
     return (
       <Layout>
         <VideoWrapper>
-          {url && <Video src={url + '#t=60'} muted autoPlay />}
+          {url && <Video src={url + '#t=60'} muted autoPlay loop />}
           <Cover />
         </VideoWrapper>
         <Content>
