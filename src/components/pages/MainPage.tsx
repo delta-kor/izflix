@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import HttpException from '../../exceptions/HttpException';
+import Filter from '../../filters/Filter';
 import Spaceship from '../../services/spaceship';
 import MainTemplate from '../templates/MainTemplate';
 import Page from './Page';
@@ -19,13 +21,12 @@ class MainPage extends Component<any, State> {
   };
 
   loadData = () => {
-    this.loadPlaylists();
-    this.loadFeatured();
+    Filter(this.loadPlaylists(), this.loadFeatured());
   };
 
   loadPlaylists = async () => {
     const response = await Spaceship.readAllPlaylists('performance');
-    if (!response.ok) return false;
+    if (!response.ok) throw new HttpException(response);
 
     const playlists = response.playlists;
     this.setState({ playlists });
@@ -33,7 +34,7 @@ class MainPage extends Component<any, State> {
 
   loadFeatured = async () => {
     const response = await Spaceship.readFeatured('performance');
-    if (!response.ok) return false;
+    if (!response.ok) throw new HttpException(response);
 
     this.setState({ featured: response });
   };
