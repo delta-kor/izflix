@@ -1,30 +1,32 @@
-import { motion } from 'framer-motion';
 import { Component } from 'react';
 import styled from 'styled-components';
 import Icon, { IconType } from '../../icons/Icon';
 import { Color, MobileQuery, PcQuery } from '../../styles';
+import SmoothBox from './SmoothBox';
 
-const Layout = styled(motion.div)<{ $color: string; $fluid: boolean }>`
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-
+const Layout = styled(SmoothBox)<{ $color: string; $fluid: boolean }>`
   flex-grow: ${({ $fluid }) => ($fluid ? 1 : 0)};
 
-  background: ${({ $color }) => $color};
-  border-radius: 8px;
+  & > .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  cursor: pointer;
-  user-select: none;
+    background: ${({ $color }) => $color};
+    border-radius: 8px;
 
-  ${MobileQuery} {
-    padding: 14px 18px;
-    gap: 10px;
-  }
+    cursor: pointer;
+    user-select: none;
 
-  ${PcQuery} {
-    padding: 16px 28px;
-    gap: 16px;
+    ${MobileQuery} {
+      padding: 14px 18px;
+      gap: 10px;
+    }
+
+    ${PcQuery} {
+      padding: 16px 28px;
+      gap: 16px;
+    }
   }
 `;
 
@@ -71,13 +73,7 @@ class Button extends Component<Props, any> {
     const { children, color, icon, fluid } = this.props;
 
     return (
-      <Layout
-        $color={color}
-        $fluid={fluid!!}
-        onClick={this.onClick}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 1.05 }}
-      >
+      <Layout $color={color} $fluid={fluid!!} hover={1.1} tap={0.9} onClick={this.onClick}>
         <Content>{children}</Content>
         {icon && <ActionIcon type={icon} color={Color.WHITE} />}
       </Layout>

@@ -1,7 +1,7 @@
-import { motion } from 'framer-motion';
 import { Component, MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import { Color, HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
+import SmoothBox from './SmoothBox';
 
 const Layout = styled.div`
   display: flex;
@@ -33,19 +33,21 @@ const Content = styled.div`
   }
 `;
 
-const Action = styled(motion.div)`
-  flex-shrink: 0;
-  color: ${Color.PRIMARY};
+const Action = styled(SmoothBox)`
+  & > .content {
+    flex-shrink: 0;
+    color: ${Color.PRIMARY};
 
-  cursor: pointer;
-  user-select: none;
+    cursor: pointer;
+    user-select: none;
 
-  ${MobileQuery} {
-    ${Text.CAPTION};
-  }
+    ${MobileQuery} {
+      ${Text.CAPTION};
+    }
 
-  ${PcQuery} {
-    ${Text.EX_CAPTION};
+    ${PcQuery} {
+      ${Text.EX_CAPTION};
+    }
   }
 `;
 
@@ -67,11 +69,7 @@ class SectionTitle extends Component<Props, any> {
       <Layout>
         <Content>{children}</Content>
         {action && (
-          <Action
-            onClick={this.onActionClick}
-            whileHover={{ scale: 1.15 }}
-            whileTap={{ scale: 1.05 }}
-          >
+          <Action hover={1.1} tap={0.9} onClick={this.onActionClick}>
             {action}
           </Action>
         )}

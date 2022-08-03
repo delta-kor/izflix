@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import PageManager from '../../services/page-manager';
 import { Color, MobileQuery, PcLeftMargin, PcQuery } from '../../styles';
+import SmoothBox from '../atoms/SmoothBox';
 import withLocation, { WithLocationParams } from '../tools/WithLocation';
 import withNavigate, { WithNavigateParams } from '../tools/WithNavigate';
 
@@ -56,24 +57,18 @@ const Item = styled(Icon)`
   }
 `;
 
-const ItemClickBox = styled.div`
-  position: relative;
+const ItemClickBox = styled(SmoothBox)`
+  & > .content {
+    position: relative;
 
-  width: 52px;
-  height: 52px;
+    width: 52px;
+    height: 52px;
 
-  cursor: pointer;
+    cursor: pointer;
 
-  & svg {
-    transition: fill 0.2s;
-  }
-
-  &:hover svg:not([fill='${Color.WHITE}']) {
-    fill: ${Color.GRAY_HOVER};
-  }
-
-  &:active svg:not([fill='${Color.WHITE}']) {
-    fill: ${Color.GRAY_ACTIVE};
+    & svg {
+      transition: fill 0.2s;
+    }
   }
 `;
 
@@ -92,16 +87,16 @@ class Navigator extends Component<WithLocationParams & WithNavigateParams, any> 
     if (pageInfo) {
       return (
         <Layout>
-          <ItemClickBox onClick={() => this.onItemClick('/')}>
+          <ItemClickBox hover={1.1} tap={0.9} onClick={() => this.onItemClick('/')}>
             <Item type={'home'} color={location.pathname === '/' ? Color.WHITE : Color.GRAY} />
           </ItemClickBox>
-          <ItemClickBox onClick={() => this.onItemClick('/vod')}>
+          <ItemClickBox hover={1.1} tap={0.9} onClick={() => this.onItemClick('/vod')}>
             <Item type={'tv'} color={location.pathname === '/vod' ? Color.WHITE : Color.GRAY} />
           </ItemClickBox>
-          <ItemClickBox onClick={() => this.onItemClick('/live')}>
+          <ItemClickBox hover={1.1} tap={0.9} onClick={() => this.onItemClick('/live')}>
             <Item type={'chat'} color={location.pathname === '/live' ? Color.WHITE : Color.GRAY} />
           </ItemClickBox>
-          <ItemClickBox onClick={() => this.onItemClick('/profile')}>
+          <ItemClickBox hover={1.1} tap={0.9} onClick={() => this.onItemClick('/profile')}>
             <Item
               type={'user'}
               color={location.pathname === '/profile' ? Color.WHITE : Color.GRAY}

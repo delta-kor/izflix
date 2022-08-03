@@ -21,6 +21,7 @@ const Layout = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: stretch;
+  z-index: 0;
 
   ${MobileQuery} {
     gap: 16px;

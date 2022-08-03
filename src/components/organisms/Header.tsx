@@ -14,6 +14,7 @@ import {
   PcTopMargin,
   Text,
 } from '../../styles';
+import SmoothBox from '../atoms/SmoothBox';
 import withLocation, { WithLocationParams } from '../tools/WithLocation';
 import withNavigate, { WithNavigateParams } from '../tools/WithNavigate';
 
@@ -96,13 +97,15 @@ const SearchIcon = styled(Icon)`
   }
 `;
 
-const IconClickBox = styled(motion.div)`
-  position: relative;
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+const IconClickBox = styled(SmoothBox)`
+  & > .content {
+    position: relative;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
 
-  cursor: pointer;
+    cursor: pointer;
+  }
 `;
 
 class Header extends Component<WithLocationParams & WithNavigateParams, any> {
@@ -127,18 +130,15 @@ class Header extends Component<WithLocationParams & WithNavigateParams, any> {
               onClick={() => this.onHeaderIconClick(pageType === 'main')}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
             >
               <HeaderIcon type={pageType === 'main' ? 'izflix' : 'left'} color={Color.WHITE} />
             </IconClickBox>
           )}
           <AnimateSharedLayout>
-            <Content layoutId={'header_title'}>{title}</Content>
+            <Content layoutId={'header_key'}>{title}</Content>
           </AnimateSharedLayout>
-          <IconClickBox
-            onClick={this.onSearchIconClick}
-            whileHover={{ scale: 1.15 }}
-            whileTap={{ scale: 1.05 }}
-          >
+          <IconClickBox hover={1.1} tap={0.9} onClick={this.onSearchIconClick}>
             <SearchIcon type={'search'} color={Color.WHITE} />
           </IconClickBox>
         </Layout>
