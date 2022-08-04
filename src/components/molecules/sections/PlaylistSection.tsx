@@ -1,12 +1,12 @@
 import { Component } from 'react';
 import styled from 'styled-components';
-import { HideScrollbar, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
-import PlaylistItem from '../atoms/PlaylistItem';
-import SectionTitle from '../atoms/SectionTitle';
-import { Pc } from '../tools/MediaQuery';
-import Repeat from '../tools/Repeat';
-import withDevice, { WithDeviceParams } from '../tools/WithDevice';
-import withNavigate, { WithNavigateParams } from '../tools/WithNavigate';
+import { HideScrollbar, MobileQuery, PcInnerPadding, PcQuery } from '../../../styles';
+import PlaylistItem from '../../atoms/PlaylistItem';
+import SectionTitle from '../../atoms/SectionTitle';
+import { Pc } from '../../tools/MediaQuery';
+import Repeat from '../../tools/Repeat';
+import withDevice, { WithDeviceParams } from '../../tools/WithDevice';
+import withNavigate, { WithNavigateParams } from '../../tools/WithNavigate';
 import ShortcutSection from './ShortcutSection';
 
 const Wrapper = styled.div`
@@ -40,9 +40,9 @@ const ItemList = styled.div`
   }
 
   ${PcQuery} {
+    flex-wrap: wrap;
     gap: 48px 16px;
     height: 268px;
-    flex-wrap: wrap;
     justify-content: space-between;
 
     margin: -32px -32px 0 -32px;
@@ -77,7 +77,7 @@ class PlaylistSection extends Component<Props & WithNavigateParams & WithDeviceP
             {playlists.length ? (
               playlists.map(data => <PlaylistItem playlist={data} key={data.id} />)
             ) : (
-              <Repeat element={PlaylistItem} count={10} />
+              <Repeat count={10}>{(i: number) => <PlaylistItem key={i} />}</Repeat>
             )}
           </ItemList>
         </Layout>

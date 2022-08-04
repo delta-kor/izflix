@@ -6,14 +6,16 @@ import MainTemplate from '../templates/MainTemplate';
 import Page from './Page';
 
 interface State {
-  playlists: IPlaylist[];
   featured: ApiResponse.Playlist.ReadFeatured | null;
+  playlists: IPlaylist[];
+  recommends: IVideo[];
 }
 
 class MainPage extends Component<any, State> {
   state: State = {
-    playlists: [],
     featured: null,
+    playlists: [],
+    recommends: [],
   };
 
   componentDidMount = () => {
@@ -21,7 +23,7 @@ class MainPage extends Component<any, State> {
   };
 
   loadData = () => {
-    Evoke(this.loadPlaylists, this.loadFeatured);
+    Evoke(this.loadPlaylists, this.loadFeatured, this.loadRecommends);
   };
 
   loadPlaylists = async () => {
@@ -39,12 +41,20 @@ class MainPage extends Component<any, State> {
     this.setState({ featured: response });
   };
 
+  loadRecommends = async () => {
+    const response = await Spaceship.getUserRecommends();
+    if (!response.ok) throw new HttpException(response);
+
+    const recommends = response.videos;
+    this.setState({ recommends });
+  };
+
   render() {
-    const { playlists, featured } = this.state;
+    const { featured, playlists, recommends } = this.state;
 
     return (
       <Page>
-        <MainTemplate playlists={playlists} featured={featured} />
+        <MainTemplate playlists={playlists} featured={featured} recommends={recommends} />
       </Page>
     );
   }

@@ -1,0 +1,112 @@
+import { Component, MouseEventHandler } from 'react';
+import styled from 'styled-components';
+import Spaceship from '../../services/spaceship';
+import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
+import SmoothBox from './SmoothBox';
+import SmoothImage from './SmoothImage';
+
+const FullLayout = styled(SmoothBox)`
+  & > .content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    cursor: pointer;
+    user-select: none;
+  }
+`;
+
+const Image = styled(SmoothImage)`
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+const Title = styled.div`
+  width: 100%;
+  color: ${Color.WHITE};
+  ${HideOverflow};
+
+  ${MobileQuery} {
+    ${Text.SUBTITLE_1};
+  }
+
+  ${PcQuery} {
+    ${Text.EX_SUBTITLE_1};
+  }
+`;
+
+const Description = styled.div`
+  width: 100%;
+  color: ${Color.WHITE};
+  opacity: 0.7;
+  ${HideOverflow};
+
+  ${MobileQuery} {
+    ${Text.SUBTITLE_2};
+  }
+
+  ${PcQuery} {
+    ${Text.SUBTITLE_1};
+  }
+`;
+
+const TitlePlaceholder = styled.div`
+  width: 100%;
+
+  ${MobileQuery} {
+    ${Placeholder.SUBTITLE_1};
+  }
+
+  ${PcQuery} {
+    ${Placeholder.EX_SUBTITLE_1};
+  }
+`;
+
+const DescriptionPlaceholder = styled.div`
+  width: 70%;
+
+  ${MobileQuery} {
+    ${Placeholder.SUBTITLE_2};
+  }
+
+  ${PcQuery} {
+    ${Placeholder.SUBTITLE_1};
+  }
+`;
+
+interface Props {
+  type: 'full' | 'horizontal';
+  data?: IVideo;
+  onClick?: MouseEventHandler;
+}
+
+class VideoPanel extends Component<Props, any> {
+  render() {
+    const { type, data } = this.props;
+
+    const thumbnail = data && Spaceship.getThumbnail(data.id);
+    const title = data && data.title;
+    const description = data && data.description;
+
+    if (type === 'full')
+      return (
+        <FullLayout hover={1.05} tap={0.95}>
+          <Image src={thumbnail} />
+          <Content>
+            {title ? <Title>{title}</Title> : <TitlePlaceholder />}
+            {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
+          </Content>
+        </FullLayout>
+      );
+    else return null;
+  }
+}
+
+export default VideoPanel;

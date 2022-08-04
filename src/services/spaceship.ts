@@ -98,6 +98,14 @@ class SpaceshipClass {
     return response;
   }
 
+  public async getUserRecommends(): Promise<ApiResponse.Recommend.GetUserRecommends> {
+    const payload = { data: [] };
+    return this.post('/recommend', payload, {
+      key: 'get_user_recommends',
+      expire: expireTime,
+    });
+  }
+
   public async readAllPlaylists(
     type: 'performance' | 'vod'
   ): Promise<ApiResponse.Playlist.ReadAll> {

@@ -1,17 +1,17 @@
 import { Component } from 'react';
 
 interface Props {
-  element: any;
   count: number;
 }
 
 class Repeat extends Component<Props, any> {
   render() {
-    const { element: Element, count } = this.props;
+    const count = this.props.count;
+    const children = this.props.children as (i: number) => void;
 
     return Array(count)
       .fill(0)
-      .map((_, i) => <Element key={i} />);
+      .map((_, i) => children(i));
   }
 }
 

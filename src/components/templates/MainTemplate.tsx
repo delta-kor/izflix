@@ -1,8 +1,9 @@
 import { Component } from 'react';
 import styled from 'styled-components';
 import LandingVideo from '../molecules/LandingVideo';
-import PlaylistSection from '../molecules/PlaylistSection';
-import ShortcutSection from '../molecules/ShortcutSection';
+import PlaylistSection from '../molecules/sections/PlaylistSection';
+import RecommendSection from '../molecules/sections/RecommendSection';
+import ShortcutSection from '../molecules/sections/ShortcutSection';
 import { Mobile, Pc } from '../tools/MediaQuery';
 
 const Template = styled.div`
@@ -12,17 +13,19 @@ const Template = styled.div`
 `;
 
 interface Props {
-  playlists: IPlaylist[];
   featured: ApiResponse.Playlist.ReadFeatured | null;
+  playlists: IPlaylist[];
+  recommends: IVideo[];
 }
 
 class MainTemplate extends Component<Props, any> {
   render() {
-    const { playlists, featured } = this.props;
+    const { featured, playlists, recommends } = this.props;
 
     const landingVideo = <LandingVideo data={featured} />;
     const playlistSection = <PlaylistSection playlists={playlists} />;
     const shortcutSection = <ShortcutSection />;
+    const recommendSection = <RecommendSection recommends={recommends} />;
 
     return (
       <Template>
@@ -30,10 +33,12 @@ class MainTemplate extends Component<Props, any> {
           {landingVideo}
           {playlistSection}
           {shortcutSection}
+          {recommendSection}
         </Mobile>
         <Pc>
           {landingVideo}
           {playlistSection}
+          {recommendSection}
         </Pc>
       </Template>
     );

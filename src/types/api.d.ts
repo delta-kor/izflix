@@ -30,6 +30,12 @@ interface IVideo {
 }
 
 namespace ApiResponse {
+  namespace Recommend {
+    interface GetUserRecommends extends ApiResponse {
+      videos: IVideo[];
+    }
+  }
+
   namespace Playlist {
     interface ReadAll extends ApiResponse {
       playlists: IPlaylist[];

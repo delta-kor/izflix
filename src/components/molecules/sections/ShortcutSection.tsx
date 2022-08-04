@@ -1,10 +1,10 @@
 import { Component } from 'react';
 import styled from 'styled-components';
-import { Color, MobileQuery, PcQuery } from '../../styles';
-import ListButton from '../atoms/ListButton';
-import VerticalButton from '../atoms/VerticalButton';
-import withDevice, { WithDeviceParams } from '../tools/WithDevice';
-import withNavigate, { WithNavigateParams } from '../tools/WithNavigate';
+import { Color, MobileQuery, PcQuery } from '../../../styles';
+import ListButton from '../../atoms/ListButton';
+import VerticalButton from '../../atoms/VerticalButton';
+import withDevice, { WithDeviceParams } from '../../tools/WithDevice';
+import withNavigate, { WithNavigateParams } from '../../tools/WithNavigate';
 
 const Layout = styled.div`
   display: flex;
