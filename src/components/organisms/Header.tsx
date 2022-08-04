@@ -128,6 +128,8 @@ class Header extends Component<WithLocationParams & WithNavigateParams, any> {
           {pageType !== 'submain' && (
             <IconClickBox
               onClick={() => this.onHeaderIconClick(pageType === 'main')}
+              hover={1.1}
+              tap={0.9}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
