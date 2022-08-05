@@ -44,7 +44,9 @@ const RecommendSection: React.FC<Props> = ({ recommends }) => {
       <SectionTitle>추천 동영상</SectionTitle>
       <ItemList>
         {recommends.length ? (
-          recommends.map(data => <VideoPanel type={'full'} data={data} key={data.id} />)
+          recommends.map(data => (
+            <VideoPanel type={'full'} data={data} link={`/${data.id}`} key={data.id} />
+          ))
         ) : (
           <Repeat
             count={Settings.getOne('USER_RECOMMEND_COUNT')}

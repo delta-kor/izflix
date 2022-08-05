@@ -1,4 +1,5 @@
 import { MouseEventHandler } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon, { IconType } from '../../icons/Icon';
 import { Color, MobileQuery, PcQuery } from '../../styles';
@@ -61,21 +62,19 @@ interface Props {
   color: string;
   icon?: IconType;
   fluid?: boolean;
+  link?: string;
   onClick?: MouseEventHandler;
 }
 
-const Button: React.FC<Props> = ({ color, icon, fluid, onClick, children }) => {
-  const onLayoutClick: MouseEventHandler = e => {
-    e.preventDefault();
-    onClick && onClick(e);
-  };
-
-  return (
-    <Layout $color={color} $fluid={fluid!!} hover={1.1} tap={0.9} onClick={onLayoutClick}>
+const Button: React.FC<Props> = ({ color, icon, fluid, link, onClick, children }) => {
+  const Component = (
+    <Layout $color={color} $fluid={fluid!!} hover={1.1} tap={0.9} onClick={onClick}>
       <Content>{children}</Content>
       {icon && <ActionIcon type={icon} color={Color.WHITE} />}
     </Layout>
   );
+
+  return link ? <Link to={link}>{Component}</Link> : Component;
 };
 
 export default Button;

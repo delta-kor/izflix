@@ -1,4 +1,5 @@
 import { MouseEventHandler } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Color, HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
@@ -53,24 +54,22 @@ const Action = styled(SmoothBox)`
 
 interface Props {
   action?: string;
+  link?: string;
   onActionClick?: MouseEventHandler;
   fluid?: boolean;
 }
 
-const SectionTitle: React.FC<Props> = ({ action, onActionClick, fluid, children }) => {
-  const onClick: MouseEventHandler = e => {
-    e.preventDefault();
-    onActionClick && onActionClick(e);
-  };
+const SectionTitle: React.FC<Props> = ({ action, link, onActionClick, fluid, children }) => {
+  const ActionComponent = (
+    <Action hover={1.1} tap={0.9} onClick={onActionClick}>
+      {action}
+    </Action>
+  );
 
   return (
     <Layout $fluid={fluid!!}>
       <Content>{children}</Content>
-      {action && (
-        <Action hover={1.1} tap={0.9} onClick={onClick}>
-          {action}
-        </Action>
-      )}
+      {action && link ? <Link to={link}>{ActionComponent}</Link> : ActionComponent}
     </Layout>
   );
 };

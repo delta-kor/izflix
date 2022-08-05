@@ -1,8 +1,13 @@
 import { MouseEventHandler } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon, { IconType } from '../../icons/Icon';
 import { Color, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
+
+const Wrapper = styled(Link)`
+  width: 100%;
+`;
 
 const Layout = styled(SmoothBox)<{ $color: string }>`
   width: 100%;
@@ -35,21 +40,19 @@ const Content = styled.div`
 interface Props {
   icon: IconType;
   color: string;
+  link?: string;
   onClick?: MouseEventHandler;
 }
 
-const VerticalButton: React.FC<Props> = ({ icon, color, onClick, children }) => {
-  const onLayoutClick: MouseEventHandler = e => {
-    e.preventDefault();
-    onClick && onClick(e);
-  };
-
-  return (
-    <Layout $color={color} hover={1.1} tap={0.9} onClick={onLayoutClick}>
+const VerticalButton: React.FC<Props> = ({ icon, color, link, onClick, children }) => {
+  const Component = (
+    <Layout $color={color} hover={1.1} tap={0.9} onClick={onClick}>
       <ActionIcon type={icon} color={Color.WHITE} />
       <Content>{children}</Content>
     </Layout>
   );
+
+  return link ? <Wrapper to={link}>{Component}</Wrapper> : Component;
 };
 
 export default VerticalButton;

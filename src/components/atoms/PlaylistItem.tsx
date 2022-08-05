@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
@@ -65,33 +65,27 @@ interface Props {
 }
 
 const PlaylistItem: React.FC<Props> = ({ playlist }) => {
-  const navigate = useNavigate();
-
-  const onClick = () => {
-    if (playlist) {
-      navigate(`/playlist/${playlist.id}`);
-    }
-  };
-
   const thumbnail = playlist && Spaceship.getThumbnail(playlist.thumbnail);
   const title = playlist && playlist.title;
 
-  return (
+  const Component = (
     <>
       <Pc>
-        <Layout hover={1.1} tap={0.9} onClick={onClick}>
+        <Layout hover={1.1} tap={0.9}>
           <Thumbnail src={thumbnail} />
           {title ? <Title>{title}</Title> : <TitlePlaceholder />}
         </Layout>
       </Pc>
       <Mobile>
-        <Layout onClick={onClick}>
+        <Layout>
           <Thumbnail src={thumbnail} />
           {title ? <Title>{title}</Title> : <TitlePlaceholder />}
         </Layout>
       </Mobile>
     </>
   );
+
+  return playlist ? <Link to={`/playlist/${playlist.id}`}>{Component}</Link> : Component;
 };
 
 export default PlaylistItem;

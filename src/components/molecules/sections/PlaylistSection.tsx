@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useDevice from '../../../hooks/useDevice';
 import { HideScrollbar, MobileQuery, PcInnerPadding, PcQuery } from '../../../styles';
@@ -9,6 +8,10 @@ import Repeat from '../../tools/Repeat';
 import ShortcutSection from './ShortcutSection';
 
 const Wrapper = styled.div`
+  ${MobileQuery} {
+    margin: -24px 0 0 0;
+  }
+
   ${PcQuery} {
     display: grid;
     grid-template-columns: auto 182px;
@@ -55,28 +58,24 @@ interface Props {
 }
 
 const PlaylistSection: React.FC<Props> = ({ playlists }) => {
-  const navigate = useNavigate();
   const device = useDevice();
-
-  const onSectionTitleClick = () => {
-    navigate('/playlist');
-  };
 
   return (
     <Wrapper>
       <Layout>
-        <SectionTitle
-          action={'전체보기'}
-          onActionClick={onSectionTitleClick}
-          fluid={device === 'pc'}
-        >
+        <SectionTitle action={'전체보기'} link={'/playlist'} fluid={device === 'pc'}>
           재생목록
         </SectionTitle>
         <ItemList>
           {playlists.length ? (
-            playlists.map(data => <PlaylistItem playlist={data} key={data.id} />)
+            playlists
+              .slice(0, device === 'pc' ? 6 : undefined)
+              .map(data => <PlaylistItem playlist={data} key={data.id} />)
           ) : (
-            <Repeat count={10} element={(i: number) => <PlaylistItem key={i} />} />
+            <Repeat
+              count={device === 'pc' ? 6 : 10}
+              element={(i: number) => <PlaylistItem key={i} />}
+            />
           )}
         </ItemList>
       </Layout>

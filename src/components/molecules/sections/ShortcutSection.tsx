@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useDevice from '../../../hooks/useDevice';
 import { Color, MobileQuery, PcQuery } from '../../../styles';
@@ -7,6 +6,7 @@ import VerticalButton from '../../atoms/VerticalButton';
 
 const Layout = styled.div`
   display: flex;
+  z-index: 1;
 
   ${MobileQuery} {
     justify-content: space-between;
@@ -22,32 +22,19 @@ const Layout = styled.div`
 `;
 
 const ShortcutSection: React.FC = () => {
-  const navigate = useNavigate();
   const device = useDevice();
-
-  const onItemClick = (path: string) => {
-    navigate(path);
-  };
 
   const ButtonElement = device === 'mobile' ? VerticalButton : ListButton;
 
   return (
     <Layout>
-      <ButtonElement icon={'music'} color={Color.DARK_GRAY} onClick={() => onItemClick('/music')}>
+      <ButtonElement icon={'music'} color={Color.DARK_GRAY} link={'/music'}>
         노래
       </ButtonElement>
-      <ButtonElement
-        icon={'category'}
-        color={Color.DARK_GRAY}
-        onClick={() => onItemClick('/category')}
-      >
+      <ButtonElement icon={'category'} color={Color.DARK_GRAY} link={'/category'}>
         카테고리
       </ButtonElement>
-      <ButtonElement
-        icon={'calendar'}
-        color={Color.DARK_GRAY}
-        onClick={() => onItemClick('/calendar')}
-      >
+      <ButtonElement icon={'calendar'} color={Color.DARK_GRAY} link={'/calendar'}>
         달력
       </ButtonElement>
     </Layout>

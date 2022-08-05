@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import PageManager from '../../services/page-manager';
@@ -71,30 +71,36 @@ const ItemClickBox = styled(SmoothBox)`
 `;
 
 const Navigator: React.FC = () => {
-  const navigate = useNavigate();
   const location = useLocation();
-
-  const onItemClick = (path: string) => {
-    navigate(path);
-  };
 
   const pageInfo = PageManager.getPageInfo(location.pathname);
 
   if (pageInfo) {
     return (
       <Layout>
-        <ItemClickBox hover={1.1} tap={0.9} onClick={() => onItemClick('/')}>
-          <Item type={'home'} color={location.pathname === '/' ? Color.WHITE : Color.GRAY} />
-        </ItemClickBox>
-        <ItemClickBox hover={1.1} tap={0.9} onClick={() => onItemClick('/vod')}>
-          <Item type={'tv'} color={location.pathname === '/vod' ? Color.WHITE : Color.GRAY} />
-        </ItemClickBox>
-        <ItemClickBox hover={1.1} tap={0.9} onClick={() => onItemClick('/live')}>
-          <Item type={'chat'} color={location.pathname === '/live' ? Color.WHITE : Color.GRAY} />
-        </ItemClickBox>
-        <ItemClickBox hover={1.1} tap={0.9} onClick={() => onItemClick('/profile')}>
-          <Item type={'user'} color={location.pathname === '/profile' ? Color.WHITE : Color.GRAY} />
-        </ItemClickBox>
+        <Link to={'/'}>
+          <ItemClickBox hover={1.1} tap={0.9}>
+            <Item type={'home'} color={location.pathname === '/' ? Color.WHITE : Color.GRAY} />
+          </ItemClickBox>
+        </Link>
+        <Link to={'/vod'}>
+          <ItemClickBox hover={1.1} tap={0.9}>
+            <Item type={'tv'} color={location.pathname === '/vod' ? Color.WHITE : Color.GRAY} />
+          </ItemClickBox>
+        </Link>
+        <Link to={'/live'}>
+          <ItemClickBox hover={1.1} tap={0.9}>
+            <Item type={'chat'} color={location.pathname === '/live' ? Color.WHITE : Color.GRAY} />
+          </ItemClickBox>
+        </Link>
+        <Link to={'/profile'}>
+          <ItemClickBox hover={1.1} tap={0.9}>
+            <Item
+              type={'user'}
+              color={location.pathname === '/profile' ? Color.WHITE : Color.GRAY}
+            />
+          </ItemClickBox>
+        </Link>
       </Layout>
     );
   } else {

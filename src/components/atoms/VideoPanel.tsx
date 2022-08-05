@@ -1,4 +1,5 @@
 import { MouseEventHandler } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
@@ -84,30 +85,27 @@ const DescriptionPlaceholder = styled.div`
 interface Props {
   type: 'full' | 'horizontal';
   data?: IVideo;
+  link?: string;
   onClick?: MouseEventHandler;
 }
 
-const VideoPanel: React.FC<Props> = ({ type, data, onClick }) => {
-  const onLayoutClick: MouseEventHandler = e => {
-    e.preventDefault();
-    onClick && onClick(e);
-  };
-
+const VideoPanel: React.FC<Props> = ({ type, data, link, onClick }) => {
   const thumbnail = data && Spaceship.getThumbnail(data.id);
   const title = data && data.title;
   const description = data && data.description;
 
-  if (type === 'full')
-    return (
-      <FullLayout hover={1.05} tap={0.95} onClick={onLayoutClick}>
+  const Component =
+    type === 'full' ? (
+      <FullLayout hover={1.05} tap={0.95} onClick={onClick}>
         <Image src={thumbnail} />
         <Content>
           {title ? <Title>{title}</Title> : <TitlePlaceholder />}
           {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
         </Content>
       </FullLayout>
-    );
-  else return null;
+    ) : null;
+
+  return link ? <Link to={link}>{Component}</Link> : Component;
 };
 
 export default VideoPanel;
