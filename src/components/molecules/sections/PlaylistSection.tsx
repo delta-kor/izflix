@@ -1,12 +1,11 @@
-import { Component } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useDevice from '../../../hooks/useDevice';
 import { HideScrollbar, MobileQuery, PcInnerPadding, PcQuery } from '../../../styles';
 import PlaylistItem from '../../atoms/PlaylistItem';
 import SectionTitle from '../../atoms/SectionTitle';
 import { Pc } from '../../tools/MediaQuery';
 import Repeat from '../../tools/Repeat';
-import withDevice, { WithDeviceParams } from '../../tools/WithDevice';
-import withNavigate, { WithNavigateParams } from '../../tools/WithNavigate';
 import ShortcutSection from './ShortcutSection';
 
 const Wrapper = styled.div`
@@ -55,38 +54,37 @@ interface Props {
   playlists: IPlaylist[];
 }
 
-class PlaylistSection extends Component<Props & WithNavigateParams & WithDeviceParams, any> {
-  onSectionTitleClick = () => {
-    this.props.navigate('/playlist');
+const PlaylistSection: React.FC<Props> = ({ playlists }) => {
+  const navigate = useNavigate();
+  const device = useDevice();
+
+  const onSectionTitleClick = () => {
+    navigate('/playlist');
   };
 
-  render() {
-    const { playlists, device } = this.props;
+  return (
+    <Wrapper>
+      <Layout>
+        <SectionTitle
+          action={'전체보기'}
+          onActionClick={onSectionTitleClick}
+          fluid={device === 'pc'}
+        >
+          재생목록
+        </SectionTitle>
+        <ItemList>
+          {playlists.length ? (
+            playlists.map(data => <PlaylistItem playlist={data} key={data.id} />)
+          ) : (
+            <Repeat count={10} element={(i: number) => <PlaylistItem key={i} />} />
+          )}
+        </ItemList>
+      </Layout>
+      <Pc>
+        <ShortcutSection />
+      </Pc>
+    </Wrapper>
+  );
+};
 
-    return (
-      <Wrapper>
-        <Layout>
-          <SectionTitle
-            action={'전체보기'}
-            onActionClick={this.onSectionTitleClick}
-            fluid={device === 'pc'}
-          >
-            재생목록
-          </SectionTitle>
-          <ItemList>
-            {playlists.length ? (
-              playlists.map(data => <PlaylistItem playlist={data} key={data.id} />)
-            ) : (
-              <Repeat count={10}>{(i: number) => <PlaylistItem key={i} />}</Repeat>
-            )}
-          </ItemList>
-        </Layout>
-        <Pc>
-          <ShortcutSection />
-        </Pc>
-      </Wrapper>
-    );
-  }
-}
-
-export default withNavigate<Props>(withDevice(PlaylistSection));
+export default PlaylistSection;

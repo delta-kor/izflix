@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 import styled from 'styled-components';
@@ -36,26 +35,22 @@ interface Props {
   src?: string;
 }
 
-class SmoothImage extends Component<Props, any> {
-  render() {
-    const { className, src } = this.props;
-
-    return (
-      <Layout className={className}>
-        {src && (
-          <Content
-            src={src}
-            effect="opacity"
-            width="100%"
-            wrapperProps={{
-              style: { zIndex: '1' },
-            }}
-          />
-        )}
-        <Placeholder />
-      </Layout>
-    );
-  }
-}
+const SmoothImage: React.FC<Props> = ({ className, src }) => {
+  return (
+    <Layout className={className}>
+      {src && (
+        <Content
+          src={src}
+          effect="opacity"
+          width="100%"
+          wrapperProps={{
+            style: { zIndex: '1' },
+          }}
+        />
+      )}
+      <Placeholder />
+    </Layout>
+  );
+};
 
 export default SmoothImage;

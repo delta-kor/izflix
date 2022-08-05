@@ -1,9 +1,8 @@
-import { Component } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import { Mobile, Pc } from '../tools/MediaQuery';
-import withNavigate, { WithNavigateParams } from '../tools/WithNavigate';
 import SmoothBox from './SmoothBox';
 import SmoothImage from './SmoothImage';
 
@@ -65,37 +64,34 @@ interface Props {
   playlist?: IPlaylist;
 }
 
-class PlaylistItem extends Component<Props & WithNavigateParams, any> {
-  onClick = () => {
-    const playlist = this.props.playlist;
+const PlaylistItem: React.FC<Props> = ({ playlist }) => {
+  const navigate = useNavigate();
+
+  const onClick = () => {
     if (playlist) {
-      this.props.navigate(`/playlist/${playlist.id}`, {});
+      navigate(`/playlist/${playlist.id}`);
     }
   };
 
-  render() {
-    const playlist = this.props.playlist;
+  const thumbnail = playlist && Spaceship.getThumbnail(playlist.thumbnail);
+  const title = playlist && playlist.title;
 
-    const thumbnail = playlist && Spaceship.getThumbnail(playlist.thumbnail);
-    const title = playlist && playlist.title;
+  return (
+    <>
+      <Pc>
+        <Layout hover={1.1} tap={0.9} onClick={onClick}>
+          <Thumbnail src={thumbnail} />
+          {title ? <Title>{title}</Title> : <TitlePlaceholder />}
+        </Layout>
+      </Pc>
+      <Mobile>
+        <Layout onClick={onClick}>
+          <Thumbnail src={thumbnail} />
+          {title ? <Title>{title}</Title> : <TitlePlaceholder />}
+        </Layout>
+      </Mobile>
+    </>
+  );
+};
 
-    return (
-      <>
-        <Pc>
-          <Layout hover={1.1} tap={0.9} onClick={this.onClick}>
-            <Thumbnail src={thumbnail} />
-            {title ? <Title>{title}</Title> : <TitlePlaceholder />}
-          </Layout>
-        </Pc>
-        <Mobile>
-          <Layout onClick={this.onClick}>
-            <Thumbnail src={thumbnail} />
-            {title ? <Title>{title}</Title> : <TitlePlaceholder />}
-          </Layout>
-        </Mobile>
-      </>
-    );
-  }
-}
-
-export default withNavigate<Props>(PlaylistItem);
+export default PlaylistItem;

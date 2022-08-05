@@ -1,4 +1,4 @@
-import { Component, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import Icon, { IconType } from '../../icons/Icon';
 import { Color, Text } from '../../styles';
@@ -38,21 +38,18 @@ interface Props {
   onClick?: MouseEventHandler;
 }
 
-class VerticalButton extends Component<Props, any> {
-  onClick: MouseEventHandler = e => {
-    this.props.onClick && this.props.onClick(e);
+const VerticalButton: React.FC<Props> = ({ icon, color, onClick, children }) => {
+  const onLayoutClick: MouseEventHandler = e => {
+    e.preventDefault();
+    onClick && onClick(e);
   };
 
-  render() {
-    const { children, color, icon } = this.props;
-
-    return (
-      <Layout $color={color} hover={1.1} tap={0.9} onClick={this.onClick}>
-        <ActionIcon type={icon} color={Color.WHITE} />
-        <Content>{children}</Content>
-      </Layout>
-    );
-  }
-}
+  return (
+    <Layout $color={color} hover={1.1} tap={0.9} onClick={onLayoutClick}>
+      <ActionIcon type={icon} color={Color.WHITE} />
+      <Content>{children}</Content>
+    </Layout>
+  );
+};
 
 export default VerticalButton;

@@ -1,4 +1,4 @@
-import { Component, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import Icon, { IconType } from '../../icons/Icon';
 import { Color, MobileQuery, PcQuery } from '../../styles';
@@ -64,26 +64,22 @@ interface Props {
   onClick?: MouseEventHandler;
 }
 
-class ListButton extends Component<Props, any> {
-  static defaultProps: Partial<Props> = {
-    fluid: true,
-  };
-
-  onClick: MouseEventHandler = e => {
+const ListButton: React.FC<Props> = ({ icon, color, fluid, onClick, children }) => {
+  const onLayoutClick: MouseEventHandler = e => {
     e.preventDefault();
-    this.props.onClick && this.props.onClick(e);
+    onClick && onClick(e);
   };
 
-  render() {
-    const { children, color, icon, fluid } = this.props;
+  return (
+    <Layout $color={color} $fluid={fluid!!} hover={1.1} tap={0.9} onClick={onLayoutClick}>
+      <ActionIcon type={icon} color={Color.WHITE} />
+      <Content>{children}</Content>
+    </Layout>
+  );
+};
 
-    return (
-      <Layout $color={color} $fluid={fluid!!} hover={1.1} tap={0.9} onClick={this.onClick}>
-        <ActionIcon type={icon} color={Color.WHITE} />
-        <Content>{children}</Content>
-      </Layout>
-    );
-  }
-}
+ListButton.defaultProps = {
+  fluid: true,
+};
 
 export default ListButton;

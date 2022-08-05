@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import styled from 'styled-components';
 import LandingVideo from '../molecules/LandingVideo';
 import PlaylistSection from '../molecules/sections/PlaylistSection';
@@ -18,31 +17,27 @@ interface Props {
   recommends: IVideo[];
 }
 
-class MainTemplate extends Component<Props, any> {
-  render() {
-    const { featured, playlists, recommends } = this.props;
+const MainTemplate: React.FC<Props> = ({ featured, playlists, recommends }) => {
+  const landingVideo = <LandingVideo data={featured} />;
+  const playlistSection = <PlaylistSection playlists={playlists} />;
+  const shortcutSection = <ShortcutSection />;
+  const recommendSection = <RecommendSection recommends={recommends} />;
 
-    const landingVideo = <LandingVideo data={featured} />;
-    const playlistSection = <PlaylistSection playlists={playlists} />;
-    const shortcutSection = <ShortcutSection />;
-    const recommendSection = <RecommendSection recommends={recommends} />;
-
-    return (
-      <Template>
-        <Mobile>
-          {landingVideo}
-          {playlistSection}
-          {shortcutSection}
-          {recommendSection}
-        </Mobile>
-        <Pc>
-          {landingVideo}
-          {playlistSection}
-          {recommendSection}
-        </Pc>
-      </Template>
-    );
-  }
-}
+  return (
+    <Template>
+      <Mobile>
+        {landingVideo}
+        {playlistSection}
+        {shortcutSection}
+        {recommendSection}
+      </Mobile>
+      <Pc>
+        {landingVideo}
+        {playlistSection}
+        {recommendSection}
+      </Pc>
+    </Template>
+  );
+};
 
 export default MainTemplate;

@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { Component } from 'react';
 import styled from 'styled-components';
 import { MobileQuery, MobileTopMargin, PcLeftMargin, PcQuery, PcTopMargin } from '../../styles';
 
@@ -19,19 +18,17 @@ interface Props {
   className?: string;
 }
 
-class Page extends Component<Props, any> {
-  render() {
-    return (
-      <Layout
-        className={this.props.className}
-        exit={{ opacity: 0, transition: { duration: 0.25 } }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { duration: 0.25 } }}
-      >
-        {this.props.children}
-      </Layout>
-    );
-  }
-}
+const Page: React.FC<Props> = ({ className, children }) => {
+  return (
+    <Layout
+      className={className}
+      exit={{ opacity: 0, transition: { duration: 0.2 } }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { duration: 0.2 } }}
+    >
+      {children}
+    </Layout>
+  );
+};
 
 export default Page;

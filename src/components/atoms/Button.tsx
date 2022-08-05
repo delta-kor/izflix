@@ -1,4 +1,4 @@
-import { Component, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import Icon, { IconType } from '../../icons/Icon';
 import { Color, MobileQuery, PcQuery } from '../../styles';
@@ -64,22 +64,18 @@ interface Props {
   onClick?: MouseEventHandler;
 }
 
-class Button extends Component<Props, any> {
-  onClick: MouseEventHandler = e => {
+const Button: React.FC<Props> = ({ color, icon, fluid, onClick, children }) => {
+  const onLayoutClick: MouseEventHandler = e => {
     e.preventDefault();
-    this.props.onClick && this.props.onClick(e);
+    onClick && onClick(e);
   };
 
-  render() {
-    const { children, color, icon, fluid } = this.props;
-
-    return (
-      <Layout $color={color} $fluid={fluid!!} hover={1.1} tap={0.9} onClick={this.onClick}>
-        <Content>{children}</Content>
-        {icon && <ActionIcon type={icon} color={Color.WHITE} />}
-      </Layout>
-    );
-  }
-}
+  return (
+    <Layout $color={color} $fluid={fluid!!} hover={1.1} tap={0.9} onClick={onLayoutClick}>
+      <Content>{children}</Content>
+      {icon && <ActionIcon type={icon} color={Color.WHITE} />}
+    </Layout>
+  );
+};
 
 export default Button;

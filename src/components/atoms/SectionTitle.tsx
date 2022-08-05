@@ -1,4 +1,4 @@
-import { Component, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import { Color, HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
@@ -57,26 +57,22 @@ interface Props {
   fluid?: boolean;
 }
 
-class SectionTitle extends Component<Props, any> {
-  onActionClick: MouseEventHandler = e => {
+const SectionTitle: React.FC<Props> = ({ action, onActionClick, fluid, children }) => {
+  const onClick: MouseEventHandler = e => {
     e.preventDefault();
-    this.props.onActionClick && this.props.onActionClick(e);
+    onActionClick && onActionClick(e);
   };
 
-  render() {
-    const { children, action, fluid } = this.props;
-
-    return (
-      <Layout $fluid={fluid!!}>
-        <Content>{children}</Content>
-        {action && (
-          <Action hover={1.1} tap={0.9} onClick={this.onActionClick}>
-            {action}
-          </Action>
-        )}
-      </Layout>
-    );
-  }
-}
+  return (
+    <Layout $fluid={fluid!!}>
+      <Content>{children}</Content>
+      {action && (
+        <Action hover={1.1} tap={0.9} onClick={onClick}>
+          {action}
+        </Action>
+      )}
+    </Layout>
+  );
+};
 
 export default SectionTitle;

@@ -1,10 +1,9 @@
-import { Component } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useDevice from '../../../hooks/useDevice';
 import { Color, MobileQuery, PcQuery } from '../../../styles';
 import ListButton from '../../atoms/ListButton';
 import VerticalButton from '../../atoms/VerticalButton';
-import withDevice, { WithDeviceParams } from '../../tools/WithDevice';
-import withNavigate, { WithNavigateParams } from '../../tools/WithNavigate';
 
 const Layout = styled.div`
   display: flex;
@@ -22,42 +21,37 @@ const Layout = styled.div`
   }
 `;
 
-class ShortcutSection extends Component<WithNavigateParams & WithDeviceParams, any> {
-  onItemClick = (path: string) => {
-    this.props.navigate(path);
+const ShortcutSection: React.FC = () => {
+  const navigate = useNavigate();
+  const device = useDevice();
+
+  const onItemClick = (path: string) => {
+    navigate(path);
   };
 
-  render() {
-    const device = this.props.device;
+  const ButtonElement = device === 'mobile' ? VerticalButton : ListButton;
 
-    const ButtonElement = device === 'mobile' ? VerticalButton : ListButton;
+  return (
+    <Layout>
+      <ButtonElement icon={'music'} color={Color.DARK_GRAY} onClick={() => onItemClick('/music')}>
+        노래
+      </ButtonElement>
+      <ButtonElement
+        icon={'category'}
+        color={Color.DARK_GRAY}
+        onClick={() => onItemClick('/category')}
+      >
+        카테고리
+      </ButtonElement>
+      <ButtonElement
+        icon={'calendar'}
+        color={Color.DARK_GRAY}
+        onClick={() => onItemClick('/calendar')}
+      >
+        달력
+      </ButtonElement>
+    </Layout>
+  );
+};
 
-    return (
-      <Layout>
-        <ButtonElement
-          icon={'music'}
-          color={Color.DARK_GRAY}
-          onClick={() => this.onItemClick('/music')}
-        >
-          노래
-        </ButtonElement>
-        <ButtonElement
-          icon={'category'}
-          color={Color.DARK_GRAY}
-          onClick={() => this.onItemClick('/category')}
-        >
-          카테고리
-        </ButtonElement>
-        <ButtonElement
-          icon={'calendar'}
-          color={Color.DARK_GRAY}
-          onClick={() => this.onItemClick('/calendar')}
-        >
-          달력
-        </ButtonElement>
-      </Layout>
-    );
-  }
-}
-
-export default withNavigate(withDevice(ShortcutSection));
+export default ShortcutSection;

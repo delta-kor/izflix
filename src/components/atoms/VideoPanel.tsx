@@ -1,4 +1,4 @@
-import { Component, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
@@ -87,26 +87,27 @@ interface Props {
   onClick?: MouseEventHandler;
 }
 
-class VideoPanel extends Component<Props, any> {
-  render() {
-    const { type, data } = this.props;
+const VideoPanel: React.FC<Props> = ({ type, data, onClick }) => {
+  const onLayoutClick: MouseEventHandler = e => {
+    e.preventDefault();
+    onClick && onClick(e);
+  };
 
-    const thumbnail = data && Spaceship.getThumbnail(data.id);
-    const title = data && data.title;
-    const description = data && data.description;
+  const thumbnail = data && Spaceship.getThumbnail(data.id);
+  const title = data && data.title;
+  const description = data && data.description;
 
-    if (type === 'full')
-      return (
-        <FullLayout hover={1.05} tap={0.95}>
-          <Image src={thumbnail} />
-          <Content>
-            {title ? <Title>{title}</Title> : <TitlePlaceholder />}
-            {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
-          </Content>
-        </FullLayout>
-      );
-    else return null;
-  }
-}
+  if (type === 'full')
+    return (
+      <FullLayout hover={1.05} tap={0.95} onClick={onLayoutClick}>
+        <Image src={thumbnail} />
+        <Content>
+          {title ? <Title>{title}</Title> : <TitlePlaceholder />}
+          {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
+        </Content>
+      </FullLayout>
+    );
+  else return null;
+};
 
 export default VideoPanel;

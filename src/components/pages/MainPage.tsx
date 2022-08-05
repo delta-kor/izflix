@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import delay from '../../delay';
 import HttpException from '../../exceptions/http-exception';
 import Evoke from '../../filters/evoke';
@@ -12,54 +12,48 @@ interface State {
   recommends: IVideo[];
 }
 
-class MainPage extends Component<any, State> {
-  state: State = {
-    featured: null,
-    playlists: [],
-    recommends: [],
-  };
+const MainPage: React.FC = () => {
+  const [featured, setFeatured] = useState<ApiResponse.Playlist.ReadFeatured | null>(null);
+  const [playlists, setPlaylists] = useState<IPlaylist[]>([]);
+  const [recommends, setRecommends] = useState<IVideo[]>([]);
 
-  componentDidMount = () => {
-    this.loadData();
-  };
-
-  loadData = async () => {
-    await delay(200);
-    Evoke(this.loadPlaylists, this.loadFeatured, this.loadRecommends);
-  };
-
-  loadPlaylists = async () => {
+  const loadPlaylists = async () => {
     const response = await Spaceship.readAllPlaylists('performance');
     if (!response.ok) throw new HttpException(response);
 
     const playlists = response.playlists;
-    this.setState({ playlists });
+    setPlaylists(playlists);
   };
 
-  loadFeatured = async () => {
+  const loadFeatured = async () => {
     const response = await Spaceship.readFeatured('performance');
     if (!response.ok) throw new HttpException(response);
 
-    this.setState({ featured: response });
+    setFeatured(response);
   };
 
-  loadRecommends = async () => {
+  const loadRecommends = async () => {
     const response = await Spaceship.getUserRecommends();
     if (!response.ok) throw new HttpException(response);
 
     const recommends = response.videos;
-    this.setState({ recommends });
+    setRecommends(recommends);
   };
 
-  render() {
-    const { featured, playlists, recommends } = this.state;
+  const loadData = async () => {
+    await delay(200);
+    Evoke(loadPlaylists, loadFeatured, loadRecommends);
+  };
 
-    return (
-      <Page>
-        <MainTemplate playlists={playlists} featured={featured} recommends={recommends} />
-      </Page>
-    );
-  }
-}
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  return (
+    <Page>
+      <MainTemplate playlists={playlists} featured={featured} recommends={recommends} />
+    </Page>
+  );
+};
 
 export default MainPage;

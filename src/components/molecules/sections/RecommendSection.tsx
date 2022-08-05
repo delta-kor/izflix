@@ -1,5 +1,5 @@
-import { Component } from 'react';
 import styled from 'styled-components';
+import Settings from '../../../services/settings';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../../styles';
 import SectionTitle from '../../atoms/SectionTitle';
 import VideoPanel from '../../atoms/VideoPanel';
@@ -38,23 +38,22 @@ interface Props {
   recommends: IVideo[];
 }
 
-class RecommendSection extends Component<Props, any> {
-  render() {
-    const recommends: IVideo[] = this.props.recommends;
-
-    return (
-      <Layout>
-        <SectionTitle>추천 동영상</SectionTitle>
-        <ItemList>
-          {recommends.length ? (
-            recommends.map(data => <VideoPanel type={'full'} data={data} key={data.id} />)
-          ) : (
-            <Repeat count={10}>{(i: number) => <VideoPanel type={'full'} key={i} />}</Repeat>
-          )}
-        </ItemList>
-      </Layout>
-    );
-  }
-}
+const RecommendSection: React.FC<Props> = ({ recommends }) => {
+  return (
+    <Layout>
+      <SectionTitle>추천 동영상</SectionTitle>
+      <ItemList>
+        {recommends.length ? (
+          recommends.map(data => <VideoPanel type={'full'} data={data} key={data.id} />)
+        ) : (
+          <Repeat
+            count={Settings.getOne('USER_RECOMMEND_COUNT')}
+            element={(i: number) => <VideoPanel type={'full'} key={i} />}
+          />
+        )}
+      </ItemList>
+    </Layout>
+  );
+};
 
 export default RecommendSection;

@@ -1,5 +1,5 @@
 import { AnimateSharedLayout, motion } from 'framer-motion';
-import { Component } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import PageManager from '../../services/page-manager';
@@ -15,8 +15,6 @@ import {
   Text,
 } from '../../styles';
 import SmoothBox from '../atoms/SmoothBox';
-import withLocation, { WithLocationParams } from '../tools/WithLocation';
-import withNavigate, { WithNavigateParams } from '../tools/WithNavigate';
 
 const Layout = styled.div`
   position: fixed;
@@ -108,47 +106,47 @@ const IconClickBox = styled(SmoothBox)`
   }
 `;
 
-class Header extends Component<WithLocationParams & WithNavigateParams, any> {
-  onHeaderIconClick = (isMain: boolean) => {
-    if (!isMain) this.props.navigate(-1);
+const Header: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const onHeaderIconClick = (isMain: boolean) => {
+    if (!isMain) navigate(-1);
   };
 
-  onSearchIconClick = () => {};
+  const onSearchIconClick = () => {};
 
-  render() {
-    const location = this.props.location;
-    const pageInfo = PageManager.getPageInfo(location.pathname);
+  const pageInfo = PageManager.getPageInfo(location.pathname);
 
-    if (pageInfo) {
-      const title = pageInfo.title;
-      const pageType = pageInfo.type;
+  if (pageInfo) {
+    const title = pageInfo.title;
+    const pageType = pageInfo.type;
 
-      return (
-        <Layout>
-          {pageType !== 'submain' && (
-            <IconClickBox
-              onClick={() => this.onHeaderIconClick(pageType === 'main')}
-              hover={1.1}
-              tap={0.9}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <HeaderIcon type={pageType === 'main' ? 'izflix' : 'left'} color={Color.WHITE} />
-            </IconClickBox>
-          )}
-          <AnimateSharedLayout>
-            <Content layoutId={'header_key'}>{title}</Content>
-          </AnimateSharedLayout>
-          <IconClickBox hover={1.1} tap={0.9} onClick={this.onSearchIconClick}>
-            <SearchIcon type={'search'} color={Color.WHITE} />
+    return (
+      <Layout>
+        {pageType !== 'submain' && (
+          <IconClickBox
+            onClick={() => onHeaderIconClick(pageType === 'main')}
+            hover={1.1}
+            tap={0.9}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <HeaderIcon type={pageType === 'main' ? 'izflix' : 'left'} color={Color.WHITE} />
           </IconClickBox>
-        </Layout>
-      );
-    } else {
-      return null;
-    }
+        )}
+        <AnimateSharedLayout>
+          <Content layoutId={'header_key'}>{title}</Content>
+        </AnimateSharedLayout>
+        <IconClickBox hover={1.1} tap={0.9} onClick={onSearchIconClick}>
+          <SearchIcon type={'search'} color={Color.WHITE} />
+        </IconClickBox>
+      </Layout>
+    );
+  } else {
+    return null;
   }
-}
+};
 
-export default withNavigate(withLocation(Header));
+export default Header;

@@ -1,5 +1,6 @@
-import { Component } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useDevice from '../../hooks/useDevice';
 import {
   Color,
   HideOverflow,
@@ -12,8 +13,6 @@ import {
   Text,
 } from '../../styles';
 import Button from '../atoms/Button';
-import withDevice, { WithDeviceParams } from '../tools/WithDevice';
-import withNavigate, { WithNavigateParams } from '../tools/WithNavigate';
 
 const Layout = styled.div`
   position: relative;
@@ -147,57 +146,56 @@ interface Props {
   data: ApiResponse.Playlist.ReadFeatured | null;
 }
 
-class LandingVideo extends Component<Props & WithDeviceParams & WithNavigateParams, any> {
-  onActionClick = (type: 'play' | 'playlist') => {
-    const data = this.props.data;
+const LandingVideo: React.FC<Props> = ({ data }) => {
+  const navigate = useNavigate();
+  const device = useDevice();
+
+  const onActionClick = (type: 'play' | 'playlist') => {
     if (!data) return false;
 
     if (type === 'play') {
-      this.props.navigate(`/${data.video.id}`);
+      navigate(`/${data.video.id}`);
     } else {
-      this.props.navigate(`/playlist/${data.playlist_id}`);
+      navigate(`/playlist/${data.playlist_id}`);
     }
   };
 
-  render() {
-    const data = this.props.data;
-    const video = data && data.video;
+  const video = data && data.video;
 
-    const title = video && video.title;
-    const description = video && video.description;
-    const url = data && data.url;
+  const title = video && video.title;
+  const description = video && video.description;
+  const url = data && data.url;
 
-    return (
-      <Layout>
-        <VideoWrapper>
-          {url && <Video src={url + '#t=60'} muted autoPlay loop />}
-          <Cover />
-        </VideoWrapper>
-        <Content>
-          {title ? <Title>{title}</Title> : <TitlePlaceholder />}
-          {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
-        </Content>
-        <Action>
-          <Button
-            color={Color.PRIMARY}
-            icon={'play'}
-            fluid={this.props.device === 'mobile'}
-            onClick={() => this.onActionClick('play')}
-          >
-            재생하기
-          </Button>
-          <Button
-            color={Color.TRANSPARENT}
-            icon={'playlist'}
-            fluid={this.props.device === 'mobile'}
-            onClick={() => this.onActionClick('playlist')}
-          >
-            인기 동영상
-          </Button>
-        </Action>
-      </Layout>
-    );
-  }
-}
+  return (
+    <Layout>
+      <VideoWrapper>
+        {url && <Video src={url + '#t=60'} muted autoPlay loop />}
+        <Cover />
+      </VideoWrapper>
+      <Content>
+        {title ? <Title>{title}</Title> : <TitlePlaceholder />}
+        {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
+      </Content>
+      <Action>
+        <Button
+          color={Color.PRIMARY}
+          icon={'play'}
+          fluid={device === 'mobile'}
+          onClick={() => onActionClick('play')}
+        >
+          재생하기
+        </Button>
+        <Button
+          color={Color.TRANSPARENT}
+          icon={'playlist'}
+          fluid={device === 'mobile'}
+          onClick={() => onActionClick('playlist')}
+        >
+          인기 동영상
+        </Button>
+      </Action>
+    </Layout>
+  );
+};
 
-export default withNavigate<Props>(withDevice(LandingVideo));
+export default LandingVideo;
