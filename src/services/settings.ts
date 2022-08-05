@@ -1,4 +1,4 @@
-const key = 'izflix_settings';
+const key = 'izflix_settings_v2';
 
 class SettingsClass {
   private data: ISettings;
@@ -10,17 +10,7 @@ class SettingsClass {
 
   private static loadData(): ISettings {
     const data: ISettings = {
-      FEATURED_VIDEO_AUTOPLAY: true,
-      VIDEO_AUTOPLAY: true,
-      DEFAULT_VIDEO_QUALITY: 1080,
-      DISPLAY_NEXT_VIDEO: true,
-      VIDEO_RECOMMEND_COUNT: 20,
-      FEATURED_VIDEO_START_POSITION: 0.5,
-      NEXT_VIDEO_AUTOPLAY: true,
-      NEXT_VIDEO_AUTOPLAY_COUNTDOWN: 5,
-      NEXT_VIDEO_INSTANT_PIP: true,
-      $_TRAFFIC_ALERT: false,
-      $_4K_ALERT: false,
+      USER_RECOMMEND_COUNT: 24,
       $_LIVE_TOKEN: null,
     };
 

@@ -1,5 +1,6 @@
 import NodeCache from 'node-cache';
 import delay from '../delay';
+import Settings from './settings';
 
 const expireTime = 60 * 5;
 const promiseExpireTime = 10;
@@ -98,9 +99,11 @@ class SpaceshipClass {
     return response;
   }
 
-  public async getUserRecommends(): Promise<ApiResponse.Recommend.GetUserRecommends> {
+  public async getUserRecommends(
+    count: number = Settings.getOne('USER_RECOMMEND_COUNT')
+  ): Promise<ApiResponse.Recommend.GetUserRecommends> {
     const payload = { data: [] };
-    return this.post('/recommend', payload, {
+    return this.post(`/recommend?count=${count}`, payload, {
       key: 'get_user_recommends',
       expire: expireTime,
     });

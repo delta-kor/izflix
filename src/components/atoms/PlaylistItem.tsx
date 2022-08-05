@@ -41,14 +41,10 @@ const Title = styled.div`
   ${HideOverflow};
 
   ${MobileQuery} {
-    height: 18px;
-    line-height: 18px;
     ${Text.SUBTITLE_2};
   }
 
   ${PcQuery} {
-    height: 20px;
-    line-height: 20px;
     ${Text.SUBTITLE_1};
   }
 `;

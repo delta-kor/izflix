@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import delay from '../../delay';
 import HttpException from '../../exceptions/http-exception';
 import Evoke from '../../filters/evoke';
 import Spaceship from '../../services/spaceship';
@@ -22,7 +23,8 @@ class MainPage extends Component<any, State> {
     this.loadData();
   };
 
-  loadData = () => {
+  loadData = async () => {
+    await delay(200);
     Evoke(this.loadPlaylists, this.loadFeatured, this.loadRecommends);
   };
 
