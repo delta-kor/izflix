@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import useDevice from '../../hooks/useDevice';
 import Spaceship from '../../services/spaceship';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
-import { Mobile, Pc } from '../tools/MediaQuery';
 import SmoothBox from './SmoothBox';
 import SmoothImage from './SmoothImage';
 
@@ -65,23 +65,17 @@ interface Props {
 }
 
 const PlaylistItem: React.FC<Props> = ({ playlist }) => {
+  const device = useDevice();
+
   const thumbnail = playlist && Spaceship.getThumbnail(playlist.thumbnail);
   const title = playlist && playlist.title;
 
   const Component = (
     <>
-      <Pc>
-        <Layout hover={1.1} tap={0.9}>
-          <Thumbnail src={thumbnail} />
-          {title ? <Title>{title}</Title> : <TitlePlaceholder />}
-        </Layout>
-      </Pc>
-      <Mobile>
-        <Layout>
-          <Thumbnail src={thumbnail} />
-          {title ? <Title>{title}</Title> : <TitlePlaceholder />}
-        </Layout>
-      </Mobile>
+      <Layout hover={device === 'mobile' ? 1 : 1.1} tap={device === 'mobile' ? 1 : 0.9}>
+        <Thumbnail src={thumbnail} />
+        {title ? <Title>{title}</Title> : <TitlePlaceholder />}
+      </Layout>
     </>
   );
 

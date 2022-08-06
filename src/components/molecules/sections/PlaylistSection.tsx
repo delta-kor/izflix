@@ -3,7 +3,6 @@ import useDevice from '../../../hooks/useDevice';
 import { HideScrollbar, MobileQuery, PcInnerPadding, PcQuery } from '../../../styles';
 import PlaylistItem from '../../atoms/PlaylistItem';
 import SectionTitle from '../../atoms/SectionTitle';
-import { Pc } from '../../tools/MediaQuery';
 import Repeat from '../../tools/Repeat';
 import ShortcutSection from './ShortcutSection';
 
@@ -79,9 +78,7 @@ const PlaylistSection: React.FC<Props> = ({ playlists }) => {
           )}
         </ItemList>
       </Layout>
-      <Pc>
-        <ShortcutSection />
-      </Pc>
+      {device === 'pc' && <ShortcutSection />}
     </Wrapper>
   );
 };

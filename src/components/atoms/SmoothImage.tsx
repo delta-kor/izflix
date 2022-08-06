@@ -32,7 +32,7 @@ const Placeholder = styled.div`
 
 interface Props {
   className?: string;
-  src?: string;
+  src?: string | null;
 }
 
 const SmoothImage: React.FC<Props> = ({ className, src }) => {

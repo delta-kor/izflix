@@ -1,11 +1,11 @@
 import styled from 'styled-components';
+import useDevice from '../../hooks/useDevice';
 import LandingVideo from '../molecules/LandingVideo';
 import PlaylistSection from '../molecules/sections/PlaylistSection';
 import RecommendSection from '../molecules/sections/RecommendSection';
 import ShortcutSection from '../molecules/sections/ShortcutSection';
-import { Mobile, Pc } from '../tools/MediaQuery';
 
-const Template = styled.div`
+const Layout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -18,25 +18,20 @@ interface Props {
 }
 
 const MainTemplate: React.FC<Props> = ({ featured, playlists, recommends }) => {
-  const landingVideo = <LandingVideo data={featured} />;
+  const device = useDevice();
+
+  const landingVideo = <LandingVideo type={'performance'} data={featured} />;
   const playlistSection = <PlaylistSection playlists={playlists} />;
   const shortcutSection = <ShortcutSection />;
   const recommendSection = <RecommendSection recommends={recommends} />;
 
   return (
-    <Template>
-      <Mobile>
-        {landingVideo}
-        {playlistSection}
-        {shortcutSection}
-        {recommendSection}
-      </Mobile>
-      <Pc>
-        {landingVideo}
-        {playlistSection}
-        {recommendSection}
-      </Pc>
-    </Template>
+    <Layout>
+      {landingVideo}
+      {playlistSection}
+      {device === 'mobile' ? shortcutSection : null}
+      {recommendSection}
+    </Layout>
   );
 };
 

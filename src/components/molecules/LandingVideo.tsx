@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
+import Spaceship from '../../services/spaceship';
 import {
   Color,
   HideOverflow,
@@ -37,7 +38,7 @@ const Layout = styled.div`
   }
 `;
 
-const Content = styled.div`
+const PerformanceContent = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 1;
@@ -51,9 +52,19 @@ const Content = styled.div`
   }
 `;
 
+const VodContent = styled.div`
+  display: flex;
+  z-index: 1;
+  justify-content: space-between;
+`;
+
+const PlaylistIcon = styled.img`
+  flex-shrink: 0;
+  height: 100%;
+`;
+
 const Title = styled.div`
   color: ${Color.WHITE};
-  flex-grow: 1;
 
   ${HideOverflow};
 
@@ -81,14 +92,16 @@ const Description = styled.div`
   }
 `;
 
-const TitlePlaceholder = styled.div`
+const TitlePlaceholder = styled.div<{ $type: 'performance' | 'vod' }>`
   ${MobileQuery} {
     width: 70%;
+    margin: ${props => (props.$type === 'performance' ? '0' : '0 0 0 auto')};
     ${Placeholder.HEADLINE_1};
   }
 
   ${PcQuery} {
     width: 50%;
+    margin: ${props => (props.$type === 'performance' ? '0' : '0 0 0 auto')};
     ${Placeholder.EX_HEADLINE_1};
   }
 `;
@@ -123,14 +136,14 @@ const VideoWrapper = styled.div`
 
 const Video = styled.video`
   position: absolute;
-  top: 0;
+  top: -10px;
 
   left: 0;
   width: 100%;
-  height: 129%;
+  height: calc(129% - 10px);
 
   object-fit: cover;
-  object-position: center;
+  object-position: 50% 50%;
 `;
 
 const Cover = styled.div`
@@ -143,10 +156,11 @@ const Cover = styled.div`
 `;
 
 interface Props {
+  type: 'performance' | 'vod';
   data: ApiResponse.Playlist.ReadFeatured | null;
 }
 
-const LandingVideo: React.FC<Props> = ({ data }) => {
+const LandingVideo: React.FC<Props> = ({ type, data }) => {
   const navigate = useNavigate();
   const device = useDevice();
 
@@ -162,20 +176,28 @@ const LandingVideo: React.FC<Props> = ({ data }) => {
 
   const video = data && data.video;
 
+  const playlistId = data && data.playlist_id;
   const title = video && video.title;
   const description = video && video.description;
-  const url = data && data.url;
+  const url = data && data.url + `#t=${type === 'performance' ? 60 : 300}`;
 
   return (
     <Layout>
       <VideoWrapper>
-        {url && <Video src={url + '#t=60'} muted autoPlay loop />}
+        {url && <Video src={url} muted autoPlay loop />}
         <Cover />
       </VideoWrapper>
-      <Content>
-        {title ? <Title>{title}</Title> : <TitlePlaceholder />}
-        {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
-      </Content>
+      {type === 'performance' ? (
+        <PerformanceContent>
+          {title ? <Title>{title}</Title> : <TitlePlaceholder $type={'performance'} />}
+          {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
+        </PerformanceContent>
+      ) : (
+        <VodContent>
+          {playlistId && <PlaylistIcon src={Spaceship.getThumbnail(playlistId)} />}
+          {title ? <Title>{description}</Title> : <TitlePlaceholder $type={'vod'} />}
+        </VodContent>
+      )}
       <Action>
         <Button
           color={Color.PRIMARY}
@@ -183,7 +205,7 @@ const LandingVideo: React.FC<Props> = ({ data }) => {
           fluid={device === 'mobile'}
           onClick={() => onActionClick('play')}
         >
-          재생하기
+          {type === 'performance' ? '재생하기' : '첫화재생'}
         </Button>
         <Button
           color={Color.TRANSPARENT}
@@ -191,7 +213,7 @@ const LandingVideo: React.FC<Props> = ({ data }) => {
           fluid={device === 'mobile'}
           onClick={() => onActionClick('playlist')}
         >
-          인기 동영상
+          {type === 'performance' ? '인기 동영상' : '재생목록'}
         </Button>
       </Action>
     </Layout>

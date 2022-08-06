@@ -112,7 +112,8 @@ class SpaceshipClass {
   public async readAllPlaylists(
     type: 'performance' | 'vod'
   ): Promise<ApiResponse.Playlist.ReadAll> {
-    return this.get(`/playlist/${type}`, {
+    const data = type === 'performance' ? 'default' : 'full';
+    return this.get(`/playlist/${type}?data=${data}`, {
       key: `read_all_playlists::${type}`,
       expire: expireTime,
     });
