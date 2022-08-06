@@ -7,7 +7,6 @@ import SmoothBox from './SmoothBox';
 const Layout = styled.div<{ $fluid: boolean }>`
   display: flex;
   align-items: center;
-  z-index: 1;
 
   ${MobileQuery} {
     padding: 8px ${({ $fluid }) => ($fluid ? '0' : '32px')};

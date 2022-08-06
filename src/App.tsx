@@ -1,4 +1,4 @@
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Meta from './components/Meta';
 import Header from './components/organisms/Header';
@@ -18,12 +18,14 @@ const App: React.FC<Props> = () => {
       <Header />
       <Navigator />
 
-      <AnimatePresence exitBeforeEnter>
-        <Routes location={location} key={location.pathname.split('/').splice(1, 1).join('/')}>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/vod" element={<VodPage />} />
-        </Routes>
-      </AnimatePresence>
+      <AnimateSharedLayout>
+        <AnimatePresence exitBeforeEnter>
+          <Routes location={location} key={location.pathname.split('/').splice(1, 1).join('/')}>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/vod" element={<VodPage />} />
+          </Routes>
+        </AnimatePresence>
+      </AnimateSharedLayout>
     </>
   );
 };

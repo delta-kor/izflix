@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Settings from '../../../services/settings';
-import { MobileQuery, PcInnerPadding, PcQuery } from '../../../styles';
+import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../../styles';
 import SectionTitle from '../../atoms/SectionTitle';
 import VideoPanel from '../../atoms/VideoPanel';
 import Repeat from '../../tools/Repeat';
@@ -9,6 +9,9 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
+
+  background: ${Color.BACKGROUND};
+  z-index: 1;
 
   ${PcQuery} {
     margin: 24px 0 0 0;

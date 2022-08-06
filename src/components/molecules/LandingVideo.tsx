@@ -8,6 +8,7 @@ import {
   MobileQuery,
   MobileTopMargin,
   PcInnerPadding,
+  PcLeftMargin,
   PcQuery,
   PcTopMargin,
   Placeholder,
@@ -135,15 +136,39 @@ const VideoWrapper = styled.div`
 `;
 
 const Video = styled.video`
-  position: absolute;
+  position: fixed;
   top: -10px;
 
-  left: 0;
   width: 100%;
-  height: calc(129% - 10px);
 
   object-fit: cover;
   object-position: 50% 50%;
+
+  ${MobileQuery} {
+    left: 0;
+    height: calc(320px * 1.29);
+  }
+
+  ${PcQuery} {
+    left: ${PcLeftMargin}px;
+    height: calc(562px * 1.29);
+  }
+`;
+
+const VideoHider = styled.div`
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 720px;
+  background: ${Color.BACKGROUND};
+
+  ${MobileQuery} {
+    top: calc(320px * 1.29);
+  }
+
+  ${PcQuery} {
+    top: calc(562px * 1.29);
+  }
 `;
 
 const Cover = styled.div`
@@ -185,6 +210,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
     <Layout>
       <VideoWrapper>
         {url && <Video src={url} muted autoPlay loop />}
+        <VideoHider />
         <Cover />
       </VideoWrapper>
       {type === 'performance' ? (

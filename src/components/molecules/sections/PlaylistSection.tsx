@@ -7,6 +7,8 @@ import Repeat from '../../tools/Repeat';
 import ShortcutSection from './ShortcutSection';
 
 const Wrapper = styled.div`
+  z-index: 1;
+
   ${MobileQuery} {
     margin: -24px 0 0 0;
   }
