@@ -10,6 +10,8 @@ import {
 } from '../../styles';
 
 const Layout = styled(motion.div)`
+  position: relative;
+
   ${MobileQuery} {
     margin: ${MobileTopMargin}px 0 0 0;
   }

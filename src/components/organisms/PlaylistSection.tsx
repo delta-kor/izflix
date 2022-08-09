@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import useDevice from '../../../hooks/useDevice';
-import { HideScrollbar, MobileQuery, PcInnerPadding, PcQuery } from '../../../styles';
-import PlaylistItem from '../../atoms/PlaylistItem';
-import SectionTitle from '../../atoms/SectionTitle';
-import Repeat from '../../tools/Repeat';
+import useDevice from '../../hooks/useDevice';
+import { HideScrollbar, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
+import PlaylistItem from '../atoms/PlaylistItem';
+import SectionTitle from '../atoms/SectionTitle';
+import Repeat from '../tools/Repeat';
 import ShortcutSection from './ShortcutSection';
 
 const Wrapper = styled.div`

@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
@@ -54,12 +57,13 @@ const PerformanceContent = styled.div`
 `;
 
 const VodContent = styled.div`
+  position: relative;
   display: flex;
   z-index: 1;
   justify-content: space-between;
 `;
 
-const PlaylistIcon = styled.img`
+const PlaylistIcon = styled(LazyLoadImage)`
   flex-shrink: 0;
   height: 100%;
 `;
@@ -117,6 +121,15 @@ const DescriptionPlaceholder = styled.div`
   ${PcQuery} {
     ${Placeholder.EX_SUBTITLE_1};
   }
+`;
+
+const PlaylistIconPlaceholder = styled.div`
+  position: absolute;
+  width: 80px;
+  height: 100%;
+
+  background: ${Color.DARK_GRAY};
+  border-radius: 4px;
 `;
 
 const Action = styled.div`
@@ -189,6 +202,8 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
   const navigate = useNavigate();
   const device = useDevice();
 
+  const [iconLoaded, setIconLoaded] = useState<boolean>(false);
+
   const onActionClick = (type: 'play' | 'playlist') => {
     if (!data) return false;
 
@@ -220,7 +235,17 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
         </PerformanceContent>
       ) : (
         <VodContent>
-          {playlistId && <PlaylistIcon src={Spaceship.getThumbnail(playlistId)} />}
+          {!iconLoaded && <PlaylistIconPlaceholder />}
+          {playlistId && (
+            <PlaylistIcon
+              src={Spaceship.getThumbnail(playlistId)}
+              effect={'opacity'}
+              wrapperProps={{
+                style: { height: device === 'mobile' ? '28px' : '36px' },
+              }}
+              afterLoad={() => setIconLoaded(true)}
+            />
+          )}
           {title ? <Title>{description}</Title> : <TitlePlaceholder $type={'vod'} />}
         </VodContent>
       )}

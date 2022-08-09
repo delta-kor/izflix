@@ -8,6 +8,7 @@ import Page from './Page';
 
 const VodPage: React.FC = () => {
   const [featured, setFeatured] = useState<ApiResponse.Playlist.ReadFeatured | null>(null);
+  const [playlists, setPlaylists] = useState<IPlaylist[]>([]);
 
   const loadFeatured = async () => {
     const response = await Spaceship.readFeatured('vod');
@@ -16,9 +17,18 @@ const VodPage: React.FC = () => {
     setFeatured(response);
   };
 
+  const loadPlaylists = async () => {
+    const response = await Spaceship.readAllPlaylists('vod');
+    if (!response.ok) throw new HttpException(response);
+
+    const playlists = response.playlists;
+    setPlaylists(playlists);
+  };
+
   const loadData = async () => {
     await delay(200);
     new Evoke(loadFeatured);
+    new Evoke(loadPlaylists);
   };
 
   useEffect(() => {
@@ -27,7 +37,7 @@ const VodPage: React.FC = () => {
 
   return (
     <Page>
-      <VodTemplate featured={featured} />
+      <VodTemplate featured={featured} playlists={playlists} />
     </Page>
   );
 };

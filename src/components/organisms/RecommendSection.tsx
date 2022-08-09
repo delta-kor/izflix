@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import Settings from '../../../services/settings';
-import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../../styles';
-import SectionTitle from '../../atoms/SectionTitle';
-import VideoPanel from '../../atoms/VideoPanel';
-import Repeat from '../../tools/Repeat';
+import Settings from '../../services/settings';
+import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
+import SectionTitle from '../atoms/SectionTitle';
+import VideoPanel from '../atoms/VideoPanel';
+import Repeat from '../tools/Repeat';
 
 const Layout = styled.div`
   display: flex;

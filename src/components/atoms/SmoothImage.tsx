@@ -41,8 +41,8 @@ const SmoothImage: React.FC<Props> = ({ className, src }) => {
       {src && (
         <Content
           src={src}
-          effect="opacity"
-          width="100%"
+          effect={'opacity'}
+          width={'100%'}
           wrapperProps={{
             style: { zIndex: '1' },
           }}

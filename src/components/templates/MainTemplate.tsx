@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import LandingVideo from '../molecules/LandingVideo';
-import PlaylistSection from '../molecules/sections/PlaylistSection';
-import RecommendSection from '../molecules/sections/RecommendSection';
-import ShortcutSection from '../molecules/sections/ShortcutSection';
+import PlaylistSection from '../organisms/PlaylistSection';
+import RecommendSection from '../organisms/RecommendSection';
+import ShortcutSection from '../organisms/ShortcutSection';
 
 const Layout = styled.div`
   display: flex;

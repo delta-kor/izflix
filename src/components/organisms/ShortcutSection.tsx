@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import useDevice from '../../../hooks/useDevice';
-import { Color, MobileQuery, PcQuery } from '../../../styles';
-import ListButton from '../../atoms/ListButton';
-import VerticalButton from '../../atoms/VerticalButton';
+import useDevice from '../../hooks/useDevice';
+import { Color, MobileQuery, PcQuery } from '../../styles';
+import ListButton from '../atoms/ListButton';
+import VerticalButton from '../atoms/VerticalButton';
 
 const Layout = styled.div`
   display: flex;

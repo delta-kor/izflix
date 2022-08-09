@@ -82,8 +82,26 @@ const DescriptionPlaceholder = styled.div`
   }
 `;
 
+const VerticalLayout = styled(SmoothBox)`
+  & > .content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 184px;
+
+    cursor: pointer;
+    user-select: none;
+  }
+`;
+
+const VerticalImage = styled(SmoothImage)`
+  width: 100%;
+  aspect-ratio: 9 / 12;
+  border-radius: 8px;
+`;
+
 interface Props {
-  type: 'full' | 'horizontal';
+  type: 'full' | 'horizontal' | 'vertical';
   data?: IVideo;
   link?: string;
   onClick?: MouseEventHandler;
@@ -103,7 +121,12 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, onClick }) => {
           {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
         </Content>
       </FullLayout>
-    ) : null;
+    ) : type === 'horizontal' ? null : (
+      <VerticalLayout>
+        <VerticalImage src={thumbnail} />
+        {title ? <Title>{title}</Title> : <TitlePlaceholder />}
+      </VerticalLayout>
+    );
 
   return link ? <Link to={link}>{Component}</Link> : Component;
 };
