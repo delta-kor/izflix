@@ -42,6 +42,7 @@ const Content = styled.div`
 
   ${PcQuery} {
     width: 480px;
+    height: 240px;
     flex-shrink: 0;
   }
 `;
@@ -52,6 +53,7 @@ const PlaylistIcon = styled(LazyLoadImage)`
 `;
 
 const Title = styled.div`
+  flex-shrink: 0;
   width: 100%;
   margin: 8px 0;
   color: ${Color.WHITE};
@@ -67,14 +69,22 @@ const Title = styled.div`
 `;
 
 const Description = styled.div`
-  flex-grow: 1;
-
-  ${Text.BODY_3};
   color: ${Color.WHITE};
   opacity: 0.7;
 
   height: unset;
-  line-height: 16px;
+
+  ${MobileQuery} {
+    ${Text.BODY_3};
+    height: 100%;
+    line-height: 16px;
+  }
+
+  ${PcQuery} {
+    ${Text.BODY_1};
+    height: 100%;
+    line-height: 22px;
+  }
 `;
 
 const PlaylistIconPlaceholder = styled.div`
@@ -87,6 +97,7 @@ const PlaylistIconPlaceholder = styled.div`
 `;
 
 const TitlePlaceholder = styled.div`
+  flex-shrink: 0;
   margin: 8px 0;
 
   ${MobileQuery} {
@@ -95,23 +106,27 @@ const TitlePlaceholder = styled.div`
   }
 
   ${PcQuery} {
-    width: 30%;
+    width: 50%;
     ${Placeholder.HEADLINE_1};
   }
 `;
 
 const DescriptionPlaceholder = styled.div`
-  display: inline;
   width: 100%;
+  height: 100%;
 
-  ${MobileQuery} {
-    ${Placeholder.BODY_3};
-    height: 12px;
-    margin: 2px 0;
-  }
+  & > div {
+    ${MobileQuery} {
+      ${Placeholder.BODY_3};
+      height: 12px;
+      margin: 2px 0;
+    }
 
-  ${PcQuery} {
-    ${Placeholder.BODY_1};
+    ${PcQuery} {
+      height: 14px;
+      ${Placeholder.BODY_1};
+      margin: 4px 0;
+    }
   }
 `;
 
@@ -156,7 +171,11 @@ const VodItem: React.FC<Props> = ({ data }) => {
         {description ? (
           <Description>{description}</Description>
         ) : (
-          <Repeat count={3} element={i => <DescriptionPlaceholder key={i} />} />
+          <DescriptionPlaceholder>
+            <div />
+            <div />
+            <div />
+          </DescriptionPlaceholder>
         )}
         <Action>
           <Button color={Color.DARK_GRAY} icon={'play'} fluid>
