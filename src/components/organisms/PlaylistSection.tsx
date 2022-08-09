@@ -28,6 +28,10 @@ const Layout = styled.div`
   gap: 4px;
 `;
 
+const Title = styled(SectionTitle)`
+  z-index: 1;
+`;
+
 const ItemList = styled.div`
   display: flex;
 
@@ -64,9 +68,9 @@ const PlaylistSection: React.FC<Props> = ({ playlists }) => {
   return (
     <Wrapper>
       <Layout>
-        <SectionTitle action={'전체보기'} link={'/playlist'} fluid={device === 'pc'}>
+        <Title action={'전체보기'} link={'/playlist'} fluid={device === 'pc'}>
           재생목록
-        </SectionTitle>
+        </Title>
         <ItemList>
           {playlists.length ? (
             playlists

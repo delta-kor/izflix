@@ -56,9 +56,17 @@ interface Props {
   link?: string;
   onActionClick?: MouseEventHandler;
   fluid?: boolean;
+  className?: string;
 }
 
-const SectionTitle: React.FC<Props> = ({ action, link, onActionClick, fluid, children }) => {
+const SectionTitle: React.FC<Props> = ({
+  action,
+  link,
+  onActionClick,
+  fluid,
+  className,
+  children,
+}) => {
   const ActionComponent = (
     <Action hover={1.1} tap={0.9} onClick={onActionClick}>
       {action}
@@ -66,7 +74,7 @@ const SectionTitle: React.FC<Props> = ({ action, link, onActionClick, fluid, chi
   );
 
   return (
-    <Layout $fluid={fluid!!}>
+    <Layout $fluid={fluid!!} className={className}>
       <Content>{children}</Content>
       {action && link ? <Link to={link}>{ActionComponent}</Link> : ActionComponent}
     </Layout>
