@@ -87,7 +87,7 @@ const VerticalLayout = styled(SmoothBox)`
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 184px;
+    height: 240px;
 
     cursor: pointer;
     user-select: none;
@@ -96,7 +96,7 @@ const VerticalLayout = styled(SmoothBox)`
 
 const VerticalImage = styled(SmoothImage)`
   width: 100%;
-  aspect-ratio: 9 / 12;
+  height: 100%;
   border-radius: 8px;
 `;
 
@@ -122,7 +122,7 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, onClick }) => {
         </Content>
       </FullLayout>
     ) : type === 'horizontal' ? null : (
-      <VerticalLayout>
+      <VerticalLayout hover={1.05} tap={0.95} onClick={onClick}>
         <VerticalImage src={thumbnail} />
         {title ? <Title>{title}</Title> : <TitlePlaceholder />}
       </VerticalLayout>
