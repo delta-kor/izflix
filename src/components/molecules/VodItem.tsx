@@ -119,7 +119,7 @@ const DescriptionPlaceholder = styled.div`
     ${MobileQuery} {
       ${Placeholder.BODY_3};
       height: 12px;
-      margin: 2px 0;
+      margin: 3px 0;
     }
 
     ${PcQuery} {
