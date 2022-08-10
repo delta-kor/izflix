@@ -21,6 +21,16 @@ const Layout = styled(motion.div)`
   }
 `;
 
+const Content = styled.div`
+  ${MobileQuery} {
+    min-height: calc(100vh - ${MobileTopMargin}px - 120px);
+  }
+
+  ${PcQuery} {
+    min-height: calc(100vh - ${PcTopMargin}px - 96px);
+  }
+`;
+
 const Footer = styled.div`
   position: absolute;
   width: 100%;
@@ -50,7 +60,7 @@ const Page: React.FC<Props> = ({ className, children }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 0.2 } }}
     >
-      {children}
+      <Content>{children}</Content>
       <Footer />
     </Layout>
   );
