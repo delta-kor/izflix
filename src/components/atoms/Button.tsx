@@ -5,6 +5,10 @@ import Icon, { IconType } from '../../icons/Icon';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import SmoothBox from './SmoothBox';
 
+const Wrapper = styled(Link)<{ $fluid: boolean }>`
+  width: ${({ $fluid }) => ($fluid ? '100%' : 'auto')};
+`;
+
 const Layout = styled(SmoothBox)<{ $color: string; $fluid: boolean }>`
   width: ${({ $fluid }) => ($fluid ? '100%' : 'auto')};
 
@@ -78,7 +82,13 @@ const Button: React.FC<Props> = ({ color, icon, fluid, link, scale, onClick, chi
     </Layout>
   );
 
-  return link ? <Link to={link}>{Component}</Link> : Component;
+  return link ? (
+    <Wrapper $fluid={fluid!!} to={link}>
+      {Component}
+    </Wrapper>
+  ) : (
+    Component
+  );
 };
 
 Button.defaultProps = {
