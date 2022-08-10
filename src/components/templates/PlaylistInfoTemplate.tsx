@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import PlaylistInfo from '../molecules/PlaylistInfo';
+import PlaylistVideoSection from '../organisms/PlaylistVideoSection';
 
 const Layout = styled.div`
   ${MobileQuery} {
@@ -27,6 +28,7 @@ const PlaylistInfoTemplate: React.FC<Props> = ({ playlist }) => {
   return (
     <Layout>
       <PlaylistInfo data={playlist} />
+      <PlaylistVideoSection playlist={playlist} />
     </Layout>
   );
 };

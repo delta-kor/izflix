@@ -26,6 +26,7 @@ const Image = styled(SmoothImage)`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   gap: 4px;
 `;
 
@@ -82,6 +83,24 @@ const DescriptionPlaceholder = styled.div`
   }
 `;
 
+const HorizontalLayout = styled(SmoothBox)`
+  & > .content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 70px;
+
+    cursor: pointer;
+    user-select: none;
+  }
+`;
+
+const HorizontalImage = styled(SmoothImage)`
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+`;
+
 const VerticalLayout = styled(SmoothBox)`
   & > .content {
     display: flex;
@@ -121,7 +140,15 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, onClick }) => {
           {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
         </Content>
       </FullLayout>
-    ) : type === 'horizontal' ? null : (
+    ) : type === 'horizontal' ? (
+      <HorizontalLayout hover={1.05} tap={0.95}>
+        <HorizontalImage src={thumbnail} />
+        <Content>
+          {title ? <Title>{title}</Title> : <TitlePlaceholder />}
+          {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
+        </Content>
+      </HorizontalLayout>
+    ) : (
       <VerticalLayout hover={1.05} tap={0.95} onClick={onClick}>
         <VerticalImage src={thumbnail} />
         {title ? <Title>{title}</Title> : <TitlePlaceholder />}

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import useDevice from '../../hooks/useDevice';
 import Spaceship from '../../services/spaceship';
 import { Color, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import Button from '../atoms/Button';
@@ -91,8 +90,6 @@ interface Props {
 }
 
 const PlaylistInfo: React.FC<Props> = ({ data }) => {
-  const device = useDevice();
-
   const thumbnail = data && Spaceship.getThumbnail(data.thumbnail);
   const title = data && data.title;
   const description = data && data.description;
@@ -111,7 +108,7 @@ const PlaylistInfo: React.FC<Props> = ({ data }) => {
           <div />
         </DescriptionPlaceholder>
       )}
-      <Button color={Color.PRIMARY} icon={'play'} fluid scale={device === 'mobile' ? 1 : 0.95}>
+      <Button color={Color.PRIMARY} icon={'play'} fluid scale={0.95}>
         재생하기
       </Button>
     </Layout>
