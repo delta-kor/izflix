@@ -10,6 +10,11 @@ const Layout = styled.div`
   flex-direction: column;
   gap: 8px;
   padding: 0 0 4px 0;
+
+  ${PcQuery} {
+    position: fixed;
+    width: 326px;
+  }
 `;
 
 const Thumbnail = styled(SmoothImage)`

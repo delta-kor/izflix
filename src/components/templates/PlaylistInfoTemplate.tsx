@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import PlaylistInfo from '../molecules/PlaylistInfo';
 import PlaylistVideoSection from '../organisms/PlaylistVideoSection';
+import { Pc } from '../tools/MediaQuery';
 
 const Layout = styled.div`
   ${MobileQuery} {
@@ -15,9 +16,13 @@ const Layout = styled.div`
   ${PcQuery} {
     display: grid;
     grid-template-columns: 326px 1fr;
-    gap: 0 64px;
+    gap: 0 32px;
     padding: 0 ${PcInnerPadding};
   }
+`;
+
+const PlaylistInfoPlaceholder = styled.div`
+  height: 100px;
 `;
 
 interface Props {
@@ -27,6 +32,9 @@ interface Props {
 const PlaylistInfoTemplate: React.FC<Props> = ({ playlist }) => {
   return (
     <Layout>
+      <Pc>
+        <PlaylistInfoPlaceholder />
+      </Pc>
       <PlaylistInfo data={playlist} />
       <PlaylistVideoSection playlist={playlist} />
     </Layout>

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { MobileQuery } from '../../styles';
+import useDevice from '../../hooks/useDevice';
+import { MobileQuery, PcQuery } from '../../styles';
 import VideoPanel from '../atoms/VideoPanel';
 import Repeat from '../tools/Repeat';
 
@@ -9,6 +10,15 @@ const Layout = styled.div`
     flex-direction: column;
     gap: 12px;
   }
+
+  ${PcQuery} {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(max(240px, calc((100% - (3 * 24px)) / 4)), 1fr)
+    );
+    gap: 32px 24px;
+  }
 `;
 
 interface Props {
@@ -16,14 +26,17 @@ interface Props {
 }
 
 const PlaylistVideoSection: React.FC<Props> = ({ playlist }) => {
+  const device = useDevice();
+  const videoPanelType = device === 'mobile' ? 'horizontal' : 'full';
+
   const videos = (playlist && playlist.video) || [];
 
   return (
     <Layout>
       {videos.length ? (
-        videos.map(data => <VideoPanel type={'horizontal'} data={data} />)
+        videos.map(data => <VideoPanel type={videoPanelType} data={data} />)
       ) : (
-        <Repeat count={6} element={i => <VideoPanel type={'horizontal'} key={i} />} />
+        <Repeat count={6} element={i => <VideoPanel type={videoPanelType} key={i} />} />
       )}
     </Layout>
   );
