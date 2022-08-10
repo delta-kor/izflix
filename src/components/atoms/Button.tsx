@@ -62,19 +62,27 @@ interface Props {
   color: string;
   icon?: IconType;
   fluid?: boolean;
+  scale?: number;
   link?: string;
   onClick?: MouseEventHandler;
 }
 
-const Button: React.FC<Props> = ({ color, icon, fluid, link, onClick, children }) => {
+const Button: React.FC<Props> = ({ color, icon, fluid, link, scale, onClick, children }) => {
+  const hover = scale! * 1.1;
+  const tap = 1 - (hover - 1);
+
   const Component = (
-    <Layout $color={color} $fluid={fluid!!} hover={1.1} tap={0.9} onClick={onClick}>
+    <Layout $color={color} $fluid={fluid!!} hover={hover} tap={tap} onClick={onClick}>
       <Content>{children}</Content>
       {icon && <ActionIcon type={icon} color={Color.WHITE} />}
     </Layout>
   );
 
   return link ? <Link to={link}>{Component}</Link> : Component;
+};
+
+Button.defaultProps = {
+  scale: 1,
 };
 
 export default Button;

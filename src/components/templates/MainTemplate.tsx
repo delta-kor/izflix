@@ -20,17 +20,12 @@ interface Props {
 const MainTemplate: React.FC<Props> = ({ featured, playlists, recommends }) => {
   const device = useDevice();
 
-  const landingVideo = <LandingVideo type={'performance'} data={featured} />;
-  const playlistSection = <PlaylistSection playlists={playlists} />;
-  const shortcutSection = <ShortcutSection />;
-  const recommendSection = <RecommendSection recommends={recommends} />;
-
   return (
     <Layout>
-      {landingVideo}
-      {playlistSection}
-      {device === 'mobile' ? shortcutSection : null}
-      {recommendSection}
+      <LandingVideo type={'performance'} data={featured} />
+      <PlaylistSection playlists={playlists} />
+      {device === 'mobile' ? <ShortcutSection /> : null}
+      <RecommendSection recommends={recommends} />
     </Layout>
   );
 };

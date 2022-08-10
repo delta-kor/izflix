@@ -162,6 +162,9 @@ const VodItem: React.FC<Props> = ({ data }) => {
   const description = data && data.description;
   const video = data && data.video;
 
+  const firstVideoLink = video && `/${video[0].id}?k=playlist&v=${data.id}`;
+  const playlistLink = data && `/playlist/${data.id}`;
+
   return (
     <Layout>
       <Content>
@@ -178,10 +181,10 @@ const VodItem: React.FC<Props> = ({ data }) => {
           </DescriptionPlaceholder>
         )}
         <Action>
-          <Button color={Color.DARK_GRAY} icon={'play'} fluid>
+          <Button color={Color.DARK_GRAY} icon={'play'} fluid link={firstVideoLink}>
             첫화재생
           </Button>
-          <Button color={Color.TRANSPARENT} icon={'playlist'} fluid>
+          <Button color={Color.TRANSPARENT} icon={'playlist'} fluid link={playlistLink}>
             재생목록
           </Button>
         </Action>

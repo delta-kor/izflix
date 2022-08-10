@@ -6,7 +6,6 @@ import VerticalButton from '../atoms/VerticalButton';
 
 const Layout = styled.div`
   display: flex;
-  background: ${Color.BACKGROUND};
   z-index: 1;
 
   ${MobileQuery} {

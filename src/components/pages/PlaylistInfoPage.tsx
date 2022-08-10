@@ -11,7 +11,7 @@ const PlaylistInfoPage: React.FC = () => {
   const params = useParams();
   const id = params.id;
 
-  const [playlist, setPlaylist] = useState<IPlaylist | null>(null);
+  const [playlist, setPlaylist] = useState<IPlaylist | undefined>(undefined);
 
   useEffect(() => {
     loadData();
