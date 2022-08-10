@@ -37,6 +37,10 @@ namespace ApiResponse {
   }
 
   namespace Playlist {
+    interface Read extends ApiResponse {
+      playlist: IPlaylist;
+    }
+
     interface ReadAll extends ApiResponse {
       playlists: IPlaylist[];
     }

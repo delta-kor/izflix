@@ -109,6 +109,13 @@ class SpaceshipClass {
     });
   }
 
+  public async readPlaylist(id: string): Promise<ApiResponse.Playlist.Read> {
+    return this.get(`/playlist/${id}`, {
+      key: `read_playlist::${id}`,
+      expire: expireTime,
+    });
+  }
+
   public async readAllPlaylists(
     type: 'performance' | 'vod'
   ): Promise<ApiResponse.Playlist.ReadAll> {
