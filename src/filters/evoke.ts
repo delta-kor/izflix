@@ -1,30 +1,13 @@
-type Handler<T> = (arg: T) => any;
-
 class Evoke<T> {
-  private readonly method: () => Promise<T>;
-  private readonly handlers: Handler<T>[] = [];
+  private promise: Promise<T>;
 
-  constructor(method: () => Promise<T>) {
-    this.method = method;
-    this.run();
+  constructor(promise: Promise<T>) {
+    this.promise = promise;
+    this.listen();
   }
 
-  private run(): void {
-    const promise = this.method();
-    promise.then(result => {
-      this.handlers.forEach(handler => handler(result));
-    });
-    promise.catch(e => console.log(e));
-  }
-
-  public and(handler: Handler<T>): this {
-    this.handlers.push(handler);
-    return this;
-  }
-
-  public retry(): this {
-    this.run();
-    return this;
+  private listen(): void {
+    this.promise.catch(e => console.error(e));
   }
 }
 

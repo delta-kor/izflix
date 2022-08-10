@@ -10,6 +10,10 @@ const VodPage: React.FC = () => {
   const [featured, setFeatured] = useState<ApiResponse.Playlist.ReadFeatured | null>(null);
   const [playlists, setPlaylists] = useState<IPlaylist[]>([]);
 
+  useEffect(() => {
+    loadData();
+  }, []);
+
   const loadFeatured = async () => {
     const response = await Spaceship.readFeatured('vod');
     if (!response.ok) throw new HttpException(response);
@@ -27,13 +31,9 @@ const VodPage: React.FC = () => {
 
   const loadData = async () => {
     await delay(200);
-    new Evoke(loadFeatured);
-    new Evoke(loadPlaylists);
+    new Evoke(loadFeatured());
+    new Evoke(loadPlaylists());
   };
-
-  useEffect(() => {
-    loadData();
-  }, []);
 
   return (
     <Page>

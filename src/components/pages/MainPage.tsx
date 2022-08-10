@@ -6,16 +6,14 @@ import Spaceship from '../../services/spaceship';
 import MainTemplate from '../templates/MainTemplate';
 import Page from './Page';
 
-interface State {
-  featured: ApiResponse.Playlist.ReadFeatured | null;
-  playlists: IPlaylist[];
-  recommends: IVideo[];
-}
-
 const MainPage: React.FC = () => {
   const [featured, setFeatured] = useState<ApiResponse.Playlist.ReadFeatured | null>(null);
   const [playlists, setPlaylists] = useState<IPlaylist[]>([]);
   const [recommends, setRecommends] = useState<IVideo[]>([]);
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const loadFeatured = async () => {
     const response = await Spaceship.readFeatured('performance');
@@ -42,14 +40,10 @@ const MainPage: React.FC = () => {
 
   const loadData = async () => {
     await delay(200);
-    new Evoke(loadFeatured);
-    new Evoke(loadPlaylists);
-    new Evoke(loadRecommends);
+    new Evoke(loadFeatured());
+    new Evoke(loadPlaylists());
+    new Evoke(loadRecommends());
   };
-
-  useEffect(() => {
-    loadData();
-  }, []);
 
   return (
     <Page>

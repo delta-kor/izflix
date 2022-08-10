@@ -4,11 +4,10 @@ import Meta from './components/Meta';
 import Header from './components/organisms/Header';
 import Navigator from './components/organisms/Navigator';
 import MainPage from './components/pages/MainPage';
+import PlaylistInfoPage from './components/pages/PlaylistInfoPage';
 import VodPage from './components/pages/VodPage';
 
-interface Props {}
-
-const App: React.FC<Props> = () => {
+const App: React.FC = () => {
   const location = useLocation();
 
   return (
@@ -23,6 +22,7 @@ const App: React.FC<Props> = () => {
           <Routes location={location} key={location.pathname.split('/').splice(1, 1).join('/')}>
             <Route path="/" element={<MainPage />} />
             <Route path="/vod" element={<VodPage />} />
+            <Route path="/playlist/:id" element={<PlaylistInfoPage />} />
           </Routes>
         </AnimatePresence>
       </AnimateSharedLayout>
