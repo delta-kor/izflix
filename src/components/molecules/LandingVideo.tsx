@@ -159,12 +159,12 @@ const Video = styled.video`
 
   ${MobileQuery} {
     left: 0;
-    height: calc(320px * 1.29);
+    height: calc(320px * 1.39);
   }
 
   ${PcQuery} {
     left: ${PcLeftMargin}px;
-    height: calc(562px * 1.29);
+    height: calc(562px * 1.39);
   }
 `;
 
@@ -176,11 +176,11 @@ const VideoHider = styled.div`
   background: ${Color.BACKGROUND};
 
   ${MobileQuery} {
-    top: calc(320px * 1.29);
+    top: calc(320px * 1.39);
   }
 
   ${PcQuery} {
-    top: calc(562px * 1.29);
+    top: calc(562px * 1.39);
   }
 `;
 
@@ -189,8 +189,8 @@ const Cover = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 130%;
-  background: linear-gradient(180deg, rgba(7, 13, 45, 0.2) 0%, rgba(7, 13, 45, 1) 100%);
+  height: 140%;
+  background: linear-gradient(180deg, rgba(7, 13, 45, 0.2) 0%, rgba(7, 13, 45, 1) 95%);
 `;
 
 interface Props {
