@@ -4,15 +4,16 @@ import AlbumItem from '../atoms/AlbumItem';
 
 const Layout = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-
   ${MobileQuery} {
-    padding: 0 32px;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding: 0 32px 16px 32px;
   }
 
   ${PcQuery} {
-    padding: 0 ${PcInnerPadding};
+    grid-template-columns: repeat(auto-fill, minmax(max(120px, (100% - 5 * 16px) / 6), 1fr));
+    gap: 16px;
+    padding: 0 ${PcInnerPadding} 16px ${PcInnerPadding};
   }
 `;
 

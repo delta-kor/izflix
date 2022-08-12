@@ -15,18 +15,19 @@ const Layout = styled(SmoothBox)`
 
     ${MobileQuery} {
       gap: 12px;
-      padding: 16px;
+      padding: 16px 0;
     }
 
     ${PcQuery} {
       gap: 16px;
-      padding: 20px 20px 16px;
+      padding: 20px 0 16px 0;
     }
   }
 `;
 
 const Thumbnail = styled(SmoothImage)`
   width: 80%;
+  max-width: 160px;
   aspect-ratio: 1 / 1;
   border-radius: 8px;
 `;
