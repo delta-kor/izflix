@@ -197,7 +197,7 @@ const VodItem: React.FC<Props> = ({ data }) => {
                 type={'vertical'}
                 data={item}
                 link={`/${item.id}?k=playlist&v=${data!.id}`}
-                key={data.id}
+                key={item.id}
               />
             ))
           ) : (
