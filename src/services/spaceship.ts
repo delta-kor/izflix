@@ -135,6 +135,20 @@ class SpaceshipClass {
     });
   }
 
+  public async getAllAlbums(): Promise<ApiResponse.Music.GetAllAlbums> {
+    return this.get('/music/album', {
+      key: 'get_all_albums',
+      expire: expireTime,
+    });
+  }
+
+  public async getOneAlbum(id: string): Promise<ApiResponse.Music.GetOneAlbum> {
+    return this.get(`/music/album/${id}`, {
+      key: 'get_one_album::${id}',
+      expire: expireTime,
+    });
+  }
+
   public getThumbnail(id: string): string {
     return `${this.baseUrl}/thumbnail/${id}`;
   }

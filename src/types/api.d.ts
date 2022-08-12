@@ -29,6 +29,18 @@ interface IVideo {
   is_4k: boolean;
 }
 
+interface IAlbum {
+  id: string;
+  title: string;
+  count: number;
+}
+
+interface IMusic {
+  id: string;
+  title: string;
+  videos: IVideo[];
+}
+
 namespace ApiResponse {
   namespace Recommend {
     interface GetUserRecommends extends ApiResponse {
@@ -49,6 +61,17 @@ namespace ApiResponse {
       playlist_id: string;
       video: IVideo;
       url: string;
+    }
+  }
+
+  namespace Music {
+    interface GetAllAlbums extends ApiResponse {
+      albums: IAlbum[];
+    }
+
+    interface GetOneAlbum extends ApiResponse {
+      album: IAlbum;
+      musics: IMusic[];
     }
   }
 }
