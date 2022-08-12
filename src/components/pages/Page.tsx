@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { motion, useIsPresent } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { useNavigationType } from 'react-router-dom';
 import styled from 'styled-components';
 import intersect from '../../services/intersect';
@@ -57,14 +57,29 @@ interface Props {
 
 const Page: React.FC<Props> = ({ className, children }) => {
   const navigationType = useNavigationType();
+  const isPresent = useIsPresent();
+
+  const [path] = useState<string>(window.location.pathname);
 
   useEffect(() => {
     intersect.setBoundary('boundary');
 
     if (navigationType === 'PUSH') {
       window.scrollTo(0, 0);
+    } else {
+      const scrollPostion = sessionStorage.getItem(path);
+      window.scrollTo(0, scrollPostion ? parseInt(scrollPostion, 10) : 0);
     }
+
+    return () => {};
   }, []);
+
+  useEffect(() => {
+    if (!isPresent) {
+      const scrollPosition = window.scrollY;
+      sessionStorage.setItem(path, scrollPosition.toString());
+    }
+  }, [isPresent]);
 
   return (
     <Layout

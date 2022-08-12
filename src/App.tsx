@@ -1,4 +1,5 @@
 import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Meta from './components/Meta';
 import Header from './components/organisms/Header';
@@ -11,6 +12,10 @@ import VodPage from './components/pages/VodPage';
 
 const App: React.FC = () => {
   const location = useLocation();
+
+  useEffect(() => {
+    window.history.scrollRestoration = 'manual';
+  }, []);
 
   return (
     <>
