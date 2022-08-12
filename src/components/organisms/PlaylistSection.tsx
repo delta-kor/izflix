@@ -18,7 +18,7 @@ const Wrapper = styled.div`
     grid-template-columns: auto 182px;
     gap: 32px;
     margin: -16px 0 -32px 0;
-    padding: 0 ${PcInnerPadding} 0 ${PcInnerPadding};
+    padding: 0 ${PcInnerPadding};
   }
 `;
 
