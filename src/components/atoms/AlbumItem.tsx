@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import { Color, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
@@ -12,6 +13,9 @@ const Layout = styled(SmoothBox)`
 
     background: ${Color.DARK_GRAY};
     border-radius: 8px;
+
+    cursor: pointer;
+    user-select: none;
 
     ${MobileQuery} {
       gap: 12px;
@@ -49,14 +53,16 @@ const Title = styled.div`
 `;
 
 const TitlePlaceholder = styled.div`
-  width: 100%;
+  width: 80%;
 
   ${MobileQuery} {
     ${Placeholder.SUBTITLE_1};
+    background: ${Color.BACKGROUND};
   }
 
   ${PcQuery} {
     ${Placeholder.EX_SUBTITLE_1};
+    background: ${Color.BACKGROUND};
   }
 `;
 
@@ -69,12 +75,14 @@ const AlbumItem: React.FC<Props> = ({ data }) => {
   const title = data && data.title;
   const thumbnail = data && Spaceship.getThumbnail(data.id);
 
-  return (
+  const Content = (
     <Layout hover={1.1} tap={0.9}>
       <Thumbnail src={thumbnail} />
       {title ? <Title>{title}</Title> : <TitlePlaceholder />}
     </Layout>
   );
+
+  return id ? <Link to={`/music/${id}`}>{Content}</Link> : Content;
 };
 
 export default AlbumItem;

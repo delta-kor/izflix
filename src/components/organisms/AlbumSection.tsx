@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import AlbumItem from '../atoms/AlbumItem';
+import Repeat from '../tools/Repeat';
 
 const Layout = styled.div`
   display: grid;
@@ -24,9 +25,11 @@ interface Props {
 const AlbumSection: React.FC<Props> = ({ albums }) => {
   return (
     <Layout>
-      {albums.map(data => (
-        <AlbumItem data={data} />
-      ))}
+      {albums.length ? (
+        albums.map(data => <AlbumItem data={data} />)
+      ) : (
+        <Repeat count={10} element={i => <AlbumItem key={i} />} />
+      )}
     </Layout>
   );
 };
