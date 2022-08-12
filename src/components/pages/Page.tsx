@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 import styled from 'styled-components';
+import intersect from '../../services/intersect';
 import {
   Color,
   MobileQuery,
@@ -53,6 +55,10 @@ interface Props {
 }
 
 const Page: React.FC<Props> = ({ className, children }) => {
+  useEffect(() => {
+    intersect.setBoundary('boundary');
+  });
+
   return (
     <Layout
       className={className}
