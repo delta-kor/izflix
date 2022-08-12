@@ -98,6 +98,7 @@ const PlaylistInfo: React.FC<Props> = ({ data }) => {
   const thumbnail = data && Spaceship.getThumbnail(data.thumbnail);
   const title = data && data.title;
   const description = data && data.description;
+  const link = data && `/${data.video[0].id}?k=playlist&v=${data.id}`;
 
   return (
     <Layout>
@@ -113,7 +114,7 @@ const PlaylistInfo: React.FC<Props> = ({ data }) => {
           <div />
         </DescriptionPlaceholder>
       )}
-      <Button color={Color.PRIMARY} icon={'play'} fluid scale={0.95}>
+      <Button color={Color.PRIMARY} icon={'play'} fluid scale={0.95} link={link}>
         재생하기
       </Button>
     </Layout>

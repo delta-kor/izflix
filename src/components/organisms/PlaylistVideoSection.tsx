@@ -27,14 +27,21 @@ interface Props {
 
 const PlaylistVideoSection: React.FC<Props> = ({ playlist }) => {
   const device = useDevice();
-  const videoPanelType = device === 'mobile' ? 'horizontal' : 'full';
 
+  const videoPanelType = device === 'mobile' ? 'horizontal' : 'full';
   const videos = (playlist && playlist.video) || [];
 
   return (
     <Layout>
       {videos.length ? (
-        videos.map(data => <VideoPanel type={videoPanelType} data={data} key={data.id} />)
+        videos.map(data => (
+          <VideoPanel
+            type={videoPanelType}
+            data={data}
+            link={`/${data.id}?k=playlist&v=${playlist!.id}`}
+            key={data.id}
+          />
+        ))
       ) : (
         <Repeat count={12} element={i => <VideoPanel type={videoPanelType} key={i} />} />
       )}
