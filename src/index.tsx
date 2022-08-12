@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import delay from './delay';
@@ -14,7 +15,9 @@ const app = (
   <React.StrictMode>
     <GlobalStyle />
     <BrowserRouter>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

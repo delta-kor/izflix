@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 interface Props {
   data: Partial<IMeta>;
