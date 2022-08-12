@@ -69,9 +69,19 @@ interface Props {
   scale?: number;
   link?: string;
   onClick?: MouseEventHandler;
+  className?: string;
 }
 
-const Button: React.FC<Props> = ({ color, icon, fluid, link, scale, onClick, children }) => {
+const Button: React.FC<Props> = ({
+  color,
+  icon,
+  fluid,
+  link,
+  scale,
+  onClick,
+  className,
+  children,
+}) => {
   const hover = scale! * 1.1;
   const tap = 1 - (hover - 1);
 
@@ -83,7 +93,7 @@ const Button: React.FC<Props> = ({ color, icon, fluid, link, scale, onClick, chi
   );
 
   return link ? (
-    <Wrapper $fluid={fluid!!} to={link}>
+    <Wrapper $fluid={fluid!!} to={link} className={className}>
       {Component}
     </Wrapper>
   ) : (
