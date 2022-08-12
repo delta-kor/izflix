@@ -29,7 +29,7 @@ const Layout = styled.div<{ $active: boolean }>`
   align-items: center;
   user-select: none;
 
-  background: ${({ $active }) => ($active ? '#070D2DAA' : Color.TRANSPARENT)};
+  background: ${({ $active }) => ($active ? '#070D2DBA' : Color.TRANSPARENT)};
   backdrop-filter: ${({ $active }) => ($active ? 'blur(10px)' : 'none')};
 
   transition: background 0.2s;
