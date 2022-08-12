@@ -34,7 +34,7 @@ const PlaylistVideoSection: React.FC<Props> = ({ playlist }) => {
   return (
     <Layout>
       {videos.length ? (
-        videos.map(data => <VideoPanel type={videoPanelType} data={data} />)
+        videos.map(data => <VideoPanel type={videoPanelType} data={data} key={data.id} />)
       ) : (
         <Repeat count={12} element={i => <VideoPanel type={videoPanelType} key={i} />} />
       )}

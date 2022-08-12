@@ -26,7 +26,7 @@ const AlbumSection: React.FC<Props> = ({ albums }) => {
   return (
     <Layout>
       {albums.length ? (
-        albums.map(data => <AlbumItem data={data} />)
+        albums.map(data => <AlbumItem data={data} key={data.id} />)
       ) : (
         <Repeat count={10} element={i => <AlbumItem key={i} />} />
       )}
