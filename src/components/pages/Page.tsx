@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
+import { useNavigationType } from 'react-router-dom';
 import styled from 'styled-components';
 import intersect from '../../services/intersect';
 import {
@@ -55,9 +56,15 @@ interface Props {
 }
 
 const Page: React.FC<Props> = ({ className, children }) => {
+  const navigationType = useNavigationType();
+
   useEffect(() => {
     intersect.setBoundary('boundary');
-  });
+
+    if (navigationType === 'PUSH') {
+      window.scrollTo(0, 0);
+    }
+  }, []);
 
   return (
     <Layout

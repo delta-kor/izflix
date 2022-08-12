@@ -23,7 +23,6 @@ class Intersect extends EventEmitter {
   public setBoundary(id: string) {
     const element = document.getElementById(id);
     if (!element) {
-      console.log('no');
       this.observer.disconnect();
       this.emit('bump', 'in');
       return false;
