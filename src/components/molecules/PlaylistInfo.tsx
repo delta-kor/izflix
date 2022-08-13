@@ -85,7 +85,7 @@ const DescriptionPlaceholder = styled.div`
     ${PcQuery} {
       ${Placeholder.SUBTITLE_1};
       height: 14px;
-      margin: 4px 0;
+      margin: 3px 0;
     }
   }
 `;
@@ -110,7 +110,6 @@ const PlaylistInfo: React.FC<Props> = ({ data }) => {
         <Description>{description}</Description>
       ) : (
         <DescriptionPlaceholder>
-          <div />
           <div />
         </DescriptionPlaceholder>
       )}
