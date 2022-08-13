@@ -28,6 +28,7 @@ const Content = styled.div`
   flex-direction: column;
   flex-grow: 1;
   gap: 4px;
+  min-width: 0;
 `;
 
 const Title = styled.div`
@@ -96,6 +97,7 @@ const HorizontalLayout = styled(SmoothBox)`
 `;
 
 const HorizontalImage = styled(SmoothImage)`
+  flex-shrink: 0;
   height: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 8px;

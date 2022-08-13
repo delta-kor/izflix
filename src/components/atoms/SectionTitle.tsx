@@ -1,7 +1,15 @@
 import { MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Color, HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
+import {
+  Color,
+  HideOverflow,
+  MobileQuery,
+  PcInnerPadding,
+  PcQuery,
+  Placeholder,
+  Text,
+} from '../../styles';
 import SmoothBox from './SmoothBox';
 
 const Layout = styled.div<{ $fluid: boolean }>`
@@ -30,6 +38,18 @@ const Content = styled.div`
 
   ${PcQuery} {
     ${Text.HEADLINE_1};
+  }
+`;
+
+const ContentPlaceholder = styled.div`
+  width: 70%;
+
+  ${MobileQuery} {
+    ${Placeholder.HEADLINE_3};
+  }
+
+  ${PcQuery} {
+    ${Placeholder.HEADLINE_1};
   }
 `;
 
@@ -75,7 +95,7 @@ const SectionTitle: React.FC<Props> = ({
 
   return (
     <Layout $fluid={fluid!!} className={className}>
-      <Content>{children}</Content>
+      {children ? <Content>{children}</Content> : <ContentPlaceholder />}
       {action && link ? <Link to={link}>{ActionComponent}</Link> : ActionComponent}
     </Layout>
   );

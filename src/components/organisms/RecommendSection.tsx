@@ -20,6 +20,7 @@ const Layout = styled.div`
 
 const ItemList = styled.div`
   display: grid;
+  min-width: 0;
 
   ${MobileQuery} {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
