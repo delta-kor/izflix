@@ -46,7 +46,7 @@ const CarouselHandleItem = styled.div<{ $active: boolean }>`
   height: 6px;
   background: ${({ $active }) => ($active ? Color.WHITE : Color.GRAY)};
   border-radius: 100%;
-  transition: background 0.2s;
+  transition: background 0.1s;
 `;
 
 interface Props {
