@@ -18,6 +18,11 @@ const Layout = styled.div`
       minmax(max(240px, calc((100% - (3 * 24px)) / 4)), 1fr)
     );
     gap: 32px 24px;
+
+    padding: 16px;
+    margin: -16px;
+
+    z-index: 2;
   }
 `;
 
@@ -25,7 +30,7 @@ interface Props {
   playlist?: IPlaylist;
 }
 
-const PlaylistVideoSection: React.FC<Props> = ({ playlist }) => {
+const PlaylistItemSection: React.FC<Props> = ({ playlist }) => {
   const device = useDevice();
 
   const videoPanelType = device === 'mobile' ? 'horizontal' : 'full';
@@ -49,4 +54,4 @@ const PlaylistVideoSection: React.FC<Props> = ({ playlist }) => {
   );
 };
 
-export default PlaylistVideoSection;
+export default PlaylistItemSection;

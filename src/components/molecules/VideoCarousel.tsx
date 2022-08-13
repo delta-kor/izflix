@@ -27,11 +27,12 @@ const Content = styled.div`
 `;
 
 interface Props {
-  videos: IVideo[];
+  data: IVideo[];
+  createLink?(id: string): string;
 }
 
-const VideoCarousel: React.FC<Props> = ({ videos }) => {
-  const groups = videos.reduce((acc, video, index) => {
+const VideoCarousel: React.FC<Props> = ({ data, createLink }) => {
+  const groups = data.reduce((acc, video, index) => {
     const group = Math.floor(index / 3);
     if (!acc[group]) acc[group] = [];
     acc[group].push(video);
@@ -47,6 +48,7 @@ const VideoCarousel: React.FC<Props> = ({ videos }) => {
               <VideoPanel
                 type={'horizontal'}
                 data={{ id, title: description, description: getDate(date), duration } as IVideo}
+                link={createLink && createLink(id)}
                 key={id}
               />
             ))}

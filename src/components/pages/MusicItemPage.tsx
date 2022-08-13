@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom';
 import HttpException from '../../exceptions/http-exception';
 import Evoke from '../../filters/evoke';
 import Spaceship from '../../services/spaceship';
-import MusicInfoTemplate from '../templates/MusicInfoTemplate';
+import MusicItemTemplate from '../templates/MusicItemTemplate';
 import ErrorPage from './ErrorPage';
 import Page from './Page';
 
-const MusicInfoPage: React.FC = () => {
+const MusicItemPage: React.FC = () => {
   const params = useParams();
   const id = params.id;
 
@@ -33,9 +33,9 @@ const MusicInfoPage: React.FC = () => {
 
   return (
     <Page>
-      <MusicInfoTemplate musics={musics} />
+      <MusicItemTemplate musics={musics} />
     </Page>
   );
 };
 
-export default MusicInfoPage;
+export default MusicItemPage;

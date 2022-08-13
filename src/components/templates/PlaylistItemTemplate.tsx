@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import PlaylistInfo from '../molecules/PlaylistInfo';
-import PlaylistVideoSection from '../organisms/PlaylistVideoSection';
+import PlaylistItemSection from '../organisms/PlaylistItemSection';
 import { Pc } from '../tools/MediaQuery';
 
 const Layout = styled.div`
@@ -29,16 +29,16 @@ interface Props {
   playlist?: IPlaylist;
 }
 
-const PlaylistInfoTemplate: React.FC<Props> = ({ playlist }) => {
+const PlaylistItemTemplate: React.FC<Props> = ({ playlist }) => {
   return (
     <Layout>
       <Pc>
         <PlaylistInfoPlaceholder />
       </Pc>
       <PlaylistInfo data={playlist} />
-      <PlaylistVideoSection playlist={playlist} />
+      <PlaylistItemSection playlist={playlist} />
     </Layout>
   );
 };
 
-export default PlaylistInfoTemplate;
+export default PlaylistItemTemplate;
