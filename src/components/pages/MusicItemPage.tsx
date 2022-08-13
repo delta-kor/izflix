@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import delay from '../../delay';
 import HttpException from '../../exceptions/http-exception';
 import Evoke from '../../filters/evoke';
 import Spaceship from '../../services/spaceship';
@@ -27,7 +28,8 @@ const MusicItemPage: React.FC = () => {
     setMusics(musics);
   };
 
-  const loadData = () => {
+  const loadData = async () => {
+    await delay(200);
     new Evoke(loadAlbum());
   };
 

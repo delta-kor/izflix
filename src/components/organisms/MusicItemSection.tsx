@@ -104,6 +104,10 @@ const MusicItemSection: React.FC<Props> = ({ musics }) => {
     }
   }, [musics]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [selectedMusic]);
+
   const createLink = (id: string): string => {
     return `/${id}?k=music&v=${selectedMusic!.id}`;
   };
