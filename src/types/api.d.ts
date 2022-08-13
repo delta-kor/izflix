@@ -23,7 +23,7 @@ interface IVideo {
   type: VideoType;
   title: string;
   description: string;
-  date: Date;
+  date: number;
   category: [string, string, string];
   duration: number;
   is_4k: boolean;
