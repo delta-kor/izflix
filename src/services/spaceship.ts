@@ -144,7 +144,7 @@ class SpaceshipClass {
 
   public async getOneAlbum(id: string): Promise<ApiResponse.Music.GetOneAlbum> {
     return this.get(`/music/album/${id}`, {
-      key: 'get_one_album::${id}',
+      key: `get_one_album::${id}`,
       expire: expireTime,
     });
   }
