@@ -27,7 +27,7 @@ const App: React.FC = () => {
 
       <AnimateSharedLayout>
         <AnimatePresence exitBeforeEnter>
-          <Routes location={location} key={location.pathname.split('/').splice(1, 1).join('/')}>
+          <Routes location={location} key={location.pathname}>
             <Route path="/" element={<MainPage />} />
             <Route path="/vod" element={<VodPage />} />
             <Route path="/playlist/:id" element={<PlaylistInfoPage />} />
