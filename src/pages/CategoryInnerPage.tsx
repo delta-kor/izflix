@@ -6,6 +6,7 @@ import CategoryInnerTemplate from '../components/templates/CategoryInnerTemplate
 import HttpException from '../exceptions/http-exception';
 import PathFinder from '../services/path-finder';
 import Spaceship from '../services/spaceship';
+import Page from './Page';
 
 const Layout = styled(motion.div)``;
 
@@ -46,13 +47,9 @@ const CategoryInnerPage: React.FC<Props> = ({ setPath }) => {
   };
 
   return (
-    <Layout
-      exit={{ opacity: 0, transition: { duration: 0.2 } }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1, transition: { duration: 0.2 } }}
-    >
+    <Page noStyle>
       <CategoryInnerTemplate setPath={setPath} category={category} />
-    </Layout>
+    </Page>
   );
 };
 

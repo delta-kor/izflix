@@ -3,14 +3,9 @@ import { useEffect, useState } from 'react';
 import { useNavigationType } from 'react-router-dom';
 import styled from 'styled-components';
 import intersect from '../services/intersect';
-import {
-  Color,
-  MobileQuery,
-  MobileTopMargin,
-  PcLeftMargin,
-  PcQuery,
-  PcTopMargin,
-} from '../styles';
+import { Color, MobileQuery, MobileTopMargin, PcLeftMargin, PcQuery, PcTopMargin } from '../styles';
+
+const NoStyleLayout = styled(motion.div)``;
 
 const Layout = styled(motion.div)`
   position: relative;
@@ -52,10 +47,11 @@ const Footer = styled.div`
 `;
 
 interface Props {
+  noStyle?: boolean;
   className?: string;
 }
 
-const Page: React.FC<Props> = ({ className, children }) => {
+const Page: React.FC<Props> = ({ noStyle, className, children }) => {
   const navigationType = useNavigationType();
   const isPresent = useIsPresent();
 
@@ -81,8 +77,10 @@ const Page: React.FC<Props> = ({ className, children }) => {
     }
   }, [isPresent]);
 
+  const Wrppaer = noStyle ? NoStyleLayout : Layout;
+
   return (
-    <Layout
+    <Wrppaer
       className={className}
       exit={{ opacity: 0, transition: { duration: 0.2 } }}
       initial={{ opacity: 0 }}
@@ -90,7 +88,7 @@ const Page: React.FC<Props> = ({ className, children }) => {
     >
       <Content>{children}</Content>
       <Footer />
-    </Layout>
+    </Wrppaer>
   );
 };
 
