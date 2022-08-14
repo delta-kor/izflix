@@ -149,9 +149,10 @@ class SpaceshipClass {
     });
   }
 
-  public async viewCategory(id: string): Promise<ApiResponse.Category.View> {
-    return this.get(`/category/${id}`, {
-      key: `view_category::${id}`,
+  public async viewCategory(id: string | null): Promise<ApiResponse.Category.View> {
+    const target = id ? `${id}` : '';
+    return this.get(`/category/${target}`, {
+      key: `view_category::${target}`,
       expire: expireTime,
     });
   }

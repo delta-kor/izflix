@@ -94,11 +94,13 @@ namespace ApiResponse {
 
     interface ViewFolder extends ApiResponse {
       type: 'folder';
+      path: IPath[];
       data: IFolder[];
     }
 
     interface ViewFile extends ApiResponse {
       type: 'file';
+      path: IPath[];
       data: IVideo[];
     }
   }

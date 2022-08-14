@@ -44,6 +44,11 @@ class PageManager {
       return result.slice(1);
     } else return [];
   }
+
+  public static getPageKey(path: string): string {
+    if (path.startsWith('/category')) return '/category';
+    return path;
+  }
 }
 
 export default PageManager;
