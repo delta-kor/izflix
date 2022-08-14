@@ -77,10 +77,10 @@ const Page: React.FC<Props> = ({ noStyle, className, children }) => {
     }
   }, [isPresent]);
 
-  const Wrppaer = noStyle ? NoStyleLayout : Layout;
-
-  return (
-    <Wrppaer
+  return noStyle ? (
+    <NoStyleLayout>{children}</NoStyleLayout>
+  ) : (
+    <Layout
       className={className}
       exit={{ opacity: 0, transition: { duration: 0.2 } }}
       initial={{ opacity: 0 }}
@@ -88,7 +88,7 @@ const Page: React.FC<Props> = ({ noStyle, className, children }) => {
     >
       <Content>{children}</Content>
       <Footer />
-    </Wrppaer>
+    </Layout>
   );
 };
 
