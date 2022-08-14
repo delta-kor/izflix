@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import HttpException from '../../exceptions/http-exception';
-import Evoke from '../../filters/evoke';
-import Spaceship from '../../services/spaceship';
-import MusicTemplate from '../templates/MusicTemplate';
+import HttpException from '../exceptions/http-exception';
+import Evoke from '../filters/evoke';
+import Spaceship from '../services/spaceship';
+import MusicTemplate from '../components/templates/MusicTemplate';
 import Page from './Page';
 
 const MusicPage: React.FC = () => {

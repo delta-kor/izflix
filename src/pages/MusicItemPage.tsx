@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import delay from '../../delay';
-import HttpException from '../../exceptions/http-exception';
-import Evoke from '../../filters/evoke';
-import Spaceship from '../../services/spaceship';
-import MusicItemTemplate from '../templates/MusicItemTemplate';
+import delay from '../delay';
+import HttpException from '../exceptions/http-exception';
+import Evoke from '../filters/evoke';
+import Spaceship from '../services/spaceship';
+import MusicItemTemplate from '../components/templates/MusicItemTemplate';
 import ErrorPage from './ErrorPage';
 import Page from './Page';
 

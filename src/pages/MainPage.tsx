@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import delay from '../../delay';
-import HttpException from '../../exceptions/http-exception';
-import Evoke from '../../filters/evoke';
-import Spaceship from '../../services/spaceship';
-import MainTemplate from '../templates/MainTemplate';
+import delay from '../delay';
+import HttpException from '../exceptions/http-exception';
+import Evoke from '../filters/evoke';
+import Spaceship from '../services/spaceship';
+import MainTemplate from '../components/templates/MainTemplate';
 import Page from './Page';
 
 const MainPage: React.FC = () => {

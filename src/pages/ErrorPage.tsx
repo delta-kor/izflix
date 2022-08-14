@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import GetConstant, { ConstantKey } from '../../constants';
-import Icon from '../../icons/Icon';
-import { Color, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
-import Button from '../atoms/Button';
+import GetConstant, { ConstantKey } from '../constants';
+import Icon from '../icons/Icon';
+import { Color, MobileQuery, PcInnerPadding, PcQuery, Text } from '../styles';
+import Button from '../components/atoms/Button';
 import Page from './Page';
 
 const Layout = styled.div`

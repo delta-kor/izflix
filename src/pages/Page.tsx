@@ -2,7 +2,7 @@ import { motion, useIsPresent } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useNavigationType } from 'react-router-dom';
 import styled from 'styled-components';
-import intersect from '../../services/intersect';
+import intersect from '../services/intersect';
 import {
   Color,
   MobileQuery,
@@ -10,7 +10,7 @@ import {
   PcLeftMargin,
   PcQuery,
   PcTopMargin,
-} from '../../styles';
+} from '../styles';
 
 const Layout = styled(motion.div)`
   position: relative;

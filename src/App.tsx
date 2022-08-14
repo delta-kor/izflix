@@ -4,12 +4,12 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Meta from './components/Meta';
 import Header from './components/organisms/Header';
 import Navigator from './components/organisms/Navigator';
-import ErrorPage from './components/pages/ErrorPage';
-import MainPage from './components/pages/MainPage';
-import MusicItemPage from './components/pages/MusicItemPage';
-import MusicPage from './components/pages/MusicPage';
-import PlaylistItemPage from './components/pages/PlaylistItemPage';
-import VodPage from './components/pages/VodPage';
+import ErrorPage from './pages/ErrorPage';
+import MainPage from './pages/MainPage';
+import MusicItemPage from './pages/MusicItemPage';
+import MusicPage from './pages/MusicPage';
+import PlaylistItemPage from './pages/PlaylistItemPage';
+import VodPage from './pages/VodPage';
 
 const App: React.FC = () => {
   const location = useLocation();

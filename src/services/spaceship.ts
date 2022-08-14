@@ -149,6 +149,13 @@ class SpaceshipClass {
     });
   }
 
+  public async viewCategory(id: string): Promise<ApiResponse.Category.View> {
+    return this.get(`/category/${id}`, {
+      key: `view_category::${id}`,
+      expire: expireTime,
+    });
+  }
+
   public getThumbnail(id: string): string {
     return `${this.baseUrl}/thumbnail/${id}`;
   }

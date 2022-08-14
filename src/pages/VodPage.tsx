@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import delay from '../../delay';
-import HttpException from '../../exceptions/http-exception';
-import Evoke from '../../filters/evoke';
-import Spaceship from '../../services/spaceship';
-import VodTemplate from '../templates/VodTemplate';
+import delay from '../delay';
+import HttpException from '../exceptions/http-exception';
+import Evoke from '../filters/evoke';
+import Spaceship from '../services/spaceship';
+import VodTemplate from '../components/templates/VodTemplate';
 import Page from './Page';
 
 const VodPage: React.FC = () => {

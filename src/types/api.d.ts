@@ -41,6 +41,20 @@ interface IMusic {
   videos: IVideo[];
 }
 
+interface IPath {
+  id: string;
+  title: string;
+  count: number;
+}
+
+interface IFolder {
+  id: string;
+  path: string[];
+  title: string;
+  count: number;
+  date: number;
+}
+
 namespace ApiResponse {
   namespace Recommend {
     interface GetUserRecommends extends ApiResponse {
@@ -72,6 +86,20 @@ namespace ApiResponse {
     interface GetOneAlbum extends ApiResponse {
       album: IAlbum;
       musics: IMusic[];
+    }
+  }
+
+  namespace Category {
+    type View = ViewFolder | ViewFile;
+
+    interface ViewFolder extends ApiResponse {
+      type: 'folder';
+      data: IFolder[];
+    }
+
+    interface ViewFile extends ApiResponse {
+      type: 'file';
+      data: IVideo[];
     }
   }
 }
