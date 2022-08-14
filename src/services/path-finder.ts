@@ -1,3 +1,3 @@
-const PathFinder: Map<string, number> = new Map();
+const PathFinder: Map<string | null, number> = new Map();
 
 export default PathFinder;

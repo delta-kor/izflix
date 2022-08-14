@@ -45,6 +45,7 @@ interface IPath {
   id: string;
   title: string;
   count: number;
+  children: number;
 }
 
 interface IFolder {
@@ -52,6 +53,7 @@ interface IFolder {
   path: string[];
   title: string;
   count: number;
+  children: number;
   date: number;
 }
 

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import CategoryInnerTemplate from '../components/templates/CategoryInnerTemplate';
 import HttpException from '../exceptions/http-exception';
+import PathFinder from '../services/path-finder';
 import Spaceship from '../services/spaceship';
 
 const Layout = styled(motion.div)``;
@@ -28,6 +29,16 @@ const CategoryInnerPage: React.FC<Props> = ({ setPath }) => {
 
     setCategory(response);
     setPath(response.path);
+
+    for (const path of response.path) {
+      PathFinder.set(path.id, path.children);
+    }
+
+    if (response.type === 'folder') {
+      for (const data of response.data) {
+        PathFinder.set(data.id, data.children);
+      }
+    }
   };
 
   const loadData = () => {
