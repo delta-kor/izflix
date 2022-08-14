@@ -13,10 +13,12 @@ const Layout = styled.div`
 
   ${MobileQuery} {
     padding: 0 32px;
+    gap: 2px;
   }
 
   ${PcQuery} {
     padding: 0 ${PcInnerPadding};
+    gap: 4px;
   }
 `;
 

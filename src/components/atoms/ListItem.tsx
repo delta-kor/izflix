@@ -1,8 +1,9 @@
 import { MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import useDevice from '../../hooks/useDevice';
 import Icon, { IconType } from '../../icons/Icon';
-import { Color, Placeholder, Text } from '../../styles';
+import { Color, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 import SmoothImage from './SmoothImage';
 
@@ -10,25 +11,48 @@ const Layout = styled(SmoothBox)<{ $short: boolean }>`
   & > .content {
     display: flex;
     align-items: center;
-    gap: ${({ $short }) => ($short ? '12px' : '20px')};
     padding: 8px 0;
 
     cursor: pointer;
     user-select: none;
+
+    ${MobileQuery} {
+      gap: ${({ $short }) => ($short ? '12px' : '20px')};
+    }
+
+    ${PcQuery} {
+      gap: ${({ $short }) => ($short ? '16px' : '26px')};
+    }
   }
 `;
 
 const ListIcon = styled(Icon)`
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
+
+  ${MobileQuery} {
+    width: 24px;
+    height: 24px;
+  }
+
+  ${PcQuery} {
+    width: 28px;
+    height: 28px;
+  }
 `;
 
 const ListImage = styled(SmoothImage)`
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
   border-radius: 4px;
+
+  ${MobileQuery} {
+    width: 32px;
+    height: 32px;
+  }
+
+  ${PcQuery} {
+    width: 38px;
+    height: 38px;
+  }
 `;
 
 const Content = styled.div`
@@ -41,29 +65,63 @@ const Content = styled.div`
 
 const Title = styled.div`
   color: ${Color.WHITE};
-  ${Text.SUBTITLE_1};
+
+  ${MobileQuery} {
+    ${Text.SUBTITLE_1};
+  }
+
+  ${PcQuery} {
+    ${Text.EX_SUBTITLE_1};
+  }
 `;
 
 const Description = styled.div`
   color: ${Color.GRAY};
-  ${Text.SUBTITLE_2};
+
+  ${MobileQuery} {
+    ${Text.SUBTITLE_2};
+  }
+
+  ${PcQuery} {
+    ${Text.SUBTITLE_1};
+  }
 `;
 
 const Count = styled.div`
   flex-shrink: 0;
-
   color: ${Color.GRAY};
-  ${Text.SUBTITLE_2};
+
+  ${MobileQuery} {
+    ${Text.SUBTITLE_2};
+  }
+
+  ${PcQuery} {
+    ${Text.SUBTITLE_1};
+  }
 `;
 
 const TitlePlaceholder = styled.div`
   width: 80%;
-  ${Placeholder.SUBTITLE_1};
+
+  ${MobileQuery} {
+    ${Placeholder.SUBTITLE_1};
+  }
+
+  ${PcQuery} {
+    ${Placeholder.EX_SUBTITLE_1};
+  }
 `;
 
 const DescriptionPlaceholder = styled.div`
   width: 40%;
-  ${Placeholder.SUBTITLE_2};
+
+  ${MobileQuery} {
+    ${Placeholder.SUBTITLE_2};
+  }
+
+  ${PcQuery} {
+    ${Placeholder.SUBTITLE_1};
+  }
 `;
 
 interface PropsBase {
@@ -87,11 +145,20 @@ interface ImageProps extends PropsBase {
 type Props = IconProps | ImageProps | { type: 'placeholder' };
 
 const ListItem: React.FC<Props> = props => {
+  const device = useDevice();
+
+  const scale = device === 'mobile' ? [1.05, 0.95] : [1.01, 0.99];
+
   const link = props.type === 'placeholder' ? undefined : props.link;
 
   const Inner =
     props.type !== 'placeholder' ? (
-      <Layout $short={props.type === 'image'} hover={1.05} tap={0.95} onClick={props.onClick}>
+      <Layout
+        $short={props.type === 'image'}
+        hover={scale[0]}
+        tap={scale[1]}
+        onClick={props.onClick}
+      >
         {props.type === 'icon' ? (
           <ListIcon type={props.value} color={Color.PRIMARY} />
         ) : (
@@ -104,7 +171,7 @@ const ListItem: React.FC<Props> = props => {
         <Count>{props.count}</Count>
       </Layout>
     ) : (
-      <Layout $short={true} hover={1.05} tap={0.95}>
+      <Layout $short={true} hover={scale[0]} tap={scale[1]}>
         <ListImage />
         <Content>
           <TitlePlaceholder />
