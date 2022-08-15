@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import useDevice from '../../hooks/useDevice';
 import Icon from '../../icons/Icon';
-import { Color, Text } from '../../styles';
+import { Color, MobileQuery, PcQuery, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 
 const Layout = styled.div`
@@ -10,7 +11,7 @@ const Layout = styled.div`
   gap: 4px;
   align-items: center;
   flex-wrap: wrap;
-  height: 48px;
+  height: 44px;
 `;
 
 const Chip = styled(motion(Link))`
@@ -20,13 +21,29 @@ const Chip = styled(motion(Link))`
 `;
 
 const SeperatorIcon = styled(Icon)`
-  width: 20px;
-  height: 20px;
+  ${MobileQuery} {
+    width: 20px;
+    height: 20px;
+  }
+
+  ${PcQuery} {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 const Item = styled(SmoothBox)`
-  color: ${Color.WHITE};
-  ${Text.BODY_2};
+  & > .content {
+    color: ${Color.WHITE};
+
+    ${MobileQuery} {
+      ${Text.BODY_2};
+    }
+
+    ${PcQuery} {
+      ${Text.BODY_1};
+    }
+  }
 `;
 
 interface Props {
@@ -35,17 +52,21 @@ interface Props {
 }
 
 const Breadcrumb: React.FC<Props> = ({ path, shrinked }) => {
+  const device = useDevice();
+
   const motionProps = {
     exit: { opacity: 0, transition: { duration: 0.2 } },
     initial: { opacity: 0 },
     animate: { opacity: 1, transition: { duration: 0.2 } },
   };
 
+  const scale = device === 'mobile' ? [1.1, 0.9] : [1.05, 0.95];
+
   const items = path.map(item => {
     const { title, id } = item;
     return (
       <Chip to={`/category/${id}`} layoutId={id} key={id} {...motionProps}>
-        <Item hover={1.1} tap={0.9}>
+        <Item hover={scale[0]} tap={scale[1]}>
           {title}
         </Item>
         <SeperatorIcon type={'right'} color={Color.GRAY} />
@@ -55,7 +76,7 @@ const Breadcrumb: React.FC<Props> = ({ path, shrinked }) => {
 
   items.unshift(
     <Chip to={`/category/`} layoutId={'root'} key={'root'} {...motionProps}>
-      <Item hover={1.1} tap={0.9}>
+      <Item hover={scale[0]} tap={scale[1]}>
         전체
       </Item>
       <SeperatorIcon type={'right'} color={Color.GRAY} />
