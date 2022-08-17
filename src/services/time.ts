@@ -46,3 +46,9 @@ export function getHumanDuration(number: number): string {
 
   return result;
 }
+
+export function getMonth(date: Date): string {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  return `${year}. ${month}.`;
+}

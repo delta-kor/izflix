@@ -157,6 +157,20 @@ class SpaceshipClass {
     });
   }
 
+  public async getAllCalendars(): Promise<ApiResponse.Calendar.GetAll> {
+    return this.get('/calendar', {
+      key: 'get_all_calendars',
+      expire: expireTime,
+    });
+  }
+
+  public async getOneCalendar(id: string): Promise<ApiResponse.Calendar.GetOne> {
+    return this.get(`/calendar/${id}`, {
+      key: `get_one_calendar::${id}`,
+      expire: expireTime,
+    });
+  }
+
   public getThumbnail(id: string): string {
     return `${this.baseUrl}/thumbnail/${id}`;
   }
