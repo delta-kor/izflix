@@ -14,12 +14,14 @@ const Layout = styled.div`
 
 interface Props {
   timestamps: CalendarTimestamp[];
+  date?: string;
+  setDate(key: string): void;
 }
 
-const CalendarTemplate: React.FC<Props> = ({ timestamps }) => {
+const CalendarTemplate: React.FC<Props> = ({ timestamps, date, setDate }) => {
   return (
     <Layout>
-      <CalendarSection timestamps={timestamps} />
+      <CalendarSection timestamps={timestamps} date={date} setDate={setDate} />
     </Layout>
   );
 };

@@ -54,33 +54,39 @@ const Content = styled.div`
 
 type ItemType = 'deactivated' | 'activated' | 'highlighted' | 'selected';
 
-const Item = styled.div<{ $type: ItemType }>`
-  height: 38px;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 38px;
-  text-align: center;
+const Item = styled(SmoothBox)<{ $type: ItemType }>`
+  & > .content {
+    height: 38px;
 
-  background: ${({ $type }) =>
-    $type === 'deactivated'
-      ? Color.TRANSPARENT
-      : $type === 'activated'
-      ? Color.TRANSPARENT
-      : $type === 'highlighted'
-      ? Color.GRAY
-      : Color.PRIMARY};
-  color: ${({ $type }) => ($type === 'deactivated' ? Color.GRAY : Color.WHITE)};
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 38px;
+    text-align: center;
 
-  border-radius: 4px;
+    color: ${({ $type }) => ($type === 'deactivated' ? Color.GRAY : Color.WHITE)};
+    background: ${({ $type }) =>
+      $type === 'deactivated'
+        ? Color.TRANSPARENT
+        : $type === 'activated'
+        ? Color.TRANSPARENT
+        : $type === 'highlighted'
+        ? Color.GRAY
+        : Color.PRIMARY};
 
-  transform: skew(-0.1deg);
+    border-radius: 4px;
+
+    transition: background 0.2s;
+    transform: skew(-0.1deg);
+  }
 `;
 
 interface Props {
   timestamps: CalendarTimestamp[];
+  date?: string;
+  setDate(key: string): void;
 }
 
-const Calendar: React.FC<Props> = ({ timestamps }) => {
+const Calendar: React.FC<Props> = ({ timestamps, date: selectedDate, setDate }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date('2021-03-01'));
 
   const onHandleIconClick = (type: 'prev' | 'next') => {
@@ -90,7 +96,7 @@ const Calendar: React.FC<Props> = ({ timestamps }) => {
     setCurrentMonth(newMonth);
   };
 
-  const handleIconWrapperMotionProps = { hover: 1.1, tap: 0.9 };
+  const motionProps = { hover: 1.1, tap: 0.9 };
 
   const items = [];
 
@@ -109,7 +115,7 @@ const Calendar: React.FC<Props> = ({ timestamps }) => {
 
   for (let i = 0; i < firstDay; i++) {
     items.push(
-      <Item key={'prev' + i} $type={'deactivated'}>
+      <Item $type={'deactivated'} key={'prev' + i}>
         {daysInPrevMonth - firstDay + i + 1}
       </Item>
     );
@@ -120,16 +126,29 @@ const Calendar: React.FC<Props> = ({ timestamps }) => {
     const timestampKey = date.toISOString().substring(2, 10).replace(/-/g, '');
     const timestamp = timestamps.find(t => t[0] === timestampKey);
 
-    items.push(
-      <Item key={i} $type={timestamp ? 'highlighted' : 'activated'}>
-        {i + 1}
-      </Item>
-    );
+    if (timestamp) {
+      items.push(
+        <Item
+          $type={selectedDate === timestampKey ? 'selected' : 'highlighted'}
+          onClick={() => setDate(timestampKey)}
+          key={timestampKey}
+          {...motionProps}
+        >
+          {i + 1}
+        </Item>
+      );
+    } else {
+      items.push(
+        <Item $type={'activated'} key={timestampKey} {...motionProps}>
+          {i + 1}
+        </Item>
+      );
+    }
   }
 
   for (let i = 0; i < 6 - lastDay; i++) {
     items.push(
-      <Item key={'next' + i} $type={'deactivated'}>
+      <Item $type={'deactivated'} key={'next' + i}>
         {i + 1}
       </Item>
     );
@@ -138,17 +157,11 @@ const Calendar: React.FC<Props> = ({ timestamps }) => {
   return (
     <Layout>
       <Handle>
-        <HandleIconWrapper
-          onClick={() => onHandleIconClick('prev')}
-          {...handleIconWrapperMotionProps}
-        >
+        <HandleIconWrapper onClick={() => onHandleIconClick('prev')} {...motionProps}>
           <HandleIcon type={'left'} color={Color.GRAY} />
         </HandleIconWrapper>
         <HandleTitle>{getMonth(currentMonth)}</HandleTitle>
-        <HandleIconWrapper
-          onClick={() => onHandleIconClick('next')}
-          {...handleIconWrapperMotionProps}
-        >
+        <HandleIconWrapper onClick={() => onHandleIconClick('next')} {...motionProps}>
           <HandleIcon type={'right'} color={Color.GRAY} />
         </HandleIconWrapper>
       </Handle>

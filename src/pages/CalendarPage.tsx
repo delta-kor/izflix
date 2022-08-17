@@ -6,6 +6,7 @@ import Page from './Page';
 
 const CalendarPage: React.FC = () => {
   const [timestamps, setTimestamps] = useState<CalendarTimestamp[]>([]);
+  const [date, setDate] = useState<string | undefined>();
 
   useEffect(() => {
     loadData();
@@ -25,7 +26,7 @@ const CalendarPage: React.FC = () => {
 
   return (
     <Page>
-      <CalendarTemplate timestamps={timestamps} />
+      <CalendarTemplate timestamps={timestamps} date={date} setDate={setDate} />
     </Page>
   );
 };
