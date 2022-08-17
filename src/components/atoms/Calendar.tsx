@@ -122,7 +122,8 @@ const Calendar: React.FC<Props> = ({ timestamps, date: selectedDate, setDate }) 
   }
 
   for (let i = 0; i < daysInCurrentMonth; i++) {
-    const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i + 1);
+    const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i + 2);
+
     const timestampKey = date.toISOString().substring(2, 10).replace(/-/g, '');
     const timestamp = timestamps.find(t => t[0] === timestampKey);
 
