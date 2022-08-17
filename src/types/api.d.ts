@@ -57,6 +57,8 @@ interface IFolder {
   date: number;
 }
 
+type CalendarTimestamp = [string, number];
+
 namespace ApiResponse {
   namespace Recommend {
     interface GetUserRecommends extends ApiResponse {
@@ -104,6 +106,16 @@ namespace ApiResponse {
       type: 'file';
       path: IPath[];
       data: IVideo[];
+    }
+  }
+
+  namespace Calendar {
+    interface GetAll extends ApiResponse {
+      timestamps: CalendarTimestamp[];
+    }
+
+    interface GetOne extends ApiResponse {
+      videos: IVideo[];
     }
   }
 }
