@@ -45,6 +45,35 @@ const HandleTitle = styled.div`
 const Content = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 38px);
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+type ItemType = 'deactivated' | 'activated' | 'highlighted' | 'selected';
+
+const Item = styled.div<{ $type: ItemType }>`
+  height: 38px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 38px;
+  text-align: center;
+
+  background: ${({ $type }) =>
+    $type === 'deactivated'
+      ? Color.TRANSPARENT
+      : $type === 'activated'
+      ? Color.TRANSPARENT
+      : $type === 'highlighted'
+      ? Color.GRAY
+      : Color.PRIMARY};
+  color: ${({ $type }) => ($type === 'deactivated' ? Color.GRAY : Color.WHITE)};
+
+  border-radius: 4px;
+
+  transform: skew(-0.1deg);
 `;
 
 interface Props {
@@ -63,6 +92,49 @@ const Calendar: React.FC<Props> = ({ timestamps }) => {
 
   const handleIconWrapperMotionProps = { hover: 1.1, tap: 0.9 };
 
+  const items = [];
+
+  const daysInCurrentMonth = new Date(
+    currentMonth.getFullYear(),
+    currentMonth.getMonth() + 1,
+    0
+  ).getDate();
+  const daysInPrevMonth = new Date(
+    currentMonth.getFullYear(),
+    currentMonth.getMonth(),
+    0
+  ).getDate();
+  const firstDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1).getDay();
+  const lastDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDay();
+
+  for (let i = 0; i < firstDay; i++) {
+    items.push(
+      <Item key={'prev' + i} $type={'deactivated'}>
+        {daysInPrevMonth - firstDay + i + 1}
+      </Item>
+    );
+  }
+
+  for (let i = 0; i < daysInCurrentMonth; i++) {
+    const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i + 1);
+    const timestampKey = date.toISOString().substring(2, 10).replace(/-/g, '');
+    const timestamp = timestamps.find(t => t[0] === timestampKey);
+
+    items.push(
+      <Item key={i} $type={timestamp ? 'highlighted' : 'activated'}>
+        {i + 1}
+      </Item>
+    );
+  }
+
+  for (let i = 0; i < 6 - lastDay; i++) {
+    items.push(
+      <Item key={'next' + i} $type={'deactivated'}>
+        {i + 1}
+      </Item>
+    );
+  }
+
   return (
     <Layout>
       <Handle>
@@ -80,6 +152,7 @@ const Calendar: React.FC<Props> = ({ timestamps }) => {
           <HandleIcon type={'right'} color={Color.GRAY} />
         </HandleIconWrapper>
       </Handle>
+      <Content>{items}</Content>
     </Layout>
   );
 };
