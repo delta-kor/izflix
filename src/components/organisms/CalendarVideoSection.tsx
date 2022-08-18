@@ -14,7 +14,8 @@ const Layout = styled.div`
 
 const ItemList = styled.div`
   display: grid;
-  min-width: 0;
+  margin: -16px;
+  padding: 16px;
 
   ${MobileQuery} {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -24,7 +25,7 @@ const ItemList = styled.div`
   ${PcQuery} {
     grid-template-columns: repeat(
       auto-fill,
-      minmax(max(280px, calc((100% - (2 * 24px)) / 3)), 1fr)
+      minmax(max(240px, calc((100% - (2 * 24px)) / 3)), 1fr)
     );
     gap: 32px 24px;
   }

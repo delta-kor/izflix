@@ -7,6 +7,9 @@ import SmoothBox from './SmoothBox';
 import SmoothImage from './SmoothImage';
 
 const FullLayout = styled(SmoothBox)`
+  width: 100%;
+  min-width: 0;
+
   & > .content {
     display: flex;
     flex-direction: column;

@@ -2,13 +2,18 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import { getMonth } from '../../services/time';
-import { Color, Text } from '../../styles';
+import { Color, PcQuery, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  ${PcQuery} {
+    position: fixed;
+    width: 326px;
+  }
 `;
 
 const Handle = styled.div`
@@ -23,6 +28,7 @@ const HandleIconWrapper = styled(SmoothBox)`
     position: relative;
     width: 32px;
     height: 32px;
+    cursor: pointer;
   }
 `;
 
@@ -39,6 +45,7 @@ const HandleTitle = styled.div`
   flex-grow: 1;
   color: ${Color.WHITE};
   text-align: center;
+  user-select: none;
   ${Text.HEADLINE_1};
 `;
 
@@ -75,6 +82,9 @@ const Item = styled(SmoothBox)<{ $type: ItemType }>`
 
     border-radius: 4px;
 
+    cursor: ${({ $type }) => ($type !== 'deactivated' ? 'pointer' : 'unset')};
+    user-select: none;
+
     transition: background 0.2s;
     transform: skew(-0.1deg);
   }
@@ -93,6 +103,10 @@ const Calendar: React.FC<Props> = ({ timestamps, date: selectedDate, setDate }) 
     const newMonth = new Date(currentMonth);
     if (type === 'next') newMonth.setMonth(newMonth.getMonth() + 1);
     else newMonth.setMonth(newMonth.getMonth() - 1);
+
+    if (newMonth.getFullYear() > 2021) return false;
+    if (newMonth.getFullYear() < 2018) return false;
+
     setCurrentMonth(newMonth);
   };
 
