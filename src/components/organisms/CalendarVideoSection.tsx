@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import styled from 'styled-components';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import VideoPanel from '../atoms/VideoPanel';
@@ -12,7 +13,7 @@ const Layout = styled.div`
   z-index: 1;
 `;
 
-const ItemList = styled.div`
+const ItemList = styled(motion.div)`
   display: grid;
   margin: -16px;
   padding: 16px;
@@ -37,15 +38,23 @@ interface Props {
 const CalendarVideoSection: React.FC<Props> = ({ videos }) => {
   return (
     <Layout>
-      <ItemList>
-        {videos.length ? (
-          videos.map(data => (
-            <VideoPanel type={'full'} data={data} link={`/${data.id}`} key={data.id} />
-          ))
-        ) : (
-          <Repeat count={12} element={(i: number) => <VideoPanel type={'full'} key={i} />} />
-        )}
-      </ItemList>
+      <AnimatePresence exitBeforeEnter>
+        <ItemList
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          key={videos[0]?.id}
+        >
+          {videos.length ? (
+            videos.map(data => (
+              <VideoPanel type={'full'} data={data} link={`/${data.id}`} key={data.id} />
+            ))
+          ) : (
+            <Repeat count={6} element={(i: number) => <VideoPanel type={'full'} key={i} />} />
+          )}
+        </ItemList>
+      </AnimatePresence>
     </Layout>
   );
 };
