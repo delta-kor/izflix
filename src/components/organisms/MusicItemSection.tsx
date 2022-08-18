@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import useDevice from '../../hooks/useDevice';
 import { getDate } from '../../services/time';
 import { Color, MobileQuery, PcInnerPadding, PcQuery, PcTopMargin } from '../../styles';
 import MusicItem from '../atoms/MusicItem';
@@ -92,6 +93,8 @@ interface Props {
 }
 
 const MusicItemSection: React.FC<Props> = ({ musics }) => {
+  const device = useDevice();
+
   const [selectedMusic, setSelectedMusic] = useState<IMusic | undefined>();
 
   useEffect(() => {
@@ -105,7 +108,7 @@ const MusicItemSection: React.FC<Props> = ({ musics }) => {
   }, [musics]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    device === 'pc' && window.scrollTo(0, 0);
   }, [selectedMusic]);
 
   const createLink = (id: string): string => {

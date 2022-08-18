@@ -20,6 +20,8 @@ const Layout = styled(motion.div)`
 `;
 
 const Content = styled.div`
+  padding: 0 0 2px 0;
+
   ${MobileQuery} {
     min-height: calc(100vh - ${MobileTopMargin}px - 120px);
   }
