@@ -41,7 +41,7 @@ const CalendarPage: React.FC = () => {
 
   return (
     <Page>
-      <CalendarTemplate timestamps={timestamps} date={date} setDate={setDate} />
+      <CalendarTemplate timestamps={timestamps} date={date} videos={videos} setDate={setDate} />
     </Page>
   );
 };
