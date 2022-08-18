@@ -164,9 +164,9 @@ class SpaceshipClass {
     });
   }
 
-  public async getOneCalendar(id: string): Promise<ApiResponse.Calendar.GetOne> {
-    return this.get(`/calendar/${id}`, {
-      key: `get_one_calendar::${id}`,
+  public async getOneCalendar(key: string): Promise<ApiResponse.Calendar.GetOne> {
+    return this.get(`/calendar/${key}`, {
+      key: `get_one_calendar::${key}`,
       expire: expireTime,
     });
   }

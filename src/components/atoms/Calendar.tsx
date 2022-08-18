@@ -87,7 +87,7 @@ interface Props {
 }
 
 const Calendar: React.FC<Props> = ({ timestamps, date: selectedDate, setDate }) => {
-  const [currentMonth, setCurrentMonth] = useState(new Date('2021-03-01'));
+  const [currentMonth, setCurrentMonth] = useState(new Date('2019-04-01'));
 
   const onHandleIconClick = (type: 'prev' | 'next') => {
     const newMonth = new Date(currentMonth);
