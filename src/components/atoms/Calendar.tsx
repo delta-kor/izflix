@@ -52,7 +52,7 @@ const HandleTitle = styled.div`
 const Content = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(6, 38px);
+  grid-template-rows: repeat(auto-fill, 38px);
   gap: 8px;
   align-items: center;
   justify-content: center;

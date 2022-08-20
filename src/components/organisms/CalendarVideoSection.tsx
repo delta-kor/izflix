@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import useDevice from '../../hooks/useDevice';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import VideoPanel from '../atoms/VideoPanel';
 import Repeat from '../tools/Repeat';
@@ -18,8 +19,8 @@ const ItemList = styled.div`
   padding: 16px;
 
   ${MobileQuery} {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 24px 24px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 8px 8px;
   }
 
   ${PcQuery} {
@@ -36,13 +37,15 @@ interface Props {
 }
 
 const CalendarVideoSection: React.FC<Props> = ({ videos, date }) => {
+  const device = useDevice();
+
   return (
     <Layout>
       <ItemList>
         {videos.length ? (
           videos.map(data => (
             <VideoPanel
-              type={'full'}
+              type={device === 'mobile' ? 'horizontal' : 'full'}
               data={data}
               link={`/${data.id}`}
               state={{ key: 'calendar', value: date }}
@@ -50,7 +53,12 @@ const CalendarVideoSection: React.FC<Props> = ({ videos, date }) => {
             />
           ))
         ) : (
-          <Repeat count={6} element={(i: number) => <VideoPanel type={'full'} key={i} />} />
+          <Repeat
+            count={6}
+            element={(i: number) => (
+              <VideoPanel type={device === 'mobile' ? 'horizontal' : 'full'} key={i} />
+            )}
+          />
         )}
       </ItemList>
     </Layout>
