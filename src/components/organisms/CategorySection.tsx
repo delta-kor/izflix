@@ -55,7 +55,8 @@ const CategorySection: React.FC<Props> = ({ setPath, category }) => {
         count={getDuration(data.duration, data.is_4k)}
         type={'image'}
         value={Spaceship.getThumbnail(data.id)}
-        link={`/${data.id}?k=category&v=${category.path.slice(-1)[0]?.id}`}
+        link={`/${data.id}`}
+        state={{ key: 'category', value: category.path.slice(-1)[0]?.id }}
         key={data.id}
       />
     ));

@@ -1,5 +1,6 @@
 import { UIEventHandler, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { VideoPageState } from '../../pages/VideoPage';
 import { getDate } from '../../services/time';
 import { Color } from '../../styles';
 import VideoPanel from '../atoms/VideoPanel';
@@ -51,7 +52,7 @@ const CarouselHandleItem = styled.div<{ $active: boolean }>`
 
 interface Props {
   data: IVideo[];
-  createLink?(id: string): string;
+  createLink?(id: string): [string, VideoPageState];
 }
 
 const VideoCarousel: React.FC<Props> = ({ data, createLink }) => {
@@ -83,7 +84,8 @@ const VideoCarousel: React.FC<Props> = ({ data, createLink }) => {
                 <VideoPanel
                   type={'horizontal'}
                   data={{ id, title: description, description: getDate(date), duration } as IVideo}
-                  link={createLink && createLink(id)}
+                  link={createLink && createLink(id)[0]}
+                  state={createLink && createLink(id)[1]}
                   key={id}
                 />
               ))}

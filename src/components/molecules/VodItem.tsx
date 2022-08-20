@@ -162,8 +162,10 @@ const VodItem: React.FC<Props> = ({ data }) => {
   const description = data && data.description;
   const video = data && data.video;
 
-  const firstVideoLink = video && `/${video[0].id}?k=playlist&v=${data.id}`;
+  const firstVideoLink = video && `/${video[0].id}`;
   const playlistLink = data && `/playlist/${data.id}`;
+
+  const linkState = video && { key: 'playlist', value: data.id };
 
   return (
     <Layout>
@@ -181,7 +183,13 @@ const VodItem: React.FC<Props> = ({ data }) => {
           </DescriptionPlaceholder>
         )}
         <Action>
-          <Button color={Color.DARK_GRAY} icon={'play'} fluid link={firstVideoLink}>
+          <Button
+            color={Color.DARK_GRAY}
+            icon={'play'}
+            fluid
+            link={firstVideoLink}
+            state={linkState}
+          >
             첫화재생
           </Button>
           <Button color={Color.TRANSPARENT} icon={'playlist'} fluid link={playlistLink}>
@@ -196,7 +204,8 @@ const VodItem: React.FC<Props> = ({ data }) => {
               <VideoPanel
                 type={'vertical'}
                 data={item}
-                link={`/${item.id}?k=playlist&v=${data!.id}`}
+                link={`/${item.id}`}
+                state={{ key: 'playlist', value: data!.id }}
                 key={item.id}
               />
             ))

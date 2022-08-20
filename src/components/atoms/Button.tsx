@@ -68,6 +68,7 @@ interface Props {
   fluid?: boolean;
   scale?: number;
   link?: string;
+  state?: any;
   onClick?: MouseEventHandler;
   className?: string;
 }
@@ -77,6 +78,7 @@ const Button: React.FC<Props> = ({
   icon,
   fluid,
   link,
+  state,
   scale,
   onClick,
   className,
@@ -93,7 +95,7 @@ const Button: React.FC<Props> = ({
   );
 
   return link ? (
-    <Wrapper $fluid={fluid!!} to={link} className={className}>
+    <Wrapper $fluid={fluid!!} to={link} state={state} className={className}>
       {Component}
     </Wrapper>
   ) : (

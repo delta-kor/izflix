@@ -43,7 +43,8 @@ const PlaylistItemSection: React.FC<Props> = ({ playlist }) => {
           <VideoPanel
             type={videoPanelType}
             data={data}
-            link={`/${data.id}?k=playlist&v=${playlist!.id}`}
+            link={`/${data.id}`}
+            state={{ key: 'playlist', value: playlist!.id }}
             key={data.id}
           />
         ))

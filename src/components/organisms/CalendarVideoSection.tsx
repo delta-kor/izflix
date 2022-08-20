@@ -32,15 +32,22 @@ const ItemList = styled.div`
 `;
 interface Props {
   videos: IVideo[];
+  date?: string;
 }
 
-const CalendarVideoSection: React.FC<Props> = ({ videos }) => {
+const CalendarVideoSection: React.FC<Props> = ({ videos, date }) => {
   return (
     <Layout>
       <ItemList>
         {videos.length ? (
           videos.map(data => (
-            <VideoPanel type={'full'} data={data} link={`/${data.id}`} key={data.id} />
+            <VideoPanel
+              type={'full'}
+              data={data}
+              link={`/${data.id}`}
+              state={{ key: 'calendar', value: date }}
+              key={data.id}
+            />
           ))
         ) : (
           <Repeat count={6} element={(i: number) => <VideoPanel type={'full'} key={i} />} />

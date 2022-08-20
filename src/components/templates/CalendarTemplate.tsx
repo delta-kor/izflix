@@ -39,7 +39,7 @@ const CalendarTemplate: React.FC<Props> = ({ timestamps, date, setDate, videos }
         <CalendarPlaceholder />
       </Pc>
       <CalendarSection timestamps={timestamps} date={date} setDate={setDate} />
-      <CalendarVideoSection videos={videos} />
+      <CalendarVideoSection videos={videos} date={date} />
     </Layout>
   );
 };

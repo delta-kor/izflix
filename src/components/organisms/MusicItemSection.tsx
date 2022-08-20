@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
+import { VideoPageState } from '../../pages/VideoPage';
 import { getDate } from '../../services/time';
 import { Color, MobileQuery, PcInnerPadding, PcQuery, PcTopMargin } from '../../styles';
 import MusicItem from '../atoms/MusicItem';
@@ -111,8 +112,10 @@ const MusicItemSection: React.FC<Props> = ({ musics }) => {
     device === 'pc' && window.scrollTo(0, 0);
   }, [selectedMusic]);
 
-  const createLink = (id: string): string => {
-    return `/${id}?k=music&v=${selectedMusic!.id}`;
+  const createLink = (id: string): [string, VideoPageState] => {
+    const link = `/${id}`;
+    const state: VideoPageState = { key: 'music', value: selectedMusic!.id };
+    return [link, state];
   };
 
   return (
@@ -161,7 +164,8 @@ const MusicItemSection: React.FC<Props> = ({ musics }) => {
               <VideoPanel
                 type={'full'}
                 data={{ id, title: description, description: getDate(date), duration } as IVideo}
-                link={createLink(id)}
+                link={createLink(id)[0]}
+                state={createLink(id)[1]}
                 key={id}
               />
             ))

@@ -129,6 +129,7 @@ interface PropsBase {
   description: string;
   count: string;
   link?: string;
+  state?: any;
   onClick?: MouseEventHandler;
 }
 
@@ -150,6 +151,7 @@ const ListItem: React.FC<Props> = props => {
   const scale = device === 'mobile' ? [1.05, 0.95] : [1.01, 0.99];
 
   const link = props.type === 'placeholder' ? undefined : props.link;
+  const state = props.type === 'placeholder' ? undefined : props.state;
 
   const Inner =
     props.type !== 'placeholder' ? (
@@ -179,7 +181,14 @@ const ListItem: React.FC<Props> = props => {
         </Content>
       </Layout>
     );
-  return link ? <Link to={link}> {Inner}</Link> : Inner;
+  return link ? (
+    <Link to={link} state={state}>
+      {' '}
+      {Inner}
+    </Link>
+  ) : (
+    Inner
+  );
 };
 
 export default ListItem;

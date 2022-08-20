@@ -49,7 +49,12 @@ const RecommendSection: React.FC<Props> = ({ recommends }) => {
       <ItemList>
         {recommends.length ? (
           recommends.map(data => (
-            <VideoPanel type={'full'} data={data} link={`/${data.id}`} key={data.id} />
+            <VideoPanel
+              type={'full'}
+              data={data}
+              link={`/${data.id}`}
+              key={data.id}
+            />
           ))
         ) : (
           <Repeat

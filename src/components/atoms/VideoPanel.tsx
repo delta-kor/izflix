@@ -128,10 +128,11 @@ interface Props {
   type: 'full' | 'horizontal' | 'vertical';
   data?: IVideo;
   link?: string;
+  state?: any;
   onClick?: MouseEventHandler;
 }
 
-const VideoPanel: React.FC<Props> = ({ type, data, link, onClick }) => {
+const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick }) => {
   const thumbnail = data && Spaceship.getThumbnail(data.id);
   const title = data && data.title;
   const description = data && data.description;
@@ -160,7 +161,13 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, onClick }) => {
       </VerticalLayout>
     );
 
-  return link ? <Link to={link}>{Component}</Link> : Component;
+  return link ? (
+    <Link to={link} state={state}>
+      {Component}
+    </Link>
+  ) : (
+    Component
+  );
 };
 
 export default VideoPanel;
