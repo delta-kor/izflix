@@ -1,4 +1,4 @@
-import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Meta from './components/Meta';
@@ -31,21 +31,19 @@ const App: React.FC = () => {
       <Header />
       <Navigator />
 
-      <AnimateSharedLayout>
-        <AnimatePresence exitBeforeEnter>
-          <Routes location={location} key={PageManager.getPageKey(location.pathname)}>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/vod" element={<VodPage />} />
-            <Route path="/playlist/:id" element={<PlaylistItemPage />} />
-            <Route path="/music" element={<MusicPage />} />
-            <Route path="/music/:id" element={<MusicItemPage />} />
-            <Route path="/category/*" element={<CategoryPage />} />
-            <Route path="/calendar" element={<CalendarPage />} />
-            <Route path="/:id" element={<VideoPage panorama={panorama} />} />
-            <Route path="*" element={<ErrorPage data={'NOT_FOUND'} />} />
-          </Routes>
-        </AnimatePresence>
-      </AnimateSharedLayout>
+      <AnimatePresence exitBeforeEnter>
+        <Routes location={location} key={PageManager.getPageKey(location.pathname)}>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/vod" element={<VodPage />} />
+          <Route path="/playlist/:id" element={<PlaylistItemPage />} />
+          <Route path="/music" element={<MusicPage />} />
+          <Route path="/music/:id" element={<MusicItemPage />} />
+          <Route path="/category/*" element={<CategoryPage />} />
+          <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/:id" element={<VideoPage panorama={panorama} />} />
+          <Route path="*" element={<ErrorPage data={'NOT_FOUND'} />} />
+        </Routes>
+      </AnimatePresence>
     </>
   );
 };

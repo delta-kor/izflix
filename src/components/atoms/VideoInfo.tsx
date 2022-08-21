@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Color, Placeholder, Text } from '../../styles';
+import { Color, HideOverflow, Placeholder, Text } from '../../styles';
 
 const Layout = styled.div`
   display: flex;
@@ -7,7 +7,7 @@ const Layout = styled.div`
   gap: 8px;
 
   min-width: 0;
-  padding: 32px 16px;
+  padding: 16px 32px;
 `;
 
 const Title = styled.div`
@@ -15,6 +15,7 @@ const Title = styled.div`
 
   color: ${Color.WHITE};
   ${Text.HEADLINE_2};
+  ${HideOverflow};
 `;
 
 const Description = styled.div`
@@ -23,6 +24,7 @@ const Description = styled.div`
   color: ${Color.WHITE};
   opacity: 0.7;
   ${Text.SUBTITLE_2};
+  ${HideOverflow};
 `;
 
 const TitlePlaceholder = styled.div`

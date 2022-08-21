@@ -6,6 +6,11 @@ const Layout = styled.div`
   flex-direction: column;
 `;
 
+const VideoPlaceholder = styled.div`
+  width: 100%;
+  aspect-ratio: 16 / 9;
+`;
+
 interface Props {
   videoInfo?: ApiResponse.Video.Info;
 }
@@ -13,6 +18,7 @@ interface Props {
 const VideoTemplate: React.FC<Props> = ({ videoInfo }) => {
   return (
     <Layout>
+      <VideoPlaceholder />
       <VideoInfoSection videoInfo={videoInfo} />
     </Layout>
   );

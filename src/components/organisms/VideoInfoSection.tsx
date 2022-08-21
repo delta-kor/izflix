@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import VideoInfo from '../atoms/VideoInfo';
+import VideoMetadata from '../molecules/VideoMetadata';
 
 const Layout = styled.div`
   display: flex;
@@ -14,6 +15,7 @@ const VideoInfoSection: React.FC<Props> = ({ videoInfo }) => {
   return (
     <Layout>
       <VideoInfo videoInfo={videoInfo} />
+      <VideoMetadata videoInfo={videoInfo} />
     </Layout>
   );
 };

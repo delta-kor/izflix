@@ -69,7 +69,7 @@ const Breadcrumb: React.FC<Props> = ({ path, shrinked }) => {
     return (
       <Chip
         to={`/category/${id}`}
-        layoutId={id + shrinked ? 'shrinked' : 'default'}
+        layoutId={id + (shrinked ? 'shrinked' : 'default')}
         key={id}
         {...motionProps}
       >
@@ -85,7 +85,7 @@ const Breadcrumb: React.FC<Props> = ({ path, shrinked }) => {
     items.unshift(
       <Chip
         to={`/category/`}
-        layoutId={'root' + shrinked ? 's' : 'd'}
+        layoutId={'root' + (shrinked ? 'shrinked' : 'default')}
         key={'root'}
         {...motionProps}
       >
