@@ -15,6 +15,8 @@ function usePanorama(): Panorama {
   const [streamInfo, setStreamInfo] = useState<ApiResponse.Video.Stream | undefined>();
 
   const view = async (id: string, state?: VideoPageState) => {
+    setVideoInfo(undefined);
+
     const response = await Spaceship.getVideoInfo(id);
     if (!response.ok) return response;
 
