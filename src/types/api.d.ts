@@ -29,6 +29,14 @@ interface IVideo {
   is_4k: boolean;
 }
 
+interface IVideoInfo {
+  title: string;
+  description: string;
+  duration: number;
+  date: number;
+  path: IPath[];
+}
+
 interface IAlbum {
   id: string;
   title: string;
@@ -64,6 +72,17 @@ namespace ApiResponse {
     interface GetUserRecommends extends ApiResponse {
       videos: IVideo[];
     }
+  }
+
+  namespace Video {
+    interface StreamVideo extends ApiResponse {
+      url: string;
+      quality: number;
+      qualities: number[];
+      duration: number;
+    }
+
+    interface VideoInfo extends ApiResponse, IVideoInfo {}
   }
 
   namespace Playlist {

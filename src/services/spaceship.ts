@@ -109,6 +109,20 @@ class SpaceshipClass {
     });
   }
 
+  public async streamVideo(id: string, quality: number): Promise<ApiResponse.Video.StreamVideo> {
+    return this.get(`/video/${id}?quality=${quality}`, {
+      key: `stream_video::${id}::${quality}`,
+      expire: expireTime,
+    });
+  }
+
+  public async getVideoInfo(id: string): Promise<ApiResponse.Video.VideoInfo> {
+    return this.get(`/video/${id}/info`, {
+      key: `get_video_info::${id}`,
+      expire: expireTime,
+    });
+  }
+
   public async readPlaylist(id: string): Promise<ApiResponse.Playlist.Read> {
     return this.get(`/playlist/${id}`, {
       key: `read_playlist::${id}`,
