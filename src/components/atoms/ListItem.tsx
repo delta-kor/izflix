@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import Icon, { IconType } from '../../icons/Icon';
-import { Color, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
+import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 import SmoothImage from './SmoothImage';
 
@@ -65,6 +65,7 @@ const Content = styled.div`
 
 const Title = styled.div`
   color: ${Color.WHITE};
+  ${HideOverflow};
 
   ${MobileQuery} {
     ${Text.SUBTITLE_1};
@@ -77,6 +78,7 @@ const Title = styled.div`
 
 const Description = styled.div`
   color: ${Color.GRAY};
+  ${HideOverflow};
 
   ${MobileQuery} {
     ${Text.SUBTITLE_2};

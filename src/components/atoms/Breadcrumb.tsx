@@ -11,7 +11,7 @@ const Layout = styled.div<{ $shrinked: boolean }>`
   gap: 4px;
   align-items: center;
   flex-wrap: wrap;
-  height: ${({ $shrinked }) => ($shrinked ? 'auto' : '44px')};
+  min-height: ${({ $shrinked }) => ($shrinked ? 'auto' : '44px')};
 
   zoom: ${({ $shrinked }) => ($shrinked ? 0.9 : 1)};
 `;
