@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
@@ -6,12 +6,14 @@ import Icon from '../../icons/Icon';
 import { Color, MobileQuery, PcQuery, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 
-const Layout = styled.div`
+const Layout = styled.div<{ $shrinked: boolean }>`
   display: flex;
   gap: 4px;
   align-items: center;
   flex-wrap: wrap;
-  height: 44px;
+  height: ${({ $shrinked }) => ($shrinked ? 'auto' : '44px')};
+
+  zoom: ${({ $shrinked }) => ($shrinked ? 0.9 : 1)};
 `;
 
 const Chip = styled(motion(Link))`
@@ -65,7 +67,12 @@ const Breadcrumb: React.FC<Props> = ({ path, shrinked }) => {
   const items = path.map(item => {
     const { title, id } = item;
     return (
-      <Chip to={`/category/${id}`} layoutId={id} key={id} {...motionProps}>
+      <Chip
+        to={`/category/${id}`}
+        layoutId={id + shrinked ? 'shrinked' : 'default'}
+        key={id}
+        {...motionProps}
+      >
         <Item hover={scale[0]} tap={scale[1]}>
           {title}
         </Item>
@@ -74,18 +81,26 @@ const Breadcrumb: React.FC<Props> = ({ path, shrinked }) => {
     );
   });
 
-  items.unshift(
-    <Chip to={`/category/`} layoutId={'root'} key={'root'} {...motionProps}>
-      <Item hover={scale[0]} tap={scale[1]}>
-        전체
-      </Item>
-      <SeperatorIcon type={'right'} color={Color.GRAY} />
-    </Chip>
-  );
+  !shrinked &&
+    items.unshift(
+      <Chip
+        to={`/category/`}
+        layoutId={'root' + shrinked ? 's' : 'd'}
+        key={'root'}
+        {...motionProps}
+      >
+        <Item hover={scale[0]} tap={scale[1]}>
+          전체
+        </Item>
+        <SeperatorIcon type={'right'} color={Color.GRAY} />
+      </Chip>
+    );
 
   return (
-    <Layout>
-      <AnimatePresence>{items}</AnimatePresence>
+    <Layout $shrinked={!!shrinked}>
+      <AnimateSharedLayout>
+        <AnimatePresence>{items}</AnimatePresence>
+      </AnimateSharedLayout>
     </Layout>
   );
 };
