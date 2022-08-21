@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Meta from './components/Meta';
 import Header from './components/organisms/Header';
 import Navigator from './components/organisms/Navigator';
+import usePanorama from './hooks/usePanorama';
 import CalendarPage from './pages/CalendarPage';
 import CategoryPage from './pages/CategoryPage';
 import ErrorPage from './pages/ErrorPage';
@@ -17,6 +18,7 @@ import PageManager from './services/page-manager';
 
 const App: React.FC = () => {
   const location = useLocation();
+  const panorama = usePanorama();
 
   useEffect(() => {
     window.history.scrollRestoration = 'manual';
@@ -39,7 +41,7 @@ const App: React.FC = () => {
             <Route path="/music/:id" element={<MusicItemPage />} />
             <Route path="/category/*" element={<CategoryPage />} />
             <Route path="/calendar" element={<CalendarPage />} />
-            <Route path="/:id" element={<VideoPage />} />
+            <Route path="/:id" element={<VideoPage panorama={panorama} />} />
             <Route path="*" element={<ErrorPage data={'NOT_FOUND'} />} />
           </Routes>
         </AnimatePresence>

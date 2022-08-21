@@ -109,14 +109,14 @@ class SpaceshipClass {
     });
   }
 
-  public async streamVideo(id: string, quality: number): Promise<ApiResponse.Video.StreamVideo> {
+  public async streamVideo(id: string, quality: number): Promise<ApiResponse.Video.Stream> {
     return this.get(`/video/${id}?quality=${quality}`, {
       key: `stream_video::${id}::${quality}`,
       expire: expireTime,
     });
   }
 
-  public async getVideoInfo(id: string): Promise<ApiResponse.Video.VideoInfo> {
+  public async getVideoInfo(id: string): Promise<ApiResponse.Video.Info> {
     return this.get(`/video/${id}/info`, {
       key: `get_video_info::${id}`,
       expire: expireTime,

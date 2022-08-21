@@ -1,8 +1,8 @@
 import styled from 'styled-components';
+import Button from '../components/atoms/Button';
 import GetConstant, { ConstantKey } from '../constants';
 import Icon from '../icons/Icon';
 import { Color, MobileQuery, PcInnerPadding, PcQuery, Text } from '../styles';
-import Button from '../components/atoms/Button';
 import Page from './Page';
 
 const Layout = styled.div`
@@ -49,11 +49,11 @@ const HomeButton = styled(Button)`
 `;
 
 interface Props {
-  data?: ConstantKey;
+  data: ConstantKey | string;
 }
 
-const ErrorPage: React.FC<Props> = ({ data, children }) => {
-  const message = data ? GetConstant(data) : children;
+const ErrorPage: React.FC<Props> = ({ data }) => {
+  const message = GetConstant(data as ConstantKey) || data;
   return (
     <Page>
       <Layout>

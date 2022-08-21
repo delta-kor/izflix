@@ -75,14 +75,14 @@ namespace ApiResponse {
   }
 
   namespace Video {
-    interface StreamVideo extends ApiResponse {
+    interface Stream extends ApiResponse {
       url: string;
       quality: number;
       qualities: number[];
       duration: number;
     }
 
-    interface VideoInfo extends ApiResponse, IVideoInfo {}
+    interface Info extends ApiResponse, IVideoInfo {}
   }
 
   namespace Playlist {
