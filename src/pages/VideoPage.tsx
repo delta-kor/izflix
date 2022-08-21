@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import VideoTemplate from '../components/templates/VideoTemplate';
 import { Panorama } from '../hooks/usePanorama';
 import ErrorPage from './ErrorPage';
 import Page from './Page';
@@ -27,20 +28,16 @@ const VideoPage: React.FC<Props> = ({ panorama }) => {
   useEffect(() => {
     if (!id || id.length !== 6) return setError('NOT_FOUND');
 
-    panorama.view(id).then(res => !res.ok && setError(res.message || 'NOT_FOUND'));
-  }, []);
+    panorama.view(id, state).then(res => !res.ok && setError(res.message || 'NOT_FOUND'));
 
-  if(error) {
-    return <ErrorPage data={error} />;
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
+  if (error) return <ErrorPage data={error} />;
 
   return (
-    <Page>
-      Video Page
-      <br />
-      ID : {id}
-      <br />
-      {state && state.key} / {state && state.value}
+    <Page noStyle>
+      <VideoTemplate videoInfo={panorama.videoInfo} />
     </Page>
   );
 };

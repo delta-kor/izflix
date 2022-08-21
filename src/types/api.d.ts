@@ -29,14 +29,6 @@ interface IVideo {
   is_4k: boolean;
 }
 
-interface IVideoInfo {
-  title: string;
-  description: string;
-  duration: number;
-  date: number;
-  path: IPath[];
-}
-
 interface IAlbum {
   id: string;
   title: string;
@@ -82,7 +74,13 @@ namespace ApiResponse {
       duration: number;
     }
 
-    interface Info extends ApiResponse, IVideoInfo {}
+    interface Info extends ApiResponse {
+      title: string;
+      description: string;
+      duration: number;
+      date: number;
+      path: IPath[];
+    }
   }
 
   namespace Playlist {
