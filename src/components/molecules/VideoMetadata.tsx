@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
-import { getDate } from '../../services/time';
+import { dateToKey, getDate } from '../../services/time';
 import { Color, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import Breadcrumb from '../atoms/Breadcrumb';
 
@@ -18,7 +19,7 @@ const Layout = styled.div`
   }
 `;
 
-const Date = styled.div`
+const DateArea = styled(Link)`
   display: flex;
   align-items: center;
   gap: 8px;
@@ -66,12 +67,14 @@ const VideoMetadata: React.FC<Props> = ({ videoInfo }) => {
   const date = videoInfo?.date;
   const path = videoInfo?.path;
 
+  const dateKey = date && dateToKey(new Date(date));
+
   return (
     <Layout>
-      <Date>
+      <DateArea to={date ? '/calendar' : ''} state={{ date: dateKey }}>
         <DateIcon type={'calendar'} color={Color.WHITE} />
         {date ? <DateContent>{getDate(date)}</DateContent> : <DatePlaceholder />}
-      </Date>
+      </DateArea>
       {path ? <Breadcrumb path={path} shrinked /> : <CategoryPlaceholder />}
     </Layout>
   );

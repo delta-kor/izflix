@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import CalendarTemplate from '../components/templates/CalendarTemplate';
 import HttpException from '../exceptions/http-exception';
 import Spaceship from '../services/spaceship';
 import Page from './Page';
 
 const CalendarPage: React.FC = () => {
+  const location = useLocation();
+  const state = location.state as { date?: string };
+  console.log(state);
+
   const [timestamps, setTimestamps] = useState<CalendarTimestamp[]>([]);
-  const [date, setDate] = useState<string>('190401');
+  const [date, setDate] = useState<string>(state.date || '190401');
   const [videos, setVideos] = useState<IVideo[]>([]);
 
   useEffect(() => {
