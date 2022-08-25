@@ -100,7 +100,6 @@ const Calendar: React.FC<Props> = ({ timestamps, date: selectedDate, setDate }) 
   const initialDate = selectedDate
     ? `20${selectedDate.slice(0, 2)}-${selectedDate.slice(2, 4)}-01`
     : '2019-04-01';
-  console.log(selectedDate, initialDate);
   const [currentMonth, setCurrentMonth] = useState(new Date(initialDate));
 
   const onHandleIconClick = (type: 'prev' | 'next') => {
