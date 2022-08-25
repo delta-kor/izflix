@@ -1,30 +1,49 @@
 import styled from 'styled-components';
-import { Color, HideOverflow, Placeholder, Text } from '../../styles';
+import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
-
   min-width: 0;
-  padding: 16px 32px;
+
+  ${MobileQuery} {
+    gap: 8px;
+    padding: 16px 32px;
+  }
+
+  ${PcQuery} {
+    gap: 10px;
+    padding: 24px 32px;
+  }
 `;
 
 const Title = styled.div`
   flex-grow: 1;
-
   color: ${Color.WHITE};
-  ${Text.HEADLINE_2};
   ${HideOverflow};
+
+  ${MobileQuery} {
+    ${Text.HEADLINE_2};
+  }
+
+  ${PcQuery} {
+    ${Text.HEADLINE_1};
+  }
 `;
 
 const Description = styled.div`
   flex-grow: 1;
-
   color: ${Color.WHITE};
   opacity: 0.7;
-  ${Text.SUBTITLE_2};
   ${HideOverflow};
+
+  ${MobileQuery} {
+    ${Text.SUBTITLE_2};
+  }
+
+  ${PcQuery} {
+    ${Text.SUBTITLE_1};
+  }
 `;
 
 const TitlePlaceholder = styled.div`

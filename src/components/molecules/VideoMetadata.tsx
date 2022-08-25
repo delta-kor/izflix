@@ -1,14 +1,21 @@
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import { getDate } from '../../services/time';
-import { Color, Placeholder, Text } from '../../styles';
+import { Color, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import Breadcrumb from '../atoms/Breadcrumb';
 
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
   padding: 0 32px;
+
+  ${MobileQuery} {
+    gap: 8px;
+  }
+
+  ${PcQuery} {
+    gap: 12px;
+  }
 `;
 
 const Date = styled.div`
@@ -28,9 +35,15 @@ const DateIcon = styled(Icon)`
 
 const DateContent = styled.div`
   color: ${Color.WHITE};
-  ${Text.BODY_2};
-
   transform: skew(-0.1deg);
+
+  ${MobileQuery} {
+    ${Text.BODY_2};
+  }
+
+  ${PcQuery} {
+    ${Text.BODY_1};
+  }
 `;
 
 const DatePlaceholder = styled.div`

@@ -31,11 +31,10 @@ const VideoPlaceholder = styled.div`
   background: ${Color.DARK_GRAY};
 `;
 
-const ContentPlaceholder = styled.div`
-  width: min(30vw, 300px);
-  height: 800px;
-
-  background: ${Color.DARK_GRAY};
+const ContentArea = styled.div`
+  ${PcQuery} {
+    width: min(30vw, 300px);
+  }
 `;
 
 const VideoAreaPlaceholder = styled.div`
@@ -56,7 +55,7 @@ const VideoTemplate: React.FC<Props> = ({ videoInfo }) => {
         <VideoPlaceholder />
         <VideoInfoSection videoInfo={videoInfo} />
       </VideoArea>
-      <ContentPlaceholder />
+      <ContentArea></ContentArea>
     </Layout>
   );
 };
