@@ -10,7 +10,7 @@ const CalendarPage: React.FC = () => {
   const state = location.state as { date?: string };
 
   const [timestamps, setTimestamps] = useState<CalendarTimestamp[]>([]);
-  const [date, setDate] = useState<string>(state.date || '190401');
+  const [date, setDate] = useState<string>(state?.date || '190401');
   const [videos, setVideos] = useState<IVideo[]>([]);
 
   useEffect(() => {

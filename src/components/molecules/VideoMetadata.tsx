@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import { dateToKey, getDate } from '../../services/time';
 import { Color, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import Breadcrumb from '../atoms/Breadcrumb';
+import SmoothBox from '../atoms/SmoothBox';
 
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   padding: 0 32px;
 
   ${MobileQuery} {
@@ -19,13 +21,17 @@ const Layout = styled.div`
   }
 `;
 
-const DateArea = styled(Link)`
-  display: flex;
-  align-items: center;
-  gap: 8px;
+const DateArea = styled(SmoothBox)`
+  display: inline-block;
 
-  cursor: pointer;
-  user-select: none;
+  & > .content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    cursor: pointer;
+    user-select: none;
+  }
 `;
 
 const DateIcon = styled(Icon)`
@@ -78,14 +84,19 @@ interface Props {
 }
 
 const VideoMetadata: React.FC<Props> = ({ videoInfo }) => {
+  const navigate = useNavigate();
+
   const date = videoInfo?.date;
   const path = videoInfo?.path;
 
-  const dateKey = date && dateToKey(new Date(date));
+  const onDateAreaClick = () => {
+    const dateKey = date && dateToKey(new Date(date));
+    navigate('/calendar', { state: { date: dateKey } });
+  };
 
   return (
     <Layout>
-      <DateArea to={date ? '/calendar' : ''} state={{ date: dateKey }}>
+      <DateArea hover={1.05} tap={0.95} onClick={onDateAreaClick}>
         <DateIcon type={'calendar'} color={Color.WHITE} />
         {date ? <DateContent>{getDate(date)}</DateContent> : <DatePlaceholder />}
       </DateArea>
