@@ -79,6 +79,7 @@ namespace ApiResponse {
     }
 
     interface Info extends ApiResponse {
+      id: string;
       title: string;
       description: string;
       duration: number;

@@ -36,7 +36,7 @@ const ItemList = styled.div<{ $fluid: boolean }>`
         1fr
       )
     );
-    gap: 32px 24px;
+    gap: ${({ $fluid }) => ($fluid ? '24px' : '32px')} 24px;
     padding: 0 ${({ $fluid: $flat }) => ($flat ? 0 : PcInnerPadding)};
   }
 `;

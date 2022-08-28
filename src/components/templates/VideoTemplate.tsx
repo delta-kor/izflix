@@ -1,4 +1,6 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import styled from 'styled-components';
+import { Panorama } from '../../hooks/usePanorama';
 import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import NextVideoList from '../molecules/NextVideoList';
 import RecommendSection from '../organisms/RecommendSection';
@@ -42,13 +44,14 @@ const VideoPlaceholder = styled.div`
 const ContentArea = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
 
   ${MobileQuery} {
+    gap: 16px;
     padding: 0 32px;
   }
 
   ${PcQuery} {
+    gap: 24px;
     width: min(30vw, 300px);
   }
 `;
@@ -58,12 +61,18 @@ const VideoAreaPlaceholder = styled.div`
 `;
 
 interface Props {
-  videoInfo?: ApiResponse.Video.Info;
-  nextVideos: IVideo[];
-  recommends: IVideo[];
+  panorama: Panorama;
 }
 
-const VideoTemplate: React.FC<Props> = ({ videoInfo, nextVideos, recommends }) => {
+const VideoTemplate: React.FC<Props> = ({ panorama }) => {
+  const motionProps = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+  };
+
+  const videoId = panorama.videoInfo?.id || panorama.currentVideoId;
+
   return (
     <Layout>
       <Pc>
@@ -71,11 +80,19 @@ const VideoTemplate: React.FC<Props> = ({ videoInfo, nextVideos, recommends }) =
       </Pc>
       <VideoArea>
         <VideoPlaceholder />
-        <VideoInfoSection videoInfo={videoInfo} />
+        <VideoInfoSection videoInfo={panorama.videoInfo} />
       </VideoArea>
       <ContentArea>
-        <NextVideoList videos={nextVideos} />
-        <RecommendSection recommends={recommends} fluid />
+        <AnimatePresence>
+          {panorama.nextVideos.length > 1 && (
+            <motion.div layoutId={'next videos' + videoId} key={'next videos'} {...motionProps}>
+              <NextVideoList videos={panorama.nextVideos} currentVideoId={videoId} />
+            </motion.div>
+          )}
+          <motion.div layoutId={'recommend' + videoId} key={'recommend'}>
+            <RecommendSection recommends={panorama.recommends} fluid />
+          </motion.div>
+        </AnimatePresence>
       </ContentArea>
     </Layout>
   );

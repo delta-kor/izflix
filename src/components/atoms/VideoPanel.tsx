@@ -34,7 +34,7 @@ const Content = styled.div`
   min-width: 0;
 `;
 
-const Title = styled.div`
+const Title = styled.div<{ $shrink?: boolean }>`
   width: 100%;
   color: ${Color.WHITE};
   ${HideOverflow};
@@ -44,11 +44,11 @@ const Title = styled.div`
   }
 
   ${PcQuery} {
-    ${Text.EX_SUBTITLE_1};
+    ${({ $shrink }) => ($shrink ? Text.SUBTITLE_1 : Text.EX_SUBTITLE_1)};
   }
 `;
 
-const Description = styled.div`
+const Description = styled.div<{ $shrink?: boolean }>`
   width: 100%;
   color: ${Color.WHITE};
   opacity: 0.7;
@@ -59,7 +59,7 @@ const Description = styled.div`
   }
 
   ${PcQuery} {
-    ${Text.SUBTITLE_1};
+    ${({ $shrink }) => ($shrink ? Text.SUBTITLE_2 : Text.SUBTITLE_1)};
   }
 `;
 
@@ -87,12 +87,12 @@ const DescriptionPlaceholder = styled.div`
   }
 `;
 
-const HorizontalLayout = styled(SmoothBox)`
+const HorizontalLayout = styled(SmoothBox)<{ $shrink: boolean }>`
   & > .content {
     display: flex;
     align-items: center;
     gap: 16px;
-    height: 70px;
+    height: ${({ $shrink }) => ($shrink ? '60px' : '70px')};
 
     cursor: pointer;
     user-select: none;
@@ -130,9 +130,10 @@ interface Props {
   link?: string;
   state?: any;
   onClick?: MouseEventHandler;
+  shrink?: boolean;
 }
 
-const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick }) => {
+const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink }) => {
   const thumbnail = data && Spaceship.getThumbnail(data.id);
   const title = data && data.title;
   const description = data && data.description;
@@ -147,11 +148,15 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick }) => {
         </Content>
       </FullLayout>
     ) : type === 'horizontal' ? (
-      <HorizontalLayout hover={1.05} tap={0.95}>
+      <HorizontalLayout $shrink={!!shrink} hover={1.05} tap={0.95}>
         <HorizontalImage src={thumbnail} />
         <Content>
-          {title ? <Title>{title}</Title> : <TitlePlaceholder />}
-          {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
+          {title ? <Title $shrink={!!shrink}>{title}</Title> : <TitlePlaceholder />}
+          {description ? (
+            <Description $shrink={!!shrink}> {description}</Description>
+          ) : (
+            <DescriptionPlaceholder />
+          )}
         </Content>
       </HorizontalLayout>
     ) : (
