@@ -47,13 +47,27 @@ const Description = styled.div`
 `;
 
 const TitlePlaceholder = styled.div`
-  width: 60%;
-  ${Placeholder.HEADLINE_2};
+  ${MobileQuery} {
+    width: 60%;
+    ${Placeholder.HEADLINE_2};
+  }
+
+  ${PcQuery} {
+    width: 420px;
+    ${Placeholder.HEADLINE_1};
+  }
 `;
 
 const DescriptionPlaceholder = styled.div`
-  width: 30%;
-  ${Placeholder.SUBTITLE_2};
+  ${MobileQuery} {
+    width: 30%;
+    ${Placeholder.SUBTITLE_2};
+  }
+
+  ${PcQuery} {
+    width: 320px;
+    ${Placeholder.SUBTITLE_1};
+  }
 `;
 
 interface Props {

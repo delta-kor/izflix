@@ -8,7 +8,6 @@ import Page from './Page';
 const CalendarPage: React.FC = () => {
   const location = useLocation();
   const state = location.state as { date?: string };
-  console.log(state);
 
   const [timestamps, setTimestamps] = useState<CalendarTimestamp[]>([]);
   const [date, setDate] = useState<string>(state.date || '190401');

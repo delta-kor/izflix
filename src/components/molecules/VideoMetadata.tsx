@@ -48,15 +48,29 @@ const DateContent = styled.div`
 `;
 
 const DatePlaceholder = styled.div`
-  width: 90px;
-  ${Placeholder.BODY_2};
+  ${MobileQuery} {
+    width: 90px;
+    ${Placeholder.BODY_2};
+  }
+
+  ${PcQuery} {
+    width: 140px;
+    ${Placeholder.BODY_1};
+  }
 `;
 
 const CategoryPlaceholder = styled.div`
-  width: 80%;
   height: 20px;
   border-radius: 4px;
   background: ${Color.DARK_GRAY};
+
+  ${MobileQuery} {
+    width: 80%;
+  }
+
+  ${PcQuery} {
+    width: 240px;
+  }
 `;
 
 interface Props {
