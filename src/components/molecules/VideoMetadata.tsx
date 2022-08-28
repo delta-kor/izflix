@@ -72,6 +72,7 @@ const CategoryPlaceholder = styled.div`
 
   ${MobileQuery} {
     width: 80%;
+    zoom: 0.9;
   }
 
   ${PcQuery} {
