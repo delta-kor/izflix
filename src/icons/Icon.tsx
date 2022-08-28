@@ -13,6 +13,7 @@ import { ReactComponent as FullscreenSvg } from '../icons/svg/fullscreen.svg';
 import { ReactComponent as HomeSvg } from '../icons/svg/home.svg';
 import { ReactComponent as IzflixSvg } from '../icons/svg/izflix.svg';
 import { ReactComponent as LeftSvg } from '../icons/svg/left.svg';
+import { ReactComponent as LoaderSvg } from '../icons/svg/loader.svg';
 import { ReactComponent as MusicSvg } from '../icons/svg/music.svg';
 import { ReactComponent as PauseSvg } from '../icons/svg/pause.svg';
 import { ReactComponent as PlaySvg } from '../icons/svg/play.svg';
@@ -39,6 +40,7 @@ const IconMap = {
   home: HomeSvg,
   izflix: IzflixSvg,
   left: LeftSvg,
+  loader: LoaderSvg,
   music: MusicSvg,
   pause: PauseSvg,
   play: PlaySvg,

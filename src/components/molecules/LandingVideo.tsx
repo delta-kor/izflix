@@ -18,6 +18,7 @@ import {
   Text,
 } from '../../styles';
 import Button from '../atoms/Button';
+import Loader from '../atoms/Loader';
 
 const Layout = styled.div`
   position: relative;
@@ -148,7 +149,7 @@ const VideoWrapper = styled.div`
   z-index: 0;
 `;
 
-const Video = styled.video`
+const Video = styled.video<{ $active: boolean }>`
   position: fixed;
   top: -10px;
 
@@ -156,6 +157,9 @@ const Video = styled.video`
 
   object-fit: cover;
   object-position: 50% 50%;
+  opacity: ${({ $active }) => ($active ? 1 : 0)};
+
+  transition: opacity 1s ease;
 
   ${MobileQuery} {
     left: 0;
@@ -193,6 +197,28 @@ const Cover = styled.div`
   background: linear-gradient(180deg, rgba(7, 13, 45, 0.2) 0%, rgba(7, 13, 45, 1) 95%);
 `;
 
+const VideoLoader = styled(Loader)<{ $active: boolean }>`
+  position: absolute;
+
+  z-index: 1;
+  opacity: ${({ $active }) => ($active ? 1 : 0)};
+  transition: opacity 0.5s ease;
+
+  ${MobileQuery} {
+    top: 108px;
+    left: calc(50% - 18px);
+    width: 36px;
+    height: 36px;
+  }
+
+  ${PcQuery} {
+    top: 220px;
+    left: calc(50% - 24px);
+    width: 48px;
+    height: 48px;
+  }
+`;
+
 interface Props {
   type: 'performance' | 'vod';
   data: ApiResponse.Playlist.ReadFeatured | null;
@@ -203,6 +229,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
   const device = useDevice();
 
   const [iconLoaded, setIconLoaded] = useState<boolean>(false);
+  const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
 
   const onActionClick = (type: 'play' | 'playlist') => {
     if (!data) return false;
@@ -224,7 +251,18 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
   return (
     <Layout>
       <VideoWrapper>
-        {url && <Video src={url} muted autoPlay loop />}
+        <VideoLoader $active={!videoLoaded} color={Color.DARK_GRAY} />
+        {url && (
+          <Video
+            $active={videoLoaded}
+            onCanPlay={() => setVideoLoaded(true)}
+            src={url}
+            muted
+            autoPlay
+            loop
+            playsInline
+          />
+        )}
         <VideoHider />
         <Cover />
       </VideoWrapper>
