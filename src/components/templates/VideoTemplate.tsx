@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { Panorama } from '../../hooks/usePanorama';
+import { VideoPageState } from '../../pages/VideoPage';
 import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import NextVideoList from '../molecules/NextVideoList';
 import RecommendSection from '../organisms/RecommendSection';
@@ -65,6 +67,9 @@ interface Props {
 }
 
 const VideoTemplate: React.FC<Props> = ({ panorama }) => {
+  const location = useLocation();
+  const state = location.state as VideoPageState | undefined;
+
   const motionProps = {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
@@ -86,7 +91,7 @@ const VideoTemplate: React.FC<Props> = ({ panorama }) => {
         <AnimatePresence>
           {panorama.nextVideos.length > 1 && (
             <motion.div layoutId={'next videos' + videoId} key={'next videos'} {...motionProps}>
-              <NextVideoList videos={panorama.nextVideos} currentVideoId={videoId} />
+              <NextVideoList videos={panorama.nextVideos} currentVideoId={videoId} state={state} />
             </motion.div>
           )}
           <motion.div layoutId={'recommend' + videoId} key={'recommend'}>

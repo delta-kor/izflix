@@ -235,7 +235,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
     if (!data) return false;
 
     if (type === 'play') {
-      navigate(`/${data.video.id}`);
+      navigate(`/${data.video.id}`, { state: { key: 'playlist', value: data.playlist_id } });
     } else {
       navigate(`/playlist/${data.playlist_id}`);
     }

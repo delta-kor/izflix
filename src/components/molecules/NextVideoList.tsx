@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
+import { VideoPageState } from '../../pages/VideoPage';
 import { Color, Ease, HideOverflow, MobileQuery, PcQuery, Text } from '../../styles';
 import VideoPanel from '../atoms/VideoPanel';
 
@@ -85,9 +86,10 @@ const ExpandedItem = styled(motion.div)`
 interface Props {
   videos: IVideo[];
   currentVideoId?: string;
+  state?: VideoPageState;
 }
 
-const NextVideoList: React.FC<Props> = ({ videos, currentVideoId }) => {
+const NextVideoList: React.FC<Props> = ({ videos, currentVideoId, state }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const renderingVideos: IVideo[] = [];
@@ -133,7 +135,13 @@ const NextVideoList: React.FC<Props> = ({ videos, currentVideoId }) => {
       </Header>
       <Content>
         <ConstantContent>
-          <VideoPanel type={'horizontal'} data={renderingVideos[0]} shrink />
+          <VideoPanel
+            type={'horizontal'}
+            data={renderingVideos[0]}
+            link={`/${renderingVideos[0].id}`}
+            state={state}
+            shrink
+          />
         </ConstantContent>
         <ExpandedContent>
           <AnimatePresence initial={false}>
@@ -150,7 +158,13 @@ const NextVideoList: React.FC<Props> = ({ videos, currentVideoId }) => {
               >
                 {renderingVideos.slice(1).map(data => (
                   <ExpandedItem key={data.id}>
-                    <VideoPanel type={'horizontal'} data={data} shrink />
+                    <VideoPanel
+                      type={'horizontal'}
+                      data={data}
+                      link={`/${data.id}`}
+                      state={state}
+                      shrink
+                    />
                   </ExpandedItem>
                 ))}
               </ExpandedArea>
