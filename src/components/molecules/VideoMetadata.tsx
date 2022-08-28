@@ -42,7 +42,7 @@ const DateIcon = styled(Icon)`
 
 const DateContent = styled.div`
   color: ${Color.WHITE};
-  transform: skew(-0.1deg);
+  transform: skew(0.1deg);
 
   ${MobileQuery} {
     ${Text.BODY_2};

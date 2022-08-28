@@ -37,6 +37,7 @@ const SeperatorIcon = styled(Icon)`
 const Item = styled(SmoothBox)`
   & > .content {
     color: ${Color.WHITE};
+    transform: skew(0.1deg);
 
     ${MobileQuery} {
       ${Text.BODY_2};

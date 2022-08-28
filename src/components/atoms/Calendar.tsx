@@ -86,7 +86,7 @@ const Item = styled(SmoothBox)<{ $type: ItemType }>`
     user-select: none;
 
     transition: background 0.2s;
-    transform: skew(-0.1deg);
+    transform: skew(0.1deg);
   }
 `;
 
