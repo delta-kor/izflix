@@ -8,20 +8,25 @@ interface PanoramaMethods {
 
 interface Panorama extends PanoramaMethods {
   videoInfo?: ApiResponse.Video.Info;
+  recommends: IVideo[];
 }
 
 function usePanorama(): Panorama {
   const [videoInfo, setVideoInfo] = useState<ApiResponse.Video.Info | undefined>();
   const [streamInfo, setStreamInfo] = useState<ApiResponse.Video.Stream | undefined>();
   const [videoList, setVideoList] = useState<IVideo[]>([]);
+  const [recommends, setRecommends] = useState<IVideo[]>([]);
 
   const view = async (id: string, state?: VideoPageState) => {
     setVideoInfo(undefined);
+    setRecommends([]);
+    if (!videoList.some(video => video.id === id)) setVideoList([]);
 
     const response = await Spaceship.getVideoInfo(id);
     if (!response.ok) return response;
 
     state && loadState(state);
+    loadRecommend(id);
 
     setVideoInfo(response);
     return response;
@@ -55,9 +60,16 @@ function usePanorama(): Panorama {
     }
   };
 
+  const loadRecommend = async (id: string) => {
+    const response = await Spaceship.getVideoRecommends(id);
+    if (!response.ok) return false;
+
+    setRecommends(response.videos);
+  };
+
   const methods = { view };
 
-  return { videoInfo, ...methods };
+  return { videoInfo, recommends, ...methods };
 }
 
 export type { Panorama };

@@ -109,6 +109,16 @@ class SpaceshipClass {
     });
   }
 
+  public async getVideoRecommends(
+    id: string,
+    count: number = Settings.getOne('VIDEO_RECOMMEND_COUNT')
+  ): Promise<ApiResponse.Recommend.GetVideoRecommends> {
+    return this.get(`/recommend/${id}?count=${count}`, {
+      key: `get_video_recommends::${id}::${count}`,
+      expire: expireTime,
+    });
+  }
+
   public async streamVideo(id: string, quality: number): Promise<ApiResponse.Video.Stream> {
     return this.get(`/video/${id}?quality=${quality}`, {
       key: `stream_video::${id}::${quality}`,

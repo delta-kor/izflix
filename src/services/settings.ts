@@ -11,6 +11,7 @@ class SettingsClass {
   private static loadData(): ISettings {
     const data: ISettings = {
       USER_RECOMMEND_COUNT: 24,
+      VIDEO_RECOMMEND_COUNT: 12,
       $_LIVE_TOKEN: null,
     };
 

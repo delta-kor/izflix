@@ -64,6 +64,10 @@ namespace ApiResponse {
     interface GetUserRecommends extends ApiResponse {
       videos: IVideo[];
     }
+
+    interface GetVideoRecommends extends ApiResponse {
+      videos: IVideo[];
+    }
   }
 
   namespace Video {
