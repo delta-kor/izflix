@@ -8,19 +8,20 @@ interface PanoramaMethods {
 
 interface Panorama extends PanoramaMethods {
   videoInfo?: ApiResponse.Video.Info;
+  nextVideos: IVideo[];
   recommends: IVideo[];
 }
 
 function usePanorama(): Panorama {
   const [videoInfo, setVideoInfo] = useState<ApiResponse.Video.Info | undefined>();
   const [streamInfo, setStreamInfo] = useState<ApiResponse.Video.Stream | undefined>();
-  const [videoList, setVideoList] = useState<IVideo[]>([]);
+  const [nextVideos, setNextVideos] = useState<IVideo[]>([]);
   const [recommends, setRecommends] = useState<IVideo[]>([]);
 
   const view = async (id: string, state?: VideoPageState) => {
     setVideoInfo(undefined);
     setRecommends([]);
-    if (!videoList.some(video => video.id === id)) setVideoList([]);
+    if (!nextVideos.some(video => video.id === id)) setNextVideos([]);
 
     const response = await Spaceship.getVideoInfo(id);
     if (!response.ok) return response;
@@ -38,7 +39,7 @@ function usePanorama(): Panorama {
         const response = await Spaceship.readPlaylist(state.value);
         if (!response.ok) return false;
 
-        setVideoList(response.playlist.video);
+        setNextVideos(response.playlist.video);
         break;
       }
 
@@ -46,7 +47,7 @@ function usePanorama(): Panorama {
         const response = await Spaceship.viewCategory(state.value);
         if (!response.ok) return false;
 
-        if (response.type === 'file') setVideoList(response.data);
+        if (response.type === 'file') setNextVideos(response.data);
         break;
       }
 
@@ -54,7 +55,7 @@ function usePanorama(): Panorama {
         const response = await Spaceship.getOneCalendar(state.value);
         if (!response.ok) return false;
 
-        setVideoList(response.videos);
+        setNextVideos(response.videos);
         break;
       }
     }
@@ -69,7 +70,7 @@ function usePanorama(): Panorama {
 
   const methods = { view };
 
-  return { videoInfo, recommends, ...methods };
+  return { videoInfo, nextVideos, recommends, ...methods };
 }
 
 export type { Panorama };

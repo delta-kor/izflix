@@ -37,7 +37,11 @@ const VideoPage: React.FC<Props> = ({ panorama }) => {
 
   return (
     <Page noStyle>
-      <VideoTemplate videoInfo={panorama.videoInfo} recommends={panorama.recommends} />
+      <VideoTemplate
+        videoInfo={panorama.videoInfo}
+        nextVideos={panorama.nextVideos}
+        recommends={panorama.recommends}
+      />
     </Page>
   );
 };
