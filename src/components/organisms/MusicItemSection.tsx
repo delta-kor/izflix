@@ -42,6 +42,7 @@ const Content = styled.div`
     );
     gap: 32px 24px;
 
+    min-width: 0;
     padding: 16px;
     margin: -16px;
 
