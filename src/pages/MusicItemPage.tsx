@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MusicItemTemplate from '../components/templates/MusicItemTemplate';
-import delay from '../delay';
+import delay from '../services/delay';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
 import Spaceship from '../services/spaceship';

@@ -1,14 +1,11 @@
-import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import CategoryInnerTemplate from '../components/templates/CategoryInnerTemplate';
 import HttpException from '../exceptions/http-exception';
+import Evoke from '../filters/evoke';
 import PathFinder from '../services/path-finder';
 import Spaceship from '../services/spaceship';
 import Page from './Page';
-
-const Layout = styled(motion.div)``;
 
 interface Props {
   setPath(path: IPath[]): void;
@@ -43,7 +40,7 @@ const CategoryInnerPage: React.FC<Props> = ({ setPath }) => {
   };
 
   const loadData = () => {
-    loadCategory(id);
+    new Evoke(loadCategory(id));
   };
 
   return (

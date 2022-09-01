@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import delay from '../delay';
+import delay from '../services/delay';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
 import Spaceship from '../services/spaceship';

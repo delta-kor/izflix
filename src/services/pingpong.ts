@@ -63,7 +63,7 @@ class Pingpong extends EventEmitter {
   }
 
   private static onError(message: string = '오류가 발생했어요\n다시 시도해 주세요'): void {
-    Transmitter.emit('popup', message);
+    Transmitter.emit('popup', {type: 'error', message});
   }
 
   private async onOpen(): Promise<void> {

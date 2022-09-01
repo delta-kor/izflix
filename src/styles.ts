@@ -18,10 +18,8 @@ const Color = {
   GRAY: '#454B6B',
   DARK_GRAY: '#161A36',
   BACKGROUND: '#070D2D',
+  RED: '#E55555',
   TRANSPARENT: 'transparent',
-
-  GRAY_HOVER: '#606895',
-  GRAY_ACTIVE: '#969BBB',
 };
 
 const Text = {

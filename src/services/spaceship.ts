@@ -1,5 +1,5 @@
 import NodeCache from 'node-cache';
-import delay from '../delay';
+import delay from './delay';
 import Settings from './settings';
 
 const expireTime = 60 * 5;

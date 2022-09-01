@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import CalendarTemplate from '../components/templates/CalendarTemplate';
 import HttpException from '../exceptions/http-exception';
+import Evoke from '../filters/evoke';
 import Spaceship from '../services/spaceship';
 import Page from './Page';
 
@@ -40,7 +41,7 @@ const CalendarPage: React.FC = () => {
   };
 
   const loadData = () => {
-    loadAllCalendars();
+    new Evoke(loadAllCalendars());
   };
 
   return (

@@ -1,8 +1,9 @@
-import { Component } from 'react';
+import { Component, MouseEventHandler } from 'react';
 import { ReactComponent as AddSvg } from '../icons/svg/add.svg';
 import { ReactComponent as CalendarSvg } from '../icons/svg/calendar.svg';
 import { ReactComponent as CategorySvg } from '../icons/svg/category.svg';
 import { ReactComponent as ChatSvg } from '../icons/svg/chat.svg';
+import { ReactComponent as CloseSvg } from '../icons/svg/close.svg';
 import { ReactComponent as CompassSvg } from '../icons/svg/compass.svg';
 import { ReactComponent as DownSvg } from '../icons/svg/down.svg';
 import { ReactComponent as DownloadSvg } from '../icons/svg/download.svg';
@@ -30,6 +31,7 @@ const IconMap = {
   calendar: CalendarSvg,
   category: CategorySvg,
   chat: ChatSvg,
+  close: CloseSvg,
   compass: CompassSvg,
   down: DownSvg,
   download: DownloadSvg,
@@ -56,6 +58,7 @@ const IconMap = {
 interface Props {
   type: keyof typeof IconMap;
   color: string;
+  onClick?: MouseEventHandler;
   className?: string;
 }
 
@@ -66,7 +69,7 @@ class Icon extends Component<Props, any> {
 
     const className = this.props.className;
 
-    return <Item className={className} fill={this.props.color} />;
+    return <Item onClick={this.props.onClick} className={className} fill={this.props.color} />;
   }
 }
 

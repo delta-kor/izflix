@@ -58,9 +58,9 @@ const Breadcrumb: React.FC<Props> = ({ path, shrinked }) => {
   const device = useDevice();
 
   const motionProps = {
-    exit: { opacity: 0, transition: { duration: 0.2 } },
     initial: { opacity: 0 },
     animate: { opacity: 1, transition: { duration: 0.2 } },
+    exit: { opacity: 0, transition: { duration: 0.2 } },
   };
 
   const scale = device === 'mobile' ? [1.1, 0.9] : [1.05, 0.95];

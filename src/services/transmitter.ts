@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
 
 interface TransmitterEvents {
-  popup(message: any): void;
+  popup(popup: Popup): void;
 }
 
 declare interface TransmitterClass {

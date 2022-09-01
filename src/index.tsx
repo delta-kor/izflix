@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import delay from './delay';
+import delay from './services/delay';
 import GlobalStyle from './GlobalStyle';
 import reportWebVitals from './reportWebVitals';
 import isCrawler from './services/crawl';

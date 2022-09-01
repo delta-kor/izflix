@@ -1,3 +1,6 @@
+import HttpException from '../exceptions/http-exception';
+import Transmitter from '../services/transmitter';
+
 class Evoke<T> {
   private promise: Promise<T>;
 
@@ -7,7 +10,13 @@ class Evoke<T> {
   }
 
   private listen(): void {
-    this.promise.catch(e => console.error(e));
+    this.promise.catch(e => {
+      console.error(e);
+      if (e instanceof HttpException)
+        Transmitter.emit('popup', { type: 'error', message: e.message });
+      else
+        Transmitter.emit('popup', { type: 'error', message: '서비스 로드 중 오류가 발생했어요' });
+    });
   }
 }
 

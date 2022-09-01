@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Meta from './components/Meta';
 import Header from './components/organisms/Header';
 import Navigator from './components/organisms/Navigator';
+import Popup from './components/organisms/Popup';
 import usePanorama from './hooks/usePanorama';
 import CalendarPage from './pages/CalendarPage';
 import CategoryPage from './pages/CategoryPage';
@@ -27,6 +28,8 @@ const App: React.FC = () => {
   return (
     <>
       <Meta data={{}} />
+
+      <Popup />
 
       <Header />
       <Navigator />
