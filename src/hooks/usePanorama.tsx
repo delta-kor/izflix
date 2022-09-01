@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import HttpException from '../exceptions/http-exception';
+import Evoke from '../filters/evoke';
 import { VideoPageState } from '../pages/VideoPage';
 import Spaceship from '../services/spaceship';
 
@@ -31,8 +33,8 @@ function usePanorama(): Panorama {
 
     setVideoInfo(response);
 
-    state && loadState(state, response);
-    loadRecommend(id);
+    state && new Evoke(loadState(state, response));
+    new Evoke(loadRecommend(id));
 
     return response;
   };
@@ -41,7 +43,7 @@ function usePanorama(): Panorama {
     switch (state.key) {
       case 'playlist': {
         const response = await Spaceship.readPlaylist(state.value);
-        if (!response.ok) return false;
+        if (!response.ok) throw new HttpException(response);
 
         setNextVideos(response.playlist.video);
         break;
@@ -49,7 +51,7 @@ function usePanorama(): Panorama {
 
       case 'category': {
         const response = await Spaceship.viewCategory(state.value);
-        if (!response.ok) return false;
+        if (!response.ok) throw new HttpException(response);
 
         if (response.type === 'file')
           setNextVideos(
@@ -63,7 +65,7 @@ function usePanorama(): Panorama {
 
       case 'calendar': {
         const response = await Spaceship.getOneCalendar(state.value);
-        if (!response.ok) return false;
+        if (!response.ok) throw new HttpException(response);
 
         setNextVideos(response.videos);
         break;
@@ -73,7 +75,7 @@ function usePanorama(): Panorama {
 
   const loadRecommend = async (id: string) => {
     const response = await Spaceship.getVideoRecommends(id);
-    if (!response.ok) return false;
+    if (!response.ok) throw new HttpException(response);
 
     setRecommends(response.videos);
   };
