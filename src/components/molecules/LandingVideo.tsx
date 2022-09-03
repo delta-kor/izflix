@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { useNavigate } from 'react-router-dom';
@@ -225,6 +226,7 @@ interface Props {
 }
 
 const LandingVideo: React.FC<Props> = ({ type, data }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const device = useDevice();
 
@@ -294,7 +296,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
           fluid={device === 'mobile'}
           onClick={() => onActionClick('play')}
         >
-          {type === 'performance' ? '재생하기' : '첫화재생'}
+          {type === 'performance' ? t('landing.play') : t('landing.first')}
         </Button>
         <Button
           color={Color.TRANSPARENT}
@@ -302,7 +304,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
           fluid={device === 'mobile'}
           onClick={() => onActionClick('playlist')}
         >
-          {type === 'performance' ? '인기 동영상' : '재생목록'}
+          {type === 'performance' ? t('landing.featured') : t('landing.playlist')}
         </Button>
       </Action>
     </Layout>

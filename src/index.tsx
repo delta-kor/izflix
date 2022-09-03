@@ -3,10 +3,11 @@ import { render } from 'react-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import delay from './services/delay';
 import GlobalStyle from './GlobalStyle';
 import reportWebVitals from './reportWebVitals';
 import isCrawler from './services/crawl';
+import delay from './services/delay';
+import './services/i18n';
 import Tracker from './services/tracker';
 
 Tracker.initialize();
