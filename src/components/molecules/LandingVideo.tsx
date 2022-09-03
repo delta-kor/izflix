@@ -68,6 +68,7 @@ const VodContent = styled.div`
 const PlaylistIcon = styled(LazyLoadImage)`
   flex-shrink: 0;
   height: 100%;
+  margin: 0 8px 0 0;
 `;
 
 const Title = styled.div`
@@ -296,7 +297,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
           fluid={device === 'mobile'}
           onClick={() => onActionClick('play')}
         >
-          {type === 'performance' ? t('landing.play') : t('landing.first')}
+          {type === 'performance' ? t('landing.play') : t('landing.play_first')}
         </Button>
         <Button
           color={Color.TRANSPARENT}
@@ -304,7 +305,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
           fluid={device === 'mobile'}
           onClick={() => onActionClick('playlist')}
         >
-          {type === 'performance' ? t('landing.featured') : t('landing.playlist')}
+          {type === 'performance' ? t('landing.trending') : t('landing.playlist')}
         </Button>
       </Action>
     </Layout>

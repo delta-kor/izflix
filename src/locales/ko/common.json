@@ -2,7 +2,7 @@
   "landing": {
     "play": "재생하기",
     "play_first": "첫화재생",
-    "featured": "인기 동영상",
+    "trending": "인기 동영상",
     "playlist": "재생목록"
   }
 }

@@ -1,5 +1,6 @@
 import NodeCache from 'node-cache';
 import delay from './delay';
+import i18n from './i18n';
 import Settings from './settings';
 
 const expireTime = 60 * 5;
@@ -28,6 +29,8 @@ class SpaceshipClass {
       options.body = JSON.stringify(payload);
       options.headers = { 'Content-Type': 'application/json' };
     }
+
+    options.headers = { ...options.headers, 'Accept-Language': i18n.language };
 
     let data: T;
 

@@ -1,5 +1,6 @@
 import { AnimateSharedLayout, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
@@ -114,6 +115,7 @@ const IconClickBox = styled(SmoothBox)`
 `;
 
 const Header: React.FC = () => {
+  const { i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -135,7 +137,9 @@ const Header: React.FC = () => {
     if (!isMain) navigate(-1);
   };
 
-  const onSearchIconClick = () => {};
+  const onSearchIconClick = () => {
+    i18n.changeLanguage(i18n.language === 'ko' ? 'en' : 'ko');
+  };
 
   const pageInfo = PageManager.getPageInfo(location.pathname);
 
