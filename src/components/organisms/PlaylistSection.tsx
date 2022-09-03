@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import { HideScrollbar, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
@@ -63,13 +64,14 @@ interface Props {
 }
 
 const PlaylistSection: React.FC<Props> = ({ playlists }) => {
+  const { t } = useTranslation();
   const device = useDevice();
 
   return (
     <Wrapper>
       <Layout>
-        <Title action={'전체보기'} link={'/playlist'} fluid={device === 'pc'}>
-          재생목록
+        <Title action={t('playlist.view_all')} link={'/playlist'} fluid={device === 'pc'}>
+          {t('playlist.playlist')}
         </Title>
         <ItemList>
           {playlists.length ? (

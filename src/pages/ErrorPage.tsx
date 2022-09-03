@@ -54,6 +54,7 @@ interface Props {
 
 const ErrorPage: React.FC<Props> = ({ data }) => {
   const { t } = useTranslation();
+
   const message = t(data);
 
   return (
@@ -62,7 +63,7 @@ const ErrorPage: React.FC<Props> = ({ data }) => {
         <ErrorIcon type={'error'} color={Color.WHITE} />
         <Content>{message}</Content>
         <HomeButton color={Color.DARK_GRAY} icon={'home'} link={'/'}>
-          메인화면
+          {t('error.main')}
         </HomeButton>
       </Layout>
     </Page>

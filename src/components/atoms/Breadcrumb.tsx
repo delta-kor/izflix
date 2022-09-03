@@ -1,4 +1,5 @@
 import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
@@ -55,6 +56,7 @@ interface Props {
 }
 
 const Breadcrumb: React.FC<Props> = ({ path, shrinked }) => {
+  const { t } = useTranslation();
   const device = useDevice();
 
   const motionProps = {
@@ -91,7 +93,7 @@ const Breadcrumb: React.FC<Props> = ({ path, shrinked }) => {
         {...motionProps}
       >
         <Item hover={scale[0]} tap={scale[1]}>
-          전체
+          {t('category.root')}
         </Item>
         <SeperatorIcon type={'right'} color={Color.GRAY} />
       </Chip>

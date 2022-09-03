@@ -1,11 +1,31 @@
 {
-  "landing": {
+  "video": {
     "play": "Play",
     "play_first": "Play",
     "trending": "Trending",
-    "playlist": "Playlist"
+    "recommends": "Recommends",
+    "next": "Next Video"
+  },
+  "playlist": {
+    "playlist": "Playlist",
+    "view_all": "View All",
+    "play": "Play"
+  },
+  "music": {
+    "music": "Music"
+  },
+  "category": {
+    "category": "Category",
+    "root": "Root"
+  },
+  "calendar": {
+    "calendar": "Calendar"
   },
   "error": {
-    "not_found": "Page not found"
+    "not_found": "Page not found",
+    "service": "Error occured while loading service",
+    "server_usage": "Network connection is being delayed due to high server usage\nPlease try again in a few minutes",
+    "network_unstable": "Network connection is not stable",
+    "main": "Main Page"
   }
 }

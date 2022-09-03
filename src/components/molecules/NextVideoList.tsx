@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import { VideoPageState } from '../../pages/VideoPage';
@@ -90,6 +91,8 @@ interface Props {
 }
 
 const NextVideoList: React.FC<Props> = ({ videos, currentVideoId, state }) => {
+  const { t } = useTranslation();
+
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const renderingVideos: IVideo[] = [];
@@ -118,7 +121,7 @@ const NextVideoList: React.FC<Props> = ({ videos, currentVideoId, state }) => {
   return (
     <Layout>
       <Header onClick={() => nextExists && setExpanded(!expanded)}>
-        <Title>다음 동영상</Title>
+        <Title>{t('video.next')}</Title>
         {nextExists && (
           <motion.div
             initial={'down'}

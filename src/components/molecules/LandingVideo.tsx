@@ -297,7 +297,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
           fluid={device === 'mobile'}
           onClick={() => onActionClick('play')}
         >
-          {type === 'performance' ? t('landing.play') : t('landing.play_first')}
+          {type === 'performance' ? t('video.play') : t('video.play_first')}
         </Button>
         <Button
           color={Color.TRANSPARENT}
@@ -305,7 +305,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
           fluid={device === 'mobile'}
           onClick={() => onActionClick('playlist')}
         >
-          {type === 'performance' ? t('landing.trending') : t('landing.playlist')}
+          {type === 'performance' ? t('video.trending') : t('playlist.playlist')}
         </Button>
       </Action>
     </Layout>

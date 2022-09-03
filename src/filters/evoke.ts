@@ -14,8 +14,7 @@ class Evoke<T> {
       console.error(e);
       if (e instanceof HttpException)
         Transmitter.emit('popup', { type: 'error', message: e.message });
-      else
-        Transmitter.emit('popup', { type: 'error', message: '서비스 로드 중 오류가 발생했어요' });
+      else Transmitter.emit('popup', { type: 'error', message: 'error.service' });
     });
   }
 }

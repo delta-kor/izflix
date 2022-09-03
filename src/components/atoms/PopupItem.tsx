@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import { Color, Text } from '../../styles';
@@ -42,13 +43,15 @@ interface Props {
 }
 
 const PopupItem: React.FC<Props> = ({ data, close }) => {
+  const { t } = useTranslation();
+
   const iconType = 'error';
   const color = Color.RED;
 
   return (
     <Layout>
       <HeaderIcon type={iconType} color={color} />
-      <Content>{data.message}</Content>
+      <Content>{t(data.message)}</Content>
       <CloseIcon type={'close'} color={Color.GRAY} onClick={() => close()} />
     </Layout>
   );

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import { Color, MobileQuery, PcQuery } from '../../styles';
@@ -22,6 +23,7 @@ const Layout = styled.div`
 `;
 
 const ShortcutSection: React.FC = () => {
+  const { t } = useTranslation();
   const device = useDevice();
 
   const ButtonElement = device === 'mobile' ? VerticalButton : ListButton;
@@ -29,13 +31,13 @@ const ShortcutSection: React.FC = () => {
   return (
     <Layout>
       <ButtonElement icon={'music'} color={Color.DARK_GRAY} link={'/music'}>
-        노래
+        {t('music.music')}
       </ButtonElement>
       <ButtonElement icon={'category'} color={Color.DARK_GRAY} link={'/category'}>
-        카테고리
+        {t('category.category')}
       </ButtonElement>
       <ButtonElement icon={'calendar'} color={Color.DARK_GRAY} link={'/calendar'}>
-        달력
+        {t('calendar.calendar')}
       </ButtonElement>
     </Layout>
   );

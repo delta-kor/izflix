@@ -1,11 +1,32 @@
 {
-  "landing": {
+  "video": {
     "play": "재생하기",
     "play_first": "첫화재생",
     "trending": "인기 동영상",
-    "playlist": "재생목록"
+    "playlist": "재생목록",
+    "recommends": "추천 동영상",
+    "next": "다음 동영상"
+  },
+  "playlist": {
+    "playlist": "재생목록",
+    "view_all": "전체보기",
+    "play": "재생하기"
+  },
+  "music": {
+    "music": "노래"
+  },
+  "category": {
+    "category": "카테고리",
+    "root": "전체"
+  },
+  "calendar": {
+    "calendar": "달력"
   },
   "error": {
-    "not_found": "페이지를 찾을 수 없어요"
+    "not_found": "페이지를 찾을 수 없어요",
+    "service": "서비스 로드 중 오류가 발생했어요",
+    "server_usage": "서버 사용량이 많아 접속이 지연되고 있습니다\n잠시후 다시 시도해주세요",
+    "network_unstable": "네트워크 연결이 원할하지 않아요",
+    "main": "메인화면"
   }
 }

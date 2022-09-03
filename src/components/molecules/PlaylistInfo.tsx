@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import { Color, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
@@ -95,6 +96,8 @@ interface Props {
 }
 
 const PlaylistInfo: React.FC<Props> = ({ data }) => {
+  const { t } = useTranslation();
+
   const thumbnail = data && Spaceship.getThumbnail(data.thumbnail);
   const title = data && data.title;
   const description = data && data.description;
@@ -115,7 +118,7 @@ const PlaylistInfo: React.FC<Props> = ({ data }) => {
         </DescriptionPlaceholder>
       )}
       <Button color={Color.PRIMARY} icon={'play'} fluid scale={0.95} link={link} state={linkState}>
-        재생하기
+        {t('playlist.play')}
       </Button>
     </Layout>
   );

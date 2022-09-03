@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 import styled from 'styled-components';
@@ -155,6 +156,8 @@ interface Props {
 }
 
 const VodItem: React.FC<Props> = ({ data }) => {
+  const { t } = useTranslation();
+
   const [iconLoaded, setIconLoaded] = useState<boolean>(false);
 
   const playlistIcon = data!! && Spaceship.getThumbnail(data.id);
@@ -190,10 +193,10 @@ const VodItem: React.FC<Props> = ({ data }) => {
             link={firstVideoLink}
             state={linkState}
           >
-            첫화재생
+            {t('video.play_first')}
           </Button>
           <Button color={Color.TRANSPARENT} icon={'playlist'} fluid link={playlistLink}>
-            재생목록
+            {t('playlist.playlist')}
           </Button>
         </Action>
       </Content>

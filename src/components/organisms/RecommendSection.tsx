@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Settings from '../../services/settings';
 import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
@@ -47,9 +48,11 @@ interface Props {
 }
 
 const RecommendSection: React.FC<Props> = ({ recommends, fluid }) => {
+  const { t } = useTranslation();
+
   return (
     <Layout $fluid={!!fluid}>
-      {!fluid && <SectionTitle>추천 동영상</SectionTitle>}
+      {!fluid && <SectionTitle>{t('video.recommends')}</SectionTitle>}
       <ItemList $fluid={!!fluid}>
         {recommends.length ? (
           recommends.map(data => (
