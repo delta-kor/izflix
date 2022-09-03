@@ -44,7 +44,7 @@ const App: React.FC = () => {
           <Route path="/category/*" element={<CategoryPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/:id" element={<VideoPage panorama={panorama} />} />
-          <Route path="*" element={<ErrorPage data={'NOT_FOUND'} />} />
+          <Route path="*" element={<ErrorPage data={'error.not_found'} />} />
         </Routes>
       </AnimatePresence>
     </>

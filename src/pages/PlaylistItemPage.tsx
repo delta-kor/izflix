@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import PlaylistItemTemplate from '../components/templates/PlaylistItemTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
 import Spaceship from '../services/spaceship';
-import PlaylistItemTemplate from '../components/templates/PlaylistItemTemplate';
 import ErrorPage from './ErrorPage';
 import Page from './Page';
 
@@ -17,7 +17,7 @@ const PlaylistItemPage: React.FC = () => {
     loadData();
   }, []);
 
-  if (!id) return <ErrorPage data={'NOT_FOUND'} />;
+  if (!id) return <ErrorPage data={'error.not_found'} />;
 
   const loadPlaylist = async (id: string) => {
     const response = await Spaceship.readPlaylist(id);

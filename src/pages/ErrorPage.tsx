@@ -1,6 +1,6 @@
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Button from '../components/atoms/Button';
-import GetConstant, { ConstantKey } from '../constants';
 import Icon from '../icons/Icon';
 import { Color, MobileQuery, PcInnerPadding, PcQuery, Text } from '../styles';
 import Page from './Page';
@@ -49,11 +49,13 @@ const HomeButton = styled(Button)`
 `;
 
 interface Props {
-  data: ConstantKey | string;
+  data: string;
 }
 
 const ErrorPage: React.FC<Props> = ({ data }) => {
-  const message = GetConstant(data as ConstantKey) || data;
+  const { t } = useTranslation();
+  const message = t(data);
+
   return (
     <Page>
       <Layout>

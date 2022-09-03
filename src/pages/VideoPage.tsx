@@ -26,9 +26,8 @@ const VideoPage: React.FC<Props> = ({ panorama }) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!id || id.length !== 6) return setError('NOT_FOUND');
-
-    panorama.view(id, state).then(res => !res.ok && setError(res.message || 'NOT_FOUND'));
+    if (!id || id.length !== 6) return setError('error.not_found');
+    panorama.view(id, state).then(res => !res.ok && setError(res.message || 'error.not_found'));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);

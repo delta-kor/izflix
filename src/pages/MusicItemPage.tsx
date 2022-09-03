@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MusicItemTemplate from '../components/templates/MusicItemTemplate';
-import delay from '../services/delay';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
+import delay from '../services/delay';
 import Spaceship from '../services/spaceship';
 import ErrorPage from './ErrorPage';
 import Page from './Page';
@@ -18,7 +18,7 @@ const MusicItemPage: React.FC = () => {
     loadData();
   }, []);
 
-  if (!id) return <ErrorPage data={'NOT_FOUND'} />;
+  if (!id) return <ErrorPage data={'error.not_found'} />;
 
   const loadAlbum = async (id: string) => {
     const response = await Spaceship.getOneAlbum(id);

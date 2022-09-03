@@ -4,5 +4,8 @@
     "play_first": "첫화재생",
     "trending": "인기 동영상",
     "playlist": "재생목록"
+  },
+  "error": {
+    "not_found": "페이지를 찾을 수 없어요"
   }
 }

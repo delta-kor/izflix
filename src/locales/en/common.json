@@ -4,5 +4,8 @@
     "play_first": "Play",
     "trending": "Trending",
     "playlist": "Playlist"
+  },
+  "error": {
+    "not_found": "Page not found"
   }
 }
