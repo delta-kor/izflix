@@ -176,6 +176,13 @@ class SpaceshipClass {
     });
   }
 
+  public async getOneMusic(id: string): Promise<ApiResponse.Music.GetOneMusic> {
+    return this.get(`/music/${id}`, {
+      key: `get_one_music::${id}`,
+      expire: expireTime,
+    });
+  }
+
   public async viewCategory(id: string | null): Promise<ApiResponse.Category.View> {
     const target = id ? `${id}` : '';
     return this.get(`/category/${target}`, {

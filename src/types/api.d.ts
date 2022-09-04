@@ -113,6 +113,10 @@ namespace ApiResponse {
       album: IAlbum;
       musics: IMusic[];
     }
+
+    interface GetOneMusic extends ApiResponse {
+      music: IMusic;
+    }
   }
 
   namespace Category {

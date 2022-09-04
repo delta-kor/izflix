@@ -3,6 +3,7 @@ import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
 import { VideoPageState } from '../pages/VideoPage';
 import Spaceship from '../services/spaceship';
+import { getDate } from '../services/time';
 
 interface PanoramaMethods {
   view(id: string, state?: VideoPageState): Promise<ApiResponse.Video.Info>;
@@ -68,6 +69,20 @@ function usePanorama(): Panorama {
         if (!response.ok) throw new HttpException(response);
 
         setNextVideos(response.videos);
+        break;
+      }
+
+      case 'music': {
+        const response = await Spaceship.getOneMusic(state.value);
+        if (!response.ok) throw new HttpException(response);
+
+        setNextVideos(
+          response.music.videos.map(data => ({
+            ...data,
+            title: data.description,
+            description: getDate(data.date),
+          }))
+        );
         break;
       }
     }
