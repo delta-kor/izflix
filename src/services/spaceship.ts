@@ -19,7 +19,9 @@ class SpaceshipClass {
   private token: string | null = null;
   private callbacks: any[] = [];
 
-  constructor(private baseUrl: string) {}
+  constructor(private baseUrl: string) {
+    this.getUserToken();
+  }
 
   private async request<T extends ApiResponse>(
     method: 'GET' | 'POST' | 'DELETE' | 'PUT',
