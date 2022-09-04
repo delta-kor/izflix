@@ -19,9 +19,7 @@ class SpaceshipClass {
   private token: string | null = null;
   private callbacks: any[] = [];
 
-  constructor(private baseUrl: string) {
-    this.loadUserToken();
-  }
+  constructor(private baseUrl: string) {}
 
   private async request<T extends ApiResponse>(
     method: 'GET' | 'POST' | 'DELETE' | 'PUT',
@@ -29,7 +27,7 @@ class SpaceshipClass {
     payload: any = {},
     auth: boolean
   ): Promise<T> {
-    if (process.env.NODE_ENV === 'development') await delay(500);
+    if (process.env.NODE_ENV === 'development') await delay(0);
 
     const options: RequestInit = { method };
 
@@ -73,7 +71,7 @@ class SpaceshipClass {
       const promiseCache = this.cache.get<Promise<T>>(requestOption.key + '::promise');
       if (promiseCache) {
         const resolved = await promiseCache;
-        if (resolved.ok) return resolved;
+        return resolved;
       }
 
       const cache = this.cache.get<T>(requestOption.key);
@@ -84,6 +82,8 @@ class SpaceshipClass {
     if (requestOption) this.cache.set(requestOption.key + '::promise', promise, promiseExpireTime);
 
     const response = await promise;
+    if (requestOption) this.cache.del(requestOption.key + '::promise');
+
     if (response.ok && requestOption) {
       this.cache.set(requestOption.key, response, requestOption.expire);
     }
@@ -100,7 +100,7 @@ class SpaceshipClass {
       const promiseCache = this.cache.get<Promise<T>>(requestOption.key + '::promise');
       if (promiseCache) {
         const resolved = await promiseCache;
-        if (resolved.ok) return resolved;
+        return resolved;
       }
 
       const cache = this.cache.get<T>(requestOption.key);
@@ -111,6 +111,8 @@ class SpaceshipClass {
     if (requestOption) this.cache.set(requestOption.key + '::promise', promise, promiseExpireTime);
 
     const response = await promise;
+    if (requestOption) this.cache.del(requestOption.key + '::promise');
+
     if (response.ok && requestOption) {
       this.cache.set(requestOption.key, response, requestOption.expire);
     }
@@ -136,22 +138,27 @@ class SpaceshipClass {
       if (!data.ok) throw new HttpException(data);
 
       const token = data.token;
-
-      this.token = token;
       Settings.setOne('$_USER_TOKEN', token);
+      this.token = token;
       this.callbacks.forEach(callback => callback(token));
+      this.callbacks = [];
     } catch (e) {
       if (e instanceof HttpException)
         Transmitter.emit('popup', { type: 'error', message: e.message });
       else Transmitter.emit('popup', { type: 'error', message: 'error.failed_login' });
+
+      this.token = null;
       this.callbacks.forEach(callback => callback(null));
+      this.callbacks = [];
     }
   }
 
   private async getUserToken(): Promise<string | null> {
     if (this.token) return this.token;
     return new Promise(resolve => {
+      const initialLength = this.callbacks.length;
       this.callbacks.push(resolve);
+      if (!initialLength) this.loadUserToken();
     });
   }
 
@@ -160,7 +167,7 @@ class SpaceshipClass {
   ): Promise<ApiResponse.Recommend.GetUserRecommends> {
     const payload = { data: [] };
     return this.post(`/recommend?count=${count}`, payload, {
-      key: 'get_user_recommends',
+      key: `get_user_recommends::${count}`,
       expire: expireTime,
     });
   }
