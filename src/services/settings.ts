@@ -12,6 +12,7 @@ class SettingsClass {
     const data: ISettings = {
       USER_RECOMMEND_COUNT: 24,
       VIDEO_RECOMMEND_COUNT: 12,
+      $_USER_TOKEN: null,
       $_LIVE_TOKEN: null,
     };
 

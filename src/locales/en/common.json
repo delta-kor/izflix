@@ -26,6 +26,7 @@
     "service": "Error occured while loading service",
     "server_usage": "Network connection is being delayed due to high server usage\nPlease try again in a few minutes",
     "network_unstable": "Network connection is not stable",
+    "login_failed": "Failed to login",
     "main": "Main Page"
   }
 }

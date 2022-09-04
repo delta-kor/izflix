@@ -6,6 +6,23 @@ interface ApiResponse {
   message?: string;
 }
 
+interface ApiResponseWithToken extends ApiResponse {
+  token: string;
+}
+
+enum Role {
+  USER,
+  STAFF,
+  MASTER,
+}
+
+interface IUser {
+  id: string;
+  nickname: string;
+  role: Role;
+  ip: string[];
+}
+
 interface IPlaylist {
   id: string;
   label: string;
@@ -60,6 +77,13 @@ interface IFolder {
 type CalendarTimestamp = [string, number];
 
 namespace ApiResponse {
+  namespace User {
+    interface Get extends ApiResponse {
+      user: IUser;
+      token: string;
+    }
+  }
+
   namespace Recommend {
     interface GetUserRecommends extends ApiResponse {
       videos: IVideo[];

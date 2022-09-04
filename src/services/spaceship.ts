@@ -1,25 +1,33 @@
 import NodeCache from 'node-cache';
+import HttpException from '../exceptions/http-exception';
 import delay from './delay';
 import i18n from './i18n';
 import Settings from './settings';
+import Transmitter from './transmitter';
 
 const expireTime = 60 * 5;
 const promiseExpireTime = 10;
 
-interface CacheOptions {
+interface RequestOptions {
   key: string;
   expire: number;
+  auth?: boolean;
 }
 
 class SpaceshipClass {
   private cache: NodeCache = new NodeCache();
+  private token: string | null = null;
+  private callbacks: any[] = [];
 
-  constructor(private baseUrl: string) {}
+  constructor(private baseUrl: string) {
+    this.loadUserToken();
+  }
 
   private async request<T extends ApiResponse>(
     method: 'GET' | 'POST' | 'DELETE' | 'PUT',
     path: string,
-    payload: any = {}
+    payload: any = {},
+    auth: boolean
   ): Promise<T> {
     if (process.env.NODE_ENV === 'development') await delay(500);
 
@@ -31,6 +39,11 @@ class SpaceshipClass {
     }
 
     options.headers = { ...options.headers, 'Accept-Language': i18n.resolvedLanguage };
+
+    if (auth) {
+      const token = await this.getUserToken();
+      if (token) options.headers = { ...options.headers, Authorization: `izflix ${token}` };
+    }
 
     let data: T;
 
@@ -52,24 +65,27 @@ class SpaceshipClass {
     return data;
   }
 
-  private async get<T extends ApiResponse>(path: string, cacheOption?: CacheOptions): Promise<T> {
-    if (cacheOption) {
-      const promiseCache = this.cache.get<Promise<T>>(cacheOption.key + '::promise');
+  private async get<T extends ApiResponse>(
+    path: string,
+    requestOption?: RequestOptions
+  ): Promise<T> {
+    if (requestOption) {
+      const promiseCache = this.cache.get<Promise<T>>(requestOption.key + '::promise');
       if (promiseCache) {
         const resolved = await promiseCache;
         if (resolved.ok) return resolved;
       }
 
-      const cache = this.cache.get<T>(cacheOption.key);
+      const cache = this.cache.get<T>(requestOption.key);
       if (cache) return cache;
     }
 
-    const promise = this.request<T>('GET', path);
-    if (cacheOption) this.cache.set(cacheOption.key + '::promise', promise, promiseExpireTime);
+    const promise = this.request<T>('GET', path, requestOption, requestOption?.auth!!);
+    if (requestOption) this.cache.set(requestOption.key + '::promise', promise, promiseExpireTime);
 
     const response = await promise;
-    if (response.ok && cacheOption) {
-      this.cache.set(cacheOption.key, response, cacheOption.expire);
+    if (response.ok && requestOption) {
+      this.cache.set(requestOption.key, response, requestOption.expire);
     }
 
     return response;
@@ -78,28 +94,65 @@ class SpaceshipClass {
   private async post<T extends ApiResponse>(
     path: string,
     data: any,
-    cacheOption?: CacheOptions
+    requestOption?: RequestOptions
   ): Promise<T> {
-    if (cacheOption) {
-      const promiseCache = this.cache.get<Promise<T>>(cacheOption.key + '::promise');
+    if (requestOption) {
+      const promiseCache = this.cache.get<Promise<T>>(requestOption.key + '::promise');
       if (promiseCache) {
         const resolved = await promiseCache;
         if (resolved.ok) return resolved;
       }
 
-      const cache = this.cache.get<T>(cacheOption.key);
+      const cache = this.cache.get<T>(requestOption.key);
       if (cache) return cache;
     }
 
-    const promise = this.request<T>('POST', path, data);
-    if (cacheOption) this.cache.set(cacheOption.key + '::promise', promise, promiseExpireTime);
+    const promise = this.request<T>('POST', path, data, requestOption?.auth!!);
+    if (requestOption) this.cache.set(requestOption.key + '::promise', promise, promiseExpireTime);
 
     const response = await promise;
-    if (response.ok && cacheOption) {
-      this.cache.set(cacheOption.key, response, cacheOption.expire);
+    if (response.ok && requestOption) {
+      this.cache.set(requestOption.key, response, requestOption.expire);
     }
 
     return response;
+  }
+
+  private async loadUserToken(): Promise<void> {
+    try {
+      const localToken = Settings.getOne('$_USER_TOKEN');
+      const url = this.baseUrl + '/user';
+
+      const options: RequestInit = {
+        method: 'GET',
+        headers: {
+          'Accept-Language': i18n.resolvedLanguage,
+          Authorization: `izflix ${localToken}`,
+        },
+      };
+
+      const response = await fetch(url, options);
+      const data: ApiResponse.User.Get = await response.json();
+      if (!data.ok) throw new HttpException(data);
+
+      const token = data.token;
+
+      this.token = token;
+      Settings.setOne('$_USER_TOKEN', token);
+      this.callbacks.forEach(callback => callback(token));
+    } catch (e) {
+      if (e instanceof HttpException)
+        Transmitter.emit('popup', { type: 'error', message: e.message });
+      else Transmitter.emit('popup', { type: 'error', message: 'error.failed_login' });
+      this.callbacks.forEach(callback => callback(null));
+    }
+  }
+
+  private async getUserToken(): Promise<string | null> {
+    if (this.token) return this.token;
+    return new Promise(resolve => {
+      this.callbacks.push(resolve);
+    });
   }
 
   public async getUserRecommends(
