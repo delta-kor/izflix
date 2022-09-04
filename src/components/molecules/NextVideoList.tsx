@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import { VideoPageState } from '../../pages/VideoPage';
-import { Color, Ease, HideOverflow, MobileQuery, PcQuery, Text } from '../../styles';
+import { Color, Ease, EaseReverse, HideOverflow, MobileQuery, PcQuery, Text } from '../../styles';
 import VideoPanel from '../atoms/VideoPanel';
 
 const Layout = styled.div`
@@ -154,10 +154,10 @@ const NextVideoList: React.FC<Props> = ({ videos, currentVideoId, state }) => {
                 animate={'open'}
                 exit={'collapsed'}
                 variants={{
-                  open: { opacity: 1, height: 'auto' },
-                  collapsed: { opacity: 0, height: 0 },
+                  open: { opacity: 1, height: 'auto', transition: { ease: EaseReverse } },
+                  collapsed: { opacity: 0, height: 0, transition: { ease: Ease } },
                 }}
-                transition={{ duration: 0.5, ease: Ease }}
+                transition={{ duration: 0.7 }}
               >
                 {renderingVideos.slice(1).map(data => (
                   <ExpandedItem key={data.id}>

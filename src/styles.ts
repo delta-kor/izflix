@@ -51,6 +51,7 @@ const Placeholder = {
 };
 
 const Ease = [0.04, 0.62, 0.23, 0.98];
+const EaseReverse = [0.76, 0.02, 0.42, 0.8];
 
 const HideOverflow = `overflow:hidden;
 text-overflow:ellipsis;
@@ -75,6 +76,7 @@ export {
   Text,
   Placeholder,
   Ease,
+  EaseReverse,
   HideOverflow,
   PcInnerPadding,
   HideScrollbar,
