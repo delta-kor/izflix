@@ -138,7 +138,7 @@ const Header: React.FC = () => {
   };
 
   const onSearchIconClick = () => {
-    i18n.changeLanguage(i18n.language === 'ko' ? 'en' : 'ko');
+    i18n.changeLanguage(i18n.resolvedLanguage === 'ko' ? 'en' : 'ko');
   };
 
   const pageInfo = PageManager.getPageInfo(location.pathname);

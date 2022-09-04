@@ -30,7 +30,7 @@ class SpaceshipClass {
       options.headers = { 'Content-Type': 'application/json' };
     }
 
-    options.headers = { ...options.headers, 'Accept-Language': i18n.language };
+    options.headers = { ...options.headers, 'Accept-Language': i18n.resolvedLanguage };
 
     let data: T;
 

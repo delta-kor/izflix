@@ -12,6 +12,7 @@ i18n
       en: { common: commonEnglish },
       ko: { common: commonKorean },
     },
+    load: 'languageOnly',
     fallbackLng: 'en',
     defaultNS: 'common',
   });
