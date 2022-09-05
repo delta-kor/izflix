@@ -7,7 +7,6 @@ import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import NextVideoList from '../molecules/NextVideoList';
 import RecommendSection from '../organisms/RecommendSection';
 import VideoInfoSection from '../organisms/VideoInfoSection';
-import { Pc } from '../tools/MediaQuery';
 
 const Layout = styled.div`
   ${MobileQuery} {
@@ -31,7 +30,6 @@ const VideoArea = styled.div`
   }
 
   ${PcQuery} {
-    position: fixed;
     width: calc((100vw - ${PcInnerPadding} * 2) - min(30vw, 300px) - 32px);
   }
 `;
@@ -58,10 +56,6 @@ const ContentArea = styled.div`
   }
 `;
 
-const VideoAreaPlaceholder = styled.div`
-  height: 48px;
-`;
-
 interface Props {
   panorama: Panorama;
 }
@@ -80,9 +74,6 @@ const VideoTemplate: React.FC<Props> = ({ panorama }) => {
 
   return (
     <Layout>
-      <Pc>
-        <VideoAreaPlaceholder />
-      </Pc>
       <VideoArea>
         <VideoPlaceholder />
         <VideoInfoSection videoInfo={panorama.videoInfo} />
