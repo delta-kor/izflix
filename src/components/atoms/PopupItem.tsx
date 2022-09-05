@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
-import { Color, Text } from '../../styles';
+import { Color, PcQuery, Text } from '../../styles';
 
 const Layout = styled.div`
   display: flex;
@@ -13,6 +13,11 @@ const Layout = styled.div`
   border: 2px solid ${Color.GRAY};
   backdrop-filter: blur(4px);
   border-radius: 8px;
+
+  ${PcQuery} {
+    display: inline-flex;
+    min-width: 480px;
+  }
 `;
 
 const HeaderIcon = styled(Icon)`

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import delay from '../../services/delay';
 import Transmitter from '../../services/transmitter';
+import { MobileQuery, PcLeftMargin, PcQuery } from '../../styles';
 import PopupItem from '../atoms/PopupItem';
 
 const Layout = styled.div`
@@ -11,11 +12,19 @@ const Layout = styled.div`
   flex-direction: column;
   gap: 8px;
 
-  left: 16px;
   right: 16px;
-  bottom: 96px;
 
   z-index: 100;
+
+  ${MobileQuery} {
+    left: 16px;
+    bottom: 96px;
+  }
+
+  ${PcQuery} {
+    left: ${PcLeftMargin + 16}px;
+    bottom: 16px;
+  }
 `;
 
 type PopupSet = [string, Popup];
