@@ -16,6 +16,7 @@ import PlaylistItemPage from './pages/PlaylistItemPage';
 import VideoPage from './pages/VideoPage';
 import VodPage from './pages/VodPage';
 import PageManager from './services/page-manager';
+import Spaceship from './services/spaceship';
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -23,6 +24,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     window.history.scrollRestoration = 'manual';
+    Spaceship.load();
   }, []);
 
   return (

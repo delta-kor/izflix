@@ -19,8 +19,10 @@ class SpaceshipClass {
   private token: string | null = null;
   private callbacks: any[] = [];
 
-  constructor(private baseUrl: string) {
-    this.getUserToken();
+  constructor(private baseUrl: string) {}
+
+  public async load(): Promise<void> {
+    this.loadUserToken();
   }
 
   private async request<T extends ApiResponse>(
@@ -135,7 +137,6 @@ class SpaceshipClass {
         },
       };
 
-      console.log('ready to fetch', url, options);
       const response = await fetch(url, options);
       const data: ApiResponse.User.Get = await response.json();
       if (!data.ok) throw new HttpException(data);
@@ -159,13 +160,10 @@ class SpaceshipClass {
   }
 
   private async getUserToken(): Promise<string | null> {
-    console.log('token', this.token);
     if (this.token) return this.token;
     return new Promise(resolve => {
       const initialLength = this.callbacks.length;
       this.callbacks.push(resolve);
-      console.log('callbacks', this.callbacks);
-      console.log('initialLength', initialLength);
       if (!initialLength) this.loadUserToken();
     });
   }
