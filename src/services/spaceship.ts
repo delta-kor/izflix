@@ -147,7 +147,7 @@ class SpaceshipClass {
     } catch (e) {
       if (e instanceof HttpException)
         Transmitter.emit('popup', { type: 'error', message: e.message });
-      else Transmitter.emit('popup', { type: 'error', message: 'error.failed_login' });
+      else Transmitter.emit('popup', { type: 'error', message: 'error.login_failed' });
 
       this.token = null;
       this.callbacks.forEach(callback => callback(null));
@@ -156,10 +156,13 @@ class SpaceshipClass {
   }
 
   private async getUserToken(): Promise<string | null> {
+    console.log('token', this.token);
     if (this.token) return this.token;
     return new Promise(resolve => {
       const initialLength = this.callbacks.length;
       this.callbacks.push(resolve);
+      console.log('callbacks', this.callbacks);
+      console.log('initialLength', initialLength);
       if (!initialLength) this.loadUserToken();
     });
   }
