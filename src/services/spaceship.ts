@@ -126,7 +126,7 @@ class SpaceshipClass {
 
   private async loadUserToken(): Promise<void> {
     try {
-      const localToken = Settings.getOne('$_USER_TOKEN');
+      const localToken = Settings.getOne('$_AUTH_TOKEN');
       const url = this.baseUrl + '/user';
 
       const options: RequestInit = {
@@ -142,7 +142,7 @@ class SpaceshipClass {
       if (!data.ok) throw new HttpException(data);
 
       const token = data.token;
-      Settings.setOne('$_USER_TOKEN', token);
+      Settings.setOne('$_AUTH_TOKEN', token);
       this.token = token;
       this.callbacks.forEach(callback => callback(token));
       this.callbacks = [];
