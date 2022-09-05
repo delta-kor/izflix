@@ -135,6 +135,7 @@ class SpaceshipClass {
         },
       };
 
+      console.log('ready to fetch', url, options);
       const response = await fetch(url, options);
       const data: ApiResponse.User.Get = await response.json();
       if (!data.ok) throw new HttpException(data);
@@ -145,6 +146,8 @@ class SpaceshipClass {
       this.callbacks.forEach(callback => callback(token));
       this.callbacks = [];
     } catch (e) {
+      console.error(e);
+
       if (e instanceof HttpException)
         Transmitter.emit('popup', { type: 'error', message: e.message });
       else Transmitter.emit('popup', { type: 'error', message: 'error.login_failed' });
