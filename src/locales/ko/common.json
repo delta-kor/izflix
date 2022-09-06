@@ -3,9 +3,12 @@
     "play": "재생하기",
     "play_first": "첫화재생",
     "trending": "인기 동영상",
-    "playlist": "재생목록",
     "recommends": "추천 동영상",
-    "next": "다음 동영상"
+    "next": "다음 동영상",
+    "add": "추가",
+    "save": "저장",
+    "like": "좋아요",
+    "share": "공유"
   },
   "playlist": {
     "playlist": "재생목록",

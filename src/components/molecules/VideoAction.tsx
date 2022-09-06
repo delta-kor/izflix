@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import VerticalButton from '../atoms/VerticalButton';
@@ -37,6 +38,8 @@ interface Props {
 }
 
 const VideoAction: React.FC<Props> = ({ action, onLike }) => {
+  const { t } = useTranslation();
+
   const liked = action?.liked;
   const likesTotal = action?.likes_total;
 
@@ -48,17 +51,17 @@ const VideoAction: React.FC<Props> = ({ action, onLike }) => {
           color={Color.TRANSPARENT}
           onClick={onLike}
         >
-          {likesTotal || '좋아요'}
+          {likesTotal || t('video.like')}
         </VerticalButton>
       </WidthProtector>
       <VerticalButton icon={'share'} color={Color.TRANSPARENT}>
-        공유
+        {t('video.share')}
       </VerticalButton>
       <VerticalButton icon={'download'} color={Color.TRANSPARENT}>
-        다운로드
+        {t('video.save')}
       </VerticalButton>
       <VerticalButton icon={'add'} color={Color.TRANSPARENT}>
-        추가
+        {t('video.add')}
       </VerticalButton>
     </Layout>
   );

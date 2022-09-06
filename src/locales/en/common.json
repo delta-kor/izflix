@@ -4,7 +4,11 @@
     "play_first": "Play",
     "trending": "Trending",
     "recommends": "Recommends",
-    "next": "Next Video"
+    "next": "Next Video",
+    "add": "Add",
+    "save": "Save",
+    "like": "Like",
+    "share": "Share"
   },
   "playlist": {
     "playlist": "Playlist",
