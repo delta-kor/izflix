@@ -55,7 +55,6 @@ const VideoPage: React.FC<Props> = ({ panorama }) => {
     setAction(action => ({
       ...action!,
       liked: !action!.liked,
-      likes_total: action!.likes_total + (action!.liked ? -1 : 1),
     }));
 
     const response = await Spaceship.likeVideo(id);
