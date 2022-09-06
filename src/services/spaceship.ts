@@ -58,6 +58,12 @@ class SpaceshipClass {
           message: '서버 사용량이 많아 접속이 지연되고 있습니다\n잠시후 다시 시도해주세요',
         } as T;
 
+      const token = response.headers.get('iz-auth-token');
+      if (token) {
+        Settings.setOne('$_AUTH_TOKEN', token);
+        this.token = token;
+      }
+
       data = await response.json();
       data.status = response.status;
     } catch (e: any) {
@@ -134,7 +140,7 @@ class SpaceshipClass {
       const url = this.baseUrl + '/user';
 
       const options: RequestInit = {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Accept-Language': i18n.resolvedLanguage,
           Authorization: `izflix ${localToken}`,
