@@ -80,7 +80,6 @@ namespace ApiResponse {
   namespace User {
     interface Get extends ApiResponse {
       user: IUser;
-      token: string;
     }
   }
 
@@ -109,6 +108,13 @@ namespace ApiResponse {
       duration: number;
       date: number;
       path: IPath[];
+      liked: boolean;
+      likes_total: number;
+    }
+
+    interface Like extends ApiResponse {
+      liked: boolean;
+      total: number;
     }
   }
 

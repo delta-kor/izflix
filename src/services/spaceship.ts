@@ -22,7 +22,7 @@ class SpaceshipClass {
   constructor(private baseUrl: string) {}
 
   public async load(): Promise<void> {
-    this.loadUserToken();
+    this.getUserToken();
   }
 
   private async request<T extends ApiResponse>(
@@ -71,7 +71,9 @@ class SpaceshipClass {
     path: string,
     requestOption?: RequestOptions
   ): Promise<T> {
-    if (requestOption) {
+    const useCache = requestOption && !requestOption.auth;
+
+    if (useCache) {
       const promiseCache = this.cache.get<Promise<T>>(requestOption.key + '::promise');
       if (promiseCache) {
         const resolved = await promiseCache;
@@ -83,12 +85,12 @@ class SpaceshipClass {
     }
 
     const promise = this.request<T>('GET', path, requestOption, requestOption?.auth!!);
-    if (requestOption) this.cache.set(requestOption.key + '::promise', promise, promiseExpireTime);
+    if (useCache) this.cache.set(requestOption.key + '::promise', promise, promiseExpireTime);
 
     const response = await promise;
-    if (requestOption) this.cache.del(requestOption.key + '::promise');
+    if (useCache) this.cache.del(requestOption.key + '::promise');
 
-    if (response.ok && requestOption) {
+    if (response.ok && useCache) {
       this.cache.set(requestOption.key, response, requestOption.expire);
     }
 
@@ -141,7 +143,9 @@ class SpaceshipClass {
       const data: ApiResponse.User.Get = await response.json();
       if (!data.ok) throw new HttpException(data);
 
-      const token = data.token;
+      const token = response.headers.get('iz-auth-token');
+      if (!token) throw new Error('Token not found');
+
       Settings.setOne('$_AUTH_TOKEN', token);
       this.token = token;
       this.callbacks.forEach(callback => callback(token));
@@ -199,6 +203,15 @@ class SpaceshipClass {
     return this.get(`/video/${id}/info`, {
       key: `get_video_info::${id}`,
       expire: expireTime,
+      auth: true,
+    });
+  }
+
+  public async likeVideo(id: string): Promise<ApiResponse.Video.Like> {
+    return this.get(`/video/${id}/like`, {
+      key: `like_video::${id}`,
+      expire: expireTime,
+      auth: true,
     });
   }
 
