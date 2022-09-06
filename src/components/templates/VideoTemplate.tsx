@@ -5,6 +5,7 @@ import { Panorama } from '../../hooks/usePanorama';
 import { VideoPageState } from '../../pages/VideoPage';
 import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import NextVideoList from '../molecules/NextVideoList';
+import VideoAction from '../molecules/VideoAction';
 import RecommendSection from '../organisms/RecommendSection';
 import VideoInfoSection from '../organisms/VideoInfoSection';
 
@@ -58,9 +59,11 @@ const ContentArea = styled.div`
 
 interface Props {
   panorama: Panorama;
+  action?: ApiResponse.Video.Action;
+  onLike(): void;
 }
 
-const VideoTemplate: React.FC<Props> = ({ panorama }) => {
+const VideoTemplate: React.FC<Props> = ({ panorama, action, onLike }) => {
   const location = useLocation();
   const state = location.state as VideoPageState | undefined;
 
@@ -77,6 +80,7 @@ const VideoTemplate: React.FC<Props> = ({ panorama }) => {
       <VideoArea>
         <VideoPlaceholder />
         <VideoInfoSection videoInfo={panorama.videoInfo} />
+        <VideoAction action={action} onLike={onLike} />
       </VideoArea>
       <ContentArea>
         <AnimatePresence>

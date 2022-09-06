@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import VideoTemplate from '../components/templates/VideoTemplate';
+import HttpException from '../exceptions/http-exception';
+import Evoke from '../filters/evoke';
 import { Panorama } from '../hooks/usePanorama';
+import Spaceship from '../services/spaceship';
 import ErrorPage from './ErrorPage';
 import Page from './Page';
 
@@ -24,19 +27,39 @@ const VideoPage: React.FC<Props> = ({ panorama }) => {
   const id = params.id;
 
   const [error, setError] = useState<string | null>(null);
+  const [action, setAction] = useState<ApiResponse.Video.Action | undefined>(undefined);
 
   useEffect(() => {
     if (!id || id.length !== 6) return setError('error.not_found');
+
     panorama.view(id, state).then(res => !res.ok && setError(res.message || 'error.not_found'));
+    loadData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  if (error) return <ErrorPage data={error} />;
+  const loadData = () => {
+    new Evoke(loadAction(id!));
+  };
 
+  const loadAction = async (id: string) => {
+    const response = await Spaceship.getVideoAction(id);
+    if (!response.ok) throw new HttpException(response);
+
+    setAction(response);
+  };
+
+  const onLike = async (id: string) => {
+    const response = await Spaceship.likeVideo(id);
+    if (!response.ok) throw new HttpException(response);
+
+    setAction(action => ({ ...action!, liked: response.liked, likes_total: response.total }));
+  };
+
+  if (error) return <ErrorPage data={error} />;
   return (
     <Page noStyle>
-      <VideoTemplate panorama={panorama} />
+      <VideoTemplate panorama={panorama} action={action} onLike={() => new Evoke(onLike(id!))} />
     </Page>
   );
 };

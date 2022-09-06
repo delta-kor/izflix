@@ -102,7 +102,9 @@ class SpaceshipClass {
     data: any,
     requestOption?: RequestOptions
   ): Promise<T> {
-    if (requestOption) {
+    const useCache = requestOption && !requestOption.auth;
+
+    if (useCache) {
       const promiseCache = this.cache.get<Promise<T>>(requestOption.key + '::promise');
       if (promiseCache) {
         const resolved = await promiseCache;
@@ -114,12 +116,12 @@ class SpaceshipClass {
     }
 
     const promise = this.request<T>('POST', path, data, requestOption?.auth!!);
-    if (requestOption) this.cache.set(requestOption.key + '::promise', promise, promiseExpireTime);
+    if (useCache) this.cache.set(requestOption.key + '::promise', promise, promiseExpireTime);
 
     const response = await promise;
-    if (requestOption) this.cache.del(requestOption.key + '::promise');
+    if (useCache) this.cache.del(requestOption.key + '::promise');
 
-    if (response.ok && requestOption) {
+    if (response.ok && useCache) {
       this.cache.set(requestOption.key, response, requestOption.expire);
     }
 
