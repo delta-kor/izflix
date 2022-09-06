@@ -11,6 +11,8 @@ import { ReactComponent as DownScreenSvg } from '../icons/svg/downscreen.svg';
 import { ReactComponent as ErrorSvg } from '../icons/svg/error.svg';
 import { ReactComponent as FolderSvg } from '../icons/svg/folder.svg';
 import { ReactComponent as FullscreenSvg } from '../icons/svg/fullscreen.svg';
+import { ReactComponent as HeartBorderSvg } from '../icons/svg/heart_border.svg';
+import { ReactComponent as HeartFilledSvg } from '../icons/svg/heart_filled.svg';
 import { ReactComponent as HomeSvg } from '../icons/svg/home.svg';
 import { ReactComponent as IzflixSvg } from '../icons/svg/izflix.svg';
 import { ReactComponent as LeftSvg } from '../icons/svg/left.svg';
@@ -39,6 +41,8 @@ const IconMap = {
   error: ErrorSvg,
   folder: FolderSvg,
   fullscreen: FullscreenSvg,
+  heart_border: HeartBorderSvg,
+  heart_filled: HeartFilledSvg,
   home: HomeSvg,
   izflix: IzflixSvg,
   left: LeftSvg,

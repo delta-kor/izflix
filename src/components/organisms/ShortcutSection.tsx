@@ -30,13 +30,13 @@ const ShortcutSection: React.FC = () => {
 
   return (
     <Layout>
-      <ButtonElement icon={'music'} color={Color.DARK_GRAY} link={'/music'}>
+      <ButtonElement icon={'music'} color={Color.DARK_GRAY} link={'/music'} fluid>
         {t('music.music')}
       </ButtonElement>
-      <ButtonElement icon={'category'} color={Color.DARK_GRAY} link={'/category'}>
+      <ButtonElement icon={'category'} color={Color.DARK_GRAY} link={'/category'} fluid>
         {t('category.category')}
       </ButtonElement>
-      <ButtonElement icon={'calendar'} color={Color.DARK_GRAY} link={'/calendar'}>
+      <ButtonElement icon={'calendar'} color={Color.DARK_GRAY} link={'/calendar'} fluid>
         {t('calendar.calendar')}
       </ButtonElement>
     </Layout>
