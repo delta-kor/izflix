@@ -55,12 +55,11 @@ const VideoPage: React.FC<Props> = ({ panorama }) => {
     setAction(action => ({
       ...action!,
       liked: !action!.liked,
+      likes_total: action!.liked ? action!.likes_total - 1 : action!.likes_total + 1,
     }));
 
     const response = await Spaceship.likeVideo(id);
     if (!response.ok) throw new HttpException(response);
-
-    setAction(action => ({ ...action!, liked: response.liked, likes_total: response.total }));
   };
 
   if (error) return <ErrorPage data={error} />;
