@@ -28,7 +28,7 @@ class SpaceshipClass {
   private async request<T extends ApiResponse>(
     method: 'GET' | 'POST' | 'DELETE' | 'PUT',
     path: string,
-    payload: any = {},
+    payload: any,
     auth: boolean
   ): Promise<T> {
     if (process.env.NODE_ENV === 'development') await delay(0);
@@ -203,12 +203,19 @@ class SpaceshipClass {
     return this.get(`/video/${id}/info`, {
       key: `get_video_info::${id}`,
       expire: expireTime,
+    });
+  }
+
+  public async getVideoAction(id: string): Promise<ApiResponse.Video.Action> {
+    return this.get(`/video/${id}/action`, {
+      key: `get_video_action::${id}`,
+      expire: expireTime,
       auth: true,
     });
   }
 
   public async likeVideo(id: string): Promise<ApiResponse.Video.Like> {
-    return this.get(`/video/${id}/like`, {
+    return this.post(`/video/${id}/like`, null, {
       key: `like_video::${id}`,
       expire: expireTime,
       auth: true,

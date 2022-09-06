@@ -108,6 +108,9 @@ namespace ApiResponse {
       duration: number;
       date: number;
       path: IPath[];
+    }
+
+    interface Action extends ApiResponse {
       liked: boolean;
       likes_total: number;
     }
