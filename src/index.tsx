@@ -1,9 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import ReactModal from 'react-modal';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import GlobalStyle from './GlobalStyle';
+import ModalsProvider from './providers/ModalProvider';
 import reportWebVitals from './reportWebVitals';
 import isCrawler from './services/crawl';
 import delay from './services/delay';
@@ -12,18 +14,21 @@ import Tracker from './services/tracker';
 
 Tracker.initialize();
 
+const rootElement = document.getElementById('root')!;
+ReactModal.setAppElement(rootElement);
+
 const app = (
   <React.StrictMode>
     <GlobalStyle />
-    <BrowserRouter>
-      <HelmetProvider>
-        <App />
-      </HelmetProvider>
-    </BrowserRouter>
+    <ModalsProvider>
+      <BrowserRouter>
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
+      </BrowserRouter>
+    </ModalsProvider>
   </React.StrictMode>
 );
-
-const rootElement = document.getElementById('root')!;
 
 const minimumDelay = 0;
 const renderStartTime = Date.now();

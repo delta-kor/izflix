@@ -2,6 +2,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Meta from './components/Meta';
+import Modals from './components/modals/Modals';
 import Header from './components/organisms/Header';
 import Navigator from './components/organisms/Navigator';
 import Popup from './components/organisms/Popup';
@@ -33,6 +34,7 @@ const App: React.FC = () => {
       <Meta data={{}} />
 
       <Popup />
+      <Modals />
 
       <Header />
       <Navigator />

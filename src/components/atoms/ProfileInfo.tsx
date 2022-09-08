@@ -1,4 +1,6 @@
+import { MouseEventHandler } from 'react';
 import styled from 'styled-components';
+import useModal from '../../hooks/useModal';
 import Icon from '../../icons/Icon';
 import { userIdToTag } from '../../services/user';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
@@ -119,6 +121,10 @@ interface Props {
 }
 
 const ProfileInfo: React.FC<Props> = ({ data }) => {
+  const modal = useModal();
+
+  const onEditClick: MouseEventHandler = () => {};
+
   const userId = data?.id;
   const nickname = data?.nickname;
 
@@ -131,7 +137,7 @@ const ProfileInfo: React.FC<Props> = ({ data }) => {
           <UserIdArrowIcon type={'right'} color={Color.GRAY} />
         </UserIdContent>
       </Content>
-      <EditIconWrapper hover={1.1} tap={0.9}>
+      <EditIconWrapper hover={1.1} tap={0.9} onClick={onEditClick}>
         <EditIcon type={'edit'} color={Color.GRAY} />
       </EditIconWrapper>
     </Layout>
