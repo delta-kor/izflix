@@ -144,6 +144,7 @@ const ProfileInfo: React.FC<Props> = ({ user }) => {
   };
 
   const onNicknameUpdate = (nickname: string) => {
+    if (nickname === user.user?.nickname) return true;
     new Evoke(user.updateNickname(nickname)).then(() => {
       Transmitter.emit('popup', {
         type: 'success',

@@ -64,10 +64,15 @@ const InputModal: React.FC<Props> = ({
       <Layout>
         <Content>{content}</Content>
         <Input
+          type={'text'}
           value={inputValue}
           placeholder={placeholder}
           maxLength={maxLength}
           onChange={onChange}
+          onKeyDown={e => {
+            if (e.key === 'Enter') handleSubmit();
+          }}
+          autoFocus
         />
         <ModalAction onSubmit={handleSubmit} onCancel={onCancel} submit cancel />
       </Layout>
