@@ -23,13 +23,8 @@ const WidthProtector = styled.div`
   display: flex;
   justify-content: center;
 
-  ${MobileQuery} {
-    min-width: 72px;
-  }
-
-  ${PcQuery} {
-    min-width: 76px;
-  }
+  min-width: 76px;
+  margin: 0 -7px;
 `;
 
 interface Props {
