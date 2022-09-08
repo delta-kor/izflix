@@ -32,7 +32,7 @@ class SpaceshipClass {
     payload: any,
     requestOption?: RequestOptions
   ): Promise<T> {
-    if (process.env.NODE_ENV === 'development') await delay(0);
+    if (process.env.NODE_ENV === 'development') await delay(500);
 
     const options: RequestInit = { method };
 

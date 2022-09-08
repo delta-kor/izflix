@@ -8,6 +8,7 @@ import { ReactComponent as CompassSvg } from '../icons/svg/compass.svg';
 import { ReactComponent as DownSvg } from '../icons/svg/down.svg';
 import { ReactComponent as DownloadSvg } from '../icons/svg/download.svg';
 import { ReactComponent as DownScreenSvg } from '../icons/svg/downscreen.svg';
+import { ReactComponent as EditSvg } from '../icons/svg/edit.svg';
 import { ReactComponent as ErrorSvg } from '../icons/svg/error.svg';
 import { ReactComponent as FolderSvg } from '../icons/svg/folder.svg';
 import { ReactComponent as FullscreenSvg } from '../icons/svg/fullscreen.svg';
@@ -15,6 +16,7 @@ import { ReactComponent as HeartBorderSvg } from '../icons/svg/heart_border.svg'
 import { ReactComponent as HeartFilledSvg } from '../icons/svg/heart_filled.svg';
 import { ReactComponent as HomeSvg } from '../icons/svg/home.svg';
 import { ReactComponent as IzflixSvg } from '../icons/svg/izflix.svg';
+import { ReactComponent as LanguageSvg } from '../icons/svg/language.svg';
 import { ReactComponent as LeftSvg } from '../icons/svg/left.svg';
 import { ReactComponent as LoaderSvg } from '../icons/svg/loader.svg';
 import { ReactComponent as MusicSvg } from '../icons/svg/music.svg';
@@ -38,6 +40,7 @@ const IconMap = {
   down: DownSvg,
   download: DownloadSvg,
   downscreen: DownScreenSvg,
+  edit: EditSvg,
   error: ErrorSvg,
   folder: FolderSvg,
   fullscreen: FullscreenSvg,
@@ -45,6 +48,7 @@ const IconMap = {
   heart_filled: HeartFilledSvg,
   home: HomeSvg,
   izflix: IzflixSvg,
+  language: LanguageSvg,
   left: LeftSvg,
   loader: LoaderSvg,
   music: MusicSvg,

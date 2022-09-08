@@ -6,7 +6,7 @@ import Spaceship from '../services/spaceship';
 import Page from './Page';
 
 const ProfilePage: React.FC = () => {
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<IUser | undefined>();
 
   useEffect(() => {
     loadData();
@@ -25,7 +25,7 @@ const ProfilePage: React.FC = () => {
 
   return (
     <Page>
-      <ProfileTemplate />
+      <ProfileTemplate user={user} />
     </Page>
   );
 };
