@@ -1,7 +1,10 @@
 import { MouseEventHandler } from 'react';
 import styled from 'styled-components';
+import Evoke from '../../filters/evoke';
 import useModal from '../../hooks/useModal';
+import { User } from '../../hooks/useUser';
 import Icon from '../../icons/Icon';
+import Transmitter from '../../services/transmitter';
 import { userIdToTag } from '../../services/user';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import InputModal from '../modals/InputModal';
@@ -118,25 +121,36 @@ const UserIdPlaceholder = styled.div`
 `;
 
 interface Props {
-  data?: IUser;
+  user: User;
 }
 
-const ProfileInfo: React.FC<Props> = ({ data }) => {
+const ProfileInfo: React.FC<Props> = ({ user }) => {
   const modal = useModal();
 
+  const userId = user.user?.id;
+  const nickname = user.user?.nickname;
+
   const onEditClick: MouseEventHandler = () => {
+    if (!user.user) return false;
     modal.openModal(InputModal, {
       content: '닉네임을 입력해주세요',
-      value: data?.nickname,
+      value: nickname,
       placeholder: '닉네임을 입력해주세요',
+      maxLength: 12,
       onSubmit(data) {
-        console.log(data);
+        onNicknameUpdate(data.nickname);
       },
     });
   };
 
-  const userId = data?.id;
-  const nickname = data?.nickname;
+  const onNicknameUpdate = (nickname: string) => {
+    new Evoke(user.updateNickname(nickname)).then(() => {
+      Transmitter.emit('popup', {
+        type: 'success',
+        message: '닉네임을 수정하였습니다',
+      });
+    });
+  };
 
   return (
     <Layout>

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { User } from '../../hooks/useUser';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import ProfileSection from '../organisms/ProfileSection';
 
@@ -14,7 +15,7 @@ const Layout = styled.div`
 `;
 
 interface Props {
-  user?: IUser;
+  user: User;
 }
 
 const ProfileTemplate: React.FC<Props> = ({ user }) => {

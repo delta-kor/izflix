@@ -9,6 +9,7 @@ const expireTime = 60 * 5;
 const promiseExpireTime = 10;
 
 interface RequestOptions {
+  method?: string;
   key: string;
   expire: number;
   auth?: boolean;
@@ -27,7 +28,7 @@ class SpaceshipClass {
   }
 
   private async request<T extends ApiResponse>(
-    method: 'GET' | 'POST' | 'DELETE' | 'PUT',
+    method: string,
     path: string,
     payload: any,
     requestOption?: RequestOptions
@@ -111,6 +112,7 @@ class SpaceshipClass {
     data: any,
     requestOption?: RequestOptions
   ): Promise<T> {
+    const method = requestOption?.method || 'POST';
     const useCache = requestOption && !requestOption.auth;
 
     if (useCache) {
@@ -124,7 +126,7 @@ class SpaceshipClass {
       if (cache) return cache;
     }
 
-    const promise = this.request<T>('POST', path, data, requestOption);
+    const promise = this.request<T>(method, path, data, requestOption);
     if (useCache) this.cache.set(requestOption.key + '::promise', promise, promiseExpireTime);
 
     const response = await promise;
@@ -186,6 +188,15 @@ class SpaceshipClass {
   public async getUser(): Promise<ApiResponse.User.Get> {
     return this.post('/user', null, {
       key: 'get_user',
+      expire: expireTime,
+      auth: true,
+    });
+  }
+
+  public async updateUser(data: Partial<IUser>): Promise<ApiResponse.User.Get> {
+    return this.post('/user', data, {
+      method: 'PUT',
+      key: 'update_user',
       expire: expireTime,
       auth: true,
     });

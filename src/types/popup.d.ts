@@ -7,4 +7,8 @@ interface ErrorPopup extends PopupBase {
   type: 'error';
 }
 
-type Popup = ErrorPopup;
+interface SuccessPopup extends PopupBase {
+  type: 'success';
+}
+
+type Popup = ErrorPopup | SuccessPopup;

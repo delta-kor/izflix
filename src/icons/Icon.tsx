@@ -3,6 +3,7 @@ import { ReactComponent as AddSvg } from '../icons/svg/add.svg';
 import { ReactComponent as CalendarSvg } from '../icons/svg/calendar.svg';
 import { ReactComponent as CategorySvg } from '../icons/svg/category.svg';
 import { ReactComponent as ChatSvg } from '../icons/svg/chat.svg';
+import { ReactComponent as CheckSvg } from '../icons/svg/check.svg';
 import { ReactComponent as CloseSvg } from '../icons/svg/close.svg';
 import { ReactComponent as CompassSvg } from '../icons/svg/compass.svg';
 import { ReactComponent as DownSvg } from '../icons/svg/down.svg';
@@ -35,6 +36,7 @@ const IconMap = {
   calendar: CalendarSvg,
   category: CategorySvg,
   chat: ChatSvg,
+  check: CheckSvg,
   close: CloseSvg,
   compass: CompassSvg,
   down: DownSvg,

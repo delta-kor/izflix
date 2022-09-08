@@ -50,8 +50,31 @@ interface Props {
 const PopupItem: React.FC<Props> = ({ data, close }) => {
   const { t } = useTranslation();
 
-  const iconType = 'error';
-  const color = Color.RED;
+  let iconType: any;
+  switch (data.type) {
+    case 'error':
+      iconType = 'error';
+      break;
+    case 'success':
+      iconType = 'check';
+      break;
+    default:
+      iconType = 'loader';
+      break;
+  }
+
+  let color: string;
+  switch (data.type) {
+    case 'error':
+      color = Color.RED;
+      break;
+    case 'success':
+      color = Color.PRIMARY;
+      break;
+    default:
+      color = Color.PRIMARY;
+      break;
+  }
 
   return (
     <Layout>

@@ -1,14 +1,12 @@
-import styled from 'styled-components';
+import { User } from '../../hooks/useUser';
 import ProfileInfo from '../atoms/ProfileInfo';
 
-const Layout = styled.div``;
-
 interface Props {
-  user?: IUser;
+  user: User;
 }
 
 const ProfileSection: React.FC<Props> = ({ user }) => {
-  return <ProfileInfo data={user} />;
+  return <ProfileInfo user={user} />;
 };
 
 export default ProfileSection;

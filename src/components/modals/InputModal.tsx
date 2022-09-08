@@ -38,9 +38,17 @@ interface Props extends ModalProps<{ nickname: string }> {
   content: string;
   value?: string;
   placeholder?: string;
+  maxLength?: number;
 }
 
-const InputModal: React.FC<Props> = ({ content, value, placeholder, onSubmit, onCancel }) => {
+const InputModal: React.FC<Props> = ({
+  content,
+  value,
+  placeholder,
+  maxLength,
+  onSubmit,
+  onCancel,
+}) => {
   const [inputValue, setInputValue] = useState(value ?? '');
 
   const onChange: ChangeEventHandler<HTMLInputElement> = e => {
@@ -55,7 +63,12 @@ const InputModal: React.FC<Props> = ({ content, value, placeholder, onSubmit, on
     <ModalBase>
       <Layout>
         <Content>{content}</Content>
-        <Input value={inputValue} placeholder={placeholder} onChange={onChange} />
+        <Input
+          value={inputValue}
+          placeholder={placeholder}
+          maxLength={maxLength}
+          onChange={onChange}
+        />
         <ModalAction onSubmit={handleSubmit} onCancel={onCancel} submit cancel />
       </Layout>
     </ModalBase>

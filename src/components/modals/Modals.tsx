@@ -15,9 +15,9 @@ const Modals: React.FC = () => {
           close(Component);
         };
 
-        const handleSubmit = async () => {
+        const handleSubmit = async (data?: any) => {
           if (typeof onSubmit === 'function') {
-            await onSubmit();
+            await onSubmit(data);
           }
           handleCancel();
         };
