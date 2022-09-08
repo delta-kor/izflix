@@ -12,6 +12,7 @@ interface RequestOptions {
   key: string;
   expire: number;
   auth?: boolean;
+  ignoreAuthError?: boolean;
 }
 
 class SpaceshipClass {
@@ -29,7 +30,7 @@ class SpaceshipClass {
     method: 'GET' | 'POST' | 'DELETE' | 'PUT',
     path: string,
     payload: any,
-    auth: boolean
+    requestOption?: RequestOptions
   ): Promise<T> {
     if (process.env.NODE_ENV === 'development') await delay(0);
 
@@ -42,9 +43,11 @@ class SpaceshipClass {
 
     options.headers = { ...options.headers, 'Accept-Language': i18n.resolvedLanguage };
 
-    if (auth) {
+    if (requestOption?.auth) {
       const token = await this.getUserToken();
       if (token) options.headers = { ...options.headers, Authorization: `izflix ${token}` };
+      else if (!requestOption.ignoreAuthError)
+        return { ok: false, message: 'error.login_failed' } as T;
     }
 
     let data: T;
@@ -55,7 +58,7 @@ class SpaceshipClass {
       if (!response.ok && !response.headers.get('Content-Type')!.includes('application/json'))
         return {
           ok: false,
-          message: '서버 사용량이 많아 접속이 지연되고 있습니다\n잠시후 다시 시도해주세요',
+          message: 'error.server_usage',
         } as T;
 
       const token = response.headers.get('iz-auth-token');
@@ -67,7 +70,7 @@ class SpaceshipClass {
       data = await response.json();
       data.status = response.status;
     } catch (e: any) {
-      return { ok: false, message: '네트워크 연결이 원할하지 않아요' } as T;
+      return { ok: false, message: 'error.network_unstable' } as T;
     }
 
     return data;
@@ -90,7 +93,7 @@ class SpaceshipClass {
       if (cache) return cache;
     }
 
-    const promise = this.request<T>('GET', path, requestOption, requestOption?.auth!!);
+    const promise = this.request<T>('GET', path, requestOption, requestOption);
     if (useCache) this.cache.set(requestOption.key + '::promise', promise, promiseExpireTime);
 
     const response = await promise;
@@ -121,7 +124,7 @@ class SpaceshipClass {
       if (cache) return cache;
     }
 
-    const promise = this.request<T>('POST', path, data, requestOption?.auth!!);
+    const promise = this.request<T>('POST', path, data, requestOption);
     if (useCache) this.cache.set(requestOption.key + '::promise', promise, promiseExpireTime);
 
     const response = await promise;
@@ -177,6 +180,14 @@ class SpaceshipClass {
       const initialLength = this.callbacks.length;
       this.callbacks.push(resolve);
       if (!initialLength) this.loadUserToken();
+    });
+  }
+
+  public async getUser(): Promise<ApiResponse.User.Get> {
+    return this.post('/user', null, {
+      key: 'get_user',
+      expire: expireTime,
+      auth: true,
     });
   }
 
