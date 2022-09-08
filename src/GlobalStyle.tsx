@@ -17,6 +17,10 @@ body {
   overflow-y: overlay;
 }
 
+input {
+  font-family: 'NanumSquare', sans-serif;
+}
+
 body:lang(zh) {
   font-family: sans-serif;
 }

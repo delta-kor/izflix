@@ -4,6 +4,7 @@ import useModal from '../../hooks/useModal';
 import Icon from '../../icons/Icon';
 import { userIdToTag } from '../../services/user';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
+import InputModal from '../modals/InputModal';
 import SmoothBox from './SmoothBox';
 
 const Layout = styled.div`
@@ -123,7 +124,16 @@ interface Props {
 const ProfileInfo: React.FC<Props> = ({ data }) => {
   const modal = useModal();
 
-  const onEditClick: MouseEventHandler = () => {};
+  const onEditClick: MouseEventHandler = () => {
+    modal.openModal(InputModal, {
+      content: '닉네임을 입력해주세요',
+      value: data?.nickname,
+      placeholder: '닉네임을 입력해주세요',
+      onSubmit(data) {
+        console.log(data);
+      },
+    });
+  };
 
   const userId = data?.id;
   const nickname = data?.nickname;

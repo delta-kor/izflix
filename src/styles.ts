@@ -58,6 +58,7 @@ text-overflow:ellipsis;
 white-space:nowrap;`;
 
 const PcInnerPadding = `max(32px, calc((100vw - ${PcLeftMargin}px - ${PcStretchLimitInner}px) / 2))`;
+const ModalWidth = 'calc(100vw - 64px)';
 
 const HideScrollbar = '&::-webkit-scrollbar { display: none; }';
 
@@ -79,5 +80,6 @@ export {
   EaseReverse,
   HideOverflow,
   PcInnerPadding,
+  ModalWidth,
   HideScrollbar,
 };

@@ -3,6 +3,8 @@ import { Color } from '../../styles';
 
 const Layout = styled.div`
   display: flex;
+  justify-content: center;
+  flex-grow: 1;
   gap: 8px;
 `;
 

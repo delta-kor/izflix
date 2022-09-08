@@ -11,7 +11,7 @@ const Modals: React.FC = () => {
         const { Component, props } = modal;
         const { onSubmit, ...restProps } = props;
 
-        const handleClose = () => {
+        const handleCancel = () => {
           close(Component);
         };
 
@@ -19,11 +19,11 @@ const Modals: React.FC = () => {
           if (typeof onSubmit === 'function') {
             await onSubmit();
           }
-          handleClose();
+          handleCancel();
         };
 
         return (
-          <Component {...restProps} onClose={handleClose} onSubmit={handleSubmit} key={index} />
+          <Component {...restProps} onCancel={handleCancel} onSubmit={handleSubmit} key={index} />
         );
       })}
     </>
