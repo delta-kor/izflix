@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { MobileQuery, PcQuery } from '../../styles';
+import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import ProfileSection from '../organisms/ProfileSection';
 
 const Layout = styled.div`
@@ -8,9 +8,8 @@ const Layout = styled.div`
   }
 
   ${PcQuery} {
-    max-width: 720px;
-    padding: 0 32px;
-    margin: 0 auto;
+    max-width: 640px;
+    margin: 0 32px 0 ${PcInnerPadding};
   }
 `;
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import { userIdToTag } from '../../services/user';
-import { Color, HideOverflow, Placeholder, Text } from '../../styles';
+import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 
 const Layout = styled.div`
@@ -20,8 +20,15 @@ const Content = styled.div`
 
 const Nickname = styled.div`
   color: ${Color.WHITE};
-  ${Text.HEADLINE_1};
   ${HideOverflow};
+
+  ${MobileQuery} {
+    ${Text.HEADLINE_1};
+  }
+
+  ${PcQuery} {
+    ${Text.EX_HEADLINE_1};
+  }
 `;
 
 const UserIdContent = styled.div`
@@ -36,14 +43,30 @@ const UserIdContent = styled.div`
 
 const UserId = styled.div`
   color: ${Color.GRAY};
-  min-width: 100px;
-  ${Text.SUBTITLE_1};
+
+  ${MobileQuery} {
+    min-width: 100px;
+    ${Text.SUBTITLE_1};
+  }
+
+  ${PcQuery} {
+    min-width: 124px;
+    ${Text.EX_SUBTITLE_1};
+  }
 `;
 
 const UserIdArrowIcon = styled(Icon)`
   flex-shrink: 0;
-  width: 14px;
-  height: 14px;
+
+  ${MobileQuery} {
+    width: 14px;
+    height: 14px;
+  }
+
+  ${PcQuery} {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 const EditIconWrapper = styled(SmoothBox)`
@@ -56,18 +79,39 @@ const EditIconWrapper = styled(SmoothBox)`
 `;
 
 const EditIcon = styled(Icon)`
-  width: 24px;
-  height: 24px;
+  ${MobileQuery} {
+    width: 24px;
+    height: 24px;
+  }
+
+  ${PcQuery} {
+    width: 28px;
+    height: 28px;
+  }
 `;
 
 const NicknamePlaceholder = styled.div`
-  width: 30%;
-  ${Placeholder.HEADLINE_1};
+  ${MobileQuery} {
+    width: 50%;
+    ${Placeholder.HEADLINE_1};
+  }
+
+  ${PcQuery} {
+    width: 30%;
+    ${Placeholder.EX_HEADLINE_1};
+  }
 `;
 
 const UserIdPlaceholder = styled.div`
-  width: 100px;
-  ${Placeholder.SUBTITLE_1};
+  ${MobileQuery} {
+    width: 100px;
+    ${Placeholder.SUBTITLE_1};
+  }
+
+  ${PcQuery} {
+    width: 124px;
+    ${Placeholder.EX_SUBTITLE_1};
+  }
 `;
 
 interface Props {
