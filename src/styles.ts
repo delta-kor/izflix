@@ -58,7 +58,7 @@ text-overflow:ellipsis;
 white-space:nowrap;`;
 
 const PcInnerPadding = `max(32px, calc((100vw - ${PcLeftMargin}px - ${PcStretchLimitInner}px) / 2))`;
-const ModalWidth = 'calc(100vw - 64px)';
+const ModalWidth = 'calc(100vw - 80px)';
 
 const HideScrollbar = '&::-webkit-scrollbar { display: none; }';
 

@@ -5,7 +5,7 @@ const ModalStyle: ReactModal.Styles = {
   content: {
     position: 'absolute',
     inset: 'unset',
-    padding: '16px',
+    padding: '24px',
     maxWidth: '100%',
     background: Color.DARK_GRAY,
     border: '2px solid #454B6B',

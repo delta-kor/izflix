@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Color } from '../../styles';
+import { Color, MobileQuery, PcQuery } from '../../styles';
 
 const Layout = styled.div`
   display: flex;
@@ -11,15 +11,23 @@ const Layout = styled.div`
 
 const Button = styled.div<{ $background: string }>`
   display: inline-block;
-  padding: 12px 16px;
 
   background: ${({ $background }) => $background};
   color: ${Color.WHITE};
-  font-size: 16px;
   border-radius: 8px;
 
   cursor: pointer;
   user-select: none;
+
+  ${MobileQuery} {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  ${PcQuery} {
+    padding: 14px 18px;
+    font-size: 16px;
+  }
 `;
 
 interface Props {

@@ -1,31 +1,52 @@
 import { ChangeEventHandler, useState } from 'react';
 import styled from 'styled-components';
-import { Color, ModalWidth, Text } from '../../styles';
+import { Color, MobileQuery, ModalWidth, PcQuery, Text } from '../../styles';
 import ModalAction from '../molecules/ModalAction';
 import ModalBase, { ModalProps } from './ModalBase';
 
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
-
   width: ${ModalWidth};
   max-width: 360px;
+
+  ${MobileQuery} {
+    gap: 12px;
+  }
+
+  ${PcQuery} {
+    gap: 16px;
+  }
 `;
 
 const Content = styled.div`
   color: ${Color.WHITE};
-  ${Text.SUBTITLE_1};
+
+  ${MobileQuery} {
+    ${Text.HEADLINE_3};
+  }
+
+  ${PcQuery} {
+    ${Text.HEADLINE_2};
+  }
 `;
 
 const Input = styled.input`
-  padding: 16px 24px;
   color: ${Color.WHITE};
-  font-size: 18px;
   font-weight: 700;
   border: none;
   border-radius: 8px;
   background: ${Color.GRAY};
+
+  ${MobileQuery} {
+    padding: 14px 20px;
+    font-size: 16px;
+  }
+
+  ${PcQuery} {
+    padding: 16px 20px;
+    font-size: 18px;
+  }
 
   &::placeholder {
     color: ${Color.WHITE};
@@ -72,7 +93,10 @@ const InputModal: React.FC<Props> = ({
           onKeyDown={e => {
             if (e.key === 'Enter') handleSubmit();
           }}
+          onFocus={e => e.target.select()}
           autoFocus
+          spellCheck={false}
+          autoComplete={'off'}
         />
         <ModalAction onSubmit={handleSubmit} onCancel={onCancel} submit cancel />
       </Layout>
