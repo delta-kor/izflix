@@ -1,4 +1,5 @@
 import { MouseEventHandler } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Evoke from '../../filters/evoke';
 import useModal from '../../hooks/useModal';
@@ -125,6 +126,7 @@ interface Props {
 }
 
 const ProfileInfo: React.FC<Props> = ({ user }) => {
+  const { t } = useTranslation();
   const modal = useModal();
 
   const userId = user.user?.id;
@@ -133,9 +135,9 @@ const ProfileInfo: React.FC<Props> = ({ user }) => {
   const onEditClick: MouseEventHandler = () => {
     if (!user.user) return false;
     modal.openModal(InputModal, {
-      content: '닉네임을 입력해주세요',
+      content: t('profile.update_nickname'),
       value: nickname,
-      placeholder: '닉네임을 입력해주세요',
+      placeholder: t('profile.input_nickname'),
       maxLength: 12,
       onSubmit(data) {
         onNicknameUpdate(data.nickname);
@@ -148,7 +150,7 @@ const ProfileInfo: React.FC<Props> = ({ user }) => {
     new Evoke(user.updateNickname(nickname)).then(() => {
       Transmitter.emit('popup', {
         type: 'success',
-        message: '닉네임을 수정하였습니다',
+        message: t('profile.nickname_updated'),
       });
     });
   };

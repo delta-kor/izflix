@@ -32,5 +32,14 @@
     "network_unstable": "Network connection is not stable",
     "login_failed": "Failed to login",
     "main": "Main Page"
+  },
+  "profile": {
+    "input_nickname": "Enter nickname",
+    "nickname_updated": "Nickname updated",
+    "update_nickname": "Edit nickname"
+  },
+  "modal": {
+    "cancel": "Cancel",
+    "submit": "Submit"
   }
 }

@@ -30,6 +30,8 @@ function useUser(): User {
   };
 
   const updateNickname = async (nickname: string) => {
+    setUser(undefined);
+
     const response = await Spaceship.updateUser({ nickname });
     if (!response.ok) throw new HttpException(response);
 

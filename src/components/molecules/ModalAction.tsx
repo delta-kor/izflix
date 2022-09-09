@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Color } from '../../styles';
 
@@ -29,16 +30,18 @@ interface Props {
 }
 
 const ModalAction: React.FC<Props> = ({ onSubmit, onCancel, submit, cancel }) => {
+  const { t } = useTranslation();
+
   return (
     <Layout>
       {cancel && (
         <Button $background={Color.TRANSPARENT} onClick={onCancel}>
-          취소
+          {t('modal.cancel')}
         </Button>
       )}
       {submit && (
         <Button $background={Color.PRIMARY} onClick={onSubmit}>
-          확인
+          {t('modal.submit')}
         </Button>
       )}
     </Layout>

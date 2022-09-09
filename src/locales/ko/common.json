@@ -25,6 +25,15 @@
   "calendar": {
     "calendar": "달력"
   },
+  "profile": {
+    "update_nickname": "닉네임 변경",
+    "input_nickname": "닉네임을 입력해주세요",
+    "nickname_updated": "닉네임이 변경되었어요"
+  },
+  "modal": {
+    "cancel": "취소",
+    "submit": "확인"
+  },
   "error": {
     "not_found": "페이지를 찾을 수 없어요",
     "service": "서비스 로드 중 오류가 발생했어요",
