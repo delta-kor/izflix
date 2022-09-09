@@ -9,6 +9,7 @@ const Layout = styled.div`
   ${MobileQuery} {
     display: flex;
     flex-direction: column;
+    padding: 0 32px;
     gap: 12px;
   }
 
