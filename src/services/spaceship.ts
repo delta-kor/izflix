@@ -202,6 +202,13 @@ class SpaceshipClass {
     });
   }
 
+  public async search(query: string): Promise<ApiResponse.Search.Search> {
+    return this.get(`/search?query=${query}`, {
+      key: `search::${query}`,
+      expire: expireTime,
+    });
+  }
+
   public async getUserRecommends(
     count: number = Settings.getOne('USER_RECOMMEND_COUNT')
   ): Promise<ApiResponse.Recommend.GetUserRecommends> {
