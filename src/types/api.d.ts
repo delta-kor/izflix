@@ -33,6 +33,7 @@ interface IPlaylist {
   featured: boolean;
   order: number;
   thumbnail: string;
+  count: number;
 }
 
 interface IVideo {

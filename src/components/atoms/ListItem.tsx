@@ -128,7 +128,7 @@ const DescriptionPlaceholder = styled.div`
 
 interface PropsBase {
   title: string;
-  description: string;
+  description?: string;
   count: string;
   link?: string;
   state?: any;
@@ -170,7 +170,7 @@ const ListItem: React.FC<Props> = props => {
         )}
         <Content>
           <Title>{props.title}</Title>
-          <Description>{props.description}</Description>
+          {props.description && <Description>{props.description}</Description>}
         </Content>
         <Count>{props.count}</Count>
       </Layout>

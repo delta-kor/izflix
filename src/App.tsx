@@ -14,6 +14,7 @@ import MainPage from './pages/MainPage';
 import MusicItemPage from './pages/MusicItemPage';
 import MusicPage from './pages/MusicPage';
 import PlaylistItemPage from './pages/PlaylistItemPage';
+import PlaylistPage from './pages/PlaylistPage';
 import ProfilePage from './pages/ProfilePage';
 import VideoPage from './pages/VideoPage';
 import VodPage from './pages/VodPage';
@@ -43,6 +44,7 @@ const App: React.FC = () => {
         <Routes location={location} key={PageManager.getPageKey(location.pathname)}>
           <Route path="/" element={<MainPage />} />
           <Route path="/vod" element={<VodPage />} />
+          <Route path="/playlist" element={<PlaylistPage />} />
           <Route path="/playlist/:id" element={<PlaylistItemPage />} />
           <Route path="/music" element={<MusicPage />} />
           <Route path="/music/:id" element={<MusicItemPage />} />
