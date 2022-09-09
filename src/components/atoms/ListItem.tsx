@@ -145,7 +145,12 @@ interface ImageProps extends PropsBase {
   value: string;
 }
 
-type Props = IconProps | ImageProps | { type: 'placeholder' };
+interface PlaceholderProps {
+  type: 'placeholder';
+  noDescription?: boolean;
+}
+
+type Props = IconProps | ImageProps | PlaceholderProps;
 
 const ListItem: React.FC<Props> = props => {
   const device = useDevice();
@@ -179,7 +184,7 @@ const ListItem: React.FC<Props> = props => {
         <ListImage />
         <Content>
           <TitlePlaceholder />
-          <DescriptionPlaceholder />
+          {!props.noDescription && <DescriptionPlaceholder />}
         </Content>
       </Layout>
     );

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import ListItem from '../atoms/ListItem';
+import Repeat from '../tools/Repeat';
 
 const Layout = styled.div`
   display: flex;
@@ -10,12 +11,11 @@ const Layout = styled.div`
 
   ${MobileQuery} {
     padding: 0 32px;
-    gap: 2px;
   }
 
   ${PcQuery} {
     padding: 0 ${PcInnerPadding};
-    gap: 4px;
+    gap: 2px;
   }
 `;
 
@@ -28,16 +28,20 @@ const PlaylistListSection: React.FC<Props> = ({ playlists }) => {
 
   return (
     <Layout>
-      {playlists.map(data => (
-        <ListItem
-          title={data.title}
-          count={t('common.count', { count: data.count })}
-          type={'image'}
-          value={Spaceship.getThumbnail(data.thumbnail)}
-          link={`/playlist/${data.id}`}
-          key={data.id}
-        />
-      ))}
+      {playlists.length ? (
+        playlists.map(data => (
+          <ListItem
+            title={data.title}
+            count={t('common.count', { count: data.count })}
+            type={'image'}
+            value={Spaceship.getThumbnail(data.thumbnail)}
+            link={`/playlist/${data.id}`}
+            key={data.id}
+          />
+        ))
+      ) : (
+        <Repeat count={10} element={i => <ListItem type={'placeholder'} noDescription key={i} />} />
+      )}
     </Layout>
   );
 };
