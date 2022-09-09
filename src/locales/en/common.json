@@ -41,5 +41,9 @@
   "modal": {
     "cancel": "Cancel",
     "submit": "Submit"
+  },
+  "common": {
+    "count_one": "{{count}} item",
+    "count_other": "{{count}} items"
   }
 }

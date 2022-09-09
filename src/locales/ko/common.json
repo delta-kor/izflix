@@ -34,6 +34,10 @@
     "cancel": "취소",
     "submit": "확인"
   },
+  "common": {
+    "count_one": "{{count}}개",
+    "count_other": "{{count}}개"
+  },
   "error": {
     "not_found": "페이지를 찾을 수 없어요",
     "service": "서비스 로드 중 오류가 발생했어요",

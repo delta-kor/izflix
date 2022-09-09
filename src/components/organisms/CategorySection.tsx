@@ -29,7 +29,7 @@ interface Props {
 }
 
 const CategorySection: React.FC<Props> = ({ setPath, category }) => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const params = useParams();
   const id = params.id || null;
 
@@ -40,7 +40,7 @@ const CategorySection: React.FC<Props> = ({ setPath, category }) => {
       <ListItem
         title={data.title}
         description={getDate(data.date, i18n.resolvedLanguage)}
-        count={`${data.count}개`}
+        count={t('common.count', { count: data.count })}
         type={'icon'}
         value={'folder'}
         link={`/category/${data.id}`}
