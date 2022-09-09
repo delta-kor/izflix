@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ChangeEventHandler, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
@@ -143,6 +144,7 @@ const SearchInput = styled.input`
 `;
 
 const Header: React.FC = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
@@ -179,7 +181,7 @@ const Header: React.FC = () => {
   const handleSubmit = () => {
     setSearchValue('');
     setSearchActive(false);
-    navigate(`/search?q=${searchValue}`);
+    navigate(`/search?q=${encodeURIComponent(searchValue)}`);
   };
 
   const pageInfo = PageManager.getPageInfo(location.pathname);
@@ -217,7 +219,7 @@ const Header: React.FC = () => {
             <SearchInput
               type={'text'}
               value={searchValue}
-              placeholder={'검색어를 입력해주세요'}
+              placeholder={t('search.input_query')}
               onChange={handleSearchChange}
               onKeyDown={e => {
                 if (e.key === 'Enter') handleSubmit();

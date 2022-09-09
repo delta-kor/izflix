@@ -45,5 +45,8 @@
   "common": {
     "count_one": "{{count}} item",
     "count_other": "{{count}} items"
+  },
+  "search": {
+    "input_query": "Search"
   }
 }
