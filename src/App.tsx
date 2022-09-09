@@ -42,8 +42,12 @@ const App: React.FC = () => {
       <Navigator />
 
       <AnimatePresence exitBeforeEnter>
-        <Routes location={location} key={PageManager.getPageKey(location.pathname)}>
+        <Routes
+          location={location}
+          key={PageManager.getPageKey(location.pathname + location.search)}
+        >
           <Route path="/" element={<MainPage />} />
+          <Route path="/search" element={<SearchPage />} />
           <Route path="/vod" element={<VodPage />} />
           <Route path="/playlist" element={<PlaylistPage />} />
           <Route path="/playlist/:id" element={<PlaylistItemPage />} />
@@ -52,7 +56,6 @@ const App: React.FC = () => {
           <Route path="/category/*" element={<CategoryPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/search" element={<SearchPage />} />
           <Route path="/:id" element={<VideoPage panorama={panorama} />} />
           <Route path="*" element={<ErrorPage data={'error.not_found'} />} />
         </Routes>

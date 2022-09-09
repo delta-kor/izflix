@@ -47,6 +47,7 @@
     "count_other": "{{count}} items"
   },
   "search": {
-    "input_query": "Search"
+    "input_query": "Search",
+    "no_result": "No search results"
   }
 }

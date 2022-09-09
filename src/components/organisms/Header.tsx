@@ -179,9 +179,10 @@ const Header: React.FC = () => {
   };
 
   const handleSubmit = () => {
+    if (!searchValue) return false;
+    navigate(`/search?q=${encodeURIComponent(searchValue)}`);
     setSearchValue('');
     setSearchActive(false);
-    navigate(`/search?q=${encodeURIComponent(searchValue)}`);
   };
 
   const pageInfo = PageManager.getPageInfo(location.pathname);

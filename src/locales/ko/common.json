@@ -39,7 +39,8 @@
     "count_other": "{{count}}개"
   },
   "search": {
-    "input_query": "검색어를 입력해주세요"
+    "input_query": "검색어를 입력해주세요",
+    "no_result": "검색 결과가 없어요"
   },
   "error": {
     "not_found": "페이지를 찾을 수 없어요",
