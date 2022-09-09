@@ -16,16 +16,19 @@ const SearchPage: React.FC = () => {
   }, [query]);
 
   const search = async (query: string) => {
-    if (!query) return setVideos(null);
+    if (!query) {
+      if (videos === null || videos.length) return false;
+      return setVideos(null);
+    }
 
     setVideos([]);
 
     const response = await Spaceship.search(query);
     if (!response.ok) throw new HttpException(response);
 
-    const videos = response.videos;
-    if (videos.length === 0) setVideos(null);
-    else setVideos(response.videos);
+    const result = response.videos;
+    if (result.length === 0) setVideos(null);
+    else setVideos(result);
   };
 
   const loadData = () => {
