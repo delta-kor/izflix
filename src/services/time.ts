@@ -1,9 +1,17 @@
-export function getDate(number: number): string {
+export function getDate(number: number, language: string): string {
   const date = new Date(number);
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const dayOfMonth = date.getDate();
-  return `${year}년 ${month}월 ${dayOfMonth}일`;
+
+  switch (language) {
+    case 'en':
+      return `${month}/${dayOfMonth}/${year}`;
+    case 'ko':
+      return `${year}년 ${month}월 ${dayOfMonth}일`;
+    default:
+      return `${month}/${dayOfMonth}/${year}`;
+  }
 }
 
 function padNumber(number: number): string {

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import PathFinder from '../../services/path-finder';
@@ -28,6 +29,7 @@ interface Props {
 }
 
 const CategorySection: React.FC<Props> = ({ setPath, category }) => {
+  const { i18n } = useTranslation();
   const params = useParams();
   const id = params.id || null;
 
@@ -37,7 +39,7 @@ const CategorySection: React.FC<Props> = ({ setPath, category }) => {
     Content = category.data.map(data => (
       <ListItem
         title={data.title}
-        description={getDate(data.date)}
+        description={getDate(data.date, i18n.resolvedLanguage)}
         count={`${data.count}개`}
         type={'icon'}
         value={'folder'}
@@ -51,7 +53,7 @@ const CategorySection: React.FC<Props> = ({ setPath, category }) => {
     Content = category.data.map(data => (
       <ListItem
         title={data.title}
-        description={getDate(data.date)}
+        description={getDate(data.date, i18n.resolvedLanguage)}
         count={getDuration(data.duration, data.is_4k)}
         type={'image'}
         value={Spaceship.getThumbnail(data.id)}

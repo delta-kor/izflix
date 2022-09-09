@@ -1,4 +1,5 @@
 import { UIEventHandler, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { VideoPageState } from '../../pages/VideoPage';
 import { getDate } from '../../services/time';
@@ -56,6 +57,8 @@ interface Props {
 }
 
 const VideoCarousel: React.FC<Props> = ({ data, createLink }) => {
+  const { i18n } = useTranslation();
+
   const [page, setPage] = useState<number>(0);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -83,7 +86,14 @@ const VideoCarousel: React.FC<Props> = ({ data, createLink }) => {
               {group.map(({ id, description, date, duration }) => (
                 <VideoPanel
                   type={'horizontal'}
-                  data={{ id, title: description, description: getDate(date), duration } as IVideo}
+                  data={
+                    {
+                      id,
+                      title: description,
+                      description: getDate(date, i18n.resolvedLanguage),
+                      duration,
+                    } as IVideo
+                  }
                   link={createLink && createLink(id)[0]}
                   state={createLink && createLink(id)[1]}
                   key={id}

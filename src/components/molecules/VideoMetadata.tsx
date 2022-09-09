@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
@@ -85,6 +86,7 @@ interface Props {
 }
 
 const VideoMetadata: React.FC<Props> = ({ videoInfo }) => {
+  const { i18n } = useTranslation();
   const navigate = useNavigate();
 
   const date = videoInfo?.date;
@@ -99,7 +101,11 @@ const VideoMetadata: React.FC<Props> = ({ videoInfo }) => {
     <Layout>
       <DateArea hover={1.05} tap={0.95} onClick={onDateAreaClick}>
         <DateIcon type={'calendar'} color={Color.WHITE} />
-        {date ? <DateContent>{getDate(date)}</DateContent> : <DatePlaceholder />}
+        {date ? (
+          <DateContent>{getDate(date, i18n.resolvedLanguage)}</DateContent>
+        ) : (
+          <DatePlaceholder />
+        )}
       </DateArea>
       {path ? <Breadcrumb path={path} shrinked /> : <CategoryPlaceholder />}
     </Layout>

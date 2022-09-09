@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import { VideoPageState } from '../../pages/VideoPage';
@@ -95,6 +96,7 @@ interface Props {
 }
 
 const MusicItemSection: React.FC<Props> = ({ musics }) => {
+  const { i18n } = useTranslation();
   const device = useDevice();
 
   const [selectedMusic, setSelectedMusic] = useState<IMusic | undefined>();
@@ -164,7 +166,14 @@ const MusicItemSection: React.FC<Props> = ({ musics }) => {
             selectedMusic.videos.map(({ id, description, date, duration }) => (
               <VideoPanel
                 type={'full'}
-                data={{ id, title: description, description: getDate(date), duration } as IVideo}
+                data={
+                  {
+                    id,
+                    title: description,
+                    description: getDate(date, i18n.resolvedLanguage),
+                    duration,
+                  } as IVideo
+                }
                 link={createLink(id)[0]}
                 state={createLink(id)[1]}
                 key={id}

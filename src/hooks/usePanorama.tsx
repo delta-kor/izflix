@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
 import { VideoPageState } from '../pages/VideoPage';
@@ -17,6 +18,8 @@ interface Panorama extends PanoramaMethods {
 }
 
 function usePanorama(): Panorama {
+  const { i18n } = useTranslation();
+
   const [videoInfo, setVideoInfo] = useState<ApiResponse.Video.Info | undefined>();
   const [currentVideoId, setCurrentVideoId] = useState<string | undefined>();
   const [streamInfo, setStreamInfo] = useState<ApiResponse.Video.Stream | undefined>();
@@ -80,7 +83,7 @@ function usePanorama(): Panorama {
           response.music.videos.map(data => ({
             ...data,
             title: data.description,
-            description: getDate(data.date),
+            description: getDate(data.date, i18n.resolvedLanguage),
           }))
         );
         break;
