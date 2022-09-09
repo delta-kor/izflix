@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { ChangeEventHandler, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import intersect from '../../services/intersect';
@@ -145,6 +145,7 @@ const SearchInput = styled.input`
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
 
   const [active, setActive] = useState<boolean>(false);
   const [searchActive, setSearchActive] = useState<boolean>(false);
@@ -175,13 +176,21 @@ const Header: React.FC = () => {
     setSearchValue(e.target.value);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    setSearchValue('');
+    setSearchActive(false);
+    navigate(`/search?q=${searchValue}`);
+  };
 
   const pageInfo = PageManager.getPageInfo(location.pathname);
 
   if (pageInfo) {
-    const title = pageInfo.title;
+    let title: string = pageInfo.title;
     const pageType = pageInfo.type;
+
+    if (title === '#') {
+      title = searchParams.get('q') || 'Search';
+    }
 
     const headerIconActive = pageType !== 'submain' && !searchActive;
 

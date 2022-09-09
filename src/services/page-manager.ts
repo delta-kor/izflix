@@ -12,6 +12,7 @@ PageTitles.set('/category/:id', 'Category');
 PageTitles.set('/calendar', 'Calendar');
 PageTitles.set('/playlist', 'Playlist');
 PageTitles.set('/playlist/:id', 'Playlist');
+PageTitles.set('/search', '#');
 PageTitles.set('/live', 'Live');
 
 interface PageInfo {
