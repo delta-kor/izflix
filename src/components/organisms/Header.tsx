@@ -1,6 +1,5 @@
-import { AnimateSharedLayout, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
+import { ChangeEventHandler, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
@@ -19,7 +18,7 @@ import {
 } from '../../styles';
 import SmoothBox from '../atoms/SmoothBox';
 
-const Layout = styled.div<{ $active: boolean }>`
+const Layout = styled.div<{ $active: boolean; $search: boolean }>`
   position: fixed;
   display: flex;
 
@@ -30,8 +29,9 @@ const Layout = styled.div<{ $active: boolean }>`
   align-items: center;
   user-select: none;
 
-  background: ${({ $active }) => ($active ? '#070D2DBA' : Color.TRANSPARENT)};
-  backdrop-filter: ${({ $active }) => ($active ? 'blur(10px)' : 'none')};
+  background: ${({ $active, $search }) =>
+    $active ? ($search ? 'rgba(22, 26, 54, 0.8)' : 'rgba(7, 13, 45, 0.8)') : Color.TRANSPARENT};
+  backdrop-filter: ${({ $active }) => ($active ? 'blur(6px)' : 'none')};
 
   transition: background 0.2s;
 
@@ -56,7 +56,7 @@ const Layout = styled.div<{ $active: boolean }>`
 `;
 
 const Content = styled(motion.div)`
-  flex-grow: 1;
+  width: 100%;
   color: ${Color.WHITE};
   ${HideOverflow};
 
@@ -114,12 +114,41 @@ const IconClickBox = styled(SmoothBox)`
   }
 `;
 
+const SearchLayout = styled.div`
+  flex-grow: 1;
+  height: 100%;
+`;
+
+const SearchInput = styled.input`
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: ${Color.WHITE};
+
+  ${MobileQuery} {
+    font-size: 20px;
+  }
+
+  ${PcQuery} {
+    font-size: 26px;
+  }
+
+  &::placeholder {
+    font-weight: 400;
+    color: ${Color.WHITE};
+    opacity: 0.3;
+  }
+`;
+
 const Header: React.FC = () => {
-  const { i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
   const [active, setActive] = useState<boolean>(false);
+  const [searchActive, setSearchActive] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState<string>('');
 
   useEffect(() => {
     intersect.addListener('bump', onBump);
@@ -133,13 +162,20 @@ const Header: React.FC = () => {
     setActive(type === 'in');
   };
 
-  const onHeaderIconClick = (isMain: boolean) => {
+  const handleHeaderIconClick = (isMain: boolean) => {
     if (!isMain) navigate(-1);
   };
 
-  const onSearchIconClick = () => {
-    i18n.changeLanguage(i18n.resolvedLanguage === 'ko' ? 'en' : 'ko');
+  const handleIconClick = () => {
+    setSearchValue('');
+    setSearchActive(!searchActive);
   };
+
+  const handleSearchChange: ChangeEventHandler<HTMLInputElement> = e => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleSubmit = () => {};
 
   const pageInfo = PageManager.getPageInfo(location.pathname);
 
@@ -147,25 +183,44 @@ const Header: React.FC = () => {
     const title = pageInfo.title;
     const pageType = pageInfo.type;
 
+    const headerIconActive = pageType !== 'submain' && !searchActive;
+
     return (
-      <Layout $active={active} id={'boundary_root'}>
-        {pageType !== 'submain' && (
+      <Layout $active={searchActive || active} $search={searchActive} id={'boundary_root'}>
+        {headerIconActive && (
           <IconClickBox
-            onClick={() => onHeaderIconClick(pageType === 'main')}
+            onClick={() => handleHeaderIconClick(pageType === 'main')}
             hover={1.1}
             tap={0.9}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
           >
             <HeaderIcon type={pageType === 'main' ? 'izflix' : 'left'} color={Color.WHITE} />
           </IconClickBox>
         )}
-        <AnimateSharedLayout>
-          <Content layoutId={'header_key'}>{title}</Content>
-        </AnimateSharedLayout>
-        <IconClickBox hover={1.1} tap={0.9} onClick={onSearchIconClick}>
-          <SearchIcon type={'search'} color={Color.WHITE} />
+        {!searchActive && (
+          <Content initial={{ opacity: 0 }} animate={{ opacity: 1 }} layoutId={'header_content'}>
+            {title}
+          </Content>
+        )}
+        {searchActive && (
+          <SearchLayout>
+            <SearchInput
+              type={'text'}
+              value={searchValue}
+              placeholder={'검색어를 입력해주세요'}
+              onChange={handleSearchChange}
+              onKeyDown={e => {
+                if (e.key === 'Enter') handleSubmit();
+              }}
+              autoFocus
+              spellCheck={false}
+              autoComplete={'off'}
+            />
+          </SearchLayout>
+        )}
+        <IconClickBox hover={1.1} tap={0.9} onClick={handleIconClick}>
+          <SearchIcon type={searchActive ? 'close' : 'search'} color={Color.WHITE} />
         </IconClickBox>
       </Layout>
     );
