@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { ModalsDispatchContext } from '../contexts/ModalContext';
 
-function useModals() {
+function useModal() {
   const { open, close } = useContext(ModalsDispatchContext);
 
   const openModal = <T,>(Component: React.FC<T>, props: T) => {
@@ -18,4 +18,4 @@ function useModals() {
   };
 }
 
-export default useModals;
+export default useModal;

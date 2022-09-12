@@ -3,9 +3,11 @@ import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Meta from './components/Meta';
 import Modals from './components/modals/Modals';
+import TextModal from './components/modals/TextModal';
 import Header from './components/organisms/Header';
 import Navigator from './components/organisms/Navigator';
 import Popup from './components/organisms/Popup';
+import useModal from './hooks/useModal';
 import usePanorama from './hooks/usePanorama';
 import CalendarPage from './pages/CalendarPage';
 import CategoryPage from './pages/CategoryPage';
@@ -25,10 +27,16 @@ import Spaceship from './services/spaceship';
 const App: React.FC = () => {
   const location = useLocation();
   const panorama = usePanorama();
+  const modal = useModal();
 
   useEffect(() => {
     window.history.scrollRestoration = 'manual';
     Spaceship.load();
+
+    process.env.NODE_ENV !== 'development' && modal.openModal(TextModal, {
+      content:
+        'This page is still in the development preview stage. Some features may not work and may change without notice. For general use, please use https://izflix.net.',
+    });
   }, []);
 
   return (

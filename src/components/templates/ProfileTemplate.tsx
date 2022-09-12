@@ -37,7 +37,7 @@ const ProfileTemplate: React.FC<Props> = ({ user }) => {
     <Layout>
       <ProfileSection user={user} />
       <IconListSection>
-        <IconListItem icon={'settings'} onClick={handleLanguageClick}>
+        <IconListItem icon={'settings'} onClick={() => navigate('/profile/settings')}>
           {t('profile.settings')}
         </IconListItem>
         <IconListItem icon={'language'} onClick={handleLanguageClick}>
