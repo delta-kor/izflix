@@ -9,21 +9,21 @@ const Layout = styled.div`
   gap: 16px;
 
   width: ${ModalWidth};
-  max-width: 360px;
+  max-width: 420px;
 `;
 
 const Content = styled.div`
   color: ${Color.WHITE};
 
   ${MobileQuery} {
-    ${Text.BODY_2};
-    line-height: 20px;
+    ${Text.BODY_1};
+    line-height: 24px;
     height: unset;
   }
 
   ${PcQuery} {
-    ${Text.BODY_1};
-    line-height: 26px;
+    ${Text.EX_BODY_1};
+    line-height: 30px;
     height: unset;
   }
 `;

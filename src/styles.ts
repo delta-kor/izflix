@@ -34,6 +34,7 @@ const Text = {
   CAPTION: `font-size:12px; font-weight: 400;`,
   EX_HEADLINE_1: `font-size: 30px; font-weight: 800; height: 36px; line-height: 36px;`,
   EX_SUBTITLE_1: `font-size: 20px; font-weight: 700; height: 24px; line-height: 24px;`,
+  EX_BODY_1: `font-size: 18px; font-weight: 400; height: 22px; line-height: 22px;`,
   EX_CAPTION: `font-size: 18px; font-weight: 400;`,
 };
 
@@ -46,6 +47,7 @@ const Placeholder = {
   BODY_1: `height: 20px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
   BODY_2: `height: 18px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
   BODY_3: `height: 14px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
+  EX_BODY_1: `height: 22px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
   EX_HEADLINE_1: `height: 36px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
   EX_SUBTITLE_1: `height: 24px; background: ${Color.DARK_GRAY}; border-radius: 4px;`,
 };
