@@ -1,3 +1,4 @@
+import { AnimateSharedLayout, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Color, MobileQuery, PcQuery } from '../../styles';
@@ -9,7 +10,7 @@ const Layout = styled.div`
   gap: 8px;
 `;
 
-const Button = styled.div<{ $background: string }>`
+const Button = styled(motion.div)<{ $background: string }>`
   display: inline-block;
 
   background: ${({ $background }) => $background};
@@ -42,16 +43,18 @@ const ModalAction: React.FC<Props> = ({ onSubmit, onCancel, submit, cancel }) =>
 
   return (
     <Layout>
-      {cancel && (
-        <Button $background={Color.TRANSPARENT} onClick={onCancel}>
-          {t('modal.cancel')}
-        </Button>
-      )}
-      {submit && (
-        <Button $background={Color.PRIMARY} onClick={onSubmit}>
-          {t('modal.submit')}
-        </Button>
-      )}
+      <AnimateSharedLayout>
+        {cancel && (
+          <Button $background={Color.TRANSPARENT} onClick={onCancel} layoutId={'modal_cancel'}>
+            {t('modal.cancel')}
+          </Button>
+        )}
+        {submit && (
+          <Button $background={Color.PRIMARY} onClick={onSubmit} layoutId={'modal_submit'}>
+            {t('modal.submit')}
+          </Button>
+        )}
+      </AnimateSharedLayout>
     </Layout>
   );
 };

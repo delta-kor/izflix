@@ -1,9 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useModal from '../../hooks/useModal';
 import { User } from '../../hooks/useUser';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import IconListItem from '../atoms/IconListItem';
+import SelectModal from '../modals/SelectModal';
 import IconListSection from '../organisms/IconListSection';
 import ProfileSection from '../organisms/ProfileSection';
 
@@ -28,10 +30,26 @@ interface Props {
 }
 
 const ProfileTemplate: React.FC<Props> = ({ user }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const modal = useModal();
 
-  const handleLanguageClick = () => {};
+  const handleLanguageClick = () => {
+    modal.openModal(SelectModal, {
+      content: 'profile.select_language',
+      items: [
+        ['ko', '한국어'],
+        ['en', 'English'],
+      ],
+      current: i18n.resolvedLanguage === 'ko' ? 'ko' : 'en',
+      onUpdate(selected) {
+        i18n.changeLanguage(selected);
+      },
+      onSubmit(data) {
+        i18n.changeLanguage(data.selected);
+      },
+    });
+  };
 
   return (
     <Layout>

@@ -38,11 +38,12 @@
     "nickname_updated": "Nickname updated",
     "update_nickname": "Edit nickname",
     "settings": "Settings",
-    "language": "Language"
+    "language": "Language",
+    "select_language": "Select language"
   },
   "modal": {
     "cancel": "Cancel",
-    "submit": "Submit"
+    "submit": "OK"
   },
   "common": {
     "count_one": "{{count}} item",
