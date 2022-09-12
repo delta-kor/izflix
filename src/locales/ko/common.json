@@ -28,7 +28,9 @@
   "profile": {
     "update_nickname": "닉네임 변경",
     "input_nickname": "닉네임을 입력해주세요",
-    "nickname_updated": "닉네임이 변경되었어요"
+    "nickname_updated": "닉네임이 변경되었어요",
+    "settings": "설정",
+    "language": "Language"
   },
   "modal": {
     "cancel": "취소",

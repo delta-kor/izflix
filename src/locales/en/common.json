@@ -36,7 +36,9 @@
   "profile": {
     "input_nickname": "Enter nickname",
     "nickname_updated": "Nickname updated",
-    "update_nickname": "Edit nickname"
+    "update_nickname": "Edit nickname",
+    "settings": "Settings",
+    "language": "Language"
   },
   "modal": {
     "cancel": "Cancel",
