@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useModal from '../../hooks/useModal';
 import { User } from '../../hooks/useUser';
+import Spaceship from '../../services/spaceship';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import IconListItem from '../atoms/IconListItem';
 import SelectModal from '../modals/SelectModal';
@@ -47,6 +48,7 @@ const ProfileTemplate: React.FC<Props> = ({ user }) => {
       },
       onSubmit(data) {
         i18n.changeLanguage(data.selected);
+        Spaceship.flush();
       },
     });
   };

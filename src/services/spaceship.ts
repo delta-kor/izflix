@@ -27,6 +27,10 @@ class SpaceshipClass {
     this.getUserToken();
   }
 
+  public async flush(): Promise<void> {
+    this.cache.flushAll();
+  }
+
   private async request<T extends ApiResponse>(
     method: string,
     path: string,
