@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { Panorama, PanoramaState } from '../../hooks/usePanorama';
 import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
@@ -45,7 +45,7 @@ const RenderArea = styled.div<{ $state: PanoramaState }>`
   }
 `;
 
-const Video = styled(motion.video)`
+const Video = styled.video`
   display: block;
   width: 100%;
   height: 100%;
@@ -55,7 +55,7 @@ const Video = styled(motion.video)`
 const VideoArea = styled.div<{ $state: PanoramaState }>`
   ${MobileQuery} {
     height: 100%;
-    aspect-ratio: ${({ $state }) => ($state === PanoramaState.ACTIVE ? '16 / 9' : '20 / 9')};
+    aspect-ratio: ${({ $state }) => ($state === PanoramaState.ACTIVE ? '16 / 9' : '18 / 9')};
   }
 `;
 
@@ -73,14 +73,16 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   if (panoramaState === PanoramaState.NONE) return null;
 
-  const video = <Video src={panorama.streamInfo?.url} layoutId={'panorama_video'} />;
+  const video = <Video src={panorama.streamInfo?.url} controls />;
 
-  return (
+  const Component = (
     <RenderArea $state={panoramaState}>
       {panoramaState === PanoramaState.BACKGROUND && <ContentArea></ContentArea>}
       <VideoArea $state={panoramaState}>{video}</VideoArea>
     </RenderArea>
   );
+
+  return ReactDOM.createPortal(Component, document.getElementById('panorama')!);
 };
 
 export default PanoramaSection;
