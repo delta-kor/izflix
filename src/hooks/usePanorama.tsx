@@ -40,12 +40,15 @@ function usePanorama(): Panorama {
   const [recommends, setRecommends] = useState<IVideo[]>([]);
 
   useEffect(() => {
+    if (location.pathname === `/${currentVideoId}`) return setState(PanoramaState.ACTIVE);
     const isBackgroudState = PageManager.isBackgroundState(location.pathname);
     state !== PanoramaState.NONE &&
       setState(isBackgroudState ? PanoramaState.BACKGROUND : PanoramaState.NONE);
   }, [location]);
 
   const view = async (id: string, state?: VideoPageState) => {
+    if (id === currentVideoId) return { ok: true, status: 200 };
+
     setState(PanoramaState.NONE);
     setVideoInfo(undefined);
     setStreamInfo(undefined);

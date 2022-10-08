@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
@@ -152,13 +152,24 @@ const MenuIcon = styled(Icon)`
   height: 20px;
 `;
 
+const VideoControls = styled(motion.div)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: ${Color.BACKGROUND}B4;
+  pointer-events: none;
+`;
+
 interface Props {
   panorama: Panorama;
 }
 
 const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isControlsActive, setIsControlsActive] = useState<boolean>(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -167,10 +178,16 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setIsPlaying(!video.paused);
     video.addEventListener('play', handlePlay);
     video.addEventListener('pause', handlePause);
+    video.addEventListener('mouseover', handleMouseOver);
+    video.addEventListener('mouseout', handleMouseOut);
+    video.addEventListener('touchstart', handleTouchStart);
 
     return () => {
       video.removeEventListener('play', handlePlay);
       video.removeEventListener('pause', handlePause);
+      video.removeEventListener('mouseover', handleMouseOver);
+      video.removeEventListener('mouseout', handleMouseOut);
+      video.removeEventListener('touchstart', handleTouchStart);
     };
   }, [videoRef.current]);
 
@@ -180,6 +197,23 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   const handlePause = () => {
     setIsPlaying(false);
+  };
+
+  const handleMouseOver = () => {
+    setIsControlsActive(true);
+  };
+
+  const handleMouseOut = () => {
+    setIsControlsActive(false);
+  };
+
+  let timeout: any = null;
+  const handleTouchStart = () => {
+    clearTimeout(timeout);
+    setIsControlsActive(true);
+    timeout = setTimeout(() => {
+      setIsControlsActive(false);
+    }, 1000);
   };
 
   const play = () => {
@@ -199,7 +233,20 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   const Component = (
     <RenderArea $state={panoramaState}>
-      <VideoArea $state={panoramaState}>{video}</VideoArea>
+      <VideoArea $state={panoramaState}>
+        {video}
+        <AnimatePresence>
+          {panoramaState === PanoramaState.ACTIVE && isControlsActive && (
+            <VideoControls
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.1 }}
+              key={'controls'}
+            ></VideoControls>
+          )}
+        </AnimatePresence>
+      </VideoArea>
       {panoramaState === PanoramaState.BACKGROUND && (
         <ContentArea>
           <Content>
