@@ -5,13 +5,15 @@ import Evoke from '../filters/evoke';
 import { VideoPageState } from '../pages/VideoPage';
 import Spaceship from '../services/spaceship';
 import { getDate } from '../services/time';
+import Transmitter from '../services/transmitter';
 
 interface PanoramaMethods {
-  view(id: string, state?: VideoPageState): Promise<ApiResponse.Video.Info>;
+  view(id: string, state?: VideoPageState): Promise<ApiResponse>;
 }
 
 interface Panorama extends PanoramaMethods {
   videoInfo?: ApiResponse.Video.Info;
+  streamInfo?: ApiResponse.Video.Stream;
   currentVideoId?: string;
   nextVideos: IVideo[];
   recommends: IVideo[];
@@ -20,27 +22,39 @@ interface Panorama extends PanoramaMethods {
 function usePanorama(): Panorama {
   const { i18n } = useTranslation();
 
-  const [videoInfo, setVideoInfo] = useState<ApiResponse.Video.Info | undefined>();
   const [currentVideoId, setCurrentVideoId] = useState<string | undefined>();
+  const [videoInfo, setVideoInfo] = useState<ApiResponse.Video.Info | undefined>();
   const [streamInfo, setStreamInfo] = useState<ApiResponse.Video.Stream | undefined>();
   const [nextVideos, setNextVideos] = useState<IVideo[]>([]);
   const [recommends, setRecommends] = useState<IVideo[]>([]);
 
   const view = async (id: string, state?: VideoPageState) => {
     setVideoInfo(undefined);
+    setStreamInfo(undefined);
     setCurrentVideoId(id);
     setRecommends([]);
+
     if (!nextVideos.some(video => video.id === id)) setNextVideos([]);
 
-    const response = await Spaceship.getVideoInfo(id);
-    if (!response.ok) return response;
+    const videoInfoResponse = await Spaceship.getVideoInfo(id);
+    if (!videoInfoResponse.ok) return videoInfoResponse;
 
-    setVideoInfo(response);
+    setVideoInfo(videoInfoResponse);
 
-    state && new Evoke(loadState(state, response));
+    const stream = Spaceship.streamVideo(id, 1080);
+    stream.then(streamInfoResponse => {
+      if (!streamInfoResponse.ok)
+        Transmitter.emit('popup', {
+          type: 'error',
+          message: streamInfoResponse.message || 'error.service',
+        });
+      else setStreamInfo(streamInfoResponse);
+    });
+
+    state && new Evoke(loadState(state, videoInfoResponse));
     new Evoke(loadRecommend(id));
 
-    return response;
+    return videoInfoResponse;
   };
 
   const loadState = async (state: VideoPageState, videoInfo: ApiResponse.Video.Info) => {

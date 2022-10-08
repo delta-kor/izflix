@@ -6,6 +6,7 @@ import Modals from './components/modals/Modals';
 import TextModal from './components/modals/TextModal';
 import Header from './components/organisms/Header';
 import Navigator from './components/organisms/Navigator';
+import PanoramaSection from './components/organisms/PanoramaSection';
 import Popup from './components/organisms/Popup';
 import useModal from './hooks/useModal';
 import usePanorama from './hooks/usePanorama';
@@ -43,6 +44,8 @@ const App: React.FC = () => {
   return (
     <>
       <Meta data={{}} />
+
+      <PanoramaSection panorama={panorama} />
 
       <Popup />
       <Modals />
