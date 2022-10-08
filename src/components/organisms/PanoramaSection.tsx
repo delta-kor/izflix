@@ -1,9 +1,10 @@
+import { motion } from 'framer-motion';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { Panorama, PanoramaState } from '../../hooks/usePanorama';
 import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 
-const RenderArea = styled.div<{ $state: PanoramaState }>`
+const RenderArea = styled(motion.div)<{ $state: PanoramaState }>`
   background: ${Color.DARK_GRAY}AA;
   z-index: 50;
 
@@ -50,6 +51,10 @@ const Video = styled.video`
   width: 100%;
   height: 100%;
   object-fit: cover;
+
+  &::-internal-media-controls-overlay-cast-button {
+    display: none;
+  }
 `;
 
 const VideoArea = styled.div<{ $state: PanoramaState }>`
@@ -73,7 +78,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   if (panoramaState === PanoramaState.NONE) return null;
 
-  const video = <Video src={panorama.streamInfo?.url} controls />;
+  const video = <Video src={panorama.streamInfo?.url} disableRemotePlayback />;
 
   const Component = (
     <RenderArea $state={panoramaState}>
