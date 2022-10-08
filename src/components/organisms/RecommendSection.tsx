@@ -10,6 +10,7 @@ const Layout = styled.div<{ $fluid: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 4px;
+  padding: 0 0 16px 0;
 
   background: ${Color.BACKGROUND};
   z-index: 1;
