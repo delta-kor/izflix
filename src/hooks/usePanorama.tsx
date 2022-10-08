@@ -12,6 +12,7 @@ interface PanoramaMethods {
 }
 
 interface Panorama extends PanoramaMethods {
+  state: PanoramaState;
   videoInfo?: ApiResponse.Video.Info;
   streamInfo?: ApiResponse.Video.Stream;
   currentVideoId?: string;
@@ -19,9 +20,16 @@ interface Panorama extends PanoramaMethods {
   recommends: IVideo[];
 }
 
+enum PanoramaState {
+  NONE = 'none',
+  ACTIVE = 'active',
+  BACKGROUND = 'background',
+}
+
 function usePanorama(): Panorama {
   const { i18n } = useTranslation();
 
+  const [state, setState] = useState<PanoramaState>(PanoramaState.NONE);
   const [currentVideoId, setCurrentVideoId] = useState<string | undefined>();
   const [videoInfo, setVideoInfo] = useState<ApiResponse.Video.Info | undefined>();
   const [streamInfo, setStreamInfo] = useState<ApiResponse.Video.Stream | undefined>();
@@ -29,6 +37,7 @@ function usePanorama(): Panorama {
   const [recommends, setRecommends] = useState<IVideo[]>([]);
 
   const view = async (id: string, state?: VideoPageState) => {
+    setState(PanoramaState.NONE);
     setVideoInfo(undefined);
     setStreamInfo(undefined);
     setCurrentVideoId(id);
@@ -38,7 +47,6 @@ function usePanorama(): Panorama {
 
     const videoInfoResponse = await Spaceship.getVideoInfo(id);
     if (!videoInfoResponse.ok) return videoInfoResponse;
-
     setVideoInfo(videoInfoResponse);
 
     const stream = Spaceship.streamVideo(id, 1080);
@@ -53,6 +61,8 @@ function usePanorama(): Panorama {
 
     state && new Evoke(loadState(state, videoInfoResponse));
     new Evoke(loadRecommend(id));
+
+    setState(PanoramaState.ACTIVE);
 
     return videoInfoResponse;
   };
@@ -114,8 +124,16 @@ function usePanorama(): Panorama {
 
   const methods = { view };
 
-  return { videoInfo, currentVideoId: currentVideoId, nextVideos, recommends, ...methods };
+  return {
+    state,
+    videoInfo,
+    currentVideoId,
+    nextVideos,
+    recommends,
+    ...methods,
+  };
 }
 
 export type { Panorama };
+export { PanoramaState };
 export default usePanorama;
