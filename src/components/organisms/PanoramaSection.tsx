@@ -160,7 +160,9 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   if (panoramaState === PanoramaState.NONE) return null;
 
-  const video = <Video src={panorama.streamInfo?.url} autoPlay disableRemotePlayback playsInline />;
+  const video = (
+    <Video src={panorama.streamInfo?.url} controls autoPlay disableRemotePlayback playsInline />
+  );
 
   const Component = (
     <RenderArea $state={panoramaState}>
