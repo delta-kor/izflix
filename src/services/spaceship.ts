@@ -190,6 +190,7 @@ class SpaceshipClass {
   }
 
   public async getUser(): Promise<ApiResponse.User.Get> {
+    await this.getUserToken();
     return this.post('/user', null, {
       key: 'get_user',
       expire: expireTime,
