@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { Panorama, PanoramaState } from '../../hooks/usePanorama';
@@ -156,12 +157,44 @@ interface Props {
 }
 
 const PanoramaSection: React.FC<Props> = ({ panorama }) => {
-  const panoramaState = panorama.state;
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    setIsPlaying(!video.paused);
+    video.addEventListener('play', handlePlay);
+    video.addEventListener('pause', handlePause);
+
+    return () => {
+      video.removeEventListener('play', handlePlay);
+      video.removeEventListener('pause', handlePause);
+    };
+  }, [videoRef.current]);
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+  };
+
+  const handlePause = () => {
+    setIsPlaying(false);
+  };
+
+  const play = () => {
+    videoRef.current?.play();
+  };
+
+  const pause = () => {
+    videoRef.current?.pause();
+  };
+
+  const panoramaState = panorama.state;
   if (panoramaState === PanoramaState.NONE) return null;
 
   const video = (
-    <Video src={panorama.streamInfo?.url} controls autoPlay disableRemotePlayback playsInline />
+    <Video src={panorama.streamInfo?.url} ref={videoRef} disableRemotePlayback playsInline />
   );
 
   const Component = (
@@ -174,8 +207,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
             <Description>{panorama.videoInfo?.description}</Description>
           </Content>
           <Icons>
-            <IconWrapper hover={1.1} tap={0.9}>
-              <MenuIcon type={'pause'} color={Color.WHITE} />
+            <IconWrapper hover={1.1} tap={0.9} onClick={() => (isPlaying ? pause() : play())}>
+              <MenuIcon type={isPlaying ? 'pause' : 'play'} color={Color.WHITE} />
             </IconWrapper>
             <IconWrapper hover={1.1} tap={0.9}>
               <MenuIcon type={'close'} color={Color.WHITE} />
