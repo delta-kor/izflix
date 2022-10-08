@@ -26,7 +26,7 @@ const RenderArea = styled(motion.div)<{ $state: PanoramaState }>`
         left: 16px;
         right: 16px;
         bottom: 85px;
-        height: 86px;
+        height: 72px;
         border-radius: 8px;
         overflow: hidden;
         `}
@@ -160,7 +160,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   if (panoramaState === PanoramaState.NONE) return null;
 
-  const video = <Video src={panorama.streamInfo?.url} disableRemotePlayback />;
+  const video = <Video src={panorama.streamInfo?.url} autoPlay disableRemotePlayback playsInline />;
 
   const Component = (
     <RenderArea $state={panoramaState}>
