@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
 import { VideoPageState } from '../pages/VideoPage';
+import PageManager from '../services/page-manager';
 import Spaceship from '../services/spaceship';
 import { getDate } from '../services/time';
 import Transmitter from '../services/transmitter';
@@ -39,7 +40,9 @@ function usePanorama(): Panorama {
   const [recommends, setRecommends] = useState<IVideo[]>([]);
 
   useEffect(() => {
-    setState(PanoramaState.NONE);
+    const isBackgroudState = PageManager.isBackgroundState(location.pathname);
+    state !== PanoramaState.NONE &&
+      setState(isBackgroudState ? PanoramaState.BACKGROUND : PanoramaState.NONE);
   }, [location]);
 
   const view = async (id: string, state?: VideoPageState) => {

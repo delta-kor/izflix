@@ -50,6 +50,11 @@ class PageManager {
     if (path.startsWith('/category')) return '/category';
     return path;
   }
+
+  public static isBackgroundState(location: string): boolean {
+    const pageInfo = PageManager.getPageInfo(location);
+    return !!pageInfo;
+  }
 }
 
 export default PageManager;
