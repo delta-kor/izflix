@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
 import { VideoPageState } from '../pages/VideoPage';
@@ -28,6 +29,7 @@ enum PanoramaState {
 
 function usePanorama(): Panorama {
   const { i18n } = useTranslation();
+  const location = useLocation();
 
   const [state, setState] = useState<PanoramaState>(PanoramaState.NONE);
   const [currentVideoId, setCurrentVideoId] = useState<string | undefined>();
@@ -35,6 +37,10 @@ function usePanorama(): Panorama {
   const [streamInfo, setStreamInfo] = useState<ApiResponse.Video.Stream | undefined>();
   const [nextVideos, setNextVideos] = useState<IVideo[]>([]);
   const [recommends, setRecommends] = useState<IVideo[]>([]);
+
+  useEffect(() => {
+    setState(PanoramaState.NONE);
+  }, [location]);
 
   const view = async (id: string, state?: VideoPageState) => {
     setState(PanoramaState.NONE);
@@ -127,6 +133,7 @@ function usePanorama(): Panorama {
   return {
     state,
     videoInfo,
+    streamInfo,
     currentVideoId,
     nextVideos,
     recommends,

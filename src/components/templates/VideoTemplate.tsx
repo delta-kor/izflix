@@ -36,10 +36,28 @@ const VideoArea = styled.div`
 `;
 
 const VideoPlaceholder = styled.div`
+  ${MobileQuery} {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  ${PcQuery} {
+    display: none;
+  }
+`;
+
+const VideoHider = styled.div`
   width: 100%;
   aspect-ratio: 16 / 9;
-
   background: ${Color.DARK_GRAY};
+  z-index: 49;
+
+  ${MobileQuery} {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
 `;
 
 const ContentArea = styled.div`
@@ -79,6 +97,7 @@ const VideoTemplate: React.FC<Props> = ({ panorama, action, onLike }) => {
     <Layout>
       <VideoArea>
         <VideoPlaceholder />
+        <VideoHider />
         <VideoInfoSection videoInfo={panorama.videoInfo} />
         <VideoAction action={action} onLike={onLike} />
       </VideoArea>
