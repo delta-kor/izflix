@@ -11,6 +11,7 @@ import Transmitter from '../services/transmitter';
 
 interface PanoramaMethods {
   view(id: string, state?: VideoPageState): Promise<ApiResponse>;
+  setState(state: PanoramaState): void;
 }
 
 interface Panorama extends PanoramaMethods {
@@ -18,6 +19,7 @@ interface Panorama extends PanoramaMethods {
   videoInfo?: ApiResponse.Video.Info;
   streamInfo?: ApiResponse.Video.Stream;
   currentVideoId?: string;
+  currentVideoState?: VideoPageState;
   nextVideos: IVideo[];
   recommends: IVideo[];
 }
@@ -34,6 +36,7 @@ function usePanorama(): Panorama {
 
   const [state, setState] = useState<PanoramaState>(PanoramaState.NONE);
   const [currentVideoId, setCurrentVideoId] = useState<string | undefined>();
+  const [currentVideoState, setCurrentState] = useState<VideoPageState | undefined>();
   const [videoInfo, setVideoInfo] = useState<ApiResponse.Video.Info | undefined>();
   const [streamInfo, setStreamInfo] = useState<ApiResponse.Video.Stream | undefined>();
   const [nextVideos, setNextVideos] = useState<IVideo[]>([]);
@@ -53,6 +56,7 @@ function usePanorama(): Panorama {
     setVideoInfo(undefined);
     setStreamInfo(undefined);
     setCurrentVideoId(id);
+    setCurrentState(state);
     setRecommends([]);
 
     if (!nextVideos.some(video => video.id === id)) setNextVideos([]);
@@ -134,13 +138,14 @@ function usePanorama(): Panorama {
     setRecommends(response.videos);
   };
 
-  const methods = { view };
+  const methods = { view, setState: (state: PanoramaState) => setState(state) };
 
   return {
     state,
     videoInfo,
     streamInfo,
     currentVideoId,
+    currentVideoState,
     nextVideos,
     recommends,
     ...methods,
