@@ -43,20 +43,21 @@ function usePanorama(): Panorama {
   const [recommends, setRecommends] = useState<IVideo[]>([]);
 
   useEffect(() => {
-    if (location.pathname === `/${currentVideoId}`) return setState(PanoramaState.ACTIVE);
+    if (state === PanoramaState.BACKGROUND && location.pathname === `/${currentVideoId}`)
+      return setState(PanoramaState.ACTIVE);
     const isBackgroudState = PageManager.isBackgroundState(location.pathname);
     state !== PanoramaState.NONE &&
       setState(isBackgroudState ? PanoramaState.BACKGROUND : PanoramaState.NONE);
   }, [location]);
 
-  const view = async (id: string, state?: VideoPageState) => {
+  const view = async (id: string, videoState?: VideoPageState) => {
     if (id === currentVideoId) return { ok: true, status: 200 };
 
     setState(PanoramaState.NONE);
     setVideoInfo(undefined);
     setStreamInfo(undefined);
     setCurrentVideoId(id);
-    setCurrentState(state);
+    setCurrentState(videoState);
     setRecommends([]);
 
     if (!nextVideos.some(video => video.id === id)) setNextVideos([]);
@@ -75,10 +76,14 @@ function usePanorama(): Panorama {
       else setStreamInfo(streamInfoResponse);
     });
 
-    state && new Evoke(loadState(state, videoInfoResponse));
+    videoState && new Evoke(loadState(videoState, videoInfoResponse));
     new Evoke(loadRecommend(id));
 
-    setState(PanoramaState.ACTIVE);
+    setState(
+      PageManager.isBackgroundState(window.location.pathname)
+        ? PanoramaState.BACKGROUND
+        : PanoramaState.ACTIVE
+    );
 
     return videoInfoResponse;
   };
@@ -138,7 +143,15 @@ function usePanorama(): Panorama {
     setRecommends(response.videos);
   };
 
-  const methods = { view, setState: (state: PanoramaState) => setState(state) };
+  const setStateMethod = (state: PanoramaState) => {
+    if (state === PanoramaState.NONE) {
+      setCurrentState(undefined);
+      setCurrentVideoId(undefined);
+    }
+    setState(state);
+  };
+
+  const methods = { view, setState: setStateMethod };
 
   return {
     state,

@@ -110,6 +110,7 @@ const Content = styled.div`
   flex-grow: 1;
   gap: 4px;
   min-width: 0;
+  user-select: none;
 `;
 
 const Title = styled.div`
@@ -276,7 +277,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   };
 
   const handleMouseEvent = (e: MouseEvent) => {
-    if (!videoRef.current) return false;
+    if (!videoRef.current || panoramaState !== PanoramaState.ACTIVE) return false;
     const boundingRect = videoRef.current.getBoundingClientRect();
     const isOnTarget =
       boundingRect.left <= e.clientX &&
@@ -293,6 +294,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   };
 
   const handleTouchStart = () => {
+    if (panoramaState !== PanoramaState.ACTIVE) return false;
+
     clearTimeout(timeout);
     setIsControlsActive(true);
     timeout = setTimeout(() => {
@@ -391,6 +394,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
               hover={1.1}
               tap={0.9}
               onClick={e => {
+                e.preventDefault();
                 e.stopPropagation();
                 isPlaying ? pause() : play();
               }}
@@ -401,6 +405,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
               hover={1.1}
               tap={0.9}
               onClick={e => {
+                e.preventDefault();
                 e.stopPropagation();
                 panorama.setState(PanoramaState.NONE);
               }}
