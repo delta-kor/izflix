@@ -1,5 +1,5 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, PanInfo } from 'framer-motion';
+import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { Panorama, PanoramaState } from '../../hooks/usePanorama';
@@ -57,17 +57,23 @@ const RenderArea = styled(motion.div)<{ $state: PanoramaState }>`
 
 const Video = styled.video`
   display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 0;
 
   &::-internal-media-controls-overlay-cast-button {
     display: none;
   }
 `;
 
-const VideoArea = styled.div<{ $state: PanoramaState }>`
+const VideoArea = styled(motion.div)<{ $state: PanoramaState }>`
+  position: relative;
   flex-shrink: 0;
+  touch-action: none;
 
   ${MobileQuery} {
     height: 100%;
@@ -159,7 +165,7 @@ const VideoControls = styled(motion.div)`
   width: 100%;
   height: 100%;
   background: ${Color.BACKGROUND}B4;
-  pointer-events: none;
+  z-index: 1;
 `;
 
 const ProgressBar = styled.div<{ $active: boolean }>`
@@ -169,17 +175,44 @@ const ProgressBar = styled.div<{ $active: boolean }>`
   height: ${({ $active }) => ($active ? '12px' : '2px')};
   background: ${Color.GRAY};
   transition: height 0.2s;
+  z-index: 2;
+  cursor: pointer;
 `;
 
-const ProgressAmount = styled(motion.div)`
+const ProgressAmount = styled.div`
   height: 100%;
   background: ${Color.PRIMARY};
+`;
+
+const PlayButton = styled(SmoothBox)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  & > .content {
+    width: 56px;
+    height: 56px;
+    background: ${Color.WHITE};
+    border-radius: 100%;
+    cursor: pointer;
+  }
+`;
+
+const PlayIcon = styled(Icon)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
 `;
 
 interface Props {
   panorama: Panorama;
 }
 
+let timeout: any = null;
 const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -197,6 +230,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     video.addEventListener('play', handlePlay);
     video.addEventListener('pause', handlePause);
     video.addEventListener('touchstart', handleTouchStart);
+    video.addEventListener('touchmove', handleTouchStart);
     video.addEventListener('timeupdate', handleTimeUpdate);
 
     return () => {
@@ -204,6 +238,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       video.removeEventListener('play', handlePlay);
       video.removeEventListener('pause', handlePause);
       video.removeEventListener('touchstart', handleTouchStart);
+      video.removeEventListener('touchmove', handleTouchStart);
       video.removeEventListener('timeupdate', handleTimeUpdate);
     };
   }, [videoRef.current]);
@@ -238,13 +273,38 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setDuration(video.duration);
   };
 
-  let timeout: any = null;
   const handleTouchStart = () => {
+    console.log(timeout);
     clearTimeout(timeout);
     setIsControlsActive(true);
     timeout = setTimeout(() => {
       setIsControlsActive(false);
-    }, 1000);
+      timeout = null;
+    }, 3000);
+  };
+
+  const handlePan = (e: MouseEvent, info: PanInfo) => {
+    if (!videoRef.current) return false;
+
+    const video = videoRef.current;
+    const boundingRect = video.getBoundingClientRect();
+    const percentage = (info.point.x - boundingRect.left) / boundingRect.width;
+
+    video.currentTime = percentage * video.duration;
+    setPlayed(video.currentTime);
+    setDuration(video.duration);
+  };
+
+  const handleProgressBarClick: MouseEventHandler = e => {
+    if (!videoRef.current) return false;
+
+    const video = videoRef.current;
+    const boundingRect = video.getBoundingClientRect();
+    const percentage = (e.clientX - boundingRect.left) / boundingRect.width;
+
+    video.currentTime = percentage * video.duration;
+    setPlayed(video.currentTime);
+    setDuration(video.duration);
   };
 
   const play = () => {
@@ -264,7 +324,11 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   const Component = (
     <RenderArea $state={panoramaState}>
-      <VideoArea $state={panoramaState}>
+      <VideoArea
+        $state={panoramaState}
+        onPan={handlePan}
+        onPanEnd={() => timeout !== null && setIsControlsActive(false)}
+      >
         {VideoItem}
         <AnimatePresence>
           {panoramaState === PanoramaState.ACTIVE && isControlsActive && (
@@ -274,15 +338,21 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.1 }}
               key={'controls'}
-            ></VideoControls>
+            >
+              <PlayButton hover={1.1} tap={0.9} onClick={() => (isPlaying ? pause() : play())}>
+                <PlayIcon type={isPlaying ? 'pause' : 'play'} color={Color.DARK_GRAY} />
+              </PlayButton>
+            </VideoControls>
           )}
         </AnimatePresence>
         {panoramaState === PanoramaState.ACTIVE && (
-          <ProgressBar $active={isControlsActive}>
-            <ProgressAmount
-              initial={{ width: '0%' }}
-              animate={{ width: `${(played / duration) * 100}%` }}
-            />
+          <ProgressBar
+            $active={isControlsActive}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchStart}
+            onClick={handleProgressBarClick}
+          >
+            <ProgressAmount style={{ width: `${(played / duration) * 100}%` }} />
           </ProgressBar>
         )}
       </VideoArea>
