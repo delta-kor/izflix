@@ -333,6 +333,10 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const { isFullscreenEnabled, enableFullscreen, disableFullscreen } = useFullscreen({
     target: videoAreaRef,
   });
+  const { isFullscreenEnabled: isVideoFullscreenEnabled, enableFullscreen: enableVideoFullscreen } =
+    useFullscreen({
+      target: videoRef,
+    });
   const isFullScreenRef = useRef<boolean>(false);
 
   const panoramaState = panorama.state;
@@ -445,7 +449,9 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     if (isFullscreenEnabled) {
       disableFullscreen();
     } else {
-      enableFullscreen();
+      enableFullscreen().catch(() => {
+        enableVideoFullscreen();
+      });
     }
   };
 
