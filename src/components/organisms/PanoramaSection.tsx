@@ -162,34 +162,56 @@ const VideoControls = styled(motion.div)`
   pointer-events: none;
 `;
 
+const ProgressBar = styled.div<{ $active: boolean }>`
+  position: absolute;
+  bottom: -2px;
+  width: 100%;
+  height: ${({ $active }) => ($active ? '12px' : '2px')};
+  background: ${Color.GRAY};
+  transition: height 0.2s;
+`;
+
+const ProgressAmount = styled(motion.div)`
+  height: 100%;
+  background: ${Color.PRIMARY};
+`;
+
 interface Props {
   panorama: Panorama;
 }
 
 const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isControlsActive, setIsControlsActive] = useState<boolean>(false);
+  const [played, setPlayed] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     setIsPlaying(!video.paused);
+    document.addEventListener('mousemove', handleMouseEvent);
     video.addEventListener('play', handlePlay);
     video.addEventListener('pause', handlePause);
-    video.addEventListener('mouseover', handleMouseOver);
-    video.addEventListener('mouseout', handleMouseOut);
     video.addEventListener('touchstart', handleTouchStart);
+    video.addEventListener('timeupdate', handleTimeUpdate);
 
     return () => {
+      document.removeEventListener('mousemove', handleMouseEvent);
       video.removeEventListener('play', handlePlay);
       video.removeEventListener('pause', handlePause);
-      video.removeEventListener('mouseover', handleMouseOver);
-      video.removeEventListener('mouseout', handleMouseOut);
       video.removeEventListener('touchstart', handleTouchStart);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
     };
   }, [videoRef.current]);
+
+  useEffect(() => {
+    setPlayed(0);
+    setDuration(1);
+  }, [panorama.currentVideoId]);
 
   const handlePlay = () => {
     setIsPlaying(true);
@@ -199,12 +221,21 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setIsPlaying(false);
   };
 
-  const handleMouseOver = () => {
-    setIsControlsActive(true);
+  const handleMouseEvent = (e: MouseEvent) => {
+    if (!videoRef.current) return false;
+    const boundingRect = videoRef.current.getBoundingClientRect();
+    const isOnTarget =
+      boundingRect.left <= e.clientX &&
+      e.clientX <= boundingRect.right &&
+      boundingRect.top <= e.clientY &&
+      e.clientY <= boundingRect.bottom + 2;
+    setIsControlsActive(isOnTarget);
   };
 
-  const handleMouseOut = () => {
-    setIsControlsActive(false);
+  const handleTimeUpdate = (e: Event) => {
+    const video = e.target as HTMLVideoElement;
+    setPlayed(video.currentTime);
+    setDuration(video.duration);
   };
 
   let timeout: any = null;
@@ -227,14 +258,14 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const panoramaState = panorama.state;
   if (panoramaState === PanoramaState.NONE) return null;
 
-  const video = (
+  const VideoItem = (
     <Video src={panorama.streamInfo?.url} ref={videoRef} disableRemotePlayback playsInline />
   );
 
   const Component = (
     <RenderArea $state={panoramaState}>
       <VideoArea $state={panoramaState}>
-        {video}
+        {VideoItem}
         <AnimatePresence>
           {panoramaState === PanoramaState.ACTIVE && isControlsActive && (
             <VideoControls
@@ -246,6 +277,14 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
             ></VideoControls>
           )}
         </AnimatePresence>
+        {panoramaState === PanoramaState.ACTIVE && (
+          <ProgressBar $active={isControlsActive}>
+            <ProgressAmount
+              initial={{ width: '0%' }}
+              animate={{ width: `${(played / duration) * 100}%` }}
+            />
+          </ProgressBar>
+        )}
       </VideoArea>
       {panoramaState === PanoramaState.BACKGROUND && (
         <ContentArea>
