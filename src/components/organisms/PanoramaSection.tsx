@@ -447,7 +447,9 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       disableFullscreen();
     } else {
       // @ts-ignore
-      if (videoRef.current.webkitEnterFullscreen) videoRef.current.webkitEnterFullscreen();
+      if (videoRef.current.webkitEnterFullscreen && !videoRef.current.requestFullscreen)
+        // @ts-ignore
+        videoRef.current.webkitEnterFullscreen();
       else enableFullscreen();
     }
   };
