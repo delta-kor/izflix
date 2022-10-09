@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Panorama, PanoramaState } from '../../hooks/usePanorama';
 import Icon from '../../icons/Icon';
+import { getDuration } from '../../services/time';
 import { Color, HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
 import SmoothBox from '../atoms/SmoothBox';
 
@@ -227,6 +228,56 @@ const PlayIcon = styled(Icon)`
   }
 `;
 
+const Time = styled.div`
+  display: flex;
+  position: absolute;
+  align-items: flex-end;
+  transform: skew(0.1deg);
+  user-select: none;
+
+  ${MobileQuery} {
+    gap: 4px;
+    bottom: 24px;
+    left: 16px;
+  }
+
+  ${PcQuery} {
+    gap: 6px;
+    bottom: 28px;
+    left: 20px;
+  }
+
+  & > div {
+    color: ${Color.WHITE};
+  }
+
+  & > div:nth-child(1) {
+    font-weight: 700;
+
+    ${MobileQuery} {
+      font-size: 16px;
+    }
+
+    ${PcQuery} {
+      font-size: 22px;
+    }
+  }
+
+  & > div:nth-child(2),
+  & > div:nth-child(3) {
+    font-weight: 400;
+    opacity: 0.7;
+
+    ${MobileQuery} {
+      font-size: 12px;
+    }
+
+    ${PcQuery} {
+      font-size: 18px;
+    }
+  }
+`;
+
 interface Props {
   panorama: Panorama;
 }
@@ -369,6 +420,11 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
               <PlayButton hover={1.1} tap={0.9} onClick={() => (isPlaying ? pause() : play())}>
                 <PlayIcon type={isPlaying ? 'pause' : 'play'} color={Color.DARK_GRAY} />
               </PlayButton>
+              <Time>
+                <div>{getDuration(played)}</div>
+                <div>/</div>
+                <div>{getDuration(duration)}</div>
+              </Time>
             </VideoControls>
           )}
         </AnimatePresence>
