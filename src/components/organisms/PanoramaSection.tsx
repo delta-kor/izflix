@@ -2,7 +2,9 @@ import { AnimatePresence, motion, PanInfo } from 'framer-motion';
 import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useNavigate } from 'react-router-dom';
+import { useFullscreen } from 'rooks';
 import styled from 'styled-components';
+import useDevice from '../../hooks/useDevice';
 import { Panorama, PanoramaState } from '../../hooks/usePanorama';
 import Icon from '../../icons/Icon';
 import { getDuration } from '../../services/time';
@@ -278,6 +280,40 @@ const Time = styled.div`
   }
 `;
 
+const FullscreenButton = styled(SmoothBox)`
+  position: absolute;
+  cursor: pointer;
+
+  ${MobileQuery} {
+    bottom: 20px;
+    right: 12px;
+  }
+
+  ${PcQuery} {
+    bottom: 24px;
+    right: 16px;
+  }
+
+  & > .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+  }
+`;
+
+const FullscreenIcon = styled(Icon)`
+  ${MobileQuery} {
+    width: 20px;
+    height: 20px;
+  }
+
+  ${PcQuery} {
+    width: 24px;
+    height: 24px;
+  }
+`;
+
 interface Props {
   panorama: Panorama;
 }
@@ -285,12 +321,21 @@ interface Props {
 let timeout: any = null;
 const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const navigate = useNavigate();
+  const device = useDevice();
 
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isControlsActive, setIsControlsActive] = useState<boolean>(false);
   const [played, setPlayed] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
+
   const videoRef = useRef<HTMLVideoElement>(null);
+  const videoAreaRef = useRef<HTMLDivElement>(null);
+  const { isFullscreenEnabled, enableFullscreen, disableFullscreen } = useFullscreen({
+    target: videoAreaRef,
+  });
+  const isFullScreenRef = useRef<boolean>(false);
+
+  const panoramaState = panorama.state;
 
   useEffect(() => {
     const video = videoRef.current;
@@ -298,19 +343,9 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
     setIsPlaying(!video.paused);
     document.addEventListener('mousemove', handleMouseEvent);
-    video.addEventListener('play', handlePlay);
-    video.addEventListener('pause', handlePause);
-    video.addEventListener('touchstart', handleTouchStart);
-    video.addEventListener('touchmove', handleTouchStart);
-    video.addEventListener('timeupdate', handleTimeUpdate);
 
     return () => {
       document.removeEventListener('mousemove', handleMouseEvent);
-      video.removeEventListener('play', handlePlay);
-      video.removeEventListener('pause', handlePause);
-      video.removeEventListener('touchstart', handleTouchStart);
-      video.removeEventListener('touchmove', handleTouchStart);
-      video.removeEventListener('timeupdate', handleTimeUpdate);
     };
   }, [videoRef.current]);
 
@@ -318,6 +353,19 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setPlayed(0);
     setDuration(0);
   }, [panorama.currentVideoId]);
+
+  useEffect(() => {
+    isFullScreenRef.current = isFullscreenEnabled;
+
+    if (!isFullscreenEnabled && document.body.style.cursor === 'none') {
+      document.body.style.cursor = 'unset';
+    }
+
+    try {
+      if (isFullscreenEnabled) window.screen.orientation.lock('landscape');
+      else window.screen.orientation.unlock();
+    } catch (e) {}
+  }, [isFullscreenEnabled]);
 
   const handlePlay = () => {
     setIsPlaying(true);
@@ -329,6 +377,10 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   const handleMouseEvent = (e: MouseEvent) => {
     if (!videoRef.current || panoramaState !== PanoramaState.ACTIVE) return false;
+    if (isFullScreenRef.current) {
+      handleTouchStart();
+      return true;
+    }
     const boundingRect = videoRef.current.getBoundingClientRect();
     const isOnTarget =
       boundingRect.left <= e.clientX &&
@@ -338,21 +390,29 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setIsControlsActive(isOnTarget);
   };
 
-  const handleTimeUpdate = (e: Event) => {
-    const video = e.target as HTMLVideoElement;
+  const handleTimeUpdate = () => {
+    if (!videoRef.current) return false;
+    const video = videoRef.current;
     setPlayed(video.currentTime);
     setDuration(video.duration);
   };
 
   const handleTouchStart = () => {
     if (panoramaState !== PanoramaState.ACTIVE) return false;
+    document.body.style.cursor = 'unset';
 
     clearTimeout(timeout);
     setIsControlsActive(true);
-    timeout = setTimeout(() => {
-      setIsControlsActive(false);
-      timeout = null;
-    }, 3000);
+    timeout = setTimeout(
+      () => {
+        setIsControlsActive(false);
+        if (isFullScreenRef.current) {
+          document.body.style.cursor = 'none';
+        }
+        timeout = null;
+      },
+      device === 'pc' ? 1000 : 3000
+    );
   };
 
   const handlePan = (e: MouseEvent, info: PanInfo) => {
@@ -379,6 +439,16 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setDuration(video.duration || 0);
   };
 
+  const handleFullscreenClick = () => {
+    if (!videoAreaRef.current || panoramaState !== PanoramaState.ACTIVE) return false;
+
+    if (isFullscreenEnabled) {
+      disableFullscreen();
+    } else {
+      enableFullscreen();
+    }
+  };
+
   const play = () => {
     videoRef.current?.play();
   };
@@ -387,11 +457,20 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     videoRef.current?.pause();
   };
 
-  const panoramaState = panorama.state;
   if (panoramaState === PanoramaState.NONE) return null;
 
   const VideoItem = (
-    <Video src={panorama.streamInfo?.url} ref={videoRef} disableRemotePlayback playsInline />
+    <Video
+      src={panorama.streamInfo?.url}
+      ref={videoRef}
+      onPlay={handlePlay}
+      onPause={handlePause}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchStart}
+      onTimeUpdate={handleTimeUpdate}
+      disableRemotePlayback
+      playsInline
+    />
   );
 
   const Component = (
@@ -406,6 +485,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
         $state={panoramaState}
         onPan={handlePan}
         onPanEnd={() => timeout !== null && setIsControlsActive(false)}
+        ref={videoAreaRef}
       >
         {VideoItem}
         <AnimatePresence>
@@ -425,6 +505,9 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                 <div>/</div>
                 <div>{getDuration(duration)}</div>
               </Time>
+              <FullscreenButton hover={1.1} tap={0.9} onClick={handleFullscreenClick}>
+                <FullscreenIcon type={'fullscreen'} color={Color.WHITE} />
+              </FullscreenButton>
             </VideoControls>
           )}
         </AnimatePresence>

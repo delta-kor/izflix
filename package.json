@@ -27,6 +27,7 @@
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "react-snap": "^1.23.0",
+    "rooks": "^7.4.0",
     "styled-components": "^5.3.3",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"

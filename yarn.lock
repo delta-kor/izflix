@@ -8076,6 +8076,14 @@ rollup@^2.43.1:
   optionalDependencies:
     fsevents "~2.3.2"
 
+rooks@^7.4.0:
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/rooks/-/rooks-7.4.0.tgz#2174c4e705916179790fa2d2c91d3ea989245907"
+  integrity sha512-k9gOJid4/BRcznOSkce+sPlVulLj7ZuM9iEXKYk9Js4TplFULs8K/I8x1N9c0z/YkF9MHjmpe1JYVKpUJrNqVg==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    raf "^3.4.1"
+
 run-parallel@^1.1.9:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/run-parallel/-/run-parallel-1.2.0.tgz#66d1368da7bdf921eb9d95bd1a9229e7f21a43ee"
