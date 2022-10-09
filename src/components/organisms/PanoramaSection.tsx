@@ -9,6 +9,7 @@ import { Panorama, PanoramaState } from '../../hooks/usePanorama';
 import Icon from '../../icons/Icon';
 import { getDuration } from '../../services/time';
 import { Color, HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
+import Loader from '../atoms/Loader';
 import SmoothBox from '../atoms/SmoothBox';
 
 const RenderArea = styled(motion.div)<{ $state: PanoramaState }>`
@@ -60,7 +61,7 @@ const RenderArea = styled(motion.div)<{ $state: PanoramaState }>`
   }
 `;
 
-const Video = styled.video`
+const Video = styled(motion.video)`
   display: block;
   position: absolute;
   top: 0;
@@ -170,7 +171,7 @@ const VideoControls = styled(motion.div)`
   left: 0;
   width: 100%;
   height: 100%;
-  background: ${Color.BACKGROUND}B4;
+  background: ${Color.BACKGROUND}84;
   z-index: 1;
 `;
 
@@ -314,6 +315,28 @@ const FullscreenIcon = styled(Icon)`
   }
 `;
 
+const VideoLoader = styled(Loader)<{ $active: boolean }>`
+  position: absolute;
+
+  z-index: 1;
+  opacity: ${({ $active }) => ($active ? 1 : 0)};
+  transition: opacity 0.5s ease;
+
+  ${MobileQuery} {
+    top: calc(50% - 15px);
+    left: calc(50% - 15px);
+    width: 30px;
+    height: 30px;
+  }
+
+  ${PcQuery} {
+    top: calc(50% - 24px);
+    left: calc(50% - 24px);
+    width: 48px;
+    height: 48px;
+  }
+`;
+
 interface Props {
   panorama: Panorama;
 }
@@ -327,6 +350,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const [isControlsActive, setIsControlsActive] = useState<boolean>(false);
   const [played, setPlayed] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
+  const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoAreaRef = useRef<HTMLDivElement>(null);
@@ -352,6 +376,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   useEffect(() => {
     setPlayed(0);
     setDuration(0);
+    setVideoLoaded(false);
   }, [panorama.currentVideoId]);
 
   useEffect(() => {
@@ -454,8 +479,18 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     }
   };
 
+  const handleOnCanPlay = () => {
+    if (!videoRef.current) return false;
+
+    const video = videoRef.current;
+    setVideoLoaded(true);
+    setPlayed(video.currentTime || 0);
+    setDuration(video.duration || 0);
+  };
+
   const play = () => {
     videoRef.current?.play();
+    setIsControlsActive(false);
   };
 
   const pause = () => {
@@ -466,6 +501,10 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   const VideoItem = (
     <Video
+      initial={'hide'}
+      variants={{ hide: { opacity: 0 }, show: { opacity: 1 } }}
+      animate={videoLoaded ? 'show' : 'hide'}
+      transition={{ duration: 0.5 }}
       src={panorama.streamInfo?.url}
       ref={videoRef}
       onPlay={handlePlay}
@@ -473,10 +512,13 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchStart}
       onTimeUpdate={handleTimeUpdate}
+      onCanPlay={handleOnCanPlay}
       disableRemotePlayback
       playsInline
     />
   );
+
+  const synthedControlsActive = (isControlsActive || !isPlaying) && videoLoaded;
 
   const Component = (
     <RenderArea
@@ -493,8 +535,9 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
         ref={videoAreaRef}
       >
         {VideoItem}
+        <VideoLoader $active={!videoLoaded} color={Color.BACKGROUND} />
         <AnimatePresence>
-          {panoramaState === PanoramaState.ACTIVE && isControlsActive && (
+          {panoramaState === PanoramaState.ACTIVE && synthedControlsActive && (
             <VideoControls
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -518,7 +561,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
         </AnimatePresence>
         {panoramaState === PanoramaState.ACTIVE && (
           <ProgressBar
-            $active={isControlsActive}
+            $active={synthedControlsActive}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchStart}
             onClick={handleProgressBarClick}
