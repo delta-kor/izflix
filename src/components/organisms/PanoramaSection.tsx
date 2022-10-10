@@ -61,15 +61,13 @@ const RenderArea = styled(motion.div)<{ $state: PanoramaState }>`
   }
 `;
 
-const Video = styled(motion.video)`
+const Video = styled(motion.video)<{ $active: boolean; $screenAdjust: ScreenAdjust }>`
   display: block;
   position: absolute;
-  top: 0;
-  left: 0;
+  object-fit: ${({ $screenAdjust }) => ($screenAdjust === 'top' ? 'cover' : 'contain')};
+  z-index: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  z-index: 0;
 
   &::-internal-media-controls-overlay-cast-button {
     display: none;
@@ -303,6 +301,28 @@ const FullscreenButton = styled(SmoothBox)`
   }
 `;
 
+const ScreenAdjustButton = styled(SmoothBox)`
+  position: absolute;
+  cursor: pointer;
+
+  ${MobileQuery} {
+    bottom: 20px;
+    right: 52px;
+  }
+
+  ${PcQuery} {
+    bottom: 24px;
+    right: 58px;
+  }
+
+  & > .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+  }
+`;
+
 const ControlIcon = styled(Icon)`
   ${MobileQuery} {
     width: 20px;
@@ -363,6 +383,8 @@ interface Props {
   panorama: Panorama;
 }
 
+type ScreenAdjust = 'left' | 'top';
+
 let timeout: any = null;
 const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const navigate = useNavigate();
@@ -373,6 +395,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const [played, setPlayed] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
+  const [screenAdjust, setScreenAdjust] = useState<ScreenAdjust>('left');
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoAreaRef = useRef<HTMLDivElement>(null);
@@ -505,6 +528,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     if (isFullscreenEnabled) {
       disableFullscreen();
     } else {
+      handleTouchStart();
+
       // @ts-ignore
       if (videoRef.current.webkitEnterFullscreen && !videoRef.current.requestFullscreen)
         // @ts-ignore
@@ -529,6 +554,10 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     navigate(-1);
   };
 
+  const handleScreenAdjust = () => {
+    setScreenAdjust(screenAdjust => (screenAdjust === 'left' ? 'top' : 'left'));
+  };
+
   const play = () => {
     videoRef.current?.play();
   };
@@ -541,6 +570,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   const VideoItem = (
     <Video
+      $active={panorama.state === PanoramaState.ACTIVE}
+      $screenAdjust={screenAdjust}
       initial={'hide'}
       variants={{ hide: { opacity: 0 }, show: { opacity: 1 } }}
       animate={videoLoaded ? 'show' : 'hide'}
@@ -601,8 +632,16 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                 <div>{getDuration(duration)}</div>
               </Time>
               <FullscreenButton hover={1.1} tap={0.9} onClick={handleFullscreenClick}>
-                <ControlIcon type={'fullscreen'} color={Color.WHITE} />
+                <ControlIcon
+                  type={isFullscreenEnabled ? 'downscreen' : 'fullscreen'}
+                  color={Color.WHITE}
+                />
               </FullscreenButton>
+              {isFullscreenEnabled && (
+                <ScreenAdjustButton hover={1.1} tap={0.9} onClick={handleScreenAdjust}>
+                  <ControlIcon type={'fullscreen'} color={Color.WHITE} />
+                </ScreenAdjustButton>
+              )}
               <BackButton hover={1.1} tap={0.9} onClick={handleBackClick}>
                 <ControlIcon type={'left'} color={Color.WHITE} />
               </BackButton>
