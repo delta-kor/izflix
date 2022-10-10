@@ -303,7 +303,7 @@ const FullscreenButton = styled(SmoothBox)`
   }
 `;
 
-const FullscreenIcon = styled(Icon)`
+const ControlIcon = styled(Icon)`
   ${MobileQuery} {
     width: 20px;
     height: 20px;
@@ -334,6 +334,28 @@ const VideoLoader = styled(Loader)<{ $active: boolean }>`
     left: calc(50% - 24px);
     width: 48px;
     height: 48px;
+  }
+`;
+
+const BackButton = styled(SmoothBox)`
+  position: absolute;
+  cursor: pointer;
+
+  ${MobileQuery} {
+    top: 20px;
+    left: 12px;
+  }
+
+  ${PcQuery} {
+    top: 24px;
+    left: 16px;
+  }
+
+  & > .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
   }
 `;
 
@@ -502,6 +524,11 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     video.play();
   };
 
+  const handleBackClick = () => {
+    if (isFullScreenRef.current) disableFullscreen();
+    navigate(-1);
+  };
+
   const play = () => {
     videoRef.current?.play();
   };
@@ -558,7 +585,14 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
               transition={{ duration: 0.1 }}
               key={'controls'}
             >
-              <PlayButton hover={1.1} tap={0.9} onClick={() => (isPlaying ? pause() : play())}>
+              <PlayButton
+                hover={1.1}
+                tap={0.9}
+                onClick={() => {
+                  handleTouchStart();
+                  isPlaying ? pause() : play();
+                }}
+              >
                 <PlayIcon type={isPlaying ? 'pause' : 'play'} color={Color.DARK_GRAY} />
               </PlayButton>
               <Time>
@@ -567,8 +601,11 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                 <div>{getDuration(duration)}</div>
               </Time>
               <FullscreenButton hover={1.1} tap={0.9} onClick={handleFullscreenClick}>
-                <FullscreenIcon type={'fullscreen'} color={Color.WHITE} />
+                <ControlIcon type={'fullscreen'} color={Color.WHITE} />
               </FullscreenButton>
+              <BackButton hover={1.1} tap={0.9} onClick={handleBackClick}>
+                <ControlIcon type={'left'} color={Color.WHITE} />
+              </BackButton>
             </VideoControls>
           )}
         </AnimatePresence>
