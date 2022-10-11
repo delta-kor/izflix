@@ -117,7 +117,9 @@ const MusicItemSection: React.FC<Props> = ({ musics }) => {
 
   const createLink = (id: string): [string, VideoPageState] => {
     const link = `/${id}`;
-    const state: VideoPageState = { key: 'music', value: selectedMusic!.id };
+
+    const music = musics.filter(music => music.videos.some(video => video.id === id))[0];
+    const state: VideoPageState = { key: 'music', value: music.id };
     return [link, state];
   };
 

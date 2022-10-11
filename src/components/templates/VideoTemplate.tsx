@@ -85,6 +85,8 @@ const VideoTemplate: React.FC<Props> = ({ panorama, action, onLike }) => {
   const location = useLocation();
   const state = location.state as VideoPageState | undefined;
 
+  console.log('Video State', state);
+
   const motionProps = {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
