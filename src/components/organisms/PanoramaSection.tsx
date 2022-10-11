@@ -395,7 +395,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const [played, setPlayed] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
-  const [screenAdjust, setScreenAdjust] = useState<ScreenAdjust>('left');
+  const [screenAdjust, setScreenAdjust] = useState<ScreenAdjust>('top');
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoAreaRef = useRef<HTMLDivElement>(null);
@@ -639,7 +639,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
               </FullscreenButton>
               {isFullscreenEnabled && (
                 <ScreenAdjustButton hover={1.1} tap={0.9} onClick={handleScreenAdjust}>
-                  <ControlIcon type={'fullscreen'} color={Color.WHITE} />
+                  <ControlIcon type={'adjust'} color={Color.WHITE} />
                 </ScreenAdjustButton>
               )}
               <BackButton hover={1.1} tap={0.9} onClick={handleBackClick}>
