@@ -279,9 +279,11 @@ const Time = styled.div`
   }
 `;
 
-const FullscreenButton = styled(SmoothBox)`
+const BottomRight = styled.div`
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
   position: absolute;
-  cursor: pointer;
 
   ${MobileQuery} {
     bottom: 20px;
@@ -292,6 +294,10 @@ const FullscreenButton = styled(SmoothBox)`
     bottom: 24px;
     right: 16px;
   }
+`;
+
+const FullscreenButton = styled(SmoothBox)`
+  cursor: pointer;
 
   & > .content {
     display: flex;
@@ -302,18 +308,7 @@ const FullscreenButton = styled(SmoothBox)`
 `;
 
 const ScreenAdjustButton = styled(SmoothBox)`
-  position: absolute;
   cursor: pointer;
-
-  ${MobileQuery} {
-    bottom: 20px;
-    right: 52px;
-  }
-
-  ${PcQuery} {
-    bottom: 24px;
-    right: 58px;
-  }
 
   & > .content {
     display: flex;
@@ -376,6 +371,48 @@ const BackButton = styled(SmoothBox)`
     align-items: center;
     justify-content: center;
     padding: 4px;
+  }
+`;
+
+const Quality = styled(SmoothBox)`
+  ${PcQuery} {
+    margin: 0 4px 0 0;
+  }
+
+  & > .content {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 100%;
+
+    cursor: pointer;
+    user-select: none;
+  }
+`;
+
+const QualityDropdownIcon = styled(Icon)`
+  ${MobileQuery} {
+    width: 14px;
+    height: 14px;
+  }
+
+  ${PcQuery} {
+    width: 16px;
+    height: 16px;
+  }
+`;
+
+const QualityText = styled.div`
+  font-weight: 700;
+  color: ${Color.WHITE};
+  transform: skew(0.1deg);
+
+  ${MobileQuery} {
+    font-size: 14px;
+  }
+
+  ${PcQuery} {
+    font-size: 16px;
   }
 `;
 
@@ -626,22 +663,31 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
               >
                 <PlayIcon type={isPlaying ? 'pause' : 'play'} color={Color.DARK_GRAY} />
               </PlayButton>
+
               <Time>
                 <div>{getDuration(played)}</div>
                 <div>/</div>
                 <div>{getDuration(duration)}</div>
               </Time>
-              <FullscreenButton hover={1.1} tap={0.9} onClick={handleFullscreenClick}>
-                <ControlIcon
-                  type={isFullscreenEnabled ? 'downscreen' : 'fullscreen'}
-                  color={Color.WHITE}
-                />
-              </FullscreenButton>
-              {isFullscreenEnabled && (
-                <ScreenAdjustButton hover={1.1} tap={0.9} onClick={handleScreenAdjust}>
-                  <ControlIcon type={'adjust'} color={Color.WHITE} />
-                </ScreenAdjustButton>
-              )}
+
+              <BottomRight>
+                <Quality hover={1.1} tap={0.9}>
+                  <QualityDropdownIcon type={'down'} color={Color.WHITE} />
+                  <QualityText>1080p</QualityText>
+                </Quality>
+                {isFullscreenEnabled && (
+                  <ScreenAdjustButton hover={1.1} tap={0.9} onClick={handleScreenAdjust}>
+                    <ControlIcon type={'adjust'} color={Color.WHITE} />
+                  </ScreenAdjustButton>
+                )}
+                <FullscreenButton hover={1.1} tap={0.9} onClick={handleFullscreenClick}>
+                  <ControlIcon
+                    type={isFullscreenEnabled ? 'downscreen' : 'fullscreen'}
+                    color={Color.WHITE}
+                  />
+                </FullscreenButton>
+              </BottomRight>
+
               <BackButton hover={1.1} tap={0.9} onClick={handleBackClick}>
                 <ControlIcon type={'left'} color={Color.WHITE} />
               </BackButton>

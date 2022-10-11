@@ -42,7 +42,7 @@ const Text = styled.div`
     bottom: 6px;
     right: 6px;
     padding: 4px 6px;
-    font-size: 9px;
+    font-size: 10px;
   }
 
   ${PcQuery} {
