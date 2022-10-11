@@ -1,7 +1,7 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 import styled from 'styled-components';
-import { Color } from '../../styles';
+import { Color, MobileQuery, PcQuery } from '../../styles';
 
 const Layout = styled.div`
   position: relative;
@@ -30,12 +30,36 @@ const Placeholder = styled.div`
   z-index: 0;
 `;
 
+const Text = styled.div`
+  position: absolute;
+
+  color: ${Color.WHITE};
+  background: ${Color.DARK_GRAY}AA;
+  border-radius: 4px;
+  z-index: 2;
+
+  ${MobileQuery} {
+    bottom: 6px;
+    right: 6px;
+    padding: 4px 6px;
+    font-size: 9px;
+  }
+
+  ${PcQuery} {
+    bottom: 8px;
+    right: 8px;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+`;
+
 interface Props {
   className?: string;
   src?: string | null;
+  text?: string;
 }
 
-const SmoothImage: React.FC<Props> = ({ className, src }) => {
+const SmoothImage: React.FC<Props> = ({ className, src, text }) => {
   return (
     <Layout className={className}>
       {src && (
@@ -48,6 +72,7 @@ const SmoothImage: React.FC<Props> = ({ className, src }) => {
           }}
         />
       )}
+      {text && <Text>{text}</Text>}
       <Placeholder />
     </Layout>
   );

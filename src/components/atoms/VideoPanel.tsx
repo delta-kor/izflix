@@ -2,6 +2,7 @@ import { MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
+import { getDuration } from '../../services/time';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 import SmoothImage from './SmoothImage';
@@ -137,11 +138,12 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink 
   const thumbnail = data && Spaceship.getThumbnail(data.id);
   const title = data && data.title;
   const description = data && data.description;
+  const duration = data && getDuration(data.duration);
 
   const Component =
     type === 'full' ? (
       <FullLayout hover={1.05} tap={0.95} onClick={onClick}>
-        <Image src={thumbnail} />
+        <Image src={thumbnail} text={duration} />
         <Content>
           {title ? <Title>{title}</Title> : <TitlePlaceholder />}
           {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
@@ -149,7 +151,7 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink 
       </FullLayout>
     ) : type === 'horizontal' ? (
       <HorizontalLayout $shrink={!!shrink} hover={1.05} tap={0.95}>
-        <HorizontalImage src={thumbnail} />
+        <HorizontalImage src={thumbnail} text={duration} />
         <Content>
           {title ? <Title $shrink={!!shrink}>{title}</Title> : <TitlePlaceholder />}
           {description ? (
@@ -161,7 +163,7 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink 
       </HorizontalLayout>
     ) : (
       <VerticalLayout hover={1.05} tap={0.95} onClick={onClick}>
-        <VerticalImage src={thumbnail} />
+        <VerticalImage src={thumbnail} text={duration} />
         {title ? <Title>{title}</Title> : <TitlePlaceholder />}
       </VerticalLayout>
     );
