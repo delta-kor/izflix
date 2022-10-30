@@ -638,6 +638,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     if (!videoRef.current) return false;
 
     const video = videoRef.current;
+
     setVideoLoaded(true);
     setPlayed(video.currentTime || 0);
     setDuration(video.duration || 0);
@@ -659,6 +660,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   };
 
   const handleQualityItemClick = (quality: number) => {
+    panorama.setQuality(quality);
     setIsQualityActive(false);
   };
 
@@ -693,8 +695,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     />
   );
 
-  const synthedControlsActive =
-    isQualityActive || ((isControlsActive || !isPlaying) && videoLoaded);
+  const synthedControlsActive = isQualityActive || isControlsActive || !isPlaying;
 
   const Component = (
     <RenderArea

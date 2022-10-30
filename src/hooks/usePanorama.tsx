@@ -13,6 +13,7 @@ import Transmitter from '../services/transmitter';
 interface PanoramaMethods {
   view(id: string, state?: VideoPageState): Promise<ApiResponse>;
   setState(state: PanoramaState): void;
+  setQuality(quality: number): void;
 }
 
 interface Panorama extends PanoramaMethods {
@@ -152,7 +153,24 @@ function usePanorama(): Panorama {
     setState(state);
   };
 
-  const methods = { view, setState: setStateMethod };
+  const setQuality = (quality: number) => {
+    if (!currentVideoId || !streamInfo) return false;
+
+    Settings.setOne('VIDEO_QUALITY', quality);
+    setStreamInfo({ ...streamInfo, quality });
+
+    const stream = Spaceship.streamVideo(currentVideoId, quality);
+    stream.then(streamInfoResponse => {
+      if (!streamInfoResponse.ok)
+        Transmitter.emit('popup', {
+          type: 'error',
+          message: streamInfoResponse.message || 'error.service',
+        });
+      else setStreamInfo(streamInfoResponse);
+    });
+  };
+
+  const methods = { view, setState: setStateMethod, setQuality };
 
   return {
     state,
