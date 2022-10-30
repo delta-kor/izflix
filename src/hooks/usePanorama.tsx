@@ -5,6 +5,7 @@ import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
 import { VideoPageState } from '../pages/VideoPage';
 import PageManager from '../services/page-manager';
+import Settings from '../services/settings';
 import Spaceship from '../services/spaceship';
 import { getDate } from '../services/time';
 import Transmitter from '../services/transmitter';
@@ -66,7 +67,7 @@ function usePanorama(): Panorama {
     if (!videoInfoResponse.ok) return videoInfoResponse;
     setVideoInfo(videoInfoResponse);
 
-    const stream = Spaceship.streamVideo(id, 1080);
+    const stream = Spaceship.streamVideo(id, Settings.getOne('VIDEO_QUALITY'));
     stream.then(streamInfoResponse => {
       if (!streamInfoResponse.ok)
         Transmitter.emit('popup', {

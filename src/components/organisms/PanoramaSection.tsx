@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import { Panorama, PanoramaState } from '../../hooks/usePanorama';
 import Icon from '../../icons/Icon';
+import Settings from '../../services/settings';
 import { getDuration } from '../../services/time';
 import { Color, HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
 import Loader from '../atoms/Loader';
@@ -61,7 +62,7 @@ const RenderArea = styled(motion.div)<{ $state: PanoramaState }>`
   }
 `;
 
-const Video = styled(motion.video)<{ $active: boolean; $screenAdjust: ScreenAdjust }>`
+const Video = styled(motion.video)<{ $active: boolean; $screenAdjust: string }>`
   display: block;
   position: absolute;
   object-fit: ${({ $screenAdjust }) => ($screenAdjust === 'top' ? 'cover' : 'contain')};
@@ -469,8 +470,6 @@ interface Props {
   panorama: Panorama;
 }
 
-type ScreenAdjust = 'left' | 'top';
-
 let timeout: any = null;
 const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const navigate = useNavigate();
@@ -481,7 +480,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const [played, setPlayed] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
-  const [screenAdjust, setScreenAdjust] = useState<ScreenAdjust>('left');
+  const [screenAdjust, setScreenAdjust] = useState<string>(Settings.getOne('VIDEO_SCREEN_ADJUST'));
   const [isQualityActive, setIsQualityActive] = useState<boolean>(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -526,6 +525,10 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   useEffect(() => {
     panoramaStateRef.current = panorama.state;
   }, [panorama.state]);
+
+  useEffect(() => {
+    Settings.setOne('VIDEO_SCREEN_ADJUST', screenAdjust);
+  }, [screenAdjust]);
 
   const handlePlay = () => {
     setIsPlaying(true);
