@@ -374,6 +374,13 @@ const BackButton = styled(SmoothBox)`
   }
 `;
 
+const QualityWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
 const Quality = styled(SmoothBox)`
   ${PcQuery} {
     margin: 0 4px 0 0;
@@ -416,6 +423,48 @@ const QualityText = styled.div`
   }
 `;
 
+const QualityItems = styled(motion.div)`
+  position: absolute;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 4px;
+  bottom: 32px;
+
+  background: rgba(22, 26, 54, 0.5);
+  backdrop-filter: blur(4px);
+  border-radius: 8px;
+
+  ${MobileQuery} {
+    padding: 10px 14px;
+    max-height: calc(100vw * (9 / 16) - 32px - 28px - 20px);
+    overflow-y: scroll;
+  }
+
+  ${PcQuery} {
+    padding: 12px 18px;
+  }
+`;
+
+const QualityItem = styled(SmoothBox)`
+  & > .content {
+    font-weight: 700;
+    color: ${Color.WHITE};
+    transform: skew(0.1deg);
+    cursor: pointer;
+    user-select: none;
+
+    ${MobileQuery} {
+      padding: 4px 2px;
+      font-size: 14px;
+    }
+
+    ${PcQuery} {
+      padding: 4px 2px;
+      font-size: 16px;
+    }
+  }
+`;
+
 interface Props {
   panorama: Panorama;
 }
@@ -432,7 +481,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const [played, setPlayed] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
-  const [screenAdjust, setScreenAdjust] = useState<ScreenAdjust>('top');
+  const [screenAdjust, setScreenAdjust] = useState<ScreenAdjust>('left');
+  const [isQualityActive, setIsQualityActive] = useState<boolean>(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoAreaRef = useRef<HTMLDivElement>(null);
@@ -595,6 +645,14 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setScreenAdjust(screenAdjust => (screenAdjust === 'left' ? 'top' : 'left'));
   };
 
+  const handleQualityClick = () => {
+    setIsQualityActive(isQualityActive => !isQualityActive);
+  };
+
+  const handleQualityItemClick = (quality: number) => {
+    setIsQualityActive(false);
+  };
+
   const play = () => {
     videoRef.current?.play();
   };
@@ -626,7 +684,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     />
   );
 
-  const synthedControlsActive = (isControlsActive || !isPlaying) && videoLoaded;
+  const synthedControlsActive =
+    isQualityActive || ((isControlsActive || !isPlaying) && videoLoaded);
 
   const Component = (
     <RenderArea
@@ -671,10 +730,33 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
               </Time>
 
               <BottomRight>
-                <Quality hover={1.1} tap={0.9}>
-                  <QualityDropdownIcon type={'down'} color={Color.WHITE} />
-                  <QualityText>1080p</QualityText>
-                </Quality>
+                <QualityWrapper>
+                  <AnimatePresence>
+                    {isQualityActive && (
+                      <QualityItems
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.1 }}
+                      >
+                        {panorama.streamInfo?.qualities.reverse().map(quality => (
+                          <QualityItem
+                            hover={1.1}
+                            tap={0.9}
+                            onClick={() => handleQualityItemClick(quality)}
+                            key={quality}
+                          >
+                            {quality}p
+                          </QualityItem>
+                        ))}
+                      </QualityItems>
+                    )}
+                  </AnimatePresence>
+                  <Quality hover={1.1} tap={0.9} onClick={handleQualityClick}>
+                    <QualityDropdownIcon type={'down'} color={Color.WHITE} />
+                    <QualityText>{panorama.streamInfo?.quality}p</QualityText>
+                  </Quality>
+                </QualityWrapper>
                 {isFullscreenEnabled && (
                   <ScreenAdjustButton hover={1.1} tap={0.9} onClick={handleScreenAdjust}>
                     <ControlIcon type={'adjust'} color={Color.WHITE} />
