@@ -597,6 +597,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
+      clearTimeout(nextVideoTimeout);
     };
   }, []);
 
@@ -635,6 +636,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setPlayed(0);
     setDuration(0);
     setVideoLoaded(false);
+    setIsEnded(false);
+    clearTimeout(nextVideoTimeout);
   }, [panorama.currentVideoId]);
 
   useEffect(() => {
@@ -743,7 +746,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       video.currentTime -= 5;
       setPlayed(video.currentTime || 0);
     }
-    if (e.key === 'ArrowRight') {
+    if (e.key === 'ArrowRight' && !video.ended) {
       video.currentTime += 5;
       setPlayed(video.currentTime || 0);
     }
