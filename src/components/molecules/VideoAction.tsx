@@ -29,14 +29,20 @@ const WidthProtector = styled.div`
 
 interface Props {
   action?: ApiResponse.Video.Action;
+  downloadUrl?: string;
   onLike(): void;
 }
 
-const VideoAction: React.FC<Props> = ({ action, onLike }) => {
+const VideoAction: React.FC<Props> = ({ action, downloadUrl, onLike }) => {
   const { t } = useTranslation();
 
   const liked = action?.liked;
   const likesTotal = action?.likes_total;
+
+  const handleDownloadClick = () => {
+    if (!downloadUrl) return;
+    window.open(downloadUrl, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <Layout>
@@ -52,7 +58,7 @@ const VideoAction: React.FC<Props> = ({ action, onLike }) => {
       <VerticalButton icon={'share'} color={Color.TRANSPARENT}>
         {t('video.share')}
       </VerticalButton>
-      <VerticalButton icon={'download'} color={Color.TRANSPARENT}>
+      <VerticalButton icon={'download'} color={Color.TRANSPARENT} onClick={handleDownloadClick}>
         {t('video.save')}
       </VerticalButton>
       <VerticalButton icon={'add'} color={Color.TRANSPARENT}>

@@ -99,7 +99,7 @@ const VideoTemplate: React.FC<Props> = ({ panorama, action, onLike }) => {
         <VideoPlaceholder />
         <VideoHider />
         <VideoInfoSection videoInfo={panorama.videoInfo} />
-        <VideoAction action={action} onLike={onLike} />
+        <VideoAction action={action} downloadUrl={panorama.streamInfo?.url} onLike={onLike} />
       </VideoArea>
       <ContentArea>
         <AnimatePresence>
