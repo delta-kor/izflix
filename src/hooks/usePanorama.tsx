@@ -23,6 +23,7 @@ interface Panorama extends PanoramaMethods {
   currentVideoId?: string;
   currentVideoState?: VideoPageState;
   nextVideos: IVideo[];
+  nextVideo?: IVideo;
   recommends: IVideo[];
 }
 
@@ -42,6 +43,7 @@ function usePanorama(): Panorama {
   const [videoInfo, setVideoInfo] = useState<ApiResponse.Video.Info | undefined>();
   const [streamInfo, setStreamInfo] = useState<ApiResponse.Video.Stream | undefined>();
   const [nextVideos, setNextVideos] = useState<IVideo[]>([]);
+  const [nextVideo, setNextVideo] = useState<IVideo | undefined>();
   const [recommends, setRecommends] = useState<IVideo[]>([]);
 
   useEffect(() => {
@@ -51,6 +53,21 @@ function usePanorama(): Panorama {
     const isBackgroudState = PageManager.isBackgroundState(location.pathname);
     state !== PanoramaState.NONE && setState(isBackgroudState ? PanoramaState.BACKGROUND : state);
   }, [location]);
+
+  useEffect(() => {
+    if (!currentVideoId) return;
+
+    const currentVideo = nextVideos.find(video => video.id === currentVideoId);
+    const currentIndex = nextVideos.indexOf(currentVideo!);
+
+    if (currentIndex === -1) {
+      setNextVideo(recommends[0]);
+      return;
+    } else {
+      const nextVideo = nextVideos[currentIndex + 1] || nextVideos[0];
+      setNextVideo(nextVideo);
+    }
+  }, [nextVideos, currentVideoId]);
 
   const view = async (id: string, videoState?: VideoPageState) => {
     if (id === currentVideoId) return { ok: true, status: 200 };
@@ -179,6 +196,7 @@ function usePanorama(): Panorama {
     currentVideoId,
     currentVideoState,
     nextVideos,
+    nextVideo,
     recommends,
     ...methods,
   };

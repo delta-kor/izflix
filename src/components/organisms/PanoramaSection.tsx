@@ -8,10 +8,12 @@ import useDevice from '../../hooks/useDevice';
 import { Panorama, PanoramaState } from '../../hooks/usePanorama';
 import Icon from '../../icons/Icon';
 import Settings from '../../services/settings';
+import Spaceship from '../../services/spaceship';
 import { getDuration } from '../../services/time';
 import { Color, HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
 import Loader from '../atoms/Loader';
 import SmoothBox from '../atoms/SmoothBox';
+import SmoothImage from '../atoms/SmoothImage';
 
 const RenderArea = styled(motion.div)<{ $state: PanoramaState }>`
   background: ${Color.DARK_GRAY}EA;
@@ -196,6 +198,8 @@ const PlayButton = styled(SmoothBox)`
   left: 50%;
   transform: translate(-50%, -50%);
 
+  z-index: 1;
+
   & > .content {
     background: ${Color.WHITE};
     border-radius: 100%;
@@ -227,6 +231,98 @@ const PlayIcon = styled(Icon)`
   ${PcQuery} {
     width: 26px;
     height: 26px;
+  }
+`;
+
+const NextVideoWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+`;
+
+const NextVideo = styled(SmoothBox)`
+  width: 100%;
+
+  & > .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    cursor: pointer;
+    user-select: none;
+    z-index: 2;
+  }
+`;
+
+const NextVideoThumbnail = styled(SmoothImage)`
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+`;
+
+const NextVideoContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-grow: 1;
+`;
+
+const NextVideoTitle = styled.div`
+  color: ${Color.WHITE};
+  ${Text.HEADLINE_3};
+`;
+
+const NextVideoDescription = styled.div`
+  color: ${Color.WHITE};
+  opacity: 0.7;
+  ${Text.SUBTITLE_1};
+`;
+
+const NextVideoProgress = styled.div`
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background: ${Color.DARK_GRAY};
+  border-radius: 4px;
+  overflow: hidden;
+`;
+
+const NextVideoProgressIndicator = styled.div<{ $length: number }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: ${Color.WHITE};
+  border-radius: 4px;
+  animation: countdown ${({ $length }) => $length}s forwards ease-in-out;
+
+  @keyframes countdown {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+`;
+
+const NextVideoCancel = styled(SmoothBox)`
+  & > .content {
+    color: ${Color.WHITE};
+    ${Text.SUBTITLE_2};
+
+    cursor: pointer;
+    user-select: none;
   }
 `;
 
@@ -472,13 +568,16 @@ interface Props {
   panorama: Panorama;
 }
 
-let timeout: any = null;
+let controlsTimeout: any = null;
+let nextVideoTimeout: any = null;
+
 const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const navigate = useNavigate();
   const device = useDevice();
 
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isControlsActive, setIsControlsActive] = useState<boolean>(false);
+  const [isEnded, setIsEnded] = useState<boolean>(false);
   const [played, setPlayed] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
@@ -512,6 +611,24 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       document.removeEventListener('mousemove', handleMouseEvent);
     };
   }, [videoRef.current]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !panorama.nextVideo) return;
+
+    setIsEnded(video.ended);
+    clearTimeout(nextVideoTimeout);
+
+    if (video.ended) {
+      nextVideoTimeout = setTimeout(() => {
+        handleNextVideo();
+      }, 5000);
+    }
+  }, [videoRef.current?.ended]);
+
+  useEffect(() => {
+    if (!isEnded) clearTimeout(nextVideoTimeout);
+  }, [isEnded]);
 
   useEffect(() => {
     pause();
@@ -578,17 +695,17 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     if (panoramaStateRef.current !== PanoramaState.ACTIVE) return false;
     document.body.style.cursor = 'unset';
 
-    clearTimeout(timeout);
-    timeout = null;
+    clearTimeout(controlsTimeout);
+    controlsTimeout = null;
 
     setIsControlsActive(true);
-    timeout = setTimeout(
+    controlsTimeout = setTimeout(
       () => {
         setIsControlsActive(false);
         if (isFullScreenRef.current) {
           document.body.style.cursor = 'none';
         }
-        timeout = null;
+        controlsTimeout = null;
       },
       device === 'pc' ? 1000 : 3000
     );
@@ -701,6 +818,14 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setIsQualityActive(false);
   };
 
+  const handleNextVideo = () => {
+    if (!panorama.nextVideo) return;
+
+    const nextVideoId = panorama.nextVideo.id;
+    const state = panorama.currentVideoState;
+    navigate(`/${nextVideoId}`, { state });
+  };
+
   const play = () => {
     videoRef.current?.play();
   };
@@ -747,7 +872,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       <VideoArea
         $state={panorama.state}
         onPan={handlePan}
-        onPanEnd={() => timeout !== null && setIsControlsActive(false)}
+        onPanEnd={() => controlsTimeout !== null && setIsControlsActive(false)}
         ref={videoAreaRef}
       >
         {VideoItem}
@@ -761,16 +886,35 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
               transition={{ duration: 0.1 }}
               key={'controls'}
             >
-              <PlayButton
-                hover={1.1}
-                tap={0.9}
-                onClick={() => {
-                  handleTouchStart();
-                  isPlaying ? pause() : play();
-                }}
-              >
-                <PlayIcon type={isPlaying ? 'pause' : 'play'} color={Color.DARK_GRAY} />
-              </PlayButton>
+              {!isEnded && (
+                <PlayButton
+                  hover={1.1}
+                  tap={0.9}
+                  onClick={() => {
+                    handleTouchStart();
+                    isPlaying ? pause() : play();
+                  }}
+                >
+                  <PlayIcon type={isPlaying ? 'pause' : 'play'} color={Color.DARK_GRAY} />
+                </PlayButton>
+              )}
+              {isEnded && panorama.nextVideo && (
+                <NextVideoWrapper>
+                  <NextVideo hover={1.05} tap={0.95} onClick={handleNextVideo}>
+                    <NextVideoThumbnail src={Spaceship.getThumbnail(panorama.nextVideo.id)} />
+                    <NextVideoContent>
+                      <NextVideoTitle>{panorama.nextVideo.title}</NextVideoTitle>
+                      <NextVideoDescription>{panorama.nextVideo.description}</NextVideoDescription>
+                    </NextVideoContent>
+                    <NextVideoProgress>
+                      <NextVideoProgressIndicator $length={5} />
+                    </NextVideoProgress>
+                  </NextVideo>
+                  <NextVideoCancel hover={1.1} tap={0.9} onClick={() => setIsEnded(false)}>
+                    취소
+                  </NextVideoCancel>
+                </NextVideoWrapper>
+              )}
 
               <Time>
                 <div>{getDuration(played)}</div>
