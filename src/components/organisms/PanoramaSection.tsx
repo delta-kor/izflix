@@ -834,7 +834,9 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
             onTouchMove={handleTouchStart}
             onClick={handleProgressBarClick}
           >
-            <ProgressAmount style={{ width: `${(played / (duration || 1)) * 100}%` }} />
+            <ProgressAmount
+              style={{ width: `${videoLoaded ? (played / (duration || 1)) * 100 : 0}%` }}
+            />
           </ProgressBar>
         )}
       </VideoArea>
