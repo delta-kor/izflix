@@ -704,7 +704,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     />
   );
 
-  const synthedControlsActive = isQualityActive || isControlsActive || !isPlaying;
+  const synthedControlsActive =
+    isQualityActive || ((isControlsActive || !isPlaying) && videoLoaded);
 
   const Component = (
     <RenderArea
