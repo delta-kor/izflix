@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { Panorama } from '../../hooks/usePanorama';
+import Transmitter from '../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import VerticalButton from '../atoms/VerticalButton';
 
@@ -29,19 +31,39 @@ const WidthProtector = styled.div`
 
 interface Props {
   action?: ApiResponse.Video.Action;
-  downloadUrl?: string;
+  panorama: Panorama;
   onLike(): void;
 }
 
-const VideoAction: React.FC<Props> = ({ action, downloadUrl, onLike }) => {
+const VideoAction: React.FC<Props> = ({ action, panorama, onLike }) => {
   const { t } = useTranslation();
 
   const liked = action?.liked;
   const likesTotal = action?.likes_total;
 
+  const handleShareClick = () => {
+    if (!panorama.videoInfo) return;
+
+    const url = `https://izflix.net/${panorama.videoInfo.id}`;
+
+    if (navigator.share) {
+      navigator.share({
+        title: `${panorama.videoInfo.title} (${panorama.videoInfo.description})`,
+        url,
+      });
+    } else {
+      navigator.clipboard
+        .writeText(url)
+        .then(() => Transmitter.emit('popup', { type: 'success', message: t('video.url_copied') }))
+        .catch(() =>
+          Transmitter.emit('popup', { type: 'error', message: t('video.url_copy_failed') })
+        );
+    }
+  };
+
   const handleDownloadClick = () => {
-    if (!downloadUrl) return;
-    window.open(downloadUrl, '_blank', 'noopener,noreferrer');
+    if (!panorama.streamInfo) return;
+    window.open(panorama.streamInfo.url, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -55,7 +77,7 @@ const VideoAction: React.FC<Props> = ({ action, downloadUrl, onLike }) => {
           {likesTotal || t('video.like')}
         </VerticalButton>
       </WidthProtector>
-      <VerticalButton icon={'share'} color={Color.TRANSPARENT}>
+      <VerticalButton icon={'share'} color={Color.TRANSPARENT} onClick={handleShareClick}>
         {t('video.share')}
       </VerticalButton>
       <VerticalButton icon={'download'} color={Color.TRANSPARENT} onClick={handleDownloadClick}>

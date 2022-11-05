@@ -8,7 +8,9 @@
     "add": "Add",
     "save": "Save",
     "like": "Like",
-    "share": "Share"
+    "share": "Share",
+    "url_copied": "URL copied",
+    "url_copy_failed": "Failed to copy URL"
   },
   "playlist": {
     "playlist": "Playlist",
