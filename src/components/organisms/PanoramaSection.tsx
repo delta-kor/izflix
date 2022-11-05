@@ -494,6 +494,14 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const panoramaStateRef = useRef<PanoramaState>(PanoramaState.NONE);
 
   useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
+
+  useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
@@ -601,6 +609,26 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     video.currentTime = percentage * (video.duration || 0);
     setPlayed(video.currentTime || 0);
     setDuration(video.duration || 0);
+  };
+
+  const handleKeyPress = (e: KeyboardEvent) => {
+    if (!videoRef.current || panoramaStateRef.current !== PanoramaState.ACTIVE) return false;
+
+    const video = videoRef.current;
+    if (e.key === ' ') {
+      e.preventDefault();
+      if (video.paused) video.play();
+      else video.pause();
+    }
+
+    if (e.key === 'ArrowLeft') {
+      video.currentTime -= 5;
+      setPlayed(video.currentTime || 0);
+    }
+    if (e.key === 'ArrowRight') {
+      video.currentTime += 5;
+      setPlayed(video.currentTime || 0);
+    }
   };
 
   const handleProgressBarClick: MouseEventHandler = e => {
