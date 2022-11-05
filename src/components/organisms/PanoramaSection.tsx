@@ -239,12 +239,20 @@ const NextVideoWrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 30%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
+
+  ${MobileQuery} {
+    margin: 0 auto;
+    max-width: calc(100vw - 32px);
+  }
+
+  ${PcQuery} {
+    width: 30%;
+  }
 `;
 
 const NextVideo = styled(SmoothBox)`
@@ -252,39 +260,63 @@ const NextVideo = styled(SmoothBox)`
 
   & > .content {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 12px;
 
     cursor: pointer;
     user-select: none;
     z-index: 2;
+
+    ${MobileQuery} {
+      gap: 10px;
+    }
+
+    ${PcQuery} {
+      flex-direction: column;
+      gap: 12px;
+    }
   }
 `;
 
 const NextVideoThumbnail = styled(SmoothImage)`
+  flex-shrink: 0;
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 8px;
+
+  ${MobileQuery} {
+    width: 30vw;
+  }
 `;
 
 const NextVideoContent = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 4px;
-  flex-grow: 1;
+  width: 100%;
+  min-width: 0;
 `;
 
 const NextVideoTitle = styled.div`
+  width: 100%;
   color: ${Color.WHITE};
   ${Text.HEADLINE_3};
+  ${HideOverflow};
+
+  ${PcQuery} {
+    text-align: center;
+  }
 `;
 
 const NextVideoDescription = styled.div`
+  width: 100%;
   color: ${Color.WHITE};
   opacity: 0.7;
   ${Text.SUBTITLE_1};
+  ${HideOverflow};
+
+  ${PcQuery} {
+    text-align: center;
+  }
 `;
 
 const NextVideoProgress = styled.div`
@@ -621,9 +653,11 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     clearTimeout(nextVideoTimeout);
 
     if (video.ended) {
-      nextVideoTimeout = setTimeout(() => {
-        handleNextVideo();
-      }, 5000);
+      if (panorama.state === PanoramaState.ACTIVE)
+        nextVideoTimeout = setTimeout(() => {
+          handleNextVideo();
+        }, Settings.getOne('VIDEO_NEXT_COUNTDOWN') * 1000);
+      else panorama.view(panorama.nextVideo.id, panorama.currentVideoState);
     }
   }, [videoRef.current?.ended]);
 
@@ -909,10 +943,10 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                       <NextVideoTitle>{panorama.nextVideo.title}</NextVideoTitle>
                       <NextVideoDescription>{panorama.nextVideo.description}</NextVideoDescription>
                     </NextVideoContent>
-                    <NextVideoProgress>
-                      <NextVideoProgressIndicator $length={5} />
-                    </NextVideoProgress>
                   </NextVideo>
+                  <NextVideoProgress>
+                    <NextVideoProgressIndicator $length={Settings.getOne('VIDEO_NEXT_COUNTDOWN')} />
+                  </NextVideoProgress>
                   <NextVideoCancel hover={1.1} tap={0.9} onClick={() => setIsEnded(false)}>
                     취소
                   </NextVideoCancel>

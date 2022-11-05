@@ -67,7 +67,7 @@ function usePanorama(): Panorama {
       const nextVideo = nextVideos[currentIndex + 1] || nextVideos[0];
       setNextVideo(nextVideo);
     }
-  }, [nextVideos, currentVideoId]);
+  }, [nextVideos, currentVideoId, recommends]);
 
   const view = async (id: string, videoState?: VideoPageState) => {
     if (id === currentVideoId) return { ok: true, status: 200 };

@@ -14,6 +14,7 @@ class SettingsClass {
       VIDEO_RECOMMEND_COUNT: 12,
       VIDEO_SCREEN_ADJUST: 'left',
       VIDEO_QUALITY: 1080,
+      VIDEO_NEXT_COUNTDOWN: 5,
       $_AUTH_TOKEN: null,
       $_LIVE_TOKEN: null,
     };
