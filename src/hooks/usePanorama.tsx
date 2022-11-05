@@ -47,15 +47,15 @@ function usePanorama(): Panorama {
   useEffect(() => {
     if (state === PanoramaState.BACKGROUND && location.pathname === `/${currentVideoId}`)
       return setState(PanoramaState.ACTIVE);
+
     const isBackgroudState = PageManager.isBackgroundState(location.pathname);
-    state !== PanoramaState.NONE &&
-      setState(isBackgroudState ? PanoramaState.BACKGROUND : PanoramaState.NONE);
+    state !== PanoramaState.NONE && setState(isBackgroudState ? PanoramaState.BACKGROUND : state);
   }, [location]);
 
   const view = async (id: string, videoState?: VideoPageState) => {
     if (id === currentVideoId) return { ok: true, status: 200 };
 
-    setState(PanoramaState.NONE);
+    // setState(PanoramaState.NONE);
     setVideoInfo(undefined);
     setStreamInfo(undefined);
     setCurrentVideoId(id);

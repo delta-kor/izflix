@@ -514,6 +514,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   }, [videoRef.current]);
 
   useEffect(() => {
+    pause();
     setPlayed(0);
     setDuration(0);
     setVideoLoaded(false);
