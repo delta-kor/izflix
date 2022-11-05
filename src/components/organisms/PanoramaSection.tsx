@@ -430,6 +430,7 @@ const QualityItems = styled(motion.div)`
   flex-direction: column-reverse;
   gap: 4px;
   bottom: 32px;
+  right: 0;
 
   background: rgba(22, 26, 54, 0.5);
   backdrop-filter: blur(4px);
@@ -442,12 +443,13 @@ const QualityItems = styled(motion.div)`
   }
 
   ${PcQuery} {
-    padding: 12px 18px;
+    padding: 8px 14px;
   }
 `;
 
 const QualityItem = styled(SmoothBox)`
   & > .content {
+    text-align: center;
     font-weight: 700;
     color: ${Color.WHITE};
     transform: skew(0.1deg);
@@ -559,8 +561,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const handleTimeUpdate = () => {
     if (!videoRef.current) return false;
     const video = videoRef.current;
-    setPlayed(video.currentTime);
-    setDuration(video.duration);
+    setPlayed(video.currentTime || 0);
+    setDuration(video.duration || 0);
   };
 
   const handleTouchStart = () => {
@@ -646,6 +648,12 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     video.play();
   };
 
+  const handleOnLoad = () => {
+    if (!videoRef.current) return false;
+
+    setVideoLoaded(false);
+  };
+
   const handleBackClick = () => {
     if (isFullScreenRef.current) disableFullscreen();
     navigate(-1);
@@ -690,6 +698,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       onTouchMove={handleTouchStart}
       onTimeUpdate={handleTimeUpdate}
       onCanPlay={handleOnCanPlay}
+      onLoadStart={handleOnLoad}
       disableRemotePlayback
       playsInline
     />
@@ -742,14 +751,14 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
               <BottomRight>
                 <QualityWrapper>
                   <AnimatePresence>
-                    {isQualityActive && (
+                    {isQualityActive && panorama.streamInfo && (
                       <QualityItems
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.1 }}
                       >
-                        {panorama.streamInfo?.qualities.reverse().map(quality => (
+                        {[...panorama.streamInfo.qualities].map(quality => (
                           <QualityItem
                             hover={1.1}
                             tap={0.9}
@@ -762,10 +771,12 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                       </QualityItems>
                     )}
                   </AnimatePresence>
-                  <Quality hover={1.1} tap={0.9} onClick={handleQualityClick}>
-                    <QualityDropdownIcon type={'down'} color={Color.WHITE} />
-                    <QualityText>{panorama.streamInfo?.quality}p</QualityText>
-                  </Quality>
+                  {panorama.streamInfo && (
+                    <Quality hover={1.1} tap={0.9} onClick={handleQualityClick}>
+                      <QualityDropdownIcon type={'down'} color={Color.WHITE} />
+                      <QualityText>{panorama.streamInfo?.quality}p</QualityText>
+                    </Quality>
+                  )}
                 </QualityWrapper>
                 {isFullscreenEnabled && (
                   <ScreenAdjustButton hover={1.1} tap={0.9} onClick={handleScreenAdjust}>
