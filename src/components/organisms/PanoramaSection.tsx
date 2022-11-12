@@ -22,6 +22,7 @@ const RenderArea = styled(motion.div)<{ $state: PanoramaState }>`
 
   ${MobileQuery} {
     position: fixed;
+    transform: translateZ(0);
 
     ${({ $state }) =>
       $state === PanoramaState.ACTIVE

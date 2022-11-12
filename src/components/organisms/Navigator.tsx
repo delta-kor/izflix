@@ -22,6 +22,8 @@ const Layout = styled.div`
     background: ${Color.BACKGROUND};
 
     border-top: 1px solid ${Color.DARK_GRAY};
+
+    transform: translateZ(0);
   }
 
   ${PcQuery} {

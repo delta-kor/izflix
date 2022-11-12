@@ -19,6 +19,7 @@ const Layout = styled.div`
   ${MobileQuery} {
     left: 16px;
     bottom: 96px;
+    transform: translateZ(0);
   }
 
   ${PcQuery} {
