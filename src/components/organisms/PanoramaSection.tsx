@@ -248,7 +248,7 @@ const NextVideoWrapper = styled.div`
 
   ${MobileQuery} {
     margin: 0 auto;
-    max-width: calc(100vw - 32px);
+    max-width: calc(min(100vw - 32px, 70vw));
   }
 
   ${PcQuery} {
@@ -286,6 +286,7 @@ const NextVideoThumbnail = styled(SmoothImage)`
 
   ${MobileQuery} {
     width: 30vw;
+    max-width: 220px;
   }
 `;
 
