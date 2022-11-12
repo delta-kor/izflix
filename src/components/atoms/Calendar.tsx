@@ -13,6 +13,8 @@ const Layout = styled.div`
   ${PcQuery} {
     position: fixed;
     width: 326px;
+
+    z-index: 2;
   }
 `;
 
