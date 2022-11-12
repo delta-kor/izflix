@@ -18,6 +18,7 @@ const Layout = styled.div`
     grid-template-columns: 326px 1fr;
     gap: 0 32px;
     padding: 0 ${PcInnerPadding};
+    min-height: 400px;
   }
 `;
 
