@@ -1,4 +1,5 @@
 import { AnimatePresence, motion, PanInfo } from 'framer-motion';
+import { t } from 'i18next';
 import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useNavigate } from 'react-router-dom';
@@ -830,7 +831,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setPlayed(video.currentTime || 0);
     setDuration(video.duration || 0);
 
-    video.play();
+    Settings.getOne('VIDEO_AUTOPLAY') && video.play();
   };
 
   const handleOnLoad = () => {
@@ -950,7 +951,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                     <NextVideoProgressIndicator $length={Settings.getOne('VIDEO_NEXT_COUNTDOWN')} />
                   </NextVideoProgress>
                   <NextVideoCancel hover={1.1} tap={0.9} onClick={() => setIsEnded(false)}>
-                    취소
+                    {t('video.next_video_cancel')}
                   </NextVideoCancel>
                 </NextVideoWrapper>
               )}

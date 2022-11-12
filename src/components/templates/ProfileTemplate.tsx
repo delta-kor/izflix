@@ -57,11 +57,11 @@ const ProfileTemplate: React.FC<Props> = ({ user }) => {
     <Layout>
       <ProfileSection user={user} />
       <IconListSection>
-        <IconListItem icon={'settings'} onClick={() => navigate('/profile/settings')}>
-          {t('profile.settings')}
-        </IconListItem>
         <IconListItem icon={'language'} onClick={handleLanguageClick}>
           {t('profile.language')}
+        </IconListItem>
+        <IconListItem icon={'settings'} onClick={() => navigate('/profile/settings')}>
+          {t('profile.settings')}
         </IconListItem>
       </IconListSection>
     </Layout>

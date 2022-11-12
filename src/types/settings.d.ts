@@ -1,4 +1,6 @@
 interface ISettings {
+  FEATURED_VIDEO_AUTOPLAY: boolean;
+  VIDEO_AUTOPLAY: boolean;
   USER_RECOMMEND_COUNT: number;
   VIDEO_RECOMMEND_COUNT: number;
   VIDEO_SCREEN_ADJUST: string;

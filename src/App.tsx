@@ -20,6 +20,7 @@ import PlaylistItemPage from './pages/PlaylistItemPage';
 import PlaylistPage from './pages/PlaylistPage';
 import ProfilePage from './pages/ProfilePage';
 import SearchPage from './pages/SearchPage';
+import SettingsPage from './pages/SettingsPage';
 import VideoPage from './pages/VideoPage';
 import VodPage from './pages/VodPage';
 import PageManager from './services/page-manager';
@@ -68,6 +69,7 @@ const App: React.FC = () => {
           <Route path="/category/*" element={<CategoryPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/settings" element={<SettingsPage />} />
           <Route path="/:id" element={<VideoPage panorama={panorama} />} />
           <Route path="*" element={<ErrorPage data={'error.not_found'} />} />
         </Routes>

@@ -5,6 +5,7 @@ const PageTitles = new Map<string, string>();
 PageTitles.set('/', 'IZFLIX');
 PageTitles.set('/vod', 'VOD');
 PageTitles.set('/profile', 'Profile');
+PageTitles.set('/profile/settings', 'Settings');
 PageTitles.set('/music', 'Music');
 PageTitles.set('/music/:id', 'Music');
 PageTitles.set('/category', 'Category');

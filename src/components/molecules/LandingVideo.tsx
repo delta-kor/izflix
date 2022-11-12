@@ -5,6 +5,7 @@ import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
+import Settings from '../../services/settings';
 import Spaceship from '../../services/spaceship';
 import {
   Color,
@@ -261,7 +262,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
             onCanPlay={() => setVideoLoaded(true)}
             src={url}
             muted
-            autoPlay
+            autoPlay={Settings.getOne('FEATURED_VIDEO_AUTOPLAY')}
             loop
             playsInline
           />

@@ -10,6 +10,8 @@ class SettingsClass {
 
   private static loadData(): ISettings {
     const data: ISettings = {
+      FEATURED_VIDEO_AUTOPLAY: true,
+      VIDEO_AUTOPLAY: true,
       USER_RECOMMEND_COUNT: 24,
       VIDEO_RECOMMEND_COUNT: 12,
       VIDEO_SCREEN_ADJUST: 'left',
