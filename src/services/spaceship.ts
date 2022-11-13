@@ -268,6 +268,7 @@ class SpaceshipClass {
     return this.get(`/playlist/${id}`, {
       key: `read_playlist::${id}`,
       expire: expireTime,
+      auth: true,
     });
   }
 
@@ -278,6 +279,7 @@ class SpaceshipClass {
     return this.get(`/playlist/${type}?data=${data}`, {
       key: `read_all_playlists::${type}`,
       expire: expireTime,
+      auth: true,
     });
   }
 
