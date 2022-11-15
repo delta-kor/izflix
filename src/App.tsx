@@ -13,6 +13,7 @@ import usePanorama from './hooks/usePanorama';
 import CalendarPage from './pages/CalendarPage';
 import CategoryPage from './pages/CategoryPage';
 import ErrorPage from './pages/ErrorPage';
+import LiveEntrancePage from './pages/LiveEntrancePage';
 import MainPage from './pages/MainPage';
 import MusicItemPage from './pages/MusicItemPage';
 import MusicPage from './pages/MusicPage';
@@ -68,6 +69,7 @@ const App: React.FC = () => {
           <Route path="/music/:id" element={<MusicItemPage />} />
           <Route path="/category/*" element={<CategoryPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/live" element={<LiveEntrancePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/settings" element={<SettingsPage />} />
           <Route path="/:id" element={<VideoPage panorama={panorama} />} />
