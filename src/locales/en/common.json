@@ -59,6 +59,13 @@
     "video_autoplay_description": "Turning off autoplay can reduce data usage",
     "playback": "Playback"
   },
+  "live": {
+    "rules": {
+      "0": "The live will run automatically.",
+      "1": "No harassing, stalking, or threatening of individuals.",
+      "2": "Chatting may not be available depending on the connection."
+    }
+  },
   "search": {
     "input_query": "Search",
     "no_result": "No search results"

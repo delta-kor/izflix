@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Color, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
 import Button from '../atoms/Button';
@@ -50,13 +51,15 @@ const Connect = styled.div`
 `;
 
 const LiveEntranceTemplate: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Layout>
       <Title>IZFLIX LIVE</Title>
       <Rules>
-        <LiveRules index={1} text={'방송은 자동으로 진행 됩니다.'} />
-        <LiveRules index={2} text={'욕설 및 비난, 조롱은 자제 부탁드립니다.'} />
-        <LiveRules index={3} text={'접속량에 따라 채팅이 원할하지 않을 수 있습니다.'} />
+        <LiveRules index={1} text={t('live.rules.0')} />
+        <LiveRules index={2} text={t('live.rules.1')} />
+        <LiveRules index={3} text={t('live.rules.2')} />
       </Rules>
       <Connect>
         <Button color={Color.PRIMARY}>접속하기</Button>
