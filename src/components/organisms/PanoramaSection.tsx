@@ -742,9 +742,10 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   };
 
   const handlePan = (e: MouseEvent, info: PanInfo) => {
-    e.preventDefault();
-
     if (!videoRef.current || panoramaStateRef.current !== PanoramaState.ACTIVE) return false;
+
+    e.preventDefault();
+    window.getSelection()?.removeAllRanges();
 
     const video = videoRef.current;
     const boundingRect = video.getBoundingClientRect();
@@ -752,7 +753,10 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     const firstY = info.point.y - info.offset.y;
     if (Math.abs(firstY - boundingRect.bottom) > 50) return false;
 
-    const percentage = (info.point.x - boundingRect.left) / boundingRect.width;
+    const percentage = Math.max(
+      Math.min((info.point.x - boundingRect.left) / boundingRect.width, 1),
+      0
+    );
 
     video.currentTime = percentage * (video.duration || 0);
     setPlayed(video.currentTime || 0);
@@ -784,7 +788,10 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
     const video = videoRef.current;
     const boundingRect = video.getBoundingClientRect();
-    const percentage = (e.clientX - boundingRect.left) / boundingRect.width;
+    const percentage = Math.max(
+      Math.min((e.clientX - boundingRect.left) / boundingRect.width, 1),
+      0
+    );
 
     video.currentTime = percentage * (video.duration || 0);
     setPlayed(video.currentTime || 0);
