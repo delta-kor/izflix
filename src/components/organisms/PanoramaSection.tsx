@@ -428,18 +428,7 @@ const BottomRight = styled.div`
   }
 `;
 
-const FullscreenButton = styled(SmoothBox)`
-  cursor: pointer;
-
-  & > .content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px;
-  }
-`;
-
-const ScreenAdjustButton = styled(SmoothBox)`
+const BottomRightButton = styled(SmoothBox)`
   cursor: pointer;
 
   & > .content {
@@ -849,6 +838,18 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setScreenAdjust(screenAdjust => (screenAdjust === 'left' ? 'top' : 'left'));
   };
 
+  const handlePipClick = () => {
+    if (!videoRef.current) return false;
+
+    const video = videoRef.current;
+
+    if (document.pictureInPictureElement) {
+      document.exitPictureInPicture();
+    } else {
+      video.requestPictureInPicture();
+    }
+  };
+
   const handleQualityClick = () => {
     setIsQualityActive(isQualityActive => !isQualityActive);
   };
@@ -992,17 +993,22 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                     </Quality>
                   )}
                 </QualityWrapper>
-                {isFullscreenEnabled && (
-                  <ScreenAdjustButton hover={1.1} tap={0.9} onClick={handleScreenAdjust}>
-                    <ControlIcon type={'adjust'} color={Color.WHITE} />
-                  </ScreenAdjustButton>
+                {document.pictureInPictureEnabled && (
+                  <BottomRightButton hover={1.1} tap={0.9} onClick={handlePipClick}>
+                    <ControlIcon type={'pip'} color={Color.WHITE} />
+                  </BottomRightButton>
                 )}
-                <FullscreenButton hover={1.1} tap={0.9} onClick={handleFullscreenClick}>
+                {isFullscreenEnabled && (
+                  <BottomRightButton hover={1.1} tap={0.9} onClick={handleScreenAdjust}>
+                    <ControlIcon type={'adjust'} color={Color.WHITE} />
+                  </BottomRightButton>
+                )}
+                <BottomRightButton hover={1.1} tap={0.9} onClick={handleFullscreenClick}>
                   <ControlIcon
                     type={isFullscreenEnabled ? 'downscreen' : 'fullscreen'}
                     color={Color.WHITE}
                   />
-                </FullscreenButton>
+                </BottomRightButton>
               </BottomRight>
 
               <BackButton hover={1.1} tap={0.9} onClick={handleBackClick}>

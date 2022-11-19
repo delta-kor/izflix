@@ -23,6 +23,7 @@ import { ReactComponent as LeftSvg } from '../icons/svg/left.svg';
 import { ReactComponent as LoaderSvg } from '../icons/svg/loader.svg';
 import { ReactComponent as MusicSvg } from '../icons/svg/music.svg';
 import { ReactComponent as PauseSvg } from '../icons/svg/pause.svg';
+import { ReactComponent as PipSvg } from '../icons/svg/pip.svg';
 import { ReactComponent as PlaySvg } from '../icons/svg/play.svg';
 import { ReactComponent as PlaylistSvg } from '../icons/svg/playlist.svg';
 import { ReactComponent as RightSvg } from '../icons/svg/right.svg';
@@ -57,6 +58,7 @@ const IconMap = {
   loader: LoaderSvg,
   music: MusicSvg,
   pause: PauseSvg,
+  pip: PipSvg,
   play: PlaySvg,
   playlist: PlaylistSvg,
   right: RightSvg,
