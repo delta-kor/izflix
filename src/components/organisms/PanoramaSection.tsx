@@ -645,7 +645,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     clearTimeout(nextVideoTimeout);
 
     if (video.ended) {
-      if (panorama.state === PanoramaState.ACTIVE)
+      if (panorama.state === PanoramaState.ACTIVE && !isPip())
         nextVideoTimeout = setTimeout(() => {
           handleNextVideo();
         }, Settings.getOne('VIDEO_NEXT_COUNTDOWN') * 1000);
@@ -658,7 +658,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   }, [isEnded]);
 
   useEffect(() => {
-    pause();
+    !isPip() && pause();
     setPlayed(0);
     setDuration(0);
     setVideoLoaded(false);
@@ -681,6 +681,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   useEffect(() => {
     panoramaStateRef.current = panorama.state;
+    if (panorama.state !== PanoramaState.ACTIVE) exitPip();
   }, [panorama.state]);
 
   useEffect(() => {
@@ -807,7 +808,10 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       if (videoRef.current.webkitEnterFullscreen && !videoRef.current.requestFullscreen)
         // @ts-ignore
         videoRef.current.webkitEnterFullscreen();
-      else enableFullscreen();
+      else {
+        enableFullscreen();
+        document.exitPictureInPicture();
+      }
     }
   };
 
@@ -843,8 +847,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
     const video = videoRef.current;
 
-    if (document.pictureInPictureElement) {
-      document.exitPictureInPicture();
+    if (isPip()) {
+      exitPip();
     } else {
       video.requestPictureInPicture();
     }
@@ -873,6 +877,20 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   const pause = () => {
     videoRef.current?.pause();
+  };
+
+  const isPip = () => {
+    if (!videoRef.current) return false;
+    return document.pictureInPictureElement === videoRef.current;
+  };
+
+  const exitPip = () => {
+    if (!videoRef.current) return;
+
+    const video = videoRef.current;
+    if (document.pictureInPictureElement === video) {
+      document.exitPictureInPicture();
+    }
   };
 
   if (panorama.state === PanoramaState.NONE) return null;
