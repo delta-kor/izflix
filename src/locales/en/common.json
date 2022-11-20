@@ -54,10 +54,12 @@
   },
   "settings": {
     "featured_video_autoplay": "Play trending videos preview",
-    "featured_video_autoplay_description": "Turning off preview playback can reduce data usage",
+    "featured_video_autoplay_description": "Turning off preview can reduce data usage",
     "video_autoplay": "Autoplay video",
     "video_autoplay_description": "Turning off autoplay can reduce data usage",
-    "playback": "Playback"
+    "playback": "Playback",
+    "video_subtitle": "Use video subtitles",
+    "video_subtitle_description": "Use subtitles when available"
   },
   "live": {
     "rules": {

@@ -30,7 +30,7 @@ const Group = styled.div`
   }
 
   ${PcQuery} {
-    gap: 18px;
+    gap: 20px;
   }
 `;
 
@@ -75,6 +75,12 @@ const SettingsTemplate: React.FC = () => {
           description={t('settings.video_autoplay_description')}
           state={settings.VIDEO_AUTOPLAY}
           onClick={() => handleToggle('VIDEO_AUTOPLAY')}
+        />
+        <SettingsItem
+          title={t('settings.video_subtitle')}
+          description={t('settings.video_subtitle_description')}
+          state={settings.VIDEO_SUBTITLE}
+          onClick={() => handleToggle('VIDEO_SUBTITLE')}
         />
       </Group>
     </Layout>

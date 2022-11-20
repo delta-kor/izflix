@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
-import { Color, HideOverflow, MobileQuery, PcQuery, Text } from '../../styles';
+import { Color, MobileQuery, PcQuery, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 
 const Layout = styled(SmoothBox)`
@@ -26,28 +26,30 @@ const Content = styled.div`
 
 const Title = styled.div`
   color: ${Color.WHITE};
-  ${HideOverflow};
 
   ${MobileQuery} {
     ${Text.SUBTITLE_1};
+    height: unset;
   }
 
   ${PcQuery} {
     ${Text.EX_SUBTITLE_1};
+    height: unset;
   }
 `;
 
 const Description = styled.div`
   color: ${Color.WHITE};
   opacity: 0.7;
-  ${HideOverflow};
 
   ${MobileQuery} {
     ${Text.SUBTITLE_2};
+    height: unset;
   }
 
   ${PcQuery} {
     ${Text.SUBTITLE_1};
+    height: unset;
   }
 `;
 

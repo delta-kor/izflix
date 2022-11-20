@@ -53,7 +53,9 @@
     "featured_video_autoplay_description": "미리보기 재생을 끄면 데이터 사용량을 줄일 수 있어요",
     "video_autoplay": "동영상 자동 재생",
     "video_autoplay_description": "자동 재생을 끄면 데이터 사용량을 줄일 수 있어요",
-    "playback": "재생"
+    "playback": "재생",
+    "video_subtitle": "동영상 자막",
+    "video_subtitle_description": "사용 가능한 자막이 있을 경우 자막을 사용해요"
   },
   "live": {
     "rules": {

@@ -12,12 +12,14 @@ class SettingsClass {
     const data: ISettings = {
       FEATURED_VIDEO_AUTOPLAY: true,
       VIDEO_AUTOPLAY: true,
+      VIDEO_SUBTITLE: false,
+
       USER_RECOMMEND_COUNT: 24,
       VIDEO_RECOMMEND_COUNT: 12,
       VIDEO_SCREEN_ADJUST: 'left',
       VIDEO_QUALITY: 1080,
       VIDEO_NEXT_COUNTDOWN: 5,
-      VIDEO_SUBTITLE: false,
+
       $_AUTH_TOKEN: null,
       $_LIVE_TOKEN: null,
     };
