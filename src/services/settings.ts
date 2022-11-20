@@ -13,12 +13,12 @@ class SettingsClass {
       FEATURED_VIDEO_AUTOPLAY: true,
       VIDEO_AUTOPLAY: true,
       VIDEO_SUBTITLE: false,
-
-      USER_RECOMMEND_COUNT: 20,
-      VIDEO_RECOMMEND_COUNT: 12,
-      VIDEO_SCREEN_ADJUST: 'left',
       VIDEO_QUALITY: 1080,
       VIDEO_NEXT_COUNTDOWN: 5,
+      VIDEO_SCREEN_ADJUST: 'left',
+
+      USER_RECOMMEND_COUNT: 20,
+      VIDEO_RECOMMEND_COUNT: 10,
 
       $_AUTH_TOKEN: null,
       $_LIVE_TOKEN: null,

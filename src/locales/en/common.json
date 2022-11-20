@@ -60,7 +60,11 @@
     "playback": "Playback",
     "video_subtitle": "Use video subtitles",
     "video_subtitle_description": "Use subtitles when available",
-    "feed": "Feed"
+    "feed": "Feed",
+    "user_recommend_count": "Recommended video display count",
+    "video_recommend_count": "Related video display count",
+    "video_quality": "Video playback quality",
+    "video_quality_description": "Set default video playback quality when playing"
   },
   "live": {
     "rules": {

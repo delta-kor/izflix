@@ -7,6 +7,7 @@ const ModalStyle: ReactModal.Styles = {
     inset: 'unset',
     padding: '24px',
     maxWidth: '100%',
+    maxHeight: 'calc(100vh - 32px)',
     background: Color.DARK_GRAY,
     border: '2px solid #454B6B',
     borderRadius: '8px',

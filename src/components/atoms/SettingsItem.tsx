@@ -22,6 +22,7 @@ const Content = styled.div`
   flex-grow: 1;
   gap: 6px;
   min-width: 0;
+  min-height: 24px;
 `;
 
 const Title = styled.div`
@@ -102,7 +103,7 @@ const TextState = styled.div`
 
 interface Props {
   title: string;
-  description: string;
+  description?: string;
   state: boolean | string;
   onClick?: MouseEventHandler;
 }
@@ -116,7 +117,7 @@ const SettingsItem: React.FC<Props> = ({ title, description, state, onClick }) =
     <Layout hover={scale[0]} tap={scale[1]} onClick={onClick}>
       <Content>
         <Title>{title}</Title>
-        <Description>{description}</Description>
+        {description && <Description>{description}</Description>}
       </Content>
       {typeof state === 'boolean' && (
         <Checkbox>

@@ -94,22 +94,54 @@ const SettingsTemplate: React.FC = () => {
           state={settings.VIDEO_SUBTITLE}
           onClick={() => handleToggle('VIDEO_SUBTITLE')}
         />
+        <SettingsItem
+          title={t('settings.video_quality')}
+          description={t('settings.video_quality_description')}
+          state={`${settings.VIDEO_QUALITY}p`}
+          onClick={() =>
+            modal.openModal(SelectModal, {
+              content: 'settings.video_quality',
+              items: [2160, 1440, 1080, 720, 540, 360, 240].map(
+                quality => [quality, `${quality}p`] as [number, string]
+              ),
+              current: settings.VIDEO_QUALITY,
+              onSubmit(data) {
+                setValue('VIDEO_QUALITY', data.selected);
+              },
+            })
+          }
+        />
       </Group>
       <Group>
         <GroupTitle>{t('settings.feed')}</GroupTitle>
         <SettingsItem
           title={t('settings.user_recommend_count')}
-          description={t('settings.user_recommend_count_description')}
           state={t('common.count', { count: settings.USER_RECOMMEND_COUNT })}
           onClick={() =>
             modal.openModal(SelectModal, {
-              content: 'profile.select_language',
+              content: 'settings.user_recommend_count',
               items: [10, 15, 20, 25, 30].map(
-                count => [count.toString(), t('common.count', { count })] as [string, string]
+                count => [count, t('common.count', { count })] as [number, string]
               ),
-              current: settings.USER_RECOMMEND_COUNT.toString(),
+              current: settings.USER_RECOMMEND_COUNT,
               onSubmit(data) {
-                setValue('USER_RECOMMEND_COUNT', Number(data.selected));
+                setValue('USER_RECOMMEND_COUNT', data.selected);
+              },
+            })
+          }
+        />
+        <SettingsItem
+          title={t('settings.video_recommend_count')}
+          state={t('common.count', { count: settings.VIDEO_RECOMMEND_COUNT })}
+          onClick={() =>
+            modal.openModal(SelectModal, {
+              content: 'settings.video_recommend_count',
+              items: [5, 10, 15, 20, 25].map(
+                count => [count, t('common.count', { count })] as [number, string]
+              ),
+              current: settings.VIDEO_RECOMMEND_COUNT,
+              onSubmit(data) {
+                setValue('VIDEO_RECOMMEND_COUNT', data.selected);
               },
             })
           }

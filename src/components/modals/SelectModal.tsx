@@ -37,7 +37,7 @@ const Selector = styled.div`
   flex-direction: column;
 
   ${MobileQuery} {
-    gap: 4px;
+    gap: 6px;
   }
 
   ${PcQuery} {
@@ -50,25 +50,25 @@ const Item = styled.div<{ $active: boolean }>`
   height: unset;
 
   color: ${Color.WHITE};
-  background: ${({ $active }) => ($active ? Color.GRAY : Color.DARK_GRAY)};
+  background: ${({ $active }) => ($active ? Color.GRAY : Color.GRAY + '1F')};
   border-radius: 4px;
   transition: background 0.2s;
   cursor: pointer;
 
   ${MobileQuery} {
-    padding: 12px 16px;
+    padding: 10px 16px;
   }
 
   ${PcQuery} {
-    padding: 14px 16px;
+    padding: 12px 16px;
   }
 `;
 
-interface Props extends ModalProps<{ selected: string }> {
+interface Props extends ModalProps<{ selected: any }> {
   content: string;
-  items: [string, string][];
-  current?: string;
-  onUpdate?: (selected: string) => void;
+  items: [any, string][];
+  current?: any;
+  onUpdate?: (selected: any) => void;
 }
 
 const SelectModal: React.FC<Props> = ({
@@ -81,7 +81,7 @@ const SelectModal: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation();
 
-  const [selected, setSelected] = useState<string>(current || items[0][0]);
+  const [selected, setSelected] = useState<any>(current || items[0][0]);
 
   useEffect(() => {
     onUpdate && onUpdate(selected);

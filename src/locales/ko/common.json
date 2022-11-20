@@ -56,7 +56,11 @@
     "playback": "재생",
     "video_subtitle": "동영상 자막",
     "video_subtitle_description": "사용 가능한 자막이 있을 경우 자막을 사용해요",
-    "feed": "피드"
+    "feed": "피드",
+    "user_recommend_count": "추천 동영상 표시 개수",
+    "video_recommend_count": "연관 동영상 표시 개수",
+    "video_quality": "동영상 화질",
+    "video_quality_description": "동영상 재생 시 기본 화질을 설정해요"
   },
   "live": {
     "rules": {
