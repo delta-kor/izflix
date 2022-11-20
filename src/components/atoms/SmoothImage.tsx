@@ -37,6 +37,7 @@ const Text = styled.div`
   background: ${Color.DARK_GRAY}AA;
   border-radius: 4px;
   z-index: 2;
+  transform: skew(0.1deg);
 
   ${MobileQuery} {
     bottom: 6px;
