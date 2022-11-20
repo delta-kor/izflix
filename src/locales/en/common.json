@@ -80,6 +80,8 @@
   },
   "info": {
     "development": "Development",
-    "license": "Open Source License"
+    "license": "Open Source License",
+    "subtitle": "Subtitles",
+    "video": "Video Source"
   }
 }

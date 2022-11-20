@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import Icon from '../../icons/Icon';
 import { Color, HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
 
 const Layout = styled.div`
@@ -8,7 +9,7 @@ const Layout = styled.div`
 
   ${MobileQuery} {
     padding: 0 32px;
-    gap: 28px;
+    gap: 32px;
   }
 
   ${PcQuery} {
@@ -45,31 +46,38 @@ const GroupTitle = styled.span`
 `;
 
 const DevelopmentWrapper = styled.div`
-  display: flex;
-  align-items: center;
-
   ${MobileQuery} {
-    justify-content: space-between;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 16px 8px;
   }
 
   ${PcQuery} {
+    display: flex;
+    align-items: center;
     gap: 32px;
   }
 `;
 
 const DevelopmentItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
   flex-shrink: 0;
   font-weight: 800;
   font-size: 20px;
   color: ${Color.WHITE};
 `;
 
+const DevelopmentIcon = styled(Icon)`
+  width: 24px;
+  height: 24px;
+`;
+
 const LicenseWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 10px 8px;
+  gap: 10px 8px;
 `;
 
 const LicenseItem = styled.a`
@@ -89,13 +97,20 @@ const LicenseItem = styled.a`
 const VersionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+
+  ${MobileQuery} {
+    gap: 16px;
+  }
+
+  ${PcQuery} {
+    gap: 24px;
+  }
 `;
 
 const VersionItem = styled.a`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 `;
 
 const VersionContent = styled.div`
@@ -105,23 +120,84 @@ const VersionContent = styled.div`
 
 const VersionTitle = styled.div`
   font-weight: 800;
-  font-size: 24px;
   color: ${Color.WHITE};
+
+  ${MobileQuery} {
+    font-size: 20px;
+  }
+
+  ${PcQuery} {
+    font-size: 24px;
+  }
 `;
 
 const VersionNumber = styled.div`
   font-weight: 400;
-  font-size: 24px;
   color: ${Color.WHITE};
   opacity: 0.3;
+
+  ${MobileQuery} {
+    font-size: 20px;
+  }
+
+  ${PcQuery} {
+    font-size: 24px;
+  }
 `;
 
 const VersionLink = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-weight: 800;
   font-size: 16px;
   color: ${Color.WHITE};
   opacity: 0.3;
   transform: skew(0.1deg);
+`;
+
+const GithubIcon = styled(Icon)`
+  width: 16px;
+  height: 16px;
+  opacity: 1;
+`;
+
+const LogoLink = styled.a`
+  ${MobileQuery} {
+    margin: 12px auto 0 auto;
+  }
+`;
+
+const Logo = styled(Icon)`
+  width: 150px;
+`;
+
+const NameWrapper = styled.div`
+  ${MobileQuery} {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px 4px;
+  }
+
+  ${PcQuery} {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+`;
+
+const NameItem = styled.div`
+  flex-shrink: 0;
+  font-weight: 800;
+  color: ${Color.WHITE};
+
+  ${MobileQuery} {
+    font-size: 16px;
+  }
+
+  ${PcQuery} {
+    font-size: 18px;
+  }
 `;
 
 const InfoTemplate: React.FC = () => {
@@ -138,14 +214,20 @@ const InfoTemplate: React.FC = () => {
             <VersionTitle>IZFLIX</VersionTitle>
             <VersionNumber>V2.0</VersionNumber>
           </VersionContent>
-          <VersionLink>delta-kor/izflix</VersionLink>
+          <VersionLink>
+            <GithubIcon type={'github'} color={Color.WHITE} />
+            delta-kor/izflix
+          </VersionLink>
         </VersionItem>
         <VersionItem href={'https://github.com/delta-kor/video-server'} target={'_blank'}>
           <VersionContent>
             <VersionTitle>IZFLIX API</VersionTitle>
             <VersionNumber>V2.0</VersionNumber>
           </VersionContent>
-          <VersionLink>delta-kor/video-server</VersionLink>
+          <VersionLink>
+            <GithubIcon type={'github'} color={Color.WHITE} />
+            delta-kor/video-server
+          </VersionLink>
         </VersionItem>
         <VersionItem>
           <VersionContent>
@@ -163,10 +245,42 @@ const InfoTemplate: React.FC = () => {
       <Group>
         <GroupTitle>{t('info.development')}</GroupTitle>
         <DevelopmentWrapper>
-          <DevelopmentItem>Son Seoyun</DevelopmentItem>
-          <DevelopmentItem>Kwon Hayul</DevelopmentItem>
-          <DevelopmentItem>Kim Eunseo</DevelopmentItem>
+          <DevelopmentItem title={'Application Development'}>
+            <DevelopmentIcon type={'code'} color={Color.WHITE} />
+            Son Seoyun
+          </DevelopmentItem>
+          <DevelopmentItem title={'Content Management'}>
+            <DevelopmentIcon type={'management'} color={Color.WHITE} />
+            Kwon Hayul
+          </DevelopmentItem>
+          <DevelopmentItem title={'Subtitle Editor'}>
+            <DevelopmentIcon type={'subtitle'} color={Color.WHITE} />
+            Kim Eunseo
+          </DevelopmentItem>
         </DevelopmentWrapper>
+      </Group>
+      <Group>
+        <GroupTitle>{t('info.video')}</GroupTitle>
+        <NameWrapper>
+          <NameItem>Shubby</NameItem>
+          <NameItem>Russell</NameItem>
+          <NameItem>DDOLVU</NameItem>
+          <NameItem>벚꽃엔딩_48</NameItem>
+          <NameItem>위즈아이</NameItem>
+          <NameItem>슨스</NameItem>
+          <NameItem>센세</NameItem>
+        </NameWrapper>
+      </Group>
+      <Group>
+        <GroupTitle>{t('info.subtitle')}</GroupTitle>
+        <NameWrapper>
+          <NameItem>@ruo_xi_ss</NameItem>
+          <NameItem>@YNF</NameItem>
+          <NameItem>@Skell6009</NameItem>
+          <NameItem>@Crensation</NameItem>
+          <NameItem>@Yubseyo</NameItem>
+          <NameItem>@boris</NameItem>
+        </NameWrapper>
       </Group>
       <Group>
         <GroupTitle>{t('info.license')}</GroupTitle>
@@ -182,6 +296,9 @@ const InfoTemplate: React.FC = () => {
           ))}
         </LicenseWrapper>
       </Group>
+      <LogoLink href={'https://github.com/delta-kor'} target={'_blank'}>
+        <Logo type={'logo'} color={Color.WHITE} />
+      </LogoLink>
     </Layout>
   );
 };
