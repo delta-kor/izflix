@@ -54,7 +54,7 @@ const CategorySection: React.FC<Props> = ({ setPath, category }) => {
       <ListItem
         title={data.title}
         description={getDate(data.date, i18n.resolvedLanguage)}
-        count={getDuration(data.duration, data.is_4k)}
+        count={getDuration(data.duration, data.properties)}
         type={'image'}
         value={Spaceship.getThumbnail(data.id)}
         link={`/${data.id}`}

@@ -34,7 +34,7 @@ const Text = styled.div`
   position: absolute;
 
   color: ${Color.WHITE};
-  background: ${Color.DARK_GRAY}AA;
+  background: ${Color.DARK_GRAY};
   border-radius: 4px;
   z-index: 2;
   transform: skew(0.1deg);

@@ -18,15 +18,19 @@ function padNumber(number: number): string {
   return number.toString().padStart(2, '0');
 }
 
-export function getDuration(number: number, is4K: boolean = false): string {
+export function getDuration(number: number, properties: VideoProperty[] = []): string {
   number = Math.round(number);
   const minutes = ((number / 60) | 0) % 60;
   const seconds = number - ((number / 60) | 0) * 60;
   const hours = (number / 60 / 60) | 0;
-  const result = hours
+
+  let result = hours
     ? `${hours}:${padNumber(minutes)}:${padNumber(seconds)}`
     : `${minutes}:${padNumber(seconds)}`;
-  return is4K ? `4K | ${result}` : result;
+  properties.includes('4k') && (result = '4K | ' + result);
+  properties.includes('cc') && (result = 'CC | ' + result);
+
+  return result;
 }
 
 export function getHumanDuration(number: number): string {

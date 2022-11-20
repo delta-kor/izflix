@@ -1,4 +1,5 @@
 type VideoType = 'performance' | 'vod';
+type VideoProperty = '4k' | 'cc';
 
 interface ApiResponse {
   ok: boolean;
@@ -44,7 +45,7 @@ interface IVideo {
   date: number;
   category: [string, string, string];
   duration: number;
-  is_4k: boolean;
+  properties: VideoProperty[];
 }
 
 interface IAlbum {
@@ -115,6 +116,7 @@ namespace ApiResponse {
       duration: number;
       date: number;
       path: IPath[];
+      properties: VideoProperty[];
     }
 
     interface Action extends ApiResponse {
