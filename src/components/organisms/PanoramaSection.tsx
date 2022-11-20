@@ -11,7 +11,15 @@ import Icon from '../../icons/Icon';
 import Settings from '../../services/settings';
 import Spaceship from '../../services/spaceship';
 import { getDuration } from '../../services/time';
-import { Color, HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
+import {
+  Color,
+  HideOverflow,
+  MobileQuery,
+  PcInnerPadding,
+  PcQuery,
+  TabletQuery,
+  Text,
+} from '../../styles';
 import Loader from '../atoms/Loader';
 import SmoothBox from '../atoms/SmoothBox';
 import SmoothImage from '../atoms/SmoothImage';
@@ -88,6 +96,10 @@ const Video = styled(motion.video)<{ $active: boolean; $screenAdjust: string }>`
 
     ${PcQuery} {
       font-size: 32px;
+    }
+
+    ${TabletQuery} {
+      font-size: 24px;
     }
   }
 `;
@@ -858,7 +870,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
         videoRef.current.webkitEnterFullscreen();
       else {
         enableFullscreen();
-        document.exitPictureInPicture();
+        document.pictureInPictureElement && document.exitPictureInPicture();
       }
     }
   };
@@ -909,8 +921,10 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     if (!video.textTracks[0]) return false;
     if (video.textTracks[0].mode === 'showing') {
       video.textTracks[0].mode = 'hidden';
+      Settings.setOne('VIDEO_SUBTITLE', false);
     } else {
       video.textTracks[0].mode = 'showing';
+      Settings.setOne('VIDEO_SUBTITLE', true);
     }
   };
 
@@ -1015,6 +1029,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       animate={videoLoaded ? 'show' : 'hide'}
       transition={{ duration: 0.5 }}
       src={panorama.streamInfo?.url}
+      crossOrigin={'anonymous'}
       ref={videoRef}
       onPlay={handlePlay}
       onPause={handlePause}
@@ -1025,7 +1040,17 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       onLoadStart={handleOnLoad}
       disableRemotePlayback
       playsInline
-    ></Video>
+    >
+      {panorama.videoInfo?.properties.includes('cc') && (
+        <track
+          src={Spaceship.getSubtitle(panorama.videoInfo.id)}
+          kind={'subtitles'}
+          srcLang={'en'}
+          label={'English'}
+          default={Settings.getOne('VIDEO_SUBTITLE')}
+        />
+      )}
+    </Video>
   );
 
   const synthedControlsActive =

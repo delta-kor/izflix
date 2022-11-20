@@ -6,6 +6,7 @@ interface ISettings {
   VIDEO_SCREEN_ADJUST: string;
   VIDEO_QUALITY: number;
   VIDEO_NEXT_COUNTDOWN: number;
+  VIDEO_SUBTITLE: boolean;
   $_AUTH_TOKEN: string | null;
   $_LIVE_TOKEN: string | null;
 }

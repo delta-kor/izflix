@@ -17,6 +17,7 @@ class SettingsClass {
       VIDEO_SCREEN_ADJUST: 'left',
       VIDEO_QUALITY: 1080,
       VIDEO_NEXT_COUNTDOWN: 5,
+      VIDEO_SUBTITLE: false,
       $_AUTH_TOKEN: null,
       $_LIVE_TOKEN: null,
     };

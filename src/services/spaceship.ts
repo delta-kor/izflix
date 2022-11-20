@@ -338,6 +338,10 @@ class SpaceshipClass {
   public getThumbnail(id: string): string {
     return `${this.baseUrl}/thumbnail/${id}`;
   }
+
+  public getSubtitle(id: string): string {
+    return `${this.baseUrl}/video/${id}/subtitle`;
+  }
 }
 
 const baseUrl = process.env.REACT_APP_API_BASE!;
