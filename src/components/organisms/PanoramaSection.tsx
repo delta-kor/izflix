@@ -965,8 +965,6 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
     navigator.mediaSession.setActionHandler('play', play);
     navigator.mediaSession.setActionHandler('pause', pause);
-    navigator.mediaSession.setActionHandler('seekforward', seekForward);
-    navigator.mediaSession.setActionHandler('seekbackward', seekBackward);
     navigator.mediaSession.setActionHandler('nexttrack', handleNextVideo);
     navigator.mediaSession.setActionHandler('previoustrack', handleBackClick);
     navigator.mediaSession.setActionHandler('seekto', e => {
