@@ -3,6 +3,7 @@
   font-weight: 400;
   src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/NanumSquareR.woff)
     format('truetype');
+  unicode-range: U+AC00-D7A3, U+00-52F, U+1E00-1FFF, U+2200-22FF;
 }
 
 @font-face {
@@ -10,6 +11,7 @@
   font-weight: 700;
   src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/NanumSquareB.woff)
     format('truetype');
+  unicode-range: U+AC00-D7A3, U+00-52F, U+1E00-1FFF, U+2200-22FF;
 }
 
 @font-face {
@@ -17,6 +19,7 @@
   font-weight: 800;
   src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/NanumSquareEB.woff)
     format('truetype');
+  unicode-range: U+AC00-D7A3, U+00-52F, U+1E00-1FFF, U+2200-22FF;
 }
 
 body {

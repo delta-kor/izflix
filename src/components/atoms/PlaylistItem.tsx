@@ -45,6 +45,7 @@ const Title = styled.div`
 
   ${PcQuery} {
     ${Text.SUBTITLE_1};
+    transform: skew(0.1deg);
   }
 `;
 
