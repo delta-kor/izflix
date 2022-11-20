@@ -59,7 +59,8 @@
     "video_autoplay_description": "Turning off autoplay can reduce data usage",
     "playback": "Playback",
     "video_subtitle": "Use video subtitles",
-    "video_subtitle_description": "Use subtitles when available"
+    "video_subtitle_description": "Use subtitles when available",
+    "feed": "Feed"
   },
   "live": {
     "rules": {

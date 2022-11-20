@@ -41,6 +41,7 @@ const Title = styled.div`
 const Description = styled.div`
   color: ${Color.WHITE};
   opacity: 0.7;
+  transform: skew(0.1deg);
 
   ${MobileQuery} {
     ${Text.SUBTITLE_2};
@@ -69,6 +70,34 @@ const Check = styled(motion.div)`
   height: 8px;
   border-radius: 2px;
   background-color: ${Color.WHITE};
+`;
+
+const TextState = styled.div`
+  position: relative;
+  flex-shrink: 0;
+  color: ${Color.WHITE};
+  transform: skew(0.1deg);
+
+  &::after {
+    position: absolute;
+    display: block;
+    content: '';
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: ${Color.WHITE};
+  }
+
+  ${MobileQuery} {
+    ${Text.SUBTITLE_2};
+    height: unset;
+  }
+
+  ${PcQuery} {
+    ${Text.SUBTITLE_1};
+    height: unset;
+  }
 `;
 
 interface Props {
@@ -103,6 +132,7 @@ const SettingsItem: React.FC<Props> = ({ title, description, state, onClick }) =
           </AnimatePresence>
         </Checkbox>
       )}
+      {typeof state === 'string' && <TextState>{state}</TextState>}
     </Layout>
   );
 };

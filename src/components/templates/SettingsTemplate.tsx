@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import useModal from '../../hooks/useModal';
 import Settings from '../../services/settings';
 import { HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
 import SettingsItem from '../atoms/SettingsItem';
+import SelectModal from '../modals/SelectModal';
 
 const Layout = styled.div`
   display: flex;
@@ -36,6 +38,7 @@ const Group = styled.div`
 
 const GroupTitle = styled.span`
   margin: 0 0 4px 0;
+  transform: skew(0.1deg);
   ${HideOverflow};
 
   ${MobileQuery} {
@@ -49,12 +52,21 @@ const GroupTitle = styled.span`
 
 const SettingsTemplate: React.FC = () => {
   const { t } = useTranslation();
+  const modal = useModal();
 
   const [settings, setSettings] = useState<ISettings>(Settings.getAll());
 
   const handleToggle = (key: keyof ISettings) => {
     setSettings(prev => {
       const next = { ...prev, [key]: !prev[key] };
+      Settings.setAll(next);
+      return next;
+    });
+  };
+
+  const setValue = (key: keyof ISettings, value: any) => {
+    setSettings(prev => {
+      const next = { ...prev, [key]: value };
       Settings.setAll(next);
       return next;
     });
@@ -81,6 +93,26 @@ const SettingsTemplate: React.FC = () => {
           description={t('settings.video_subtitle_description')}
           state={settings.VIDEO_SUBTITLE}
           onClick={() => handleToggle('VIDEO_SUBTITLE')}
+        />
+      </Group>
+      <Group>
+        <GroupTitle>{t('settings.feed')}</GroupTitle>
+        <SettingsItem
+          title={t('settings.user_recommend_count')}
+          description={t('settings.user_recommend_count_description')}
+          state={t('common.count', { count: settings.USER_RECOMMEND_COUNT })}
+          onClick={() =>
+            modal.openModal(SelectModal, {
+              content: 'profile.select_language',
+              items: [10, 15, 20, 25, 30].map(
+                count => [count.toString(), t('common.count', { count })] as [string, string]
+              ),
+              current: settings.USER_RECOMMEND_COUNT.toString(),
+              onSubmit(data) {
+                setValue('USER_RECOMMEND_COUNT', Number(data.selected));
+              },
+            })
+          }
         />
       </Group>
     </Layout>

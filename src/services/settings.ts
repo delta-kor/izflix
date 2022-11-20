@@ -14,7 +14,7 @@ class SettingsClass {
       VIDEO_AUTOPLAY: true,
       VIDEO_SUBTITLE: false,
 
-      USER_RECOMMEND_COUNT: 24,
+      USER_RECOMMEND_COUNT: 20,
       VIDEO_RECOMMEND_COUNT: 12,
       VIDEO_SCREEN_ADJUST: 'left',
       VIDEO_QUALITY: 1080,
