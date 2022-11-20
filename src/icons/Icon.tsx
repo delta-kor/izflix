@@ -30,6 +30,7 @@ import { ReactComponent as RightSvg } from '../icons/svg/right.svg';
 import { ReactComponent as SearchSvg } from '../icons/svg/search.svg';
 import { ReactComponent as SettingsSvg } from '../icons/svg/settings.svg';
 import { ReactComponent as ShareSvg } from '../icons/svg/share.svg';
+import {ReactComponent as SubtitleSvg} from '../icons/svg/subtitle.svg';
 import { ReactComponent as TvSvg } from '../icons/svg/tv.svg';
 import { ReactComponent as UserSvg } from '../icons/svg/user.svg';
 
@@ -65,6 +66,7 @@ const IconMap = {
   search: SearchSvg,
   settings: SettingsSvg,
   share: ShareSvg,
+  subtitle: SubtitleSvg,
   tv: TvSvg,
   user: UserSvg,
 };

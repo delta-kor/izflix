@@ -77,6 +77,19 @@ const Video = styled(motion.video)<{ $active: boolean; $screenAdjust: string }>`
   &::-internal-media-controls-overlay-cast-button {
     display: none;
   }
+
+  &::cue {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #000000aa;
+
+    ${MobileQuery} {
+      font-size: 16px;
+    }
+
+    ${PcQuery} {
+      font-size: 32px;
+    }
+  }
 `;
 
 const VideoArea = styled(motion.div)<{ $state: PanoramaState }>`
@@ -889,6 +902,18 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     }
   };
 
+  const handleSubtitleClick = () => {
+    if (!videoRef.current) return false;
+    const video = videoRef.current;
+
+    if (!video.textTracks[0]) return false;
+    if (video.textTracks[0].mode === 'showing') {
+      video.textTracks[0].mode = 'hidden';
+    } else {
+      video.textTracks[0].mode = 'showing';
+    }
+  };
+
   const handleQualityClick = () => {
     setIsQualityActive(isQualityActive => !isQualityActive);
   };
@@ -999,7 +1024,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       onLoadStart={handleOnLoad}
       disableRemotePlayback
       playsInline
-    />
+    ></Video>
   );
 
   const synthedControlsActive =
@@ -1103,6 +1128,11 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                     </Quality>
                   )}
                 </QualityWrapper>
+                {(videoRef.current?.textTracks.length || 0) > 0 && (
+                  <BottomRightButton hover={1.1} tap={0.9} onClick={handleSubtitleClick}>
+                    <ControlIcon type={'subtitle'} color={Color.WHITE} />
+                  </BottomRightButton>
+                )}
                 {document.pictureInPictureEnabled && (
                   <BottomRightButton hover={1.1} tap={0.9} onClick={handlePipClick}>
                     <ControlIcon type={'pip'} color={Color.WHITE} />
