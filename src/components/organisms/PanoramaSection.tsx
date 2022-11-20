@@ -621,9 +621,13 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
+    document.addEventListener('mousemove', handleMouseEvent);
+    document.addEventListener('mousedown', handleMouseDownEvent);
 
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
+      document.removeEventListener('mousemove', handleMouseEvent);
+      document.removeEventListener('mousedown', handleMouseDownEvent);
       clearTimeout(nextVideoTimeout);
     };
   }, []);
@@ -633,13 +637,6 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     if (!video) return;
 
     setIsPlaying(!video.paused);
-    document.addEventListener('mousemove', handleMouseEvent);
-    document.addEventListener('mousedown', handleMouseDownEvent);
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseEvent);
-      document.removeEventListener('mousedown', handleMouseDownEvent);
-    };
   }, [videoRef.current]);
 
   useEffect(() => {
@@ -709,7 +706,11 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       return true;
     }
 
-    const boundingRect = videoRef.current.getBoundingClientRect();
+    const video = videoRef.current;
+
+    if (video.seeking) return setIsControlsActive(true);
+
+    const boundingRect = video.getBoundingClientRect();
     const isOnTarget =
       boundingRect.left <= e.clientX &&
       e.clientX <= boundingRect.right &&
@@ -1065,7 +1066,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
             $active={synthedControlsActive}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchStart}
-            onClick={handleProgressBarClick}
+            onMouseDown={handleProgressBarClick}
           >
             <ProgressAmount
               style={{ width: `${videoLoaded ? (played / (duration || 1)) * 100 : 0}%` }}
