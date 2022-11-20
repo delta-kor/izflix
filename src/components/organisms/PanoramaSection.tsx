@@ -549,11 +549,12 @@ const QualityItems = styled(motion.div)`
   display: flex;
   flex-direction: column-reverse;
   gap: 4px;
-  bottom: 32px;
+  bottom: 36px;
   right: 0;
 
   background: rgba(22, 26, 54, 0.5);
   backdrop-filter: blur(4px);
+  border: 2px solid ${Color.GRAY};
   border-radius: 8px;
 
   ${MobileQuery} {
@@ -567,11 +568,13 @@ const QualityItems = styled(motion.div)`
   }
 `;
 
-const QualityItem = styled(SmoothBox)`
+const QualityItem = styled(SmoothBox)<{ $active: boolean }>`
   & > .content {
     text-align: center;
     font-weight: 700;
     color: ${Color.WHITE};
+    opacity: ${({ $active }) => ($active ? 1 : 0.5)};
+
     transform: skew(0.1deg);
     cursor: pointer;
     user-select: none;
@@ -631,9 +634,11 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
     setIsPlaying(!video.paused);
     document.addEventListener('mousemove', handleMouseEvent);
+    document.addEventListener('mousedown', handleMouseDownEvent);
 
     return () => {
       document.removeEventListener('mousemove', handleMouseEvent);
+      document.removeEventListener('mousedown', handleMouseDownEvent);
     };
   }, [videoRef.current]);
 
@@ -712,6 +717,12 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       e.clientY <= boundingRect.bottom + 2;
 
     setIsControlsActive(isOnTarget);
+  };
+
+  const handleMouseDownEvent = (e: MouseEvent) => {
+    if (e.target instanceof HTMLElement && e.target.closest('.quality-clickbox')) return;
+    console.log('closing');
+    setIsQualityActive(false);
   };
 
   const handleTimeUpdate = () => {
@@ -997,9 +1008,11 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.1 }}
+                        className={'quality-clickbox'}
                       >
                         {[...panorama.streamInfo.qualities].map(quality => (
                           <QualityItem
+                            $active={panorama.streamInfo?.quality === quality}
                             hover={1.1}
                             tap={0.9}
                             onClick={() => handleQualityItemClick(quality)}
@@ -1012,7 +1025,12 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                     )}
                   </AnimatePresence>
                   {panorama.streamInfo && (
-                    <Quality hover={1.1} tap={0.9} onClick={handleQualityClick}>
+                    <Quality
+                      hover={1.1}
+                      tap={0.9}
+                      onClick={handleQualityClick}
+                      className={'quality-clickbox'}
+                    >
                       <QualityDropdownIcon type={'down'} color={Color.WHITE} />
                       <QualityText>{panorama.streamInfo?.quality}p</QualityText>
                     </Quality>
