@@ -982,7 +982,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
     navigator.mediaSession.metadata = new MediaMetadata({
       title: panorama.videoInfo.title,
-      album: panorama.videoInfo.description,
+      artist: panorama.videoInfo.description,
+      album: 'IZFLIX',
       artwork: [
         { src: Spaceship.getThumbnail(panorama.videoInfo.id), sizes: '720x406', type: 'image/png' },
       ],

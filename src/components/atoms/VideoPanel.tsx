@@ -138,7 +138,8 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink 
   const thumbnail = data && Spaceship.getThumbnail(data.id);
   const title = data && data.title;
   const description = data && data.description;
-  const duration = data && getDuration(data.duration);
+  const is4K = data && data.is_4k;
+  const duration = data && getDuration(data.duration, !!is4K);
 
   const Component =
     type === 'full' ? (
