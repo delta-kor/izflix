@@ -617,6 +617,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     target: videoAreaRef,
   });
   const isFullScreenRef = useRef<boolean>(false);
+  const panoramaRef = useRef<Panorama>(panorama);
   const panoramaStateRef = useRef<PanoramaState>(PanoramaState.NONE);
 
   useEffect(() => {
@@ -647,11 +648,12 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     clearTimeout(nextVideoTimeout);
 
     if (video.ended) {
-      if (panorama.state === PanoramaState.ACTIVE && !isPip())
-        nextVideoTimeout = setTimeout(() => {
-          handleNextVideo();
-        }, Settings.getOne('VIDEO_NEXT_COUNTDOWN') * 1000);
-      else panorama.view(panorama.nextVideo.id, panorama.currentVideoState);
+      if (panorama.state === PanoramaState.ACTIVE) {
+        nextVideoTimeout = setTimeout(
+          handleNextVideo,
+          isPip() ? 0 : Settings.getOne('VIDEO_NEXT_COUNTDOWN') * 1000
+        );
+      } else handleNextVideo();
     }
   }, [videoRef.current?.ended]);
 
@@ -682,6 +684,10 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   }, [isFullscreenEnabled]);
 
   useEffect(() => {
+    panoramaRef.current = panorama;
+  }, [panorama]);
+
+  useEffect(() => {
     panoramaStateRef.current = panorama.state;
     if (panorama.state !== PanoramaState.ACTIVE) exitPip();
   }, [panorama.state]);
@@ -689,6 +695,10 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   useEffect(() => {
     Settings.setOne('VIDEO_SCREEN_ADJUST', screenAdjust);
   }, [screenAdjust]);
+
+  useEffect(() => {
+    updateMediaSession();
+  }, [panorama.videoInfo, videoRef.current]);
 
   const handlePlay = () => {
     setIsPlaying(true);
@@ -722,15 +732,23 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   const handleMouseDownEvent = (e: MouseEvent) => {
     if (e.target instanceof HTMLElement && e.target.closest('.quality-clickbox')) return;
-    console.log('closing');
     setIsQualityActive(false);
   };
 
   const handleTimeUpdate = () => {
     if (!videoRef.current) return false;
     const video = videoRef.current;
+
     setPlayed(video.currentTime || 0);
     setDuration(video.duration || 0);
+
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.setPositionState({
+        duration: video.duration || 0,
+        playbackRate: video.playbackRate,
+        position: video.currentTime || 0,
+      });
+    }
   };
 
   const handleTouchStart = () => {
@@ -779,19 +797,17 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     if (!videoRef.current || panoramaStateRef.current !== PanoramaState.ACTIVE) return false;
 
     const video = videoRef.current;
+
     if (e.key === ' ') {
       e.preventDefault();
       if (video.paused) video.play();
       else video.pause();
     }
-
     if (e.key === 'ArrowLeft') {
-      video.currentTime -= 5;
-      setPlayed(video.currentTime || 0);
+      seekBackward();
     }
     if (e.key === 'ArrowRight' && !video.ended) {
-      video.currentTime += 5;
-      setPlayed(video.currentTime || 0);
+      seekForward();
     }
   };
 
@@ -883,7 +899,11 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   };
 
   const handleNextVideo = () => {
+    const panorama = panoramaRef.current;
     if (!panorama.nextVideo) return;
+
+    if (panorama.state !== PanoramaState.ACTIVE)
+      return panorama.view(panorama.nextVideo.id, panorama.currentVideoState);
 
     const nextVideoId = panorama.nextVideo.id;
     const state = panorama.currentVideoState;
@@ -898,6 +918,22 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     videoRef.current?.pause();
   };
 
+  const seekForward = () => {
+    if (!videoRef.current) return false;
+    const video = videoRef.current;
+
+    video.currentTime = Math.min(video.currentTime + 5, video.duration - 0.1);
+    setPlayed(video.currentTime || 0);
+  };
+
+  const seekBackward = () => {
+    if (!videoRef.current) return false;
+    const video = videoRef.current;
+
+    video.currentTime = Math.max(video.currentTime - 5, 0);
+    setPlayed(video.currentTime || 0);
+  };
+
   const isPip = () => {
     if (!videoRef.current) return false;
     return document.pictureInPictureElement === videoRef.current;
@@ -910,6 +946,38 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     if (document.pictureInPictureElement === video) {
       document.exitPictureInPicture();
     }
+  };
+
+  const updateMediaSession = () => {
+    if (!('mediaSession' in navigator)) return false;
+
+    const video = videoRef.current;
+    if (!video) return false;
+    if (!panorama.videoInfo) return false;
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: panorama.videoInfo.title,
+      album: panorama.videoInfo.description,
+      artwork: [
+        { src: Spaceship.getThumbnail(panorama.videoInfo.id), sizes: '720x406', type: 'image/png' },
+      ],
+    });
+
+    navigator.mediaSession.setActionHandler('play', play);
+    navigator.mediaSession.setActionHandler('pause', pause);
+    navigator.mediaSession.setActionHandler('seekforward', seekForward);
+    navigator.mediaSession.setActionHandler('seekbackward', seekBackward);
+    navigator.mediaSession.setActionHandler('nexttrack', handleNextVideo);
+    navigator.mediaSession.setActionHandler('previoustrack', handleBackClick);
+    navigator.mediaSession.setActionHandler('seekto', e => {
+      if (typeof e.seekTime !== 'number') return false;
+
+      const video = videoRef.current;
+      if (!video) return false;
+
+      video.currentTime = e.seekTime;
+      setPlayed(video.currentTime || 0);
+    });
   };
 
   if (panorama.state === PanoramaState.NONE) return null;
@@ -976,7 +1044,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                   <PlayIcon type={isPlaying ? 'pause' : 'play'} color={Color.DARK_GRAY} />
                 </PlayButton>
               )}
-              {isEnded && panorama.nextVideo && (
+              {isEnded && panorama.nextVideo && !isPip() && (
                 <NextVideoWrapper>
                   <NextVideo hover={1.05} tap={0.95} onClick={handleNextVideo}>
                     <NextVideoThumbnail src={Spaceship.getThumbnail(panorama.nextVideo.id)} />
