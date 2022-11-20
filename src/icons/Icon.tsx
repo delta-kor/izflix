@@ -17,6 +17,7 @@ import { ReactComponent as FullscreenSvg } from '../icons/svg/fullscreen.svg';
 import { ReactComponent as HeartBorderSvg } from '../icons/svg/heart_border.svg';
 import { ReactComponent as HeartFilledSvg } from '../icons/svg/heart_filled.svg';
 import { ReactComponent as HomeSvg } from '../icons/svg/home.svg';
+import { ReactComponent as InfoSvg } from '../icons/svg/info.svg';
 import { ReactComponent as IzflixSvg } from '../icons/svg/izflix.svg';
 import { ReactComponent as LanguageSvg } from '../icons/svg/language.svg';
 import { ReactComponent as LeftSvg } from '../icons/svg/left.svg';
@@ -30,7 +31,7 @@ import { ReactComponent as RightSvg } from '../icons/svg/right.svg';
 import { ReactComponent as SearchSvg } from '../icons/svg/search.svg';
 import { ReactComponent as SettingsSvg } from '../icons/svg/settings.svg';
 import { ReactComponent as ShareSvg } from '../icons/svg/share.svg';
-import {ReactComponent as SubtitleSvg} from '../icons/svg/subtitle.svg';
+import { ReactComponent as SubtitleSvg } from '../icons/svg/subtitle.svg';
 import { ReactComponent as TvSvg } from '../icons/svg/tv.svg';
 import { ReactComponent as UserSvg } from '../icons/svg/user.svg';
 
@@ -53,6 +54,7 @@ const IconMap = {
   heart_border: HeartBorderSvg,
   heart_filled: HeartFilledSvg,
   home: HomeSvg,
+  info: InfoSvg,
   izflix: IzflixSvg,
   language: LanguageSvg,
   left: LeftSvg,

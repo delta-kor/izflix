@@ -42,7 +42,8 @@
     "update_nickname": "Edit nickname",
     "settings": "Settings",
     "language": "Language",
-    "select_language": "Select language"
+    "select_language": "Select language",
+    "info": "Info"
   },
   "modal": {
     "cancel": "Cancel",
@@ -76,5 +77,9 @@
   "search": {
     "input_query": "Search",
     "no_result": "No search results"
+  },
+  "info": {
+    "development": "Development",
+    "license": "Open Source License"
   }
 }

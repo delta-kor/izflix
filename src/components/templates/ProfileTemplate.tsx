@@ -63,6 +63,9 @@ const ProfileTemplate: React.FC<Props> = ({ user }) => {
         <IconListItem icon={'settings'} onClick={() => navigate('/profile/settings')}>
           {t('profile.settings')}
         </IconListItem>
+        <IconListItem icon={'info'} onClick={() => navigate('/profile/info')}>
+          {t('profile.info')}
+        </IconListItem>
       </IconListSection>
     </Layout>
   );
