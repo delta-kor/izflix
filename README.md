@@ -2,7 +2,8 @@
 
 Video player client for [video-server](https://github.com/delta-kor/video-server)
 
-[https://izflix.net](https://izflix.net)
+[https://izflix.net](https://izflix.net)  
+![IZFLIX WEB](https://cronitor.io/badges/xdQGle/production/qPaMi7L7IsLnTzdtTC_4IKuzD9c.svg)
 
 ## Project Image
 
