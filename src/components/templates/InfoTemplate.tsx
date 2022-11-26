@@ -249,7 +249,7 @@ const InfoTemplate: React.FC = () => {
             <DevelopmentIcon type={'code'} color={Color.WHITE} />
             Son Seoyun
           </DevelopmentItem>
-          <DevelopmentItem title={'Content Management'}>
+          <DevelopmentItem title={'Contents Management'}>
             <DevelopmentIcon type={'management'} color={Color.WHITE} />
             Kwon Hayul
           </DevelopmentItem>
@@ -258,18 +258,6 @@ const InfoTemplate: React.FC = () => {
             Kim Eunseo
           </DevelopmentItem>
         </DevelopmentWrapper>
-      </Group>
-      <Group>
-        <GroupTitle>{t('info.video')}</GroupTitle>
-        <NameWrapper>
-          <NameItem>Shubby</NameItem>
-          <NameItem>Russell</NameItem>
-          <NameItem>DDOLVU</NameItem>
-          <NameItem>벚꽃엔딩_48</NameItem>
-          <NameItem>위즈아이</NameItem>
-          <NameItem>슨스</NameItem>
-          <NameItem>센세</NameItem>
-        </NameWrapper>
       </Group>
       <Group>
         <GroupTitle>{t('info.subtitle')}</GroupTitle>

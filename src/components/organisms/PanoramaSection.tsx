@@ -647,12 +647,12 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
-    document.addEventListener('mousemove', handleMouseEvent);
+    document.addEventListener('mousemove', handleMouseMoveEvent);
     document.addEventListener('mousedown', handleMouseDownEvent);
 
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
-      document.removeEventListener('mousemove', handleMouseEvent);
+      document.removeEventListener('mousemove', handleMouseMoveEvent);
       document.removeEventListener('mousedown', handleMouseDownEvent);
       clearTimeout(nextVideoTimeout);
     };
@@ -733,7 +733,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setIsPlaying(false);
   };
 
-  const handleMouseEvent = (e: MouseEvent) => {
+  const handleMouseMoveEvent = (e: MouseEvent) => {
     if (!videoRef.current || panoramaStateRef.current !== PanoramaState.ACTIVE) return false;
 
     if (isFullScreenRef.current) {
