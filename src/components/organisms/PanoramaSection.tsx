@@ -824,7 +824,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     const video = videoRef.current;
     const boundingRect = video.getBoundingClientRect();
 
-    if (e.detail >= 2 && e.detail % 2 === 0) {
+    if (e.detail >= 2) {
       if (boundingRect.bottom - 70 < e.clientY) return false;
 
       if (boundingRect.left + boundingRect.width / 2 < e.clientX) {
