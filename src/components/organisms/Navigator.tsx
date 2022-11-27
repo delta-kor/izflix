@@ -15,15 +15,14 @@ const Layout = styled.div`
 
   ${MobileQuery} {
     bottom: 0;
+    left: 0;
+    right: 0;
     justify-content: space-around;
 
-    width: 100%;
     padding: 16px 32px;
     background: ${Color.BACKGROUND};
 
     border-top: 1px solid ${Color.DARK_GRAY};
-
-    transform: translateZ(0);
   }
 
   ${PcQuery} {
