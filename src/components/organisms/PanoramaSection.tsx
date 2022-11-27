@@ -737,7 +737,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     if (!videoRef.current || panoramaStateRef.current !== PanoramaState.ACTIVE) return false;
 
     if (isFullScreenRef.current) {
-      handleTouchStart();
+      handleTouch();
       return true;
     }
 
@@ -776,7 +776,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     }
   };
 
-  const handleTouchStart = () => {
+  const handleTouch = () => {
     if (panoramaStateRef.current !== PanoramaState.ACTIVE) return false;
     document.body.style.cursor = 'unset';
 
@@ -816,6 +816,25 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     video.currentTime = percentage * (video.duration || 0);
     setPlayed(video.currentTime || 0);
     setDuration(video.duration || 0);
+  };
+
+  const handleClick: MouseEventHandler = e => {
+    if (!videoRef.current || panoramaStateRef.current !== PanoramaState.ACTIVE) return false;
+
+    const video = videoRef.current;
+    const boundingRect = video.getBoundingClientRect();
+
+    if (e.detail >= 2 && e.detail % 2 === 0) {
+      if (boundingRect.bottom - 70 < e.clientY) return false;
+
+      if (boundingRect.left + boundingRect.width / 2 < e.clientX) {
+        seekForward();
+      }
+
+      if (boundingRect.left + boundingRect.width / 2 > e.clientX) {
+        seekBackward();
+      }
+    }
   };
 
   const handleKeyPress = (e: KeyboardEvent) => {
@@ -862,7 +881,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     if (isFullscreenEnabled) {
       disableFullscreen();
     } else {
-      handleTouchStart();
+      handleTouch();
 
       // @ts-ignore
       if (videoRef.current.webkitEnterFullscreen && !videoRef.current.requestFullscreen)
@@ -1033,8 +1052,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       ref={videoRef}
       onPlay={handlePlay}
       onPause={handlePause}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchStart}
+      onTouchStart={handleTouch}
+      onTouchMove={handleTouch}
       onTimeUpdate={handleTimeUpdate}
       onCanPlay={handleOnCanPlay}
       onLoadStart={handleOnLoad}
@@ -1066,6 +1085,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     >
       <VideoArea
         $state={panorama.state}
+        onClick={handleClick}
         onPan={handlePan}
         onPanEnd={() => controlsTimeout !== null && setIsControlsActive(false)}
         ref={videoAreaRef}
@@ -1086,7 +1106,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                   hover={1.1}
                   tap={0.9}
                   onClick={() => {
-                    handleTouchStart();
+                    handleTouch();
                     isPlaying ? pause() : play();
                   }}
                 >
@@ -1186,8 +1206,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
         {panorama.state === PanoramaState.ACTIVE && (
           <ProgressBar
             $active={synthedControlsActive}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchStart}
+            onTouchStart={handleTouch}
+            onTouchMove={handleTouch}
             onMouseDown={handleProgressBarClick}
           >
             <ProgressAmount
