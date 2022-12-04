@@ -162,14 +162,13 @@ const GithubIcon = styled(Icon)`
   opacity: 1;
 `;
 
-const LogoLink = styled.a`
+const Logo = styled(Icon)`
+  zoom: 1.2;
+
   ${MobileQuery} {
     margin: 12px auto 0 auto;
+    zoom: 1;
   }
-`;
-
-const Logo = styled(Icon)`
-  width: 150px;
 `;
 
 const NameWrapper = styled.div`
@@ -284,9 +283,7 @@ const InfoTemplate: React.FC = () => {
           ))}
         </LicenseWrapper>
       </Group>
-      <LogoLink href={'https://github.com/delta-kor'} target={'_blank'}>
-        <Logo type={'logo'} color={Color.WHITE} />
-      </LogoLink>
+      <Logo type={'logo'} color={Color.WHITE} />
     </Layout>
   );
 };
