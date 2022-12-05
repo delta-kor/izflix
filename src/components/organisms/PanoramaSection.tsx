@@ -1054,7 +1054,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       onTouchStart={handleTouch}
       onTouchMove={handleTouch}
       onTimeUpdate={handleTimeUpdate}
-      onCanPlay={handleOnCanPlay}
+      onLoadedMetadata={handleOnCanPlay}
       onLoadStart={handleOnLoad}
       disableRemotePlayback
       playsInline
