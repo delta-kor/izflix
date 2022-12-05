@@ -732,6 +732,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setIsPlaying(false);
   };
 
+  // document mouse move
   const handleMouseMoveEvent = (e: MouseEvent) => {
     if (!videoRef.current || panoramaStateRef.current !== PanoramaState.ACTIVE) return false;
 
@@ -754,11 +755,13 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setIsControlsActive(isOnTarget);
   };
 
+  // document mouse down
   const handleMouseDownEvent = (e: MouseEvent) => {
     if (e.target instanceof HTMLElement && e.target.closest('.quality-clickbox')) return;
     setIsQualityActive(false);
   };
 
+  // video time update
   const handleTimeUpdate = () => {
     if (!videoRef.current) return false;
     const video = videoRef.current;
@@ -775,6 +778,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     }
   };
 
+  // video & progress bar mouse down
   const handleTouch = () => {
     if (panoramaStateRef.current !== PanoramaState.ACTIVE) return false;
     document.body.style.cursor = 'unset';
@@ -795,6 +799,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     );
   };
 
+  // video & progress bar mouse drag
   const handlePan = (e: MouseEvent, info: PanInfo) => {
     if (!videoRef.current || panoramaStateRef.current !== PanoramaState.ACTIVE) return false;
 
@@ -817,6 +822,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setDuration(video.duration || 0);
   };
 
+  // video click & double click
   const handleClick: MouseEventHandler = e => {
     if (!videoRef.current || panoramaStateRef.current !== PanoramaState.ACTIVE) return false;
 
@@ -824,6 +830,11 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     const boundingRect = video.getBoundingClientRect();
 
     if (e.detail >= 2) {
+      const nativeEvent = e.nativeEvent as PointerEvent;
+      if (nativeEvent.pointerType === 'mouse') {
+        return handleFullscreenClick();
+      }
+
       if (boundingRect.bottom - 70 < e.clientY) return false;
 
       if (boundingRect.left + boundingRect.width / 2 < e.clientX) {
@@ -836,6 +847,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     }
   };
 
+  // keyboard click
   const handleKeyPress = (e: KeyboardEvent) => {
     if (!videoRef.current || panoramaStateRef.current !== PanoramaState.ACTIVE) return false;
 
@@ -854,6 +866,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     }
   };
 
+  // progress bar click
   const handleProgressBarClick: MouseEventHandler = e => {
     if (!videoRef.current || panoramaStateRef.current !== PanoramaState.ACTIVE) return false;
 
