@@ -20,12 +20,14 @@ const Layout = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   flex-grow: 1;
   gap: 6px;
   min-width: 0;
 `;
 
 const Nickname = styled.div`
+  width: 100%;
   color: ${Color.WHITE};
   ${HideOverflow};
 
@@ -38,14 +40,18 @@ const Nickname = styled.div`
   }
 `;
 
-const UserIdContent = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  min-width: 0;
+const UserIdContent = styled(SmoothBox)`
+  max-width: 100%;
 
-  cursor: pointer;
-  user-select: none;
+  & > .content {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-width: 0;
+
+    cursor: pointer;
+    user-select: none;
+  }
 `;
 
 const UserId = styled.div`
@@ -159,7 +165,7 @@ const ProfileInfo: React.FC<Props> = ({ user }) => {
     if (!userId) return false;
 
     navigator.clipboard
-      .writeText(userId)
+      .writeText(userIdToTag(userId))
       .then(() => {
         Transmitter.emit('popup', {
           type: 'success',
@@ -178,7 +184,7 @@ const ProfileInfo: React.FC<Props> = ({ user }) => {
     <Layout>
       <Content>
         {nickname ? <Nickname>{nickname}</Nickname> : <NicknamePlaceholder />}
-        <UserIdContent onClick={handleIdClick}>
+        <UserIdContent hover={1.05} tap={0.95} onClick={handleIdClick}>
           {userId ? <UserId>{userIdToTag(userId)}</UserId> : <UserIdPlaceholder />}
           <UserIdArrowIcon type={'right'} color={Color.GRAY} />
         </UserIdContent>
