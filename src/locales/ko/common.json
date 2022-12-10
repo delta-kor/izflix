@@ -16,8 +16,8 @@
     "seek_backward": "{{time}}초 뒤로 이동",
     "subtitle_off": "자막 사용 중지",
     "subtitle_on": "자막 사용",
-    "screen_adjust_top": "화면 크기에 맞춤",
-    "screen_adjust_left": "영상 크기에 맞춤"
+    "screen_adjust_left": "화면 크기에 맞춤",
+    "screen_adjust_top": "영상 크기에 맞춤"
   },
   "playlist": {
     "playlist": "재생목록",
