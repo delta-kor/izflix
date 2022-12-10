@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import PathFinder from '../../services/path-finder';
+import Cache from '../../services/cache';
 import Spaceship from '../../services/spaceship';
 import { getDate, getDuration } from '../../services/time';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
@@ -65,7 +65,7 @@ const CategorySection: React.FC<Props> = ({ setPath, category }) => {
   }
 
   if (!category) {
-    const count = PathFinder.get(id) || 5;
+    const count = Cache.get(id) || 5;
     Content = <Repeat count={count} element={i => <ListItem type={'placeholder'} key={i} />} />;
   }
 

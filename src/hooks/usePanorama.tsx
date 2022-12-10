@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
 import { VideoPageState } from '../pages/VideoPage';
+import Cache from '../services/cache';
 import PageManager from '../services/page-manager';
 import Settings from '../services/settings';
 import Spaceship from '../services/spaceship';
@@ -84,6 +85,10 @@ function usePanorama(): Panorama {
     const videoInfoResponse = await Spaceship.getVideoInfo(id);
     if (!videoInfoResponse.ok) return videoInfoResponse;
     setVideoInfo(videoInfoResponse);
+
+    for (const path of videoInfoResponse.path) {
+      Cache.set(path.id, path.children);
+    }
 
     const stream = Spaceship.streamVideo(id, Settings.getOne('VIDEO_QUALITY'));
     stream.then(streamInfoResponse => {

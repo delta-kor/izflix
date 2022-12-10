@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import CategoryInnerTemplate from '../components/templates/CategoryInnerTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
-import PathFinder from '../services/path-finder';
+import Cache from '../services/cache';
 import Spaceship from '../services/spaceship';
 import Page from './Page';
 
@@ -29,12 +29,12 @@ const CategoryInnerPage: React.FC<Props> = ({ setPath }) => {
     setPath(response.path);
 
     for (const path of response.path) {
-      PathFinder.set(path.id, path.children);
+      Cache.set(path.id, path.children);
     }
 
     if (response.type === 'folder') {
       for (const data of response.data) {
-        PathFinder.set(data.id, data.children);
+        Cache.set(data.id, data.children);
       }
     }
   };
