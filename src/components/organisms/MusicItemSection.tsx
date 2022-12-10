@@ -122,6 +122,12 @@ const MusicItemSection: React.FC<Props> = ({ musics, selected }) => {
 
   useEffect(() => {
     device === 'pc' && window.scrollTo(0, 0);
+
+    const preSelectedMusic = musics.find(music => music.id === selected);
+    if (device === 'mobile' && preSelectedMusic) {
+      const element = document.querySelector(`.music-content[data-id="${preSelectedMusic.id}"]`);
+      element?.scrollIntoView({ behavior: 'auto', block: 'center' });
+    }
   }, [selectedMusic]);
 
   const createLink = (id: string): [string, VideoPageState] => {
@@ -137,7 +143,7 @@ const MusicItemSection: React.FC<Props> = ({ musics, selected }) => {
       <Mobile>
         {selectedMusic ? (
           musics.map(music => (
-            <Content key={music.id}>
+            <Content className={'music-content'} data-id={music.id} key={music.id}>
               <SectionTitle action={music.videos.length.toString()}>{music.title}</SectionTitle>
               <VideoCarousel data={music.videos} createLink={createLink} />
             </Content>
