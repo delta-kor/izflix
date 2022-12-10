@@ -28,6 +28,7 @@ const Header = styled.div`
 const Title = styled.div`
   flex-grow: 1;
   color: ${Color.WHITE};
+  transform: skew(0.1deg);
   ${HideOverflow};
 
   ${MobileQuery} {
@@ -130,7 +131,7 @@ const NextVideoList: React.FC<Props> = ({ videos, currentVideoId, state }) => {
               up: { transform: 'rotateX(0deg)' },
               down: { transform: 'rotateX(180deg)' },
             }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.3 }}
           >
             <FoldIcon type={'down'} color={Color.WHITE} />
           </motion.div>
