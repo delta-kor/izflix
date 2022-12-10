@@ -59,8 +59,8 @@ const MusicItem: React.FC<Props> = ({ data, active, onClick }) => {
   return (
     <Layout
       $color={active ? Color.PRIMARY : Color.DARK_GRAY}
-      hover={1.05}
-      tap={0.95}
+      hover={1.03}
+      tap={0.97}
       onClick={onLayoutClick}
     >
       <Content>{data.title}</Content>
