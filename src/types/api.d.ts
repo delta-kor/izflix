@@ -117,6 +117,7 @@ namespace ApiResponse {
       date: number;
       path: IPath[];
       properties: VideoProperty[];
+      music: [string, string] | null;
     }
 
     interface Action extends ApiResponse {

@@ -93,16 +93,25 @@ const MusicItemPlaceholder = styled.div`
 
 interface Props {
   musics: IMusic[];
+  selected?: string;
 }
 
-const MusicItemSection: React.FC<Props> = ({ musics }) => {
+const MusicItemSection: React.FC<Props> = ({ musics, selected }) => {
   const { i18n } = useTranslation();
   const device = useDevice();
 
-  const [selectedMusic, setSelectedMusic] = useState<IMusic | undefined>();
+  const [selectedMusic, setSelectedMusic] = useState<IMusic | undefined>(
+    musics.find(music => music.id === selected)
+  );
 
   useEffect(() => {
     if (musics.length) {
+      const preSelectedMusic = musics.find(music => music.id === selected);
+      if (preSelectedMusic) {
+        setSelectedMusic(preSelectedMusic);
+        return;
+      }
+
       const music = musics.reduce((prev, curr) => {
         return prev.videos.length > curr.videos.length ? prev : curr;
       });

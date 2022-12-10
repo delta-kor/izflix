@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import MusicItemTemplate from '../components/templates/MusicItemTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
@@ -8,7 +8,14 @@ import Spaceship from '../services/spaceship';
 import ErrorPage from './ErrorPage';
 import Page from './Page';
 
+interface MusicItemPageState {
+  selected: string;
+}
+
 const MusicItemPage: React.FC = () => {
+  const location = useLocation();
+  const state = location.state as MusicItemPageState | undefined;
+
   const params = useParams();
   const id = params.id;
 
@@ -35,7 +42,7 @@ const MusicItemPage: React.FC = () => {
 
   return (
     <Page>
-      <MusicItemTemplate musics={musics} />
+      <MusicItemTemplate musics={musics} selected={state?.selected} />
     </Page>
   );
 };
