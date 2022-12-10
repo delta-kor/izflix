@@ -630,15 +630,16 @@ const Toast = styled(motion.div)`
   z-index: 2;
   user-select: none;
 
-  ${Text.BODY_1};
-  height: unset;
-
   ${MobileQuery} {
     bottom: 36px;
+    ${Text.BODY_2};
+    height: unset;
   }
 
   ${PcQuery} {
     bottom: 42px;
+    ${Text.BODY_1};
+    height: unset;
   }
 `;
 

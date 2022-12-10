@@ -16,8 +16,8 @@
     "seek_backward": "Seek backward {{time}}s",
     "subtitle_off": "Subtitle off",
     "subtitle_on": "Subtitle on",
-    "screen_adjust_left": "Fit to screen",
-    "screen_adjust_top": "Fit to video"
+    "screen_adjust_top": "Fit to screen",
+    "screen_adjust_left": "Fit to video"
   },
   "playlist": {
     "playlist": "Playlist",
