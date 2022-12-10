@@ -50,7 +50,7 @@ interface Props {
 const IconListItem: React.FC<Props> = ({ icon, onClick, children }) => {
   const device = useDevice();
 
-  const scale = device === 'mobile' ? [1.05, 0.95] : [1.01, 0.99];
+  const scale = device === 'mobile' ? [1.03, 0.97] : [1.01, 0.99];
 
   return (
     <Layout hover={scale[0]} tap={scale[1]} onClick={onClick}>

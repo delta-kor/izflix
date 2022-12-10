@@ -60,7 +60,7 @@ interface Props {
 
 const VerticalButton: React.FC<Props> = ({ icon, color, fluid, link, onClick, children }) => {
   const Component = (
-    <Layout $color={color} $fluid={fluid!!} hover={1.1} tap={0.9} onClick={onClick}>
+    <Layout $color={color} $fluid={fluid!!} hover={1.05} tap={0.95} onClick={onClick}>
       <ActionIcon type={icon} color={Color.WHITE} />
       <Content>{children}</Content>
     </Layout>

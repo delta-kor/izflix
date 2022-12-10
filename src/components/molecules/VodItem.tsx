@@ -192,10 +192,17 @@ const VodItem: React.FC<Props> = ({ data }) => {
             fluid
             link={firstVideoLink}
             state={linkState}
+            scale={0.96}
           >
             {t('video.play_first')}
           </Button>
-          <Button color={Color.TRANSPARENT} icon={'playlist'} fluid link={playlistLink}>
+          <Button
+            color={Color.TRANSPARENT}
+            icon={'playlist'}
+            fluid
+            link={playlistLink}
+            scale={0.96}
+          >
             {t('playlist.playlist')}
           </Button>
         </Action>

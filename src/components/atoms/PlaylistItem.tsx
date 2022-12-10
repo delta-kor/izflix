@@ -73,7 +73,7 @@ const PlaylistItem: React.FC<Props> = ({ playlist }) => {
 
   const Component = (
     <>
-      <Layout hover={device === 'mobile' ? 1 : 1.1} tap={device === 'mobile' ? 1 : 0.9}>
+      <Layout hover={device === 'mobile' ? 1 : 1.05} tap={device === 'mobile' ? 1 : 0.95}>
         <Thumbnail src={thumbnail} />
         {title ? <Title>{title}</Title> : <TitlePlaceholder />}
       </Layout>

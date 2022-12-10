@@ -143,7 +143,7 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink 
 
   const Component =
     type === 'full' ? (
-      <FullLayout hover={1.05} tap={0.95} onClick={onClick}>
+      <FullLayout hover={1.03} tap={0.97} onClick={onClick}>
         <Image src={thumbnail} text={duration} />
         <Content>
           {title ? <Title>{title}</Title> : <TitlePlaceholder />}
@@ -151,7 +151,7 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink 
         </Content>
       </FullLayout>
     ) : type === 'horizontal' ? (
-      <HorizontalLayout $shrink={!!shrink} hover={1.05} tap={0.95}>
+      <HorizontalLayout $shrink={!!shrink} hover={1.03} tap={0.97}>
         <HorizontalImage src={thumbnail} text={duration} />
         <Content>
           {title ? <Title $shrink={!!shrink}>{title}</Title> : <TitlePlaceholder />}

@@ -76,7 +76,7 @@ const AlbumItem: React.FC<Props> = ({ data }) => {
   const thumbnail = data && Spaceship.getThumbnail(data.id);
 
   const Content = (
-    <Layout hover={1.1} tap={0.9}>
+    <Layout hover={1.05} tap={0.95}>
       <Thumbnail src={thumbnail} />
       {title ? <Title>{title}</Title> : <TitlePlaceholder />}
     </Layout>

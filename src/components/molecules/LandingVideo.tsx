@@ -296,6 +296,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
           color={Color.PRIMARY}
           icon={'play'}
           fluid={device === 'mobile'}
+          scale={0.96}
           onClick={() => onActionClick('play')}
         >
           {type === 'performance' ? t('video.play') : t('video.play_first')}
@@ -304,6 +305,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
           color={Color.TRANSPARENT}
           icon={'playlist'}
           fluid={device === 'mobile'}
+          scale={0.96}
           onClick={() => onActionClick('playlist')}
         >
           {type === 'performance' ? t('video.trending') : t('playlist.playlist')}
