@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import CalendarTemplate from '../components/templates/CalendarTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
+import Cache from '../services/cache';
 import Spaceship from '../services/spaceship';
 import Page from './Page';
 
@@ -28,6 +29,10 @@ const CalendarPage: React.FC = () => {
 
     const timestamps = response.timestamps;
     setTimestamps(timestamps);
+
+    for (const timestamp of timestamps) {
+      Cache.set(timestamp[0], timestamp[1]);
+    }
   };
 
   const loadOneCalendar = async (key: string) => {

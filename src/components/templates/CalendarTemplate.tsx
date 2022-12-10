@@ -27,7 +27,7 @@ const CalendarPlaceholder = styled.div`
 
 interface Props {
   timestamps: CalendarTimestamp[];
-  date?: string;
+  date: string;
   videos: IVideo[];
   setDate(key: string): void;
 }

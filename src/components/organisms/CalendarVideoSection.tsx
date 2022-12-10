@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
+import Cache from '../../services/cache';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import VideoPanel from '../atoms/VideoPanel';
 import Repeat from '../tools/Repeat';
@@ -31,9 +32,10 @@ const ItemList = styled.div`
     gap: 32px 24px;
   }
 `;
+
 interface Props {
   videos: IVideo[];
-  date?: string;
+  date: string;
 }
 
 const CalendarVideoSection: React.FC<Props> = ({ videos, date }) => {
@@ -54,7 +56,7 @@ const CalendarVideoSection: React.FC<Props> = ({ videos, date }) => {
           ))
         ) : (
           <Repeat
-            count={6}
+            count={Cache.get(date) || 6}
             element={(i: number) => (
               <VideoPanel type={device === 'mobile' ? 'horizontal' : 'full'} key={i} />
             )}
