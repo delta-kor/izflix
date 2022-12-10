@@ -132,7 +132,7 @@ const ProfileInfo: React.FC<Props> = ({ user }) => {
   const userId = user.user?.id;
   const nickname = user.user?.nickname;
 
-  const onEditClick: MouseEventHandler = () => {
+  const handleEditClick: MouseEventHandler = () => {
     if (!user.user) return false;
     modal.openModal(InputModal, {
       content: t('profile.update_nickname'),
@@ -140,12 +140,12 @@ const ProfileInfo: React.FC<Props> = ({ user }) => {
       placeholder: t('profile.input_nickname'),
       maxLength: 12,
       onSubmit(data) {
-        onNicknameUpdate(data.nickname);
+        handleNicknameUpdate(data.nickname);
       },
     });
   };
 
-  const onNicknameUpdate = (nickname: string) => {
+  const handleNicknameUpdate = (nickname: string) => {
     if (nickname === user.user?.nickname) return true;
     new Evoke(user.updateNickname(nickname)).then(() => {
       Transmitter.emit('popup', {
@@ -155,16 +155,35 @@ const ProfileInfo: React.FC<Props> = ({ user }) => {
     });
   };
 
+  const handleIdClick = () => {
+    if (!userId) return false;
+
+    navigator.clipboard
+      .writeText(userId)
+      .then(() => {
+        Transmitter.emit('popup', {
+          type: 'success',
+          message: t('profile.id_copied'),
+        });
+      })
+      .catch(e => {
+        Transmitter.emit('popup', {
+          type: 'error',
+          message: t('profile.id_copy_failed'),
+        });
+      });
+  };
+
   return (
     <Layout>
       <Content>
         {nickname ? <Nickname>{nickname}</Nickname> : <NicknamePlaceholder />}
-        <UserIdContent>
+        <UserIdContent onClick={handleIdClick}>
           {userId ? <UserId>{userIdToTag(userId)}</UserId> : <UserIdPlaceholder />}
           <UserIdArrowIcon type={'right'} color={Color.GRAY} />
         </UserIdContent>
       </Content>
-      <EditIconWrapper hover={1.1} tap={0.9} onClick={onEditClick}>
+      <EditIconWrapper hover={1.1} tap={0.9} onClick={handleEditClick}>
         <EditIcon type={'edit'} color={Color.GRAY} />
       </EditIconWrapper>
     </Layout>
