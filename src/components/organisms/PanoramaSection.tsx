@@ -830,12 +830,13 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     const boundingRect = video.getBoundingClientRect();
 
     if (e.detail >= 2) {
+      if (boundingRect.bottom - 70 < e.clientY) return false;
+      if (Math.abs(boundingRect.left + boundingRect.width / 2 - e.clientX) < 35) return false;
+
       const nativeEvent = e.nativeEvent as PointerEvent;
       if (nativeEvent.pointerType === 'mouse') {
         return handleFullscreenClick();
       }
-
-      if (boundingRect.bottom - 70 < e.clientY) return false;
 
       if (boundingRect.left + boundingRect.width / 2 < e.clientX) {
         seekForward();
