@@ -615,12 +615,40 @@ const QualityItem = styled(SmoothBox)<{ $active: boolean }>`
   }
 `;
 
+const Toast = styled(motion.div)`
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 12px;
+
+  background: rgba(22, 26, 54, 0.5);
+  backdrop-filter: blur(2px);
+  border: 2px solid ${Color.GRAY};
+
+  color: ${Color.WHITE};
+  border-radius: 4px;
+  z-index: 2;
+  user-select: none;
+
+  ${Text.BODY_1};
+  height: unset;
+
+  ${MobileQuery} {
+    bottom: 36px;
+  }
+
+  ${PcQuery} {
+    bottom: 42px;
+  }
+`;
+
 interface Props {
   panorama: Panorama;
 }
 
 let controlsTimeout: any = null;
 let nextVideoTimeout: any = null;
+let toastTimeout: any = null;
 
 const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const navigate = useNavigate();
@@ -634,6 +662,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
   const [screenAdjust, setScreenAdjust] = useState<string>(Settings.getOne('VIDEO_SCREEN_ADJUST'));
   const [isQualityActive, setIsQualityActive] = useState<boolean>(false);
+  const [toastContent, setToastContent] = useState<string>('');
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoAreaRef = useRef<HTMLDivElement>(null);
@@ -829,6 +858,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     const video = videoRef.current;
     const boundingRect = video.getBoundingClientRect();
 
+    handleTouch();
+
     if (e.detail >= 2) {
       if (boundingRect.bottom - 70 < e.clientY) return false;
       if (Math.abs(boundingRect.left + boundingRect.width / 2 - e.clientX) < 35) return false;
@@ -931,7 +962,9 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   };
 
   const handleScreenAdjust = () => {
-    setScreenAdjust(screenAdjust => (screenAdjust === 'left' ? 'top' : 'left'));
+    const newAdjust = screenAdjust === 'left' ? 'top' : 'left';
+    setScreenAdjust(newAdjust);
+    sendToast(t(`video.screen_adjust_${newAdjust}`));
   };
 
   const handlePipClick = () => {
@@ -954,9 +987,11 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     if (video.textTracks[0].mode === 'showing') {
       video.textTracks[0].mode = 'hidden';
       Settings.setOne('VIDEO_SUBTITLE', false);
+      sendToast(t('video.subtitle_off'));
     } else {
       video.textTracks[0].mode = 'showing';
       Settings.setOne('VIDEO_SUBTITLE', true);
+      sendToast(t('video.subtitle_on'));
     }
   };
 
@@ -995,6 +1030,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
     video.currentTime = Math.min(video.currentTime + 5, video.duration - 0.1);
     setPlayed(video.currentTime || 0);
+
+    sendToast(t('video.seek_forward', { time: 5 }));
   };
 
   const seekBackward = () => {
@@ -1003,6 +1040,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
     video.currentTime = Math.max(video.currentTime - 5, 0);
     setPlayed(video.currentTime || 0);
+
+    sendToast(t('video.seek_backward', { time: 5 }));
   };
 
   const isPip = () => {
@@ -1048,6 +1087,14 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       video.currentTime = e.seekTime;
       setPlayed(video.currentTime || 0);
     });
+  };
+
+  const sendToast = (message: string) => {
+    clearTimeout(toastTimeout);
+    setToastContent(message);
+    toastTimeout = setTimeout(() => {
+      setToastContent('');
+    }, 1000);
   };
 
   if (panorama.state === PanoramaState.NONE) return null;
@@ -1214,6 +1261,19 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                 <ControlIcon type={'left'} color={Color.WHITE} />
               </BackButton>
             </VideoControls>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {toastContent && (
+            <Toast
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              key={'toast'}
+            >
+              {toastContent}
+            </Toast>
           )}
         </AnimatePresence>
         {panorama.state === PanoramaState.ACTIVE && (

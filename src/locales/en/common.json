@@ -11,7 +11,13 @@
     "share": "Share",
     "url_copied": "URL copied",
     "url_copy_failed": "Failed to copy URL",
-    "next_video_cancel": "Cancel"
+    "next_video_cancel": "Cancel",
+    "seek_forward": "Seek forward {{time}}s",
+    "seek_backward": "Seek backward {{time}}s",
+    "subtitle_off": "Subtitle off",
+    "subtitle_on": "Subtitle on",
+    "screen_adjust_top": "Fit to screen",
+    "screen_adjust_left": "Fit to video"
   },
   "playlist": {
     "playlist": "Playlist",
