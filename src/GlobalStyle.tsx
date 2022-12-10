@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { Color } from './styles';
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -7,12 +8,12 @@ const GlobalStyle = createGlobalStyle`
   outline: none;
   box-sizing: border-box;
   text-decoration: none;
-  color: #ffffff;
+  color: ${Color.WHITE};
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: #070d2d;
+  background: ${Color.BACKGROUND};
   font-family: 'NanumSquare', sans-serif;
   overflow-y: overlay;
 }
