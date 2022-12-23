@@ -103,7 +103,7 @@ const PlaylistInfo: React.FC<Props> = ({ data }) => {
   const thumbnail = data && Spaceship.getThumbnail(data.thumbnail);
   const title = data && data.title;
   const description = data && data.description;
-  const link = data && `/${data.video[0].id}`;
+  const link = data && data.video[0] && `/${data.video[0].id}`;
   const linkState = data && { key: 'playlist', value: data && data.id };
 
   return (

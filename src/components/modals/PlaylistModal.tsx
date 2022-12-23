@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import HttpException from '../../exceptions/http-exception';
 import Evoke from '../../filters/evoke';
 import useModal from '../../hooks/useModal';
 import Icon from '../../icons/Icon';
 import Spaceship from '../../services/spaceship';
+import Transmitter from '../../services/transmitter';
 import { ModalWidthSmall, MobileQuery, PcQuery, Color, Text } from '../../styles';
 import ListItem from '../atoms/ListItem';
 import SmoothBox from '../atoms/SmoothBox';
@@ -108,12 +109,12 @@ interface Props {
   respond: ModalRespondFunction;
 }
 
-let playlistCache: IPlaylist[] = [];
+let playlistsCache: IPlaylist[] | null = null;
 
 const PlaylistModal: React.FC<Props> = ({ modal, respond }) => {
   const modalHook = useModal();
 
-  const [playlists, setPlaylists] = useState<IPlaylist[]>(playlistCache || []);
+  const [playlists, setPlaylists] = useState<IPlaylist[] | null>(playlistsCache || null);
 
   useEffect(() => {
     if (modal.promise) modal.promise.then(loadData);
@@ -121,7 +122,7 @@ const PlaylistModal: React.FC<Props> = ({ modal, respond }) => {
   }, []);
 
   useEffect(() => {
-    playlistCache = playlists;
+    playlistsCache = playlists;
   }, [playlists]);
 
   const loadPlaylists = async () => {
@@ -137,6 +138,11 @@ const PlaylistModal: React.FC<Props> = ({ modal, respond }) => {
     if (!response.ok) throw new HttpException(response);
   };
 
+  const addVideoToPlaylist = async (playlistId: string, videoId: string) => {
+    const response = await Spaceship.addVideotoUserPlaylist(playlistId, videoId);
+    if (!response.ok) throw new HttpException(response);
+  };
+
   const loadData = () => {
     new Evoke(loadPlaylists());
   };
@@ -148,21 +154,40 @@ const PlaylistModal: React.FC<Props> = ({ modal, respond }) => {
       placeholder: '재생목록 이름을 입력하세요',
     }).then(async result => {
       let promise: Evoke<void> | undefined;
-      if (result.type === 'input') promise = new Evoke(createPlaylist(result.value));
+      if (result.type === 'input') {
+        playlistsCache = null;
+        promise = new Evoke(createPlaylist(result.value));
+      }
 
-      modalHook({ type: 'playlist', promise });
+      modalHook({ type: 'playlist', videoId: modal.videoId, promise });
+    });
+  };
+
+  const handlePlaylistClick = (playlistId: string) => {
+    Transmitter.emit('popup', { type: 'loading', message: '재생목록에 추가하는 중...' });
+
+    new Evoke(addVideoToPlaylist(playlistId, modal.videoId)).then(() => {
+      Transmitter.emit('popup', { type: 'success', message: '재생목록에 추가되었어요' });
+      loadData();
     });
   };
 
   return (
     <ModalBase>
       <Layout>
-        {playlists.length === 0 ? (
-          <NoPlaylist>재생목록이 없어요</NoPlaylist>
+        {playlists === null || !playlists.length ? (
+          <NoPlaylist>
+            {playlists === null ? '재생목록을 불러오는 중' : '재생목록이 없어요'}
+          </NoPlaylist>
         ) : (
           <PlaylistList>
             {playlists.map(playlist => (
-              <PlaylistItem hover={1.02} tap={0.98} key={playlist.id}>
+              <PlaylistItem
+                hover={1.02}
+                tap={0.98}
+                onClick={() => handlePlaylistClick(playlist.id)}
+                key={playlist.id}
+              >
                 <PlaylistThumbnail
                   src={playlist.thumbnail && Spaceship.getThumbnail(playlist.thumbnail)}
                   color={Color.GRAY}

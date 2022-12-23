@@ -149,6 +149,10 @@ namespace ApiResponse {
     interface CreateUserPlaylist extends ApiResponse {
       id: string;
     }
+
+    interface UpdateUserPlaylist extends ApiResponse {
+      playlist: IPlaylist;
+    }
   }
 
   namespace Music {

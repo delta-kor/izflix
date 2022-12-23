@@ -11,4 +11,8 @@ interface SuccessPopup extends PopupBase {
   type: 'success';
 }
 
-type Popup = ErrorPopup | SuccessPopup;
+interface LoadingPopup extends PopupBase {
+  type: 'loading';
+}
+
+type Popup = ErrorPopup | SuccessPopup | LoadingPopup;

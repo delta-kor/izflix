@@ -70,7 +70,8 @@ const VideoAction: React.FC<Props> = ({ action, panorama, onLike }) => {
   };
 
   const handleAddClick = () => {
-    modal({ type: 'playlist' });
+    if (!panorama.currentVideoId) return;
+    modal({ type: 'playlist', videoId: panorama.currentVideoId });
   };
 
   return (

@@ -294,8 +294,20 @@ class SpaceshipClass {
 
   public async createUserPlaylist(title: string): Promise<ApiResponse.Playlist.CreateUserPlaylist> {
     const payload = { title };
-    return this.post(`/playlist/user`, payload, {
+    return this.post('/playlist/user', payload, {
       key: `create_user_playlist::${title}`,
+      expire: expireTime,
+      auth: true,
+    });
+  }
+
+  public async addVideotoUserPlaylist(
+    playlistId: string,
+    videoId: string
+  ): Promise<ApiResponse.Playlist.UpdateUserPlaylist> {
+    const payload = { action: 'add', video_id: videoId };
+    return this.post(`/playlist/user/${playlistId}`, payload, {
+      key: `add_video_to_user_playlist::${playlistId}::${videoId}`,
       expire: expireTime,
       auth: true,
     });

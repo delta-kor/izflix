@@ -58,6 +58,9 @@ const PopupItem: React.FC<Props> = ({ data, close }) => {
     case 'success':
       iconType = 'check';
       break;
+    case 'loading':
+      iconType = 'loader';
+      break;
     default:
       iconType = 'loader';
       break;
@@ -70,6 +73,9 @@ const PopupItem: React.FC<Props> = ({ data, close }) => {
       break;
     case 'success':
       color = Color.PRIMARY;
+      break;
+    case 'loading':
+      color = Color.GRAY;
       break;
     default:
       color = Color.PRIMARY;

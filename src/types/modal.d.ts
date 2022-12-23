@@ -55,5 +55,6 @@ interface InputModal extends ModalBase {
 
 interface PlaylistModal extends ModalBase {
   type: 'playlist';
+  videoId: string;
   promise?: Evoke<void>;
 }
