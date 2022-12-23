@@ -6,7 +6,6 @@ import { User } from '../../hooks/useUser';
 import Spaceship from '../../services/spaceship';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import IconListItem from '../atoms/IconListItem';
-import SelectModal from '../modals/SelectModal';
 import IconListSection from '../organisms/IconListSection';
 import ProfileSection from '../organisms/ProfileSection';
 
@@ -36,20 +35,19 @@ const ProfileTemplate: React.FC<Props> = ({ user }) => {
   const modal = useModal();
 
   const handleLanguageClick = () => {
-    modal.openModal(SelectModal, {
+    modal({
+      type: 'select',
       content: 'profile.select_language',
       items: [
         ['ko', '한국어'],
         ['en', 'English'],
       ],
       current: i18n.resolvedLanguage === 'ko' ? 'ko' : 'en',
-      onUpdate(selected) {
-        i18n.changeLanguage(selected);
-      },
-      onSubmit(data) {
-        i18n.changeLanguage(data.selected);
+    }).then(result => {
+      if (result.type === 'select') {
+        i18n.changeLanguage(result.selected);
         Spaceship.flush();
-      },
+      }
     });
   };
 

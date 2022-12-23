@@ -8,7 +8,6 @@ import Icon from '../../icons/Icon';
 import Transmitter from '../../services/transmitter';
 import { userIdToTag } from '../../services/user';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
-import InputModal from '../modals/InputModal';
 import SmoothBox from './SmoothBox';
 
 const Layout = styled.div`
@@ -140,14 +139,14 @@ const ProfileInfo: React.FC<Props> = ({ user }) => {
 
   const handleEditClick: MouseEventHandler = () => {
     if (!user.user) return false;
-    modal.openModal(InputModal, {
+    modal({
+      type: 'input',
       content: t('profile.update_nickname'),
       value: nickname,
       placeholder: t('profile.input_nickname'),
       maxLength: 12,
-      onSubmit(data) {
-        handleNicknameUpdate(data.nickname);
-      },
+    }).then(result => {
+      if (result.type === 'input') handleNicknameUpdate(result.value);
     });
   };
 

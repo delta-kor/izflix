@@ -1,39 +1,35 @@
-import ReactModal from 'react-modal';
+import styled from 'styled-components';
 import { Color } from '../../styles';
 
-const ModalStyle: ReactModal.Styles = {
-  content: {
-    position: 'absolute',
-    inset: 'unset',
-    padding: '24px',
-    maxWidth: '100%',
-    maxHeight: 'calc(100vh - 32px)',
-    background: Color.DARK_GRAY,
-    border: '2px solid #454B6B',
-    borderRadius: '8px',
-  },
-  overlay: {
-    position: 'fixed',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    background: 'rgba(7, 13, 45, 0.5)',
-    backdropFilter: 'blur(2px)',
-    zIndex: 90,
-  },
-};
+const Background = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 13, 45, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px);
+  z-index: 90;
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  max-width: 100%;
+  max-height: calc(100vh - 32px);
+  border: 2px solid ${Color.GRAY};
+  background: ${Color.DARK_GRAY};
+  border-radius: 8px;
+`;
 
 const ModalBase: React.FC = ({ children }) => {
   return (
-    <ReactModal closeTimeoutMS={200} style={ModalStyle} isOpen>
-      {children}
-    </ReactModal>
+    <Background>
+      <Content>{children}</Content>
+    </Background>
   );
-};
-
-export type ModalProps<T> = {
-  onSubmit?(data: T): void;
-  onCancel?(): void;
 };
 
 export default ModalBase;

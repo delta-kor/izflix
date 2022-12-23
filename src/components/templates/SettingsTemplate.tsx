@@ -5,7 +5,6 @@ import useModal from '../../hooks/useModal';
 import Settings from '../../services/settings';
 import { HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
 import SettingsItem from '../atoms/SettingsItem';
-import SelectModal from '../modals/SelectModal';
 
 const Layout = styled.div`
   display: flex;
@@ -99,15 +98,15 @@ const SettingsTemplate: React.FC = () => {
           description={t('settings.video_quality_description')}
           state={`${settings.VIDEO_QUALITY}p`}
           onClick={() =>
-            modal.openModal(SelectModal, {
+            modal({
+              type: 'select',
               content: 'settings.video_quality',
               items: [2160, 1440, 1080, 720, 540, 360, 240].map(
                 quality => [quality, `${quality}p`] as [number, string]
               ),
               current: settings.VIDEO_QUALITY,
-              onSubmit(data) {
-                setValue('VIDEO_QUALITY', data.selected);
-              },
+            }).then(result => {
+              if (result.type === 'select') setValue('VIDEO_QUALITY', result.selected);
             })
           }
         />
@@ -118,15 +117,15 @@ const SettingsTemplate: React.FC = () => {
           title={t('settings.user_recommend_count')}
           state={t('common.count', { count: settings.USER_RECOMMEND_COUNT })}
           onClick={() =>
-            modal.openModal(SelectModal, {
+            modal({
+              type: 'select',
               content: 'settings.user_recommend_count',
               items: [10, 15, 20, 25, 30].map(
                 count => [count, t('common.count', { count })] as [number, string]
               ),
               current: settings.USER_RECOMMEND_COUNT,
-              onSubmit(data) {
-                setValue('USER_RECOMMEND_COUNT', data.selected);
-              },
+            }).then(result => {
+              if (result.type === 'select') setValue('USER_RECOMMEND_COUNT', result.selected);
             })
           }
         />
@@ -134,15 +133,15 @@ const SettingsTemplate: React.FC = () => {
           title={t('settings.video_recommend_count')}
           state={t('common.count', { count: settings.VIDEO_RECOMMEND_COUNT })}
           onClick={() =>
-            modal.openModal(SelectModal, {
+            modal({
+              type: 'select',
               content: 'settings.video_recommend_count',
               items: [5, 10, 15, 20, 25].map(
                 count => [count, t('common.count', { count })] as [number, string]
               ),
               current: settings.VIDEO_RECOMMEND_COUNT,
-              onSubmit(data) {
-                setValue('VIDEO_RECOMMEND_COUNT', data.selected);
-              },
+            }).then(result => {
+              if (result.type === 'select') setValue('VIDEO_RECOMMEND_COUNT', result.selected);
             })
           }
         />

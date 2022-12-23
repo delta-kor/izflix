@@ -1,5 +1,54 @@
-type ModalSegment = { Component: React.FC; props: any };
-type ModalHandler = {
-  open<T>(Component: React.FC<T>, props: T): void;
-  close(Component: React.FC): void;
-};
+interface ModalContextType {
+  modal: Modal | null;
+  fire: ModalFireFunction;
+  respond: ModalRespondFunction;
+}
+
+type ModalRespondFunction = (result: ModalResult) => void;
+type ModalFireFunction = (modal: Modal) => Promise<ModalResult>;
+
+type ModalResult = ModalOkResult | ModalCancelResult | ModalSelectResult | ModalInputResult;
+
+interface ModalOkResult {
+  type: 'ok';
+}
+
+interface ModalCancelResult {
+  type: 'cancel';
+}
+
+interface ModalSelectResult {
+  type: 'select';
+  selected: any;
+}
+
+interface ModalInputResult {
+  type: 'input';
+  value: string;
+}
+
+type Modal = TextModal | SelectModal | InputModal;
+
+interface ModalBase {
+  id?: string;
+}
+
+interface TextModal extends ModalBase {
+  type: 'text';
+  content: string;
+}
+
+interface SelectModal extends ModalBase {
+  type: 'select';
+  content: string;
+  items: [any, string][];
+  current?: any;
+}
+
+interface InputModal extends ModalBase {
+  type: 'input';
+  content: string;
+  value?: string;
+  placeholder?: string;
+  maxLength?: number;
+}

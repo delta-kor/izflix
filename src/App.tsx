@@ -2,8 +2,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Meta from './components/Meta';
-import Modals from './components/modals/Modals';
-import TextModal from './components/modals/TextModal';
+import Modal from './components/modals/Modal';
 import Header from './components/organisms/Header';
 import Navigator from './components/organisms/Navigator';
 import PanoramaSection from './components/organisms/PanoramaSection';
@@ -38,9 +37,10 @@ const App: React.FC = () => {
     Spaceship.load();
 
     process.env.NODE_ENV !== 'development' &&
-      modal.openModal(TextModal, {
+      modal({
+        type: 'text',
         content:
-          'This page is still in the development preview stage. Some features may not work and may change without notice. For general use, please use https://izflix.net.',
+          'This page is still in the development preview stage. Some features may not work and may change without notice. For general use, please use https://izflix.net',
       });
   }, []);
 
@@ -51,7 +51,7 @@ const App: React.FC = () => {
       <PanoramaSection panorama={panorama} />
 
       <Popup />
-      <Modals />
+      <Modal />
 
       <Header />
       <Navigator />

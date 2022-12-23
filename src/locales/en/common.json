@@ -55,7 +55,7 @@
   },
   "modal": {
     "cancel": "Cancel",
-    "submit": "OK"
+    "ok": "OK"
   },
   "common": {
     "count_one": "{{count}} item",

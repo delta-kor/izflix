@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
+import { m, motion } from 'framer-motion';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Color, MobileQuery, ModalWidth, PcQuery, Text } from '../../styles';
-import ModalAction from '../molecules/ModalAction';
-import ModalBase, { ModalProps } from './ModalBase';
+import { MobileQuery, PcQuery, Color, Text, ModalWidthSmall } from '../../styles';
+import SmoothBox from '../atoms/SmoothBox';
+import ModalAction from './ModalAction';
+import ModalBase from './ModalBase';
 
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  width: ${ModalWidth};
+  width: ${ModalWidthSmall};
   max-width: 360px;
 
   ${MobileQuery} {
@@ -45,64 +47,61 @@ const Selector = styled.div`
   }
 `;
 
-const Item = styled.div<{ $active: boolean }>`
-  ${Text.BODY_1};
-  height: unset;
+const Item = styled(SmoothBox)<{ $active: boolean }>`
+  & > .content {
+    ${Text.BODY_1};
+    height: unset;
 
-  color: ${Color.WHITE};
-  background: ${({ $active }) => ($active ? Color.GRAY : Color.GRAY + '1F')};
-  border-radius: 4px;
-  transition: background 0.2s;
-  cursor: pointer;
+    color: ${Color.WHITE};
+    background: ${({ $active }) => ($active ? Color.GRAY : Color.GRAY + '1F')};
+    border-radius: 4px;
 
-  ${MobileQuery} {
-    padding: 10px 16px;
-  }
+    transition: background 0.2s;
+    cursor: pointer;
 
-  ${PcQuery} {
-    padding: 12px 16px;
+    ${MobileQuery} {
+      padding: 10px 16px;
+    }
+
+    ${PcQuery} {
+      padding: 12px 16px;
+    }
   }
 `;
 
-interface Props extends ModalProps<{ selected: any }> {
-  content: string;
-  items: [any, string][];
-  current?: any;
-  onUpdate?: (selected: any) => void;
+interface Props {
+  modal: SelectModal;
+  respond: ModalRespondFunction;
 }
 
-const SelectModal: React.FC<Props> = ({
-  content,
-  items,
-  current,
-  onUpdate,
-  onSubmit,
-  onCancel,
-}) => {
+const SelectModal: React.FC<Props> = ({ modal, respond }) => {
   const { t } = useTranslation();
 
-  const [selected, setSelected] = useState<any>(current || items[0][0]);
+  const [selected, setSelected] = useState<any>(modal.current || modal.items[0][0]);
 
-  useEffect(() => {
-    onUpdate && onUpdate(selected);
-  }, [selected]);
-
-  const handleSubmit = () => {
-    onSubmit && onSubmit({ selected });
+  const handleRespond: ModalRespondFunction = result => {
+    if (result.type === 'ok') respond({ type: 'select', selected });
+    else respond(result);
   };
 
   return (
     <ModalBase>
       <Layout>
-        <Content>{t(content)}</Content>
+        <Content>{t(modal.content)}</Content>
         <Selector>
-          {items.map(([value, label]) => (
-            <Item $active={selected === value} onClick={() => setSelected(value)} key={value}>
+          {modal.items.map(([value, label]) => (
+            <Item
+              $active={selected === value}
+              hover={1.03}
+              tap={0.97}
+              onClick={() => setSelected(value)}
+              key={value}
+            >
               {label}
             </Item>
           ))}
         </Selector>
-        <ModalAction onSubmit={handleSubmit} onCancel={onCancel} submit cancel />
+        <ModalAction respond={handleRespond} ok cancel />
       </Layout>
     </ModalBase>
   );

@@ -1,19 +1,11 @@
 import styled from 'styled-components';
-import { Color, MobileQuery, ModalWidth, PcQuery, Text } from '../../styles';
-import ModalAction from '../molecules/ModalAction';
-import ModalBase, { ModalProps } from './ModalBase';
-
-const Layout = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  width: ${ModalWidth};
-  max-width: 420px;
-`;
+import { Color, MobileQuery, ModalWidthLarge, PcQuery, Text } from '../../styles';
+import ModalAction from './ModalAction';
+import ModalBase from './ModalBase';
 
 const Content = styled.div`
   color: ${Color.WHITE};
+  width: ${ModalWidthLarge};
 
   ${MobileQuery} {
     ${Text.BODY_1};
@@ -28,17 +20,16 @@ const Content = styled.div`
   }
 `;
 
-interface Props extends ModalProps<void> {
-  content: string;
+interface Props {
+  modal: TextModal;
+  respond: ModalRespondFunction;
 }
 
-const TextModal: React.FC<Props> = ({ content, onSubmit, onCancel }) => {
+const TextModal: React.FC<Props> = ({ modal, respond }) => {
   return (
     <ModalBase>
-      <Layout>
-        <Content>{content}</Content>
-        <ModalAction onSubmit={onSubmit} onCancel={onCancel} submit cancel />
-      </Layout>
+      <Content>{modal.content}</Content>
+      <ModalAction respond={respond} ok cancel />
     </ModalBase>
   );
 };

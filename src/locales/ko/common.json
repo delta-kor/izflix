@@ -47,7 +47,7 @@
   },
   "modal": {
     "cancel": "취소",
-    "submit": "확인"
+    "ok": "확인"
   },
   "common": {
     "count_one": "{{count}}개",

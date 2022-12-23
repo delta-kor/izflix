@@ -1,13 +1,13 @@
 import { ChangeEventHandler, useState } from 'react';
 import styled from 'styled-components';
-import { Color, MobileQuery, ModalWidth, PcQuery, Text } from '../../styles';
-import ModalAction from '../molecules/ModalAction';
-import ModalBase, { ModalProps } from './ModalBase';
+import { MobileQuery, PcQuery, Color, Text, ModalWidthSmall } from '../../styles';
+import ModalAction from './ModalAction';
+import ModalBase from './ModalBase';
 
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  width: ${ModalWidth};
+  width: ${ModalWidthSmall};
   max-width: 360px;
 
   ${MobileQuery} {
@@ -55,50 +55,42 @@ const Input = styled.input`
   }
 `;
 
-interface Props extends ModalProps<{ nickname: string }> {
-  content: string;
-  value?: string;
-  placeholder?: string;
-  maxLength?: number;
+interface Props {
+  modal: InputModal;
+  respond: ModalRespondFunction;
 }
 
-const InputModal: React.FC<Props> = ({
-  content,
-  value,
-  placeholder,
-  maxLength,
-  onSubmit,
-  onCancel,
-}) => {
-  const [inputValue, setInputValue] = useState(value ?? '');
+const InputModal: React.FC<Props> = ({ modal, respond }) => {
+  const [inputValue, setInputValue] = useState(modal.value ?? '');
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = e => {
+  const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     setInputValue(e.target.value);
   };
 
-  const handleSubmit = () => {
-    onSubmit && onSubmit({ nickname: inputValue });
+  const handleRespond: ModalRespondFunction = result => {
+    if (result.type === 'ok') respond({ type: 'input', value: inputValue });
+    else respond(result);
   };
 
   return (
     <ModalBase>
       <Layout>
-        <Content>{content}</Content>
+        <Content>{modal.content}</Content>
         <Input
           type={'text'}
           value={inputValue}
-          placeholder={placeholder}
-          maxLength={maxLength}
-          onChange={onChange}
+          placeholder={modal.placeholder}
+          maxLength={modal.maxLength}
+          onChange={handleChange}
           onKeyDown={e => {
-            if (e.key === 'Enter') handleSubmit();
+            if (e.key === 'Enter') handleRespond({ type: 'ok' });
           }}
           onFocus={e => e.target.select()}
           autoFocus
           spellCheck={false}
           autoComplete={'off'}
         />
-        <ModalAction onSubmit={handleSubmit} onCancel={onCancel} submit cancel />
+        <ModalAction respond={handleRespond} ok cancel />
       </Layout>
     </ModalBase>
   );

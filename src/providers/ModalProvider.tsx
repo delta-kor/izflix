@@ -1,29 +1,25 @@
-import { useMemo, useState } from 'react';
-import { ModalsDispatchContext, ModalsStateContext } from '../contexts/ModalContext';
+import { useContext, useRef, useState } from 'react';
+import ModalContext from '../contexts/ModalContext';
 
-const ModalsProvider: React.FC = ({ children }) => {
-  const [openedModals, setOpenedModals] = useState<ModalSegment[]>([]);
+const ModalProvider: React.FC = ({ children }) => {
+  const [modal, setModal] = useState<Modal | null>(null);
+  const resolve = useRef<any>(null);
 
-  const open = (Component: React.FC, props: any) => {
-    setOpenedModals(modals => {
-      return [...modals, { Component, props }];
+  const fire: ModalFireFunction = async (modal: Modal) => {
+    modal.id = Math.floor(Math.random() * 0xffffff).toString(16);
+
+    setModal(modal);
+    return new Promise(res => {
+      resolve.current = res;
     });
   };
 
-  const close = (Component: React.FC) => {
-    setOpenedModals(modals => {
-      return modals.filter(modal => {
-        return modal.Component !== Component;
-      });
-    });
+  const respond = (result: ModalResult) => {
+    resolve.current(result);
+    setModal(null);
   };
 
-  const dispatch = useMemo<ModalHandler>(() => ({ open, close }), []);
-
-  return (
-    <ModalsStateContext.Provider value={openedModals}>
-      <ModalsDispatchContext.Provider value={dispatch}>{children}</ModalsDispatchContext.Provider>
-    </ModalsStateContext.Provider>
-  );
+  return <ModalContext.Provider value={{ modal, fire, respond }}>{children}</ModalContext.Provider>;
 };
-export default ModalsProvider;
+
+export default ModalProvider;
