@@ -94,8 +94,8 @@ const SelectModal: React.FC<Props> = ({ modal, respond }) => {
           {modal.items.map(([value, label]) => (
             <Item
               $active={selected === value}
-              hover={device === 'pc' ? 1.02 : 1.06}
-              tap={device === 'pc' ? 0.98 : 0.94}
+              hover={device === 'pc' ? 1.02 : 1.04}
+              tap={device === 'pc' ? 0.98 : 0.96}
               onClick={() => setSelected(value)}
               key={value}
             >
