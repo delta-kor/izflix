@@ -4,11 +4,10 @@ import { Color } from '../../styles';
 const Background = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(7, 13, 45, 0.5);
+  background: rgba(7, 13, 45, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(2px);
   z-index: 90;
 `;
 
