@@ -46,30 +46,28 @@ const ModalAction: React.FC<Props> = ({ respond, ok, cancel }) => {
 
   return (
     <Layout>
-      <AnimateSharedLayout>
-        {cancel && (
-          <Button
-            $background={Color.TRANSPARENT}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleCancel}
-            layoutId={'modal_cancel'}
-          >
-            {t('modal.cancel')}
-          </Button>
-        )}
-        {ok && (
-          <Button
-            $background={Color.PRIMARY}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleOk}
-            layoutId={'modal_ok'}
-          >
-            {t('modal.ok')}
-          </Button>
-        )}
-      </AnimateSharedLayout>
+      {cancel && (
+        <Button
+          $background={Color.TRANSPARENT}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleCancel}
+          layoutId={'modal_cancel'}
+        >
+          {t('modal.cancel')}
+        </Button>
+      )}
+      {ok && (
+        <Button
+          $background={Color.PRIMARY}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleOk}
+          layoutId={'modal_ok'}
+        >
+          {t('modal.ok')}
+        </Button>
+      )}
     </Layout>
   );
 };

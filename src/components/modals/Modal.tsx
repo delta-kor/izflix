@@ -1,10 +1,18 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
 import { useContext } from 'react';
 import styled from 'styled-components';
 import ModalContext from '../../contexts/ModalContext';
 import InputModal from './InputModal';
+import PlaylistModal from './PlaylistModal';
 import SelectModal from './SelectModal';
 import TextModal from './TextModal';
+
+const Background = styled(motion.div)`
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 13, 45, 0.8);
+  z-index: 90;
+`;
 
 const ModalWrapper = styled(motion.div)`
   position: absolute;
@@ -41,8 +49,21 @@ const Modal: React.FC = () => {
         <InputModal modal={modal} respond={respond} />
       </ModalWrapper>
     );
+  else if (modal.type === 'playlist')
+    content = (
+      <ModalWrapper key={modal.id!} {...modalWrapperProps}>
+        <PlaylistModal modal={modal} respond={respond} />
+      </ModalWrapper>
+    );
 
-  return <AnimatePresence exitBeforeEnter>{content}</AnimatePresence>;
+  return (
+    <AnimateSharedLayout>
+      <AnimatePresence>
+        {content && <Background key={'background'} {...modalWrapperProps} />}
+        {content}
+      </AnimatePresence>
+    </AnimateSharedLayout>
+  );
 };
 
 export default Modal;

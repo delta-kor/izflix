@@ -145,6 +145,10 @@ namespace ApiResponse {
       video: IVideo;
       url: string;
     }
+
+    interface CreateUserPlaylist extends ApiResponse {
+      id: string;
+    }
   }
 
   namespace Music {

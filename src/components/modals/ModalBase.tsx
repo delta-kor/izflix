@@ -1,17 +1,17 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { Color } from '../../styles';
 
 const Background = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(7, 13, 45, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 90;
 `;
 
-const Content = styled.div`
+const Content = styled(motion.div)`
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -26,7 +26,7 @@ const Content = styled.div`
 const ModalBase: React.FC = ({ children }) => {
   return (
     <Background>
-      <Content>{children}</Content>
+      <Content layoutId={'modal-content'}>{children}</Content>
     </Background>
   );
 };

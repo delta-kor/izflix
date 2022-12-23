@@ -22,11 +22,11 @@ const Content = styled(LazyLoadImage)`
   user-drag: none;
 `;
 
-const Placeholder = styled.div`
+const Placeholder = styled.div<{ $color?: string }>`
   width: 100%;
   height: 100%;
 
-  background: ${Color.DARK_GRAY};
+  background: ${({ $color }) => $color || Color.DARK_GRAY};
   z-index: 0;
 `;
 
@@ -58,9 +58,10 @@ interface Props {
   className?: string;
   src?: string | null;
   text?: string;
+  color?: string;
 }
 
-const SmoothImage: React.FC<Props> = ({ className, src, text }) => {
+const SmoothImage: React.FC<Props> = ({ className, src, text, color }) => {
   return (
     <Layout className={className}>
       {src && (
@@ -74,7 +75,7 @@ const SmoothImage: React.FC<Props> = ({ className, src, text }) => {
         />
       )}
       {text && <Text>{text}</Text>}
-      <Placeholder />
+      <Placeholder $color={color} />
     </Layout>
   );
 };

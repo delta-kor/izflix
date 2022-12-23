@@ -27,7 +27,7 @@ interface ModalInputResult {
   value: string;
 }
 
-type Modal = TextModal | SelectModal | InputModal;
+type Modal = TextModal | SelectModal | InputModal | PlaylistModal;
 
 interface ModalBase {
   id?: string;
@@ -51,4 +51,9 @@ interface InputModal extends ModalBase {
   value?: string;
   placeholder?: string;
   maxLength?: number;
+}
+
+interface PlaylistModal extends ModalBase {
+  type: 'playlist';
+  promise?: Evoke<void>;
 }

@@ -292,6 +292,15 @@ class SpaceshipClass {
     });
   }
 
+  public async createUserPlaylist(title: string): Promise<ApiResponse.Playlist.CreateUserPlaylist> {
+    const payload = { title };
+    return this.post(`/playlist/user`, payload, {
+      key: `create_user_playlist::${title}`,
+      expire: expireTime,
+      auth: true,
+    });
+  }
+
   public async getAllAlbums(): Promise<ApiResponse.Music.GetAllAlbums> {
     return this.get('/music/album', {
       key: 'get_all_albums',

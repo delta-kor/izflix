@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import useModal from '../../hooks/useModal';
 import { Panorama } from '../../hooks/usePanorama';
 import Transmitter from '../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../styles';
@@ -38,6 +39,8 @@ interface Props {
 const VideoAction: React.FC<Props> = ({ action, panorama, onLike }) => {
   const { t } = useTranslation();
 
+  const modal = useModal();
+
   const liked = action?.liked;
   const likesTotal = action?.likes_total;
 
@@ -66,6 +69,10 @@ const VideoAction: React.FC<Props> = ({ action, panorama, onLike }) => {
     window.open(panorama.streamInfo.url, '_blank', 'noopener,noreferrer');
   };
 
+  const handleAddClick = () => {
+    modal({ type: 'playlist' });
+  };
+
   return (
     <Layout>
       <WidthProtector>
@@ -83,7 +90,7 @@ const VideoAction: React.FC<Props> = ({ action, panorama, onLike }) => {
       <VerticalButton icon={'download'} color={Color.TRANSPARENT} onClick={handleDownloadClick}>
         {t('video.save')}
       </VerticalButton>
-      <VerticalButton icon={'add'} color={Color.TRANSPARENT}>
+      <VerticalButton icon={'add'} color={Color.TRANSPARENT} onClick={handleAddClick}>
         {t('video.add')}
       </VerticalButton>
     </Layout>
