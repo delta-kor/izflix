@@ -2,6 +2,7 @@ import { m, motion } from 'framer-motion';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import useDevice from '../../hooks/useDevice';
 import { MobileQuery, PcQuery, Color, Text, ModalWidthSmall } from '../../styles';
 import SmoothBox from '../atoms/SmoothBox';
 import ModalAction from './ModalAction';
@@ -76,6 +77,7 @@ interface Props {
 
 const SelectModal: React.FC<Props> = ({ modal, respond }) => {
   const { t } = useTranslation();
+  const device = useDevice();
 
   const [selected, setSelected] = useState<any>(modal.current || modal.items[0][0]);
 
@@ -92,8 +94,8 @@ const SelectModal: React.FC<Props> = ({ modal, respond }) => {
           {modal.items.map(([value, label]) => (
             <Item
               $active={selected === value}
-              hover={1.03}
-              tap={0.97}
+              hover={device === 'pc' ? 1.02 : 1.06}
+              tap={device === 'pc' ? 0.98 : 0.94}
               onClick={() => setSelected(value)}
               key={value}
             >
