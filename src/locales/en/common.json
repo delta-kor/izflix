@@ -90,6 +90,7 @@
     "development": "Development",
     "license": "Open Source License",
     "subtitle": "Subtitles",
-    "video": "Video Source"
+    "video": "Video Source",
+    "thanks": "Special thanks to"
   }
 }

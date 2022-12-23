@@ -38,14 +38,18 @@ const GroupTitle = styled.span`
 
   ${MobileQuery} {
     ${Text.SUBTITLE_1};
+    font-weight: 800;
   }
 
   ${PcQuery} {
     ${Text.SUBTITLE_1};
+    font-weight: 800;
   }
 `;
 
 const DevelopmentWrapper = styled.div`
+  cursor: pointer;
+
   ${MobileQuery} {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -64,7 +68,7 @@ const DevelopmentItem = styled.div`
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
-  font-weight: 800;
+  font-weight: 400;
   font-size: 20px;
   color: ${Color.WHITE};
 `;
@@ -81,7 +85,7 @@ const LicenseWrapper = styled.div`
 `;
 
 const LicenseItem = styled.a`
-  font-weight: 700;
+  font-weight: 400;
   color: ${Color.WHITE};
   ${HideOverflow};
 
@@ -187,8 +191,9 @@ const NameWrapper = styled.div`
 
 const NameItem = styled.div`
   flex-shrink: 0;
-  font-weight: 800;
+  font-weight: 400;
   color: ${Color.WHITE};
+  white-space: nowrap;
 
   ${MobileQuery} {
     font-size: 16px;
@@ -203,7 +208,7 @@ const InfoTemplate: React.FC = () => {
   const { t } = useTranslation();
 
   // prettier-ignore
-  const licenses = ['framer-motion', 'i18next', 'i18next-browser-languagedetector', 'node-cache', 'path-to-regexp', 'react', 'react-ga4', 'react-helmet-async', 'react-i18next', 'react-lazy-load-image-component', 'react-modal', 'react-responsive', 'react-router-dom', 'rooks', 'styled-components', 'typescript'];
+  const licenses = ['framer-motion', 'i18next', 'i18next-browser-languagedetector', 'node-cache', 'path-to-regexp', 'react', 'react-ga4', 'react-helmet-async', 'react-i18next', 'react-lazy-load-image-component', 'react-responsive', 'react-router-dom', 'rooks', 'styled-components', 'typescript'];
 
   return (
     <Layout>
@@ -244,7 +249,7 @@ const InfoTemplate: React.FC = () => {
       <Group>
         <GroupTitle>{t('info.development')}</GroupTitle>
         <DevelopmentWrapper>
-          <DevelopmentItem title={'Application Development'}>
+          <DevelopmentItem title={'Web Development'}>
             <DevelopmentIcon type={'code'} color={Color.WHITE} />
             Son Seoyun
           </DevelopmentItem>
@@ -257,6 +262,16 @@ const InfoTemplate: React.FC = () => {
             Kim Eunseo
           </DevelopmentItem>
         </DevelopmentWrapper>
+      </Group>
+      <Group>
+        <GroupTitle>{t('info.thanks')}</GroupTitle>
+        <NameWrapper>
+          <NameItem>Lee Jinsol</NameItem>
+          <NameItem>Seol Yeha</NameItem>
+          <NameItem>Jin Taein</NameItem>
+          <NameItem>PolarBear#1201</NameItem>
+          <NameItem>powha#8932</NameItem>
+        </NameWrapper>
       </Group>
       <Group>
         <GroupTitle>{t('info.subtitle')}</GroupTitle>
