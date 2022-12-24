@@ -1,29 +1,30 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import delay from '../../services/delay';
+import PageManager from '../../services/page-manager';
 import Transmitter from '../../services/transmitter';
 import { MobileQuery, PcLeftMargin, PcQuery } from '../../styles';
 import PopupItem from '../atoms/PopupItem';
 
-const Layout = styled.div`
+const Layout = styled.div<{ $large: boolean }>`
   position: fixed;
   display: flex;
   flex-direction: column;
   gap: 8px;
 
-  right: 16px;
-
   z-index: 100;
 
   ${MobileQuery} {
     left: 16px;
-    bottom: 96px;
+    right: 16px;
+    bottom: ${({ $large }) => ($large ? 16 : 96)}px;
     transform: translateZ(0);
   }
 
   ${PcQuery} {
-    left: ${PcLeftMargin + 16}px;
+    left: ${({ $large }) => ($large ? 16 : PcLeftMargin + 16)}px;
     bottom: 16px;
   }
 `;
@@ -31,6 +32,8 @@ const Layout = styled.div`
 type PopupSet = [string, Popup];
 
 const Popup: React.FC = () => {
+  const location = useLocation();
+
   const [popups, setPopups] = useState<PopupSet[]>([]);
 
   useEffect(() => {
@@ -63,8 +66,10 @@ const Popup: React.FC = () => {
     exit: { opacity: 0, transition: { duration: 0.2, delay: 0.1 } },
   };
 
+  const isLarge = !PageManager.getPageInfo(location.pathname);
+
   return (
-    <Layout>
+    <Layout $large={isLarge}>
       <AnimatePresence>
         {popups.map(popupSet => (
           <motion.div layoutId={popupSet[0]} key={popupSet[0]} {...motionProps}>
