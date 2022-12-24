@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
-import { HideScrollbar, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
+import { HideScrollbar, MobileQuery, PcInnerPadding, PcQuery, TabletQuery } from '../../styles';
 import PlaylistItem from '../atoms/PlaylistItem';
 import SectionTitle from '../atoms/SectionTitle';
 import Repeat from '../tools/Repeat';
@@ -56,6 +56,10 @@ const ItemList = styled.div`
     margin: -32px -32px 0 -32px;
     padding: 32px 32px 0 32px;
     overflow: hidden;
+  }
+
+  ${TabletQuery} {
+    gap: 56px 8px;
   }
 `;
 

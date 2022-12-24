@@ -2,7 +2,15 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import Spaceship from '../../services/spaceship';
-import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
+import {
+  Color,
+  HideOverflow,
+  MobileQuery,
+  PcQuery,
+  Placeholder,
+  TabletQuery,
+  Text,
+} from '../../styles';
 import SmoothBox from './SmoothBox';
 import SmoothImage from './SmoothImage';
 
@@ -26,6 +34,10 @@ const Layout = styled(SmoothBox)`
     ${PcQuery} {
       gap: 12px;
       width: 150px;
+    }
+
+    ${TabletQuery} {
+      width: max(120px, min(13vw, 150px));
     }
   }
 `;
