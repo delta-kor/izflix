@@ -159,9 +159,15 @@ const NextVideoList: React.FC<Props> = ({ videos, currentVideoId, state }) => {
                     opacity: 1,
                     height: 'auto',
                     scale: 1,
+                    y: 0,
                     transition: { ease: EaseReverse },
                   },
-                  collapsed: { opacity: 0, height: 0, scale: 0.7, transition: { ease: Ease } },
+                  collapsed: {
+                    opacity: 0,
+                    height: 0,
+                    y: -15,
+                    transition: { ease: Ease },
+                  },
                 }}
                 transition={{ duration: 0.7 }}
               >
