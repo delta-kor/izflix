@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import HttpException from '../../exceptions/http-exception';
 import Evoke from '../../filters/evoke';
@@ -57,7 +58,7 @@ const TitleContent = styled.div`
   }
 `;
 
-const EditIconWrapper = styled(SmoothBox)`
+const IconWrapper = styled(SmoothBox)`
   flex-shrink: 0;
 
   & > .content {
@@ -75,7 +76,7 @@ const EditIconWrapper = styled(SmoothBox)`
   }
 `;
 
-const EditIcon = styled(Icon)`
+const IconContent = styled(Icon)`
   ${MobileQuery} {
     width: 22px;
     height: 22px;
@@ -145,6 +146,7 @@ interface Props {
 
 const PlaylistInfo: React.FC<Props> = ({ data, access }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const modal = useModal();
 
   const [title, setTitle] = useState<string | undefined>(data && data.title);
@@ -164,6 +166,12 @@ const PlaylistInfo: React.FC<Props> = ({ data, access }) => {
     return response;
   };
 
+  const deleteUserPlaylist = async (id: string) => {
+    const response = await Spaceship.deleteUserPlaylist(id);
+    if (!response.ok) throw new HttpException(response);
+    return response;
+  };
+
   const handleEditClick = () => {
     if (!data) return false;
 
@@ -171,12 +179,25 @@ const PlaylistInfo: React.FC<Props> = ({ data, access }) => {
       if (result.type !== 'input') return false;
 
       Transmitter.emit('popup', { type: 'loading', message: '제목을 수정하는 중...' });
-
       new Evoke(renameUserPlaylist(data.id, result.value)).then(result => {
         if (!result.playlist) return false;
         setTitle(result.playlist.title);
 
         Transmitter.emit('popup', { type: 'success', message: '제목을 수정했어요' });
+      });
+    });
+  };
+
+  const handleDeleteClick = () => {
+    if (!data) return false;
+
+    modal({ type: 'text', content: '정말로 재생목록을 삭제하시겠어요?' }).then(result => {
+      if (result.type !== 'ok') return false;
+
+      Transmitter.emit('popup', { type: 'loading', message: '재생목록을 삭제하는 중...' });
+      new Evoke(deleteUserPlaylist(data.id)).then(() => {
+        Transmitter.emit('popup', { type: 'success', message: '재생목록을 삭제했어요' });
+        navigate('/playlist');
       });
     });
   };
@@ -190,9 +211,14 @@ const PlaylistInfo: React.FC<Props> = ({ data, access }) => {
         <Title>
           <TitleContent>{title}</TitleContent>
           {access && (
-            <EditIconWrapper hover={1.1} tap={0.9} onClick={handleEditClick}>
-              <EditIcon type={'edit'} color={Color.GRAY} />
-            </EditIconWrapper>
+            <>
+              <IconWrapper hover={1.1} tap={0.9} onClick={handleEditClick}>
+                <IconContent type={'edit'} color={Color.GRAY} />
+              </IconWrapper>
+              <IconWrapper hover={1.1} tap={0.9} onClick={handleDeleteClick}>
+                <IconContent type={'delete'} color={Color.GRAY} />
+              </IconWrapper>
+            </>
           )}
         </Title>
       ) : (

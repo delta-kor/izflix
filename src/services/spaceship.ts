@@ -325,6 +325,17 @@ class SpaceshipClass {
     });
   }
 
+  public async deleteUserPlaylist(
+    playlistId: string
+  ): Promise<ApiResponse.Playlist.DeleteUserPlaylist> {
+    return this.post(`/playlist/user/${playlistId}`, null, {
+      method: 'DELETE',
+      key: `delete_user_playlist::${playlistId}`,
+      expire: expireTime,
+      auth: true,
+    });
+  }
+
   public async getAllAlbums(): Promise<ApiResponse.Music.GetAllAlbums> {
     return this.get('/music/album', {
       key: 'get_all_albums',

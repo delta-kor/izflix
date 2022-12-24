@@ -154,6 +154,8 @@ namespace ApiResponse {
     interface UpdateUserPlaylist extends ApiResponse {
       playlist: IPlaylist;
     }
+
+    interface DeleteUserPlaylist extends ApiResponse {}
   }
 
   namespace Music {

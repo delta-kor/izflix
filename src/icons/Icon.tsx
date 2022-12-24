@@ -8,6 +8,7 @@ import { ReactComponent as CheckSvg } from '../icons/svg/check.svg';
 import { ReactComponent as CloseSvg } from '../icons/svg/close.svg';
 import { ReactComponent as CodeSvg } from '../icons/svg/code.svg';
 import { ReactComponent as CompassSvg } from '../icons/svg/compass.svg';
+import { ReactComponent as DeleteSvg } from '../icons/svg/delete.svg';
 import { ReactComponent as DownSvg } from '../icons/svg/down.svg';
 import { ReactComponent as DownloadSvg } from '../icons/svg/download.svg';
 import { ReactComponent as DownScreenSvg } from '../icons/svg/downscreen.svg';
@@ -49,6 +50,7 @@ const IconMap = {
   close: CloseSvg,
   code: CodeSvg,
   compass: CompassSvg,
+  delete: DeleteSvg,
   down: DownSvg,
   download: DownloadSvg,
   downscreen: DownScreenSvg,
