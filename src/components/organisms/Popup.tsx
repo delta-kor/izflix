@@ -46,7 +46,10 @@ const Popup: React.FC = () => {
     const popupSet = [id, popup] as PopupSet;
 
     setPopups(popups => [...popups, popupSet]);
-    await delay(popup.duration || 5000);
+    let duration = popup.duration;
+    if (!duration) duration = popup.type === 'error' ? 5000 : 3000;
+
+    await delay(duration);
     closePopup(id);
   };
 
