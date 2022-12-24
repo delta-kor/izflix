@@ -117,7 +117,7 @@ const NextVideoList: React.FC<Props> = ({ videos, currentVideoId, state }) => {
     renderingVideos.push(...videos);
   }
 
-  const nextExists = renderingVideos.length > 2;
+  const nextExists = renderingVideos.length >= 2;
 
   return (
     <Layout>
