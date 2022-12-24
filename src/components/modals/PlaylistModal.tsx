@@ -154,6 +154,7 @@ const PlaylistModal: React.FC<Props> = ({ modal, respond }) => {
       type: 'input',
       content: t('playlist.add'),
       placeholder: t('playlist.enter_title'),
+      maxLength: 50,
     }).then(async result => {
       let promise: Evoke<void> | undefined;
       if (result.type === 'input') {

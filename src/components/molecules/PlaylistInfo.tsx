@@ -175,7 +175,13 @@ const PlaylistInfo: React.FC<Props> = ({ data, access }) => {
   const handleEditClick = () => {
     if (!data) return false;
 
-    modal({ type: 'input', content: t('playlist.enter_title'), value: title }).then(result => {
+    modal({
+      type: 'input',
+      content: t('playlist.enter_title'),
+      value: title,
+      placeholder: t('playlist.enter_title'),
+      maxLength: 50,
+    }).then(result => {
       if (result.type !== 'input') return false;
 
       Transmitter.emit('popup', { type: 'loading', message: t('playlist.title_renaming') });
