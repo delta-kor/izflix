@@ -313,6 +313,18 @@ class SpaceshipClass {
     });
   }
 
+  public async renameUserPlaylist(
+    playlistId: string,
+    title: string
+  ): Promise<ApiResponse.Playlist.UpdateUserPlaylist> {
+    const payload = { action: 'rename', title };
+    return this.post(`/playlist/user/${playlistId}`, payload, {
+      key: `rename_user_playlist::${playlistId}::${title}`,
+      expire: expireTime,
+      auth: true,
+    });
+  }
+
   public async getAllAlbums(): Promise<ApiResponse.Music.GetAllAlbums> {
     return this.get('/music/album', {
       key: 'get_all_albums',

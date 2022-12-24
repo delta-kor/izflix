@@ -28,15 +28,16 @@ const PlaylistInfoPlaceholder = styled.div`
 
 interface Props {
   playlist?: IPlaylist;
+  access: boolean;
 }
 
-const PlaylistItemTemplate: React.FC<Props> = ({ playlist }) => {
+const PlaylistItemTemplate: React.FC<Props> = ({ playlist, access }) => {
   return (
     <Layout>
       <Pc>
         <PlaylistInfoPlaceholder />
       </Pc>
-      <PlaylistInfo data={playlist} />
+      <PlaylistInfo data={playlist} access={access} />
       <PlaylistItemSection playlist={playlist} />
     </Layout>
   );

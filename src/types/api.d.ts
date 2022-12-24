@@ -134,6 +134,7 @@ namespace ApiResponse {
   namespace Playlist {
     interface Read extends ApiResponse {
       playlist: IPlaylist;
+      access: boolean;
     }
 
     interface ReadAll extends ApiResponse {

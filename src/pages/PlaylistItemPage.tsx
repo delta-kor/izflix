@@ -12,6 +12,7 @@ const PlaylistItemPage: React.FC = () => {
   const id = params.id;
 
   const [playlist, setPlaylist] = useState<IPlaylist | undefined>(undefined);
+  const [access, setAccess] = useState<boolean>(false);
 
   useEffect(() => {
     loadData();
@@ -23,8 +24,8 @@ const PlaylistItemPage: React.FC = () => {
     const response = await Spaceship.readPlaylist(id);
     if (!response.ok) throw new HttpException(response);
 
-    const playlist = response.playlist;
-    setPlaylist(playlist);
+    setPlaylist(response.playlist);
+    setAccess(response.access);
   };
 
   const loadData = () => {
@@ -33,7 +34,7 @@ const PlaylistItemPage: React.FC = () => {
 
   return (
     <Page>
-      <PlaylistItemTemplate playlist={playlist} />
+      <PlaylistItemTemplate playlist={playlist} access={access} />
     </Page>
   );
 };

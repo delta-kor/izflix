@@ -1,8 +1,15 @@
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import HttpException from '../../exceptions/http-exception';
+import Evoke from '../../filters/evoke';
+import useModal from '../../hooks/useModal';
+import Icon from '../../icons/Icon';
 import Spaceship from '../../services/spaceship';
-import { Color, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
+import Transmitter from '../../services/transmitter';
+import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import Button from '../atoms/Button';
+import SmoothBox from '../atoms/SmoothBox';
 import SmoothImage from '../atoms/SmoothImage';
 import { Pc } from '../tools/MediaQuery';
 
@@ -29,7 +36,15 @@ const Thumbnail = styled(SmoothImage)`
 `;
 
 const Title = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+`;
+
+const TitleContent = styled.div`
   color: ${Color.WHITE};
+  ${HideOverflow};
 
   ${MobileQuery} {
     ${Text.HEADLINE_3};
@@ -39,6 +54,36 @@ const Title = styled.div`
   ${PcQuery} {
     ${Text.HEADLINE_1};
     height: unset;
+  }
+`;
+
+const EditIconWrapper = styled(SmoothBox)`
+  flex-shrink: 0;
+
+  & > .content {
+    cursor: pointer;
+
+    ${MobileQuery} {
+      width: 24px;
+      height: 24px;
+    }
+
+    ${PcQuery} {
+      width: 24px;
+      height: 24px;
+    }
+  }
+`;
+
+const EditIcon = styled(Icon)`
+  ${MobileQuery} {
+    width: 22px;
+    height: 22px;
+  }
+
+  ${PcQuery} {
+    width: 24px;
+    height: 24px;
   }
 `;
 
@@ -95,23 +140,64 @@ const DescriptionPlaceholder = styled.div`
 
 interface Props {
   data?: IPlaylist;
+  access: boolean;
 }
 
-const PlaylistInfo: React.FC<Props> = ({ data }) => {
+const PlaylistInfo: React.FC<Props> = ({ data, access }) => {
   const { t } = useTranslation();
+  const modal = useModal();
+
+  const [title, setTitle] = useState<string | undefined>(data && data.title);
+
+  useEffect(() => {
+    setTitle(data && data.title);
+  }, [data]);
 
   const thumbnail = data && Spaceship.getThumbnail(data.thumbnail);
-  const title = data && data.title;
   const description = data && data.description;
   const link = data && data.video[0] && `/${data.video[0].id}`;
   const linkState = data && { key: 'playlist', value: data && data.id };
+
+  const renameUserPlaylist = async (id: string, title: string) => {
+    const response = await Spaceship.renameUserPlaylist(id, title);
+    if (!response.ok) throw new HttpException(response);
+    return response;
+  };
+
+  const handleEditClick = () => {
+    if (!data) return false;
+
+    modal({ type: 'input', content: '제목을 입력해주세요', value: title }).then(result => {
+      if (result.type !== 'input') return false;
+
+      Transmitter.emit('popup', { type: 'loading', message: '제목을 수정하는 중...' });
+
+      new Evoke(renameUserPlaylist(data.id, result.value)).then(result => {
+        if (!result.playlist) return false;
+        setTitle(result.playlist.title);
+
+        Transmitter.emit('popup', { type: 'success', message: '제목을 수정했어요' });
+      });
+    });
+  };
 
   return (
     <Layout>
       <Pc>
         <Thumbnail src={thumbnail} />
       </Pc>
-      {title ? <Title>{title}</Title> : <TitlePlaceholder />}
+      {title ? (
+        <Title>
+          <TitleContent>{title}</TitleContent>
+          {access && (
+            <EditIconWrapper hover={1.1} tap={0.9} onClick={handleEditClick}>
+              <EditIcon type={'edit'} color={Color.GRAY} />
+            </EditIconWrapper>
+          )}
+        </Title>
+      ) : (
+        <TitlePlaceholder />
+      )}
       {description ? (
         <Description>{description}</Description>
       ) : (
