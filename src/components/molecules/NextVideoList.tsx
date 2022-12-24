@@ -155,8 +155,13 @@ const NextVideoList: React.FC<Props> = ({ videos, currentVideoId, state }) => {
                 animate={'open'}
                 exit={'collapsed'}
                 variants={{
-                  open: { opacity: 1, height: 'auto', transition: { ease: EaseReverse } },
-                  collapsed: { opacity: 0, height: 0, transition: { ease: Ease } },
+                  open: {
+                    opacity: 1,
+                    height: 'auto',
+                    scale: 1,
+                    transition: { ease: EaseReverse },
+                  },
+                  collapsed: { opacity: 0, height: 0, scale: 0.7, transition: { ease: Ease } },
                 }}
                 transition={{ duration: 0.7 }}
               >
