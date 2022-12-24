@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import HttpException from '../../exceptions/http-exception';
 import Evoke from '../../filters/evoke';
@@ -112,6 +113,7 @@ interface Props {
 let playlistsCache: IPlaylist[] | null = null;
 
 const PlaylistModal: React.FC<Props> = ({ modal, respond }) => {
+  const { t } = useTranslation();
   const modalHook = useModal();
 
   const [playlists, setPlaylists] = useState<IPlaylist[] | null>(playlistsCache || null);
@@ -150,8 +152,8 @@ const PlaylistModal: React.FC<Props> = ({ modal, respond }) => {
   const handleAdd = () => {
     modalHook({
       type: 'input',
-      content: '재생목록 추가',
-      placeholder: '재생목록 이름을 입력하세요',
+      content: t('playlist.add'),
+      placeholder: t('playlist.enter_title'),
     }).then(async result => {
       let promise: Evoke<void> | undefined;
       if (result.type === 'input') {
@@ -164,10 +166,10 @@ const PlaylistModal: React.FC<Props> = ({ modal, respond }) => {
   };
 
   const handlePlaylistClick = (playlistId: string) => {
-    Transmitter.emit('popup', { type: 'loading', message: '재생목록에 추가하는 중...' });
+    Transmitter.emit('popup', { type: 'loading', message: t('playlist.adding') });
 
     new Evoke(addVideoToPlaylist(playlistId, modal.videoId)).then(() => {
-      Transmitter.emit('popup', { type: 'success', message: '재생목록에 추가되었어요' });
+      Transmitter.emit('popup', { type: 'success', message: t('playlist.added') });
       loadData();
     });
   };
@@ -177,7 +179,7 @@ const PlaylistModal: React.FC<Props> = ({ modal, respond }) => {
       <Layout>
         {playlists === null || !playlists.length ? (
           <NoPlaylist>
-            {playlists === null ? '재생목록을 불러오는 중' : '재생목록이 없어요'}
+            {playlists === null ? t('playlist.loading') : t('playlist.no_playlist')}
           </NoPlaylist>
         ) : (
           <PlaylistList>
@@ -200,7 +202,7 @@ const PlaylistModal: React.FC<Props> = ({ modal, respond }) => {
         <Line />
         <AddButton hover={1.05} tap={0.95} onClick={handleAdd}>
           <AddIcon type={'add'} color={Color.WHITE} />
-          재생목록 추가
+          {t('playlist.add')}
         </AddButton>
       </Layout>
       <ModalAction respond={respond} ok />

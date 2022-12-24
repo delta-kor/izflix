@@ -22,7 +22,18 @@
   "playlist": {
     "playlist": "Playlist",
     "view_all": "View All",
-    "play": "Play"
+    "play": "Play",
+    "add": "Add playlist",
+    "added": "Added to playlist",
+    "adding": "Adding to playlist...",
+    "deleted": "Deleted playlist",
+    "deleting": "Deleting playlist...",
+    "deletion_confirm": "Are you sure you want to delete the playlist?",
+    "enter_title": "Please enter title",
+    "loading": "Loading playlist...",
+    "no_playlist": "No playlist yet",
+    "title_renamed": "Renamed playlist",
+    "title_renaming": "Renaming playlist..."
   },
   "music": {
     "music": "Music"

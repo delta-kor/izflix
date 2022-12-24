@@ -175,15 +175,15 @@ const PlaylistInfo: React.FC<Props> = ({ data, access }) => {
   const handleEditClick = () => {
     if (!data) return false;
 
-    modal({ type: 'input', content: '제목을 입력해주세요', value: title }).then(result => {
+    modal({ type: 'input', content: t('playlist.enter_title'), value: title }).then(result => {
       if (result.type !== 'input') return false;
 
-      Transmitter.emit('popup', { type: 'loading', message: '제목을 수정하는 중...' });
+      Transmitter.emit('popup', { type: 'loading', message: t('playlist.title_renaming') });
       new Evoke(renameUserPlaylist(data.id, result.value)).then(result => {
         if (!result.playlist) return false;
         setTitle(result.playlist.title);
 
-        Transmitter.emit('popup', { type: 'success', message: '제목을 수정했어요' });
+        Transmitter.emit('popup', { type: 'success', message: t('playlist.title_renamed') });
       });
     });
   };
@@ -191,12 +191,12 @@ const PlaylistInfo: React.FC<Props> = ({ data, access }) => {
   const handleDeleteClick = () => {
     if (!data) return false;
 
-    modal({ type: 'text', content: '정말로 재생목록을 삭제하시겠어요?' }).then(result => {
+    modal({ type: 'text', content: t('playlist.deletion_confirm') }).then(result => {
       if (result.type !== 'ok') return false;
 
-      Transmitter.emit('popup', { type: 'loading', message: '재생목록을 삭제하는 중...' });
+      Transmitter.emit('popup', { type: 'loading', message: t('playlist.deleting') });
       new Evoke(deleteUserPlaylist(data.id)).then(() => {
-        Transmitter.emit('popup', { type: 'success', message: '재생목록을 삭제했어요' });
+        Transmitter.emit('popup', { type: 'success', message: t('playlist.deleted') });
         navigate('/playlist');
       });
     });

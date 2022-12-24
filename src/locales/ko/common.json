@@ -22,7 +22,18 @@
   "playlist": {
     "playlist": "재생목록",
     "view_all": "전체보기",
-    "play": "재생하기"
+    "play": "재생하기",
+    "enter_title": "제목을 입력하세요",
+    "title_renaming": "제목을 수정하는 중...",
+    "title_renamed": "제목을 수정했어요",
+    "deletion_confirm": "정말로 재생목록을 삭제하시겠어요?",
+    "deleting": "재생목록을 삭제하는 중...",
+    "deleted": "재생목록을 삭제했어요",
+    "add": "재생목록 추가",
+    "adding": "재생목록에 추가하는 중...",
+    "added": "재생목록에 추가되었어요",
+    "loading": "재생목록을 불러오는 중...",
+    "no_playlist": "재생목록이 없어요"
   },
   "music": {
     "music": "노래"
