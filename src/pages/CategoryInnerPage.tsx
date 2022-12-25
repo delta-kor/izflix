@@ -48,7 +48,7 @@ const CategoryInnerPage: React.FC<Props> = ({ setPath }) => {
 
   return (
     <Page noStyle>
-      {category?.path ? (
+      {category?.path?.length ? (
         <Meta
           data={{
             title: `${category.path

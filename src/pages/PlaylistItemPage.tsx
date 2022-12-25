@@ -37,9 +37,12 @@ const PlaylistItemPage: React.FC = () => {
 
   return (
     <Page>
-      {playlist?.title ? (
+      {playlist ? (
         <Meta
-          data={{ title: `${playlist.title} - IZFLIX`, url: `https://izflix.net/playlist/${id}` }}
+          data={{
+            title: `${playlist.title} (${playlist?.description}) - IZFLIX`,
+            url: `https://izflix.net/playlist/${id}`,
+          }}
         />
       ) : (
         <Meta
