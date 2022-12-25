@@ -81,7 +81,10 @@
     "user_recommend_count": "추천 동영상 표시 개수",
     "video_recommend_count": "연관 동영상 표시 개수",
     "video_quality": "동영상 화질",
-    "video_quality_description": "동영상 재생 시 기본 화질을 설정해요"
+    "video_quality_description": "동영상 재생 시 기본 화질을 설정해요",
+    "next_video_duration": "다음 동영상 메뉴 지속시간",
+    "next_video_duration_description": "영상이 끝난 후 다음 동영상 메뉴 자동 응답 시간을 설정해요",
+    "second": "초"
   },
   "live": {
     "rules": {

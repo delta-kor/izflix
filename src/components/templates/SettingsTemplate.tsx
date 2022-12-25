@@ -114,6 +114,23 @@ const SettingsTemplate: React.FC = () => {
       <Group>
         <GroupTitle>{t('settings.feed')}</GroupTitle>
         <SettingsItem
+          title={t('settings.next_video_duration')}
+          description={t('settings.next_video_duration_description')}
+          state={`${settings.VIDEO_NEXT_COUNTDOWN}${t('settings.second')}`}
+          onClick={() =>
+            modal({
+              type: 'select',
+              content: 'settings.next_video_duration',
+              items: [0, 1, 3, 5, 7].map(
+                quality => [quality, `${quality}${t('settings.second')}`] as [number, string]
+              ),
+              current: settings.VIDEO_NEXT_COUNTDOWN,
+            }).then(result => {
+              if (result.type === 'select') setValue('VIDEO_NEXT_COUNTDOWN', result.selected);
+            })
+          }
+        />
+        <SettingsItem
           title={t('settings.user_recommend_count')}
           state={t('common.count', { count: settings.USER_RECOMMEND_COUNT })}
           onClick={() =>

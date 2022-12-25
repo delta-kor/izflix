@@ -85,7 +85,10 @@
     "user_recommend_count": "Recommended video display count",
     "video_recommend_count": "Related video display count",
     "video_quality": "Video playback quality",
-    "video_quality_description": "Set default video playback quality when playing"
+    "video_quality_description": "Set default video playback quality when playing",
+    "next_video_duration": "Next video menu duration",
+    "next_video_duration_description": "Set duration of next video menu when video ends",
+    "second": "s"
   },
   "live": {
     "rules": {
