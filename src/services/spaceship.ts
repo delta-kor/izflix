@@ -2,6 +2,7 @@ import NodeCache from 'node-cache';
 import HttpException from '../exceptions/http-exception';
 import delay from './delay';
 import i18n from './i18n';
+import Playtime from './playtime';
 import Settings from './settings';
 import Transmitter from './transmitter';
 
@@ -217,7 +218,8 @@ class SpaceshipClass {
   public async getUserRecommends(
     count: number = Settings.getOne('USER_RECOMMEND_COUNT')
   ): Promise<ApiResponse.Recommend.GetUserRecommends> {
-    const payload = { data: [] };
+    const playtime = Playtime.get().slice(-50);
+    const payload = { data: playtime };
     return this.post(`/recommend?count=${count}`, payload, {
       key: `get_user_recommends::${count}`,
       expire: expireTime,

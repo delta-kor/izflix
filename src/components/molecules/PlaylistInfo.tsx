@@ -201,7 +201,7 @@ const PlaylistInfo: React.FC<Props> = ({ data, access }) => {
 
     if (navigator.share) {
       navigator.share({
-        title: `IZFLIX - ${data.title} (재생목록)`,
+        title: `IZFLIX - ${data.title} (${data.description})`,
         url,
       });
     } else {
