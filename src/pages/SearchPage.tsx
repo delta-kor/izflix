@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
+import Meta from '../components/Meta';
 import SearchTemplate from '../components/templates/SearchTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
@@ -7,6 +9,8 @@ import Spaceship from '../services/spaceship';
 import Page from './Page';
 
 const SearchPage: React.FC = () => {
+  const { t } = useTranslation();
+
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q')!;
   const [videos, setVideos] = useState<IVideo[] | null>([]);
@@ -37,6 +41,12 @@ const SearchPage: React.FC = () => {
 
   return (
     <Page>
+      <Meta
+        data={{
+          title: `'${query}' ${t('search.search_result')} - IZFLIX`,
+          url: `https://izflix.net/search?q=${query}`,
+        }}
+      />
       <SearchTemplate videos={videos} />
     </Page>
   );

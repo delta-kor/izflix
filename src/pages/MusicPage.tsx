@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import Meta from '../components/Meta';
+import MusicTemplate from '../components/templates/MusicTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
 import Spaceship from '../services/spaceship';
-import MusicTemplate from '../components/templates/MusicTemplate';
 import Page from './Page';
 
 const MusicPage: React.FC = () => {
+  const { t } = useTranslation();
+
   const [albums, setAlbums] = useState<IAlbum[]>([]);
 
   useEffect(() => {
@@ -26,6 +30,7 @@ const MusicPage: React.FC = () => {
 
   return (
     <Page>
+      <Meta data={{ title: `${t('music.music')} - IZFLIX`, url: 'https://izflix.net/music' }} />
       <MusicTemplate albums={albums} />
     </Page>
   );

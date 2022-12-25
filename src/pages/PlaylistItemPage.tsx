@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import Meta from '../components/Meta';
 import PlaylistItemTemplate from '../components/templates/PlaylistItemTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
@@ -8,6 +10,7 @@ import ErrorPage from './ErrorPage';
 import Page from './Page';
 
 const PlaylistItemPage: React.FC = () => {
+  const { t } = useTranslation();
   const params = useParams();
   const id = params.id;
 
@@ -34,6 +37,18 @@ const PlaylistItemPage: React.FC = () => {
 
   return (
     <Page>
+      {playlist?.title ? (
+        <Meta
+          data={{ title: `${playlist.title} - IZFLIX`, url: `https://izflix.net/playlist/${id}` }}
+        />
+      ) : (
+        <Meta
+          data={{
+            title: `${t('playlist.playlist')} - IZFLIX`,
+            url: `https://izflix.net/playlist/${id}`,
+          }}
+        />
+      )}
       <PlaylistItemTemplate playlist={playlist} access={access} />
     </Page>
   );

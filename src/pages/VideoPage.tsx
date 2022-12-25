@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
+import Meta from '../components/Meta';
 import VideoTemplate from '../components/templates/VideoTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
@@ -20,6 +22,8 @@ interface VideoPageState {
 }
 
 const VideoPage: React.FC<Props> = ({ panorama }) => {
+  const { t } = useTranslation();
+
   const location = useLocation();
   const state = location.state as VideoPageState | undefined;
 
@@ -65,6 +69,17 @@ const VideoPage: React.FC<Props> = ({ panorama }) => {
   if (error) return <ErrorPage data={error} />;
   return (
     <Page noStyle>
+      {panorama.videoInfo ? (
+        <Meta
+          data={{
+            title: `${panorama.videoInfo.title} (${panorama.videoInfo?.description}) - IZFLIX`,
+            description: t('video.meta_description'),
+            url: `https://izflix.net/${id}`,
+          }}
+        />
+      ) : (
+        <Meta data={{ title: 'IZFLIX' }} />
+      )}
       <VideoTemplate panorama={panorama} action={action} onLike={() => new Evoke(onLike(id!))} />
     </Page>
   );

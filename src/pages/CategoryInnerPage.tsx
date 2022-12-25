@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import Meta from '../components/Meta';
 import CategoryInnerTemplate from '../components/templates/CategoryInnerTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
@@ -12,6 +14,7 @@ interface Props {
 }
 
 const CategoryInnerPage: React.FC<Props> = ({ setPath }) => {
+  const { t } = useTranslation();
   const params = useParams();
   const id = params.id || null;
 
@@ -45,6 +48,24 @@ const CategoryInnerPage: React.FC<Props> = ({ setPath }) => {
 
   return (
     <Page noStyle>
+      {category?.path ? (
+        <Meta
+          data={{
+            title: `${category.path
+              .map(path => path.title)
+              .reverse()
+              .join(' / ')} - IZFLIX`,
+            url: `https://izflix.net/category/${id}`,
+          }}
+        />
+      ) : (
+        <Meta
+          data={{
+            title: `${t('category.category')} - IZFLIX`,
+            url: `https://izflix.net/category/${id}`,
+          }}
+        />
+      )}
       <CategoryInnerTemplate setPath={setPath} category={category} />
     </Page>
   );

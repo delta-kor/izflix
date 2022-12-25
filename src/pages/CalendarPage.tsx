@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
+import Meta from '../components/Meta';
 import CalendarTemplate from '../components/templates/CalendarTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
@@ -8,6 +10,7 @@ import Spaceship from '../services/spaceship';
 import Page from './Page';
 
 const CalendarPage: React.FC = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const state = location.state as { date?: string };
 
@@ -51,6 +54,9 @@ const CalendarPage: React.FC = () => {
 
   return (
     <Page>
+      <Meta
+        data={{ title: `${t('calendar.calendar')} - IZFLIX`, url: 'https://izflix.net/calendar' }}
+      />
       <CalendarTemplate timestamps={timestamps} date={date} videos={videos} setDate={setDate} />
     </Page>
   );

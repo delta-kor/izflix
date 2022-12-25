@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
-import delay from '../services/delay';
+import { useTranslation } from 'react-i18next';
+import Meta from '../components/Meta';
+import VodTemplate from '../components/templates/VodTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
+import delay from '../services/delay';
 import Spaceship from '../services/spaceship';
-import VodTemplate from '../components/templates/VodTemplate';
 import Page from './Page';
 
 const VodPage: React.FC = () => {
+  const { t } = useTranslation();
   const [featured, setFeatured] = useState<ApiResponse.Playlist.ReadFeatured | null>(null);
   const [playlists, setPlaylists] = useState<IPlaylist[]>([]);
 
@@ -37,6 +40,7 @@ const VodPage: React.FC = () => {
 
   return (
     <Page>
+      <Meta data={{ title: `VOD - IZFLIX`, url: 'https://izflix.net/vod' }} />
       <VodTemplate featured={featured} playlists={playlists} />
     </Page>
   );

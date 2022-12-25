@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
+import Meta from '../components/Meta';
 import MusicItemTemplate from '../components/templates/MusicItemTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
@@ -13,6 +15,8 @@ interface MusicItemPageState {
 }
 
 const MusicItemPage: React.FC = () => {
+  const { t } = useTranslation();
+
   const location = useLocation();
   const state = location.state as MusicItemPageState | undefined;
 
@@ -42,6 +46,9 @@ const MusicItemPage: React.FC = () => {
 
   return (
     <Page>
+      <Meta
+        data={{ title: `${t('music.music')} - IZFLIX`, url: `https://izflix.net/music/${id}` }}
+      />
       <MusicItemTemplate musics={musics} selected={state?.selected} />
     </Page>
   );

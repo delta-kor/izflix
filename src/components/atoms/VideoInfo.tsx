@@ -34,7 +34,7 @@ const Title = styled.h1`
   }
 `;
 
-const Description = styled.p`
+const Description = styled.h3`
   flex-grow: 1;
   color: ${Color.WHITE};
   opacity: 0.7;

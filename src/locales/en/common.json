@@ -17,7 +17,8 @@
     "subtitle_off": "Subtitle off",
     "subtitle_on": "Subtitle on",
     "screen_adjust_top": "Fit to screen",
-    "screen_adjust_left": "Fit to video"
+    "screen_adjust_left": "Fit to video",
+    "meta_description": "Watch in HD on IZFLIX"
   },
   "playlist": {
     "playlist": "Playlist",
@@ -63,7 +64,8 @@
     "info": "Info",
     "id_copied": "ID copied to clipboard",
     "id_copy_failed": "Failed to copy user id",
-    "notice": "Notice"
+    "notice": "Notice",
+    "profile": "Profile"
   },
   "modal": {
     "cancel": "Cancel",
@@ -88,7 +90,8 @@
     "video_quality_description": "Set default video playback quality when playing",
     "next_video_duration": "Next video menu duration",
     "next_video_duration_description": "Set duration of next video menu when video ends",
-    "second": "s"
+    "second": "s",
+    "settings": "Settings"
   },
   "live": {
     "rules": {
@@ -99,7 +102,8 @@
   },
   "search": {
     "input_query": "Search",
-    "no_result": "No search results"
+    "no_result": "No search results",
+    "search_result": "search result"
   },
   "info": {
     "development": "Development",

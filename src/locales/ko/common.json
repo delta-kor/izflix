@@ -17,7 +17,8 @@
     "subtitle_off": "자막 사용 중지",
     "subtitle_on": "자막 사용",
     "screen_adjust_top": "화면 크기에 맞춤",
-    "screen_adjust_left": "영상 크기에 맞춤"
+    "screen_adjust_left": "영상 크기에 맞춤",
+    "meta_description": "IZFLIX에서 고화질로 시청하세요"
   },
   "playlist": {
     "playlist": "재생목록",
@@ -55,7 +56,8 @@
     "info": "정보",
     "id_copied": "아이디를 클립보드에 복사했어요",
     "id_copy_failed": "아이디 복사에 실패했어요",
-    "notice": "공지"
+    "notice": "공지",
+    "profile": "프로필"
   },
   "modal": {
     "cancel": "취소",
@@ -67,7 +69,8 @@
   },
   "search": {
     "input_query": "검색어를 입력해주세요",
-    "no_result": "검색 결과가 없어요"
+    "no_result": "검색 결과가 없어요",
+    "search_result": "검색 결과"
   },
   "settings": {
     "featured_video_autoplay": "인기 동영상 미리보기 재생",
@@ -84,7 +87,8 @@
     "video_quality_description": "동영상 재생 시 기본 화질을 설정해요",
     "next_video_duration": "다음 동영상 메뉴 지속시간",
     "next_video_duration_description": "영상이 끝난 후 다음 동영상 메뉴 자동 응답 시간을 설정해요",
-    "second": "초"
+    "second": "초",
+    "settings": "설정"
   },
   "live": {
     "rules": {

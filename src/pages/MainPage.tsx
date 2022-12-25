@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import delay from '../services/delay';
+import Meta from '../components/Meta';
+import MainTemplate from '../components/templates/MainTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
+import delay from '../services/delay';
 import Spaceship from '../services/spaceship';
-import MainTemplate from '../components/templates/MainTemplate';
 import Page from './Page';
 
 const MainPage: React.FC = () => {
@@ -47,6 +48,7 @@ const MainPage: React.FC = () => {
 
   return (
     <Page>
+      <Meta data={{ title: `IZFLIX`, url: 'https://izflix.net/' }} />
       <MainTemplate playlists={playlists} featured={featured} recommends={recommends} />
     </Page>
   );
