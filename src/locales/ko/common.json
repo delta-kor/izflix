@@ -54,7 +54,8 @@
     "select_language": "언어를 선택하세요",
     "info": "정보",
     "id_copied": "아이디를 클립보드에 복사했어요",
-    "id_copy_failed": "아이디 복사에 실패했어요"
+    "id_copy_failed": "아이디 복사에 실패했어요",
+    "notice": "공지"
   },
   "modal": {
     "cancel": "취소",

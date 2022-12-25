@@ -58,11 +58,12 @@
     "nickname_updated": "Nickname updated",
     "update_nickname": "Edit nickname",
     "settings": "Settings",
-    "language": "Language",
+    "language": "언어",
     "select_language": "Select language",
     "info": "Info",
     "id_copied": "ID copied to clipboard",
-    "id_copy_failed": "Failed to copy user id"
+    "id_copy_failed": "Failed to copy user id",
+    "notice": "Notice"
   },
   "modal": {
     "cancel": "Cancel",

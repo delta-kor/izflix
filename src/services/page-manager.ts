@@ -7,6 +7,7 @@ PageTitles.set('/vod', 'VOD');
 PageTitles.set('/profile', 'Profile');
 PageTitles.set('/profile/settings', 'Settings');
 PageTitles.set('/profile/info', 'Info');
+PageTitles.set('/profile/notice', 'Notice');
 PageTitles.set('/music', 'Music');
 PageTitles.set('/music/:id', 'Music');
 PageTitles.set('/category', 'Category');

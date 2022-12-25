@@ -17,6 +17,7 @@ import LiveEntrancePage from './pages/LiveEntrancePage';
 import MainPage from './pages/MainPage';
 import MusicItemPage from './pages/MusicItemPage';
 import MusicPage from './pages/MusicPage';
+import NoticePage from './pages/NoticePage';
 import PlaylistItemPage from './pages/PlaylistItemPage';
 import PlaylistPage from './pages/PlaylistPage';
 import ProfilePage from './pages/ProfilePage';
@@ -74,6 +75,7 @@ const App: React.FC = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/settings" element={<SettingsPage />} />
           <Route path="/profile/info" element={<InfoPage />} />
+          <Route path="/profile/notice" element={<NoticePage />} />
           <Route path="/:id" element={<VideoPage panorama={panorama} />} />
           <Route path="*" element={<ErrorPage data={'error.not_found'} />} />
         </Routes>

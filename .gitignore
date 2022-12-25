@@ -32,3 +32,4 @@ yarn-error.log*
 video-rank.json
 
 .prettierrc
+.eslintignore

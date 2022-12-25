@@ -158,7 +158,6 @@ const NextVideoList: React.FC<Props> = ({ videos, currentVideoId, state }) => {
                   open: {
                     opacity: 1,
                     height: 'auto',
-                    scale: 1,
                     y: 0,
                     transition: { ease: EaseReverse },
                   },

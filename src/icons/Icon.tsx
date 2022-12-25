@@ -28,6 +28,7 @@ import { ReactComponent as LoaderSvg } from '../icons/svg/loader.svg';
 import { ReactComponent as LogoSvg } from '../icons/svg/logo.svg';
 import { ReactComponent as ManagementSvg } from '../icons/svg/management.svg';
 import { ReactComponent as MusicSvg } from '../icons/svg/music.svg';
+import { ReactComponent as NoticeSvg } from '../icons/svg/notice.svg';
 import { ReactComponent as PauseSvg } from '../icons/svg/pause.svg';
 import { ReactComponent as PipSvg } from '../icons/svg/pip.svg';
 import { ReactComponent as PlaySvg } from '../icons/svg/play.svg';
@@ -70,6 +71,7 @@ const IconMap = {
   logo: LogoSvg,
   management: ManagementSvg,
   music: MusicSvg,
+  notice: NoticeSvg,
   pause: PauseSvg,
   pip: PipSvg,
   play: PlaySvg,
