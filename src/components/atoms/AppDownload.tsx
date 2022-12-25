@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import { Color, MobileQuery, PcQuery, Text } from '../../styles';
@@ -65,12 +66,13 @@ const Action = styled.div`
 `;
 
 const AppDownload: React.FC = () => {
+  const navigate = useNavigate();
   const device = useDevice();
 
   const scale = device === 'mobile' ? [1.03, 0.97] : [1.01, 0.99];
 
   return (
-    <Layout hover={scale[0]} tap={scale[1]}>
+    <Layout hover={scale[0]} tap={scale[1]} onClick={() => navigate('/profile/app')}>
       <Content>
         <Title>앱 다운로드</Title>
         <Description>앱을 이용하면 더 많은 기능을 사용할 수 있어요</Description>

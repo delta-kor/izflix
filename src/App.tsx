@@ -9,6 +9,7 @@ import PanoramaSection from './components/organisms/PanoramaSection';
 import Popup from './components/organisms/Popup';
 import useModal from './hooks/useModal';
 import usePanorama from './hooks/usePanorama';
+import AppPage from './pages/AppPage';
 import CalendarPage from './pages/CalendarPage';
 import CategoryPage from './pages/CategoryPage';
 import ErrorPage from './pages/ErrorPage';
@@ -76,6 +77,7 @@ const App: React.FC = () => {
           <Route path="/profile/settings" element={<SettingsPage />} />
           <Route path="/profile/info" element={<InfoPage />} />
           <Route path="/profile/notice" element={<NoticePage />} />
+          <Route path="/profile/app" element={<AppPage />} />
           <Route path="/:id" element={<VideoPage panorama={panorama} />} />
           <Route path="*" element={<ErrorPage data={'error.not_found'} />} />
         </Routes>
