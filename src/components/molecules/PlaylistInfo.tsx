@@ -194,6 +194,26 @@ const PlaylistInfo: React.FC<Props> = ({ data, access }) => {
     });
   };
 
+  const handleShareClick = () => {
+    if (!data) return false;
+
+    const url = `https://izflix.net/${data.id}`;
+
+    if (navigator.share) {
+      navigator.share({
+        title: `IZFLIX - ${data.title} (재생목록)`,
+        url,
+      });
+    } else {
+      navigator.clipboard
+        .writeText(url)
+        .then(() => Transmitter.emit('popup', { type: 'success', message: t('video.url_copied') }))
+        .catch(() =>
+          Transmitter.emit('popup', { type: 'error', message: t('video.url_copy_failed') })
+        );
+    }
+  };
+
   const handleDeleteClick = () => {
     if (!data) return false;
 
@@ -220,6 +240,9 @@ const PlaylistInfo: React.FC<Props> = ({ data, access }) => {
             <>
               <IconWrapper hover={1.1} tap={0.9} onClick={handleEditClick}>
                 <IconContent type={'edit'} color={Color.GRAY} />
+              </IconWrapper>
+              <IconWrapper hover={1.1} tap={0.9} onClick={handleShareClick}>
+                <IconContent type={'share'} color={Color.GRAY} />
               </IconWrapper>
               <IconWrapper hover={1.1} tap={0.9} onClick={handleDeleteClick}>
                 <IconContent type={'delete'} color={Color.GRAY} />

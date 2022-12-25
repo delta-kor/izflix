@@ -51,7 +51,7 @@ const VideoAction: React.FC<Props> = ({ action, panorama, onLike }) => {
 
     if (navigator.share) {
       navigator.share({
-        title: `${panorama.videoInfo.title} (${panorama.videoInfo.description})`,
+        title: `IZFLIX - ${panorama.videoInfo.title} (${panorama.videoInfo.description})`,
         url,
       });
     } else {
