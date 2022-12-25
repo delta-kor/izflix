@@ -5,7 +5,7 @@ import PageManager from '../../services/page-manager';
 import { Color, MobileQuery, PcLeftMargin, PcQuery } from '../../styles';
 import SmoothBox from '../atoms/SmoothBox';
 
-const Layout = styled.div`
+const Layout = styled.nav`
   display: flex;
   position: fixed;
   left: 0;

@@ -20,7 +20,7 @@ const Layout = styled.div`
   }
 `;
 
-const Title = styled.div`
+const Title = styled.h1`
   flex-grow: 1;
   color: ${Color.WHITE};
   ${HideOverflow};
@@ -34,7 +34,7 @@ const Title = styled.div`
   }
 `;
 
-const Description = styled.div`
+const Description = styled.p`
   flex-grow: 1;
   color: ${Color.WHITE};
   opacity: 0.7;

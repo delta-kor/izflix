@@ -27,7 +27,7 @@ const Image = styled(SmoothImage)`
   border-radius: 8px;
 `;
 
-const Content = styled.div`
+const Content = styled.article`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -35,7 +35,7 @@ const Content = styled.div`
   min-width: 0;
 `;
 
-const Title = styled.div<{ $shrink?: boolean }>`
+const Title = styled.h3<{ $shrink?: boolean }>`
   width: 100%;
   color: ${Color.WHITE};
   ${HideOverflow};
@@ -49,7 +49,7 @@ const Title = styled.div<{ $shrink?: boolean }>`
   }
 `;
 
-const Description = styled.div<{ $shrink?: boolean }>`
+const Description = styled.p<{ $shrink?: boolean }>`
   width: 100%;
   color: ${Color.WHITE};
   opacity: 0.7;

@@ -41,7 +41,7 @@ const DateIcon = styled(Icon)`
   flex-shrink: 0;
 `;
 
-const DateContent = styled.div`
+const DateContent = styled.time`
   color: ${Color.WHITE};
   transform: skew(0.1deg);
 

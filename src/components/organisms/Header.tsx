@@ -19,7 +19,7 @@ import {
 } from '../../styles';
 import SmoothBox from '../atoms/SmoothBox';
 
-const Layout = styled.div<{ $active: boolean; $search: boolean }>`
+const Layout = styled.header<{ $active: boolean; $search: boolean }>`
   position: fixed;
   display: flex;
 
@@ -56,7 +56,7 @@ const Layout = styled.div<{ $active: boolean; $search: boolean }>`
   }
 `;
 
-const Content = styled(motion.div)`
+const Content = styled(motion.h1)`
   width: 100%;
   color: ${Color.WHITE};
   ${HideOverflow};

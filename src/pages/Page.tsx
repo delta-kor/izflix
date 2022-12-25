@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import intersect from '../services/intersect';
 import { Color, MobileQuery, MobileTopMargin, PcLeftMargin, PcQuery, PcTopMargin } from '../styles';
 
-const NoStyleLayout = styled(motion.div)`
+const NoStyleLayout = styled(motion.main)`
   position: relative;
 `;
 
-const Layout = styled(motion.div)`
+const Layout = styled(motion.main)`
   position: relative;
 
   ${MobileQuery} {

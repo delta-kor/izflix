@@ -20,7 +20,7 @@ const Layout = styled.div<{ $fluid: boolean }>`
   }
 `;
 
-const ItemList = styled.div<{ $fluid: boolean }>`
+const ItemList = styled.section<{ $fluid: boolean }>`
   display: grid;
   min-width: 0;
 
