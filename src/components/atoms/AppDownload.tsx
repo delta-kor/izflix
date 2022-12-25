@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
@@ -66,6 +67,8 @@ const Action = styled.div`
 `;
 
 const AppDownload: React.FC = () => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const device = useDevice();
 
@@ -74,8 +77,8 @@ const AppDownload: React.FC = () => {
   return (
     <Layout hover={scale[0]} tap={scale[1]} onClick={() => navigate('/profile/app')}>
       <Content>
-        <Title>앱 다운로드</Title>
-        <Description>앱을 이용하면 더 많은 기능을 사용할 수 있어요</Description>
+        <Title>{t('app.download')}</Title>
+        <Description>{t('app.description')}</Description>
       </Content>
       <Action>
         원클릭

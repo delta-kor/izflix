@@ -66,10 +66,16 @@ const ProfileTemplate: React.FC<Props> = ({ user }) => {
   )
     isMobile = true;
 
+  const isInStandaloneMode = (() =>
+    window.matchMedia('(display-mode: standalone)').matches ||
+    // @ts-ignore
+    window.navigator.standalone ||
+    document.referrer.includes('android-app://'))();
+
   return (
     <Layout>
       <ProfileSection user={user} />
-      {isMobile && <AppDownload />}
+      {isMobile && !isInStandaloneMode && <AppDownload />}
       <IconListSection>
         <IconListItem icon={'language'} onClick={handleLanguageClick}>
           {t('profile.language')}

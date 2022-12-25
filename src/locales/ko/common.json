@@ -107,5 +107,10 @@
     "subtitle": "자막 제공",
     "video": "영상 출처",
     "thanks": "도움 주신 분들"
+  },
+  "app": {
+    "download": "앱 다운로드",
+    "description": "앱을 이용하면 더 많은 기능을 사용할 수 있어요",
+    "web_app_description": "웹 애플리케이션은 일반 바로가기와 다릅니다"
   }
 }
