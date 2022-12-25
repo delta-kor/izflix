@@ -1,6 +1,8 @@
 import { Component, MouseEventHandler } from 'react';
 import { ReactComponent as AddSvg } from '../icons/svg/add.svg';
 import { ReactComponent as AdjustSvg } from '../icons/svg/adjust.svg';
+import { ReactComponent as ArrowDownSvg } from '../icons/svg/arrow-down.svg';
+import { ReactComponent as ArrowUpSvg } from '../icons/svg/arrow-up.svg';
 import { ReactComponent as CalendarSvg } from '../icons/svg/calendar.svg';
 import { ReactComponent as CategorySvg } from '../icons/svg/category.svg';
 import { ReactComponent as ChatSvg } from '../icons/svg/chat.svg';
@@ -44,6 +46,8 @@ import { ReactComponent as UserSvg } from '../icons/svg/user.svg';
 const IconMap = {
   add: AddSvg,
   adjust: AdjustSvg,
+  arrow_down: ArrowDownSvg,
+  arrow_up: ArrowUpSvg,
   calendar: CalendarSvg,
   category: CategorySvg,
   chat: ChatSvg,

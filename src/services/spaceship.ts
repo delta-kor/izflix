@@ -325,6 +325,31 @@ class SpaceshipClass {
     });
   }
 
+  public async removeVideoFromUserPlaylist(
+    playlistId: string,
+    videoId: string
+  ): Promise<ApiResponse.Playlist.UpdateUserPlaylist> {
+    const payload = { action: 'remove', video_id: videoId };
+    return this.post(`/playlist/user/${playlistId}`, payload, {
+      key: `remove_video_from_user_playlist::${playlistId}::${videoId}`,
+      expire: expireTime,
+      auth: true,
+    });
+  }
+
+  public async reorderVideoFromUserPlaylist(
+    playlistId: string,
+    videoId: string,
+    order: number
+  ): Promise<ApiResponse.Playlist.UpdateUserPlaylist> {
+    const payload = { action: 'reorder', video_id: videoId, order };
+    return this.post(`/playlist/user/${playlistId}`, payload, {
+      key: `reorder_video_from_user_playlist::${playlistId}::${videoId}::order`,
+      expire: expireTime,
+      auth: true,
+    });
+  }
+
   public async deleteUserPlaylist(
     playlistId: string
   ): Promise<ApiResponse.Playlist.DeleteUserPlaylist> {

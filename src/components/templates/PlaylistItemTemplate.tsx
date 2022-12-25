@@ -38,7 +38,7 @@ const PlaylistItemTemplate: React.FC<Props> = ({ playlist, access }) => {
         <PlaylistInfoPlaceholder />
       </Pc>
       <PlaylistInfo data={playlist} access={access} />
-      <PlaylistItemSection playlist={playlist} />
+      <PlaylistItemSection playlist={playlist} access={access} />
     </Layout>
   );
 };
