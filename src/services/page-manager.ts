@@ -33,7 +33,11 @@ class PageManager {
         const title = PageTitles.get(path)!;
         const params = result.slice(1);
         const type =
-          path === '/' ? 'main' : ['/vod', '/profile'].includes(path) ? 'submain' : 'children';
+          path === '/'
+            ? 'main'
+            : ['/vod', '/playlist', '/profile'].includes(path)
+            ? 'submain'
+            : 'children';
         return { title, params, type };
       }
     }

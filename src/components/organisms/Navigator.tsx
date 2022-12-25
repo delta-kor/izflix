@@ -89,11 +89,19 @@ const Navigator: React.FC = () => {
             <Item type={'tv'} color={location.pathname === '/vod' ? Color.WHITE : Color.GRAY} />
           </ItemClickBox>
         </Link>
-        <Link to={'/live'}>
+        <Link to={'/playlist'}>
+          <ItemClickBox hover={1.1} tap={0.9}>
+            <Item
+              type={'playlist'}
+              color={location.pathname === '/playlist' ? Color.WHITE : Color.GRAY}
+            />
+          </ItemClickBox>
+        </Link>
+        {/* <Link to={'/live'}>
           <ItemClickBox hover={1.1} tap={0.9}>
             <Item type={'chat'} color={location.pathname === '/live' ? Color.WHITE : Color.GRAY} />
           </ItemClickBox>
-        </Link>
+        </Link> */}
         <Link to={'/profile'}>
           <ItemClickBox hover={1.1} tap={0.9}>
             <Item
