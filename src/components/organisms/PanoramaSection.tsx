@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import { Panorama, PanoramaState } from '../../hooks/usePanorama';
 import Icon from '../../icons/Icon';
+import Playtime from '../../services/playtime';
 import Settings from '../../services/settings';
 import Spaceship from '../../services/spaceship';
 import { getDuration } from '../../services/time';
@@ -650,6 +651,7 @@ interface Props {
 let controlsTimeout: any = null;
 let nextVideoTimeout: any = null;
 let toastTimeout: any = null;
+let sessionPlaytime: [string | null, number] = [null, 0];
 
 const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const navigate = useNavigate();
@@ -722,6 +724,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     setVideoLoaded(false);
     setIsEnded(false);
     clearTimeout(nextVideoTimeout);
+    sessionPlaytime = [sessionPlaytime[0], 0];
   }, [panorama.currentVideoId]);
 
   useEffect(() => {
@@ -805,6 +808,28 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
         playbackRate: video.playbackRate,
         position: video.currentTime || 0,
       });
+    }
+
+    const id = panorama.currentVideoId;
+    if (id) {
+      let total: number = 0;
+      const length = video.played.length;
+      for (let i = 0; i < length; i++) {
+        const start = video.played.start(i);
+        const end = video.played.end(i);
+        const delta = end - start;
+        total += delta;
+      }
+
+      if (sessionPlaytime[0] === id) {
+        const delta = total - sessionPlaytime[1];
+        if (delta > 0 && delta < 100) {
+          Playtime.add(id, delta);
+        }
+      }
+
+      sessionPlaytime[0] = id;
+      sessionPlaytime[1] = total;
     }
   };
 

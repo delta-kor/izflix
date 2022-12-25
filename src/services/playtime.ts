@@ -1,4 +1,4 @@
-const key = 'izflix_playtime';
+const key = 'izflix_playtime_v2';
 
 type PlaytimeData = [string, number][];
 
