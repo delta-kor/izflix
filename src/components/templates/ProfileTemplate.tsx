@@ -5,6 +5,7 @@ import useModal from '../../hooks/useModal';
 import { User } from '../../hooks/useUser';
 import Spaceship from '../../services/spaceship';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
+import AppDownload from '../atoms/AppDownload';
 import IconListItem from '../atoms/IconListItem';
 import IconListSection from '../organisms/IconListSection';
 import ProfileSection from '../organisms/ProfileSection';
@@ -54,6 +55,7 @@ const ProfileTemplate: React.FC<Props> = ({ user }) => {
   return (
     <Layout>
       <ProfileSection user={user} />
+      <AppDownload />
       <IconListSection>
         <IconListItem icon={'language'} onClick={handleLanguageClick}>
           {t('profile.language')}
