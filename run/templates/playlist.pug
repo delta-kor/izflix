@@ -1,0 +1,13 @@
+include head.pug
+include image.pug
+
+html
+  +head('Playlist - IZFLIX', 'https://izflix.net/playlist')
+  body
+    h1 Playlist
+    include nav.pug
+    each playlist in playlists
+      article
+        h4= playlist.title
+        p= playlist.description
+        +image(playlist.thumbnail)

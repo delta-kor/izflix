@@ -17,11 +17,11 @@ class Meta extends Component<Props, any> {
 
         <meta
           name="description"
-          content={data.description || '콘서트, 음악 방송 고화질 인터넷 스트리밍 & 다시보기'}
+          content={data.description || 'Concerts, Music shows HD streaming & Replay'}
         />
         <meta
           property="og:description"
-          content={data.description || '콘서트, 음악 방송 고화질 인터넷 스트리밍 & 다시보기'}
+          content={data.description || 'Concerts, Music shows HD streaming & Replay'}
         />
 
         <meta property="og:image" content={data.image || '/og.png'} />

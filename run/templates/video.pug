@@ -1,0 +1,11 @@
+include head.pug
+include image.pug
+
+html
+  +head(`${video.title} (${video.description}) - IZFLIX`, `https://izflix.net/${video.id}`, 'Watch in HD on IZFLIX', 'https://api2.izflix.net/thumbnail/' + video.id)
+  body
+    h1= video.title
+    h2= video.description
+    h3= video.category.join(' / ')
+    time= video.date
+    +image(video.id)

@@ -40,8 +40,9 @@ const PlaylistItemPage: React.FC = () => {
       {playlist ? (
         <Meta
           data={{
-            title: `${playlist.title} (${playlist?.description}) - IZFLIX`,
+            title: `${playlist.title} (${playlist.description}) - IZFLIX`,
             url: `https://izflix.net/playlist/${id}`,
+            image: Spaceship.getThumbnail(playlist.thumbnail),
           }}
         />
       ) : (

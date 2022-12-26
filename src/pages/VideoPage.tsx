@@ -75,6 +75,7 @@ const VideoPage: React.FC<Props> = ({ panorama }) => {
             title: `${panorama.videoInfo.title} (${panorama.videoInfo?.description}) - IZFLIX`,
             description: t('video.meta_description'),
             url: `https://izflix.net/${id}`,
+            image: Spaceship.getThumbnail(id!),
           }}
         />
       ) : (

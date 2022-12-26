@@ -1,0 +1,24 @@
+mixin head(title, url, description, image)
+  head
+    meta(charset='utf-8')
+    link(rel='shortcut icon' href='/favicon.png')
+    link(rel='icon' href='/favicon.png')
+    meta(name='viewport' content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,interactive-widget=resizes-content')
+    meta(name='theme-color' content='#070d2d')
+    meta(name='color-scheme' content='dark')
+    link(rel='apple-touch-icon' href='/logo192.png')
+    link(rel='manifest' href='/manifest.json')
+    meta(name='keyword' content='아이즈원, IZONE, IZ*ONE, IZFLIX, 앚플릭스, 아이즈플릭스, 다시보기, 콘서트, 고화질, 음악방송')
+    link(rel='stylesheet' href='/prerender.css')
+    title= title
+    meta(property='og:type' content='website' data-rh='true')
+    meta(name='description' content=description || 'Concerts, Music shows HD streaming & Replay' data-rh='true')
+    meta(property='og:description' content=description || 'Concerts, Music shows HD streaming & Replay' data-rh='true')
+    meta(property='og:image' content=image || '/og.png' data-rh='true')
+    meta(name='twitter:image' content=image || '/og.png' data-rh='true')
+    meta(name='twitter:card' content='summary' data-rh='true')
+    link(rel='canonical' href=url data-rh='true')
+    meta(property='og:title' content=title data-rh='true')
+    meta(property='og:url' content=url data-rh='true')
+    .
+      !{scripts}
