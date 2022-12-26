@@ -47,11 +47,9 @@ axios
       fs.writeFileSync(path.join(build, video.id + '.html'), html);
     }
 
-    for (const video of videos) {
-      video.date = getDate(video.date);
-
+    for (const playlist of playlists) {
       const filePath = path.join(templates, 'playlistItem.pug');
-      const html = pug.compileFile(filePath)({ video, scripts });
+      const html = pug.compileFile(filePath)({ playlist, scripts });
       fs.writeFileSync(path.join(build, 'playlist', video.id + '.html'), html);
     }
   })
