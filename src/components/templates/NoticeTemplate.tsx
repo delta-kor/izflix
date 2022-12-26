@@ -71,6 +71,15 @@ const ArticleContent = styled(motion.div)`
     height: unset;
   }
 
+  a {
+    color: ${Color.PRIMARY};
+    font-weight: 700;
+  }
+
+  b {
+    font-weight: 800;
+  }
+
   h3 {
     margin: 16px 0 8px 0;
   }

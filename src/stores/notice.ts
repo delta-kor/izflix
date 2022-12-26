@@ -11,6 +11,26 @@ interface Notice {
 
 const Notice: Notice[] = [
   {
+    id: '3',
+    title: { ko: '버그 신고 / 기능 제안 / 문의', en: 'Bug report / Feature suggestions / Contact' },
+    content: {
+      ko: `버그 신고 / 기능 제안 / 문의  
+**Email**: contact@izflix.net  
+**Form**: [https://forms.gle/TcL8SBfZuSEjCMxbA](https://forms.gle/TcL8SBfZuSEjCMxbA)  
+
+------
+*2022. 12. 25.*  
+*cm@izflix.net*`,
+      en: `Bug report / Feature suggestions / Contact  
+**Email**: contact@izflix.net  
+**Form**: [https://forms.gle/TcL8SBfZuSEjCMxbA](https://forms.gle/TcL8SBfZuSEjCMxbA)  
+
+------
+*2022. 12. 25.*  
+*cm@izflix.net*`,
+    },
+  },
+  {
     id: '2',
     title: { ko: 'IZFLIX은 아이즈원 팬 사이트입니다', en: 'IZFLIX is fan site of IZ*ONE' },
     content: {
@@ -27,7 +47,7 @@ Be careful of impersonating accounts on Twitter, Instagram, etc.
 
 ------
 *2022. 12. 25.*   
-*IZFLIX*`,
+*cm@izflix.net*`,
     },
   },
   {
@@ -83,7 +103,7 @@ You can use IZFLIX in English.
 
 ------
 *2022. 12. 25.*   
-*IZFLIX*`,
+*cm@izflix.net*`,
     },
   },
 ];
