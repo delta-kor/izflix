@@ -19,7 +19,7 @@ function getDate(number) {
 }
 
 axios
-  .get('http://localhost:8080/shipment')
+  .get(process.env.SHIP_URL || 'http://localhost:8080/shipment')
   .then(res => {
     const baseFile = fs.readFileSync(path.join(build, 'index.html'));
     const base = baseFile.toString();
