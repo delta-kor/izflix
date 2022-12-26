@@ -37,13 +37,6 @@ const App: React.FC = () => {
   useEffect(() => {
     window.history.scrollRestoration = 'manual';
     Spaceship.load();
-
-    process.env.NODE_ENV !== 'development' &&
-      modal({
-        type: 'text',
-        content:
-          'This page is still in the development preview stage. Some features may not work and may change without notice. For general use, please use https://izflix.net',
-      });
   }, []);
 
   return (

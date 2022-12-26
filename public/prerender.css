@@ -28,11 +28,15 @@ body {
 
 body.hydrating #root,
 body.snapped #root,
-body.dry #root {
+body.dry #root,
+body.hydrating #panorama,
+body.snapped #panorama,
+body.dry #panorama {
   display: none !important;
 }
 
-body.hydrated #root {
+body.hydrated #root,
+body.hydrated #panorama {
   display: block;
   animation: fadein 0.2s;
 }
