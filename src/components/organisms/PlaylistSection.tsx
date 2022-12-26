@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
+import Tracker from '../../services/tracker';
 import { HideScrollbar, MobileQuery, PcInnerPadding, PcQuery, TabletQuery } from '../../styles';
 import PlaylistItem from '../atoms/PlaylistItem';
 import SectionTitle from '../atoms/SectionTitle';
@@ -81,7 +82,13 @@ const PlaylistSection: React.FC<Props> = ({ playlists }) => {
           {playlists.length ? (
             playlists
               .slice(0, device === 'pc' ? 6 : undefined)
-              .map(data => <PlaylistItem playlist={data} key={data.id} />)
+              .map(data => (
+                <PlaylistItem
+                  playlist={data}
+                  onClick={() => Tracker.send('main_playlist_clicked', { playlist_id: data.id })}
+                  key={data.id}
+                />
+              ))
           ) : (
             <Repeat
               count={device === 'pc' ? 6 : 10}

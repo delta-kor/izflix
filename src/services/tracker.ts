@@ -1,5 +1,8 @@
-import ReactGA from 'react-ga4';
+// @ts-nocheck
+
 import isCrawler from './crawl';
+
+let gtag: any;
 
 class Tracker {
   private static isActivated(): boolean {
@@ -9,23 +12,30 @@ class Tracker {
 
   public static initialize(): void {
     if (!this.isActivated()) return;
-    ReactGA.initialize('G-S789E94G7D');
+
+    window.dataLayer = window.dataLayer || [];
+
+    gtag = function gtag() {
+      dataLayer.push(arguments);
+    };
+
+    gtag('js', new Date());
+    gtag('config', 'G-S789E94G7D');
+    gtag('config', 'G-R36LWLJLH8');
   }
 
   public static send(action: string, params: any = {}): void {
     if (!this.isActivated()) return;
-    ReactGA.ga('send', {
-      hitType: 'event',
-      eventCategory: 'event',
-      eventAction: action,
+    gtag('event', action, {
+      event_category: 'event',
       ...params,
     });
   }
 
   public static page(path: string): void {
     if (!this.isActivated()) return;
-    ReactGA.set({ page: path });
-    ReactGA.send({ hitType: 'pageview', page: path });
+    // ReactGA.set({ page: path });
+    // ReactGA.send({ hitType: 'pageview', page: path });
   }
 }
 

@@ -1,3 +1,4 @@
+import { MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
@@ -75,21 +76,24 @@ const TitlePlaceholder = styled.div`
 
 interface Props {
   playlist?: IPlaylist;
+  onClick?: MouseEventHandler;
 }
 
-const PlaylistItem: React.FC<Props> = ({ playlist }) => {
+const PlaylistItem: React.FC<Props> = ({ playlist, onClick }) => {
   const device = useDevice();
 
   const thumbnail = playlist && Spaceship.getThumbnail(playlist.thumbnail);
   const title = playlist && playlist.title;
 
   const Component = (
-    <>
-      <Layout hover={device === 'mobile' ? 1 : 1.05} tap={device === 'mobile' ? 1 : 0.95}>
-        <Thumbnail src={thumbnail} />
-        {title ? <Title>{title}</Title> : <TitlePlaceholder />}
-      </Layout>
-    </>
+    <Layout
+      hover={device === 'mobile' ? 1 : 1.05}
+      tap={device === 'mobile' ? 1 : 0.95}
+      onClick={onClick}
+    >
+      <Thumbnail src={thumbnail} />
+      {title ? <Title>{title}</Title> : <TitlePlaceholder />}
+    </Layout>
   );
 
   return playlist ? <Link to={`/playlist/${playlist.id}`}>{Component}</Link> : Component;

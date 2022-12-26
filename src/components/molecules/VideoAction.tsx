@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import useModal from '../../hooks/useModal';
 import { Panorama } from '../../hooks/usePanorama';
+import Tracker from '../../services/tracker';
 import Transmitter from '../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import VerticalButton from '../atoms/VerticalButton';
@@ -46,6 +47,7 @@ const VideoAction: React.FC<Props> = ({ action, panorama, onLike }) => {
 
   const handleShareClick = () => {
     if (!panorama.videoInfo) return;
+    panorama.currentVideoId && Tracker.send('video_share', { video_id: panorama.currentVideoId });
 
     const url = `https://izflix.net/${panorama.videoInfo.id}`;
 
@@ -66,11 +68,14 @@ const VideoAction: React.FC<Props> = ({ action, panorama, onLike }) => {
 
   const handleDownloadClick = () => {
     if (!panorama.streamInfo) return;
+    panorama.currentVideoId &&
+      Tracker.send('video_download', { video_id: panorama.currentVideoId });
     window.open(panorama.streamInfo.url, '_blank', 'noopener,noreferrer');
   };
 
   const handleAddClick = () => {
     if (!panorama.currentVideoId) return;
+    panorama.currentVideoId && Tracker.send('video_add', { video_id: panorama.currentVideoId });
     modal({ type: 'playlist', videoId: panorama.currentVideoId });
   };
 

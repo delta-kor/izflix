@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Cache from '../../services/cache';
 import Spaceship from '../../services/spaceship';
 import { getDate, getDuration } from '../../services/time';
+import Tracker from '../../services/tracker';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import ListItem from '../atoms/ListItem';
 import Repeat from '../tools/Repeat';
@@ -44,6 +45,7 @@ const CategorySection: React.FC<Props> = ({ setPath, category }) => {
         type={'icon'}
         value={'folder'}
         link={`/category/${data.id}`}
+        onClick={() => Tracker.send('category_folder_clicked', { folder_path: data.id })}
         key={data.id}
       />
     ));
@@ -59,6 +61,7 @@ const CategorySection: React.FC<Props> = ({ setPath, category }) => {
         value={Spaceship.getThumbnail(data.id)}
         link={`/${data.id}`}
         state={{ key: 'category', value: category.path.slice(-1)[0]?.id }}
+        onClick={() => Tracker.send('category_file_clicked', { file_id: data.id })}
         key={data.id}
       />
     ));

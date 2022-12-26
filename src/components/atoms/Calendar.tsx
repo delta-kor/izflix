@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import { getMonth } from '../../services/time';
+import Tracker from '../../services/tracker';
 import { Color, PcQuery, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 
@@ -150,7 +151,11 @@ const Calendar: React.FC<Props> = ({ timestamps, date: selectedDate, setDate }) 
       items.push(
         <Item
           $type={selectedDate === timestampKey ? 'selected' : 'highlighted'}
-          onClick={() => setDate(timestampKey)}
+          onClick={() => {
+            if (selectedDate === timestampKey) return false;
+            Tracker.send('calendar_selected', { calendar_date: timestampKey });
+            setDate(timestampKey);
+          }}
           key={timestampKey}
           {...motionProps}
         >

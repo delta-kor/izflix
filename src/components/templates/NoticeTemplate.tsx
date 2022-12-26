@@ -1,9 +1,10 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
+import Tracker from '../../services/tracker';
 import Notice from '../../stores/notice';
 import {
   Color,
@@ -88,6 +89,12 @@ const PositionBlock = styled.div`
 const NoticeTemplate: React.FC = () => {
   const { i18n } = useTranslation();
   const [expanded, setExpanded] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (expanded !== null) {
+      Tracker.send('notice_selected', { notice_id: expanded });
+    }
+  }, [expanded]);
 
   const language = i18n.language === 'ko' ? 'ko' : 'en';
 

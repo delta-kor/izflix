@@ -109,7 +109,7 @@ const VideoTemplate: React.FC<Props> = ({ panorama, action, onLike }) => {
             </motion.div>
           )}
           <motion.div layoutId={'recommend' + videoId} key={'recommend'}>
-            <RecommendSection recommends={panorama.recommends} fluid />
+            <RecommendSection recommends={panorama.recommends} videoRecommend />
           </motion.div>
         </AnimatePresence>
       </ContentArea>

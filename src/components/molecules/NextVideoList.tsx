@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import { VideoPageState } from '../../pages/VideoPage';
+import Tracker from '../../services/tracker';
 import { Color, Ease, EaseReverse, HideOverflow, MobileQuery, PcQuery, Text } from '../../styles';
 import VideoPanel from '../atoms/VideoPanel';
 
@@ -144,6 +145,11 @@ const NextVideoList: React.FC<Props> = ({ videos, currentVideoId, state }) => {
             data={renderingVideos[0]}
             link={`/${renderingVideos[0].id}`}
             state={state}
+            onClick={() =>
+              Tracker.send('next_clicked', {
+                video_id: renderingVideos[0].id,
+              })
+            }
             shrink
           />
         </ConstantContent>
@@ -177,6 +183,11 @@ const NextVideoList: React.FC<Props> = ({ videos, currentVideoId, state }) => {
                       data={data}
                       link={`/${data.id}`}
                       state={state}
+                      onClick={() =>
+                        Tracker.send('next_clicked', {
+                          video_id: data.id,
+                        })
+                      }
                       shrink
                     />
                   </ExpandedItem>

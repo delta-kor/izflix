@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
+import Tracker from '../../services/tracker';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import ListButton from '../atoms/ListButton';
 import VerticalButton from '../atoms/VerticalButton';
@@ -30,13 +31,31 @@ const ShortcutSection: React.FC = () => {
 
   return (
     <Layout>
-      <ButtonElement icon={'music'} color={Color.DARK_GRAY} link={'/music'} fluid>
+      <ButtonElement
+        icon={'music'}
+        color={Color.DARK_GRAY}
+        link={'/music'}
+        onClick={() => Tracker.send('button_menu_clicked', { button_menu_type: 'music' })}
+        fluid
+      >
         {t('music.music')}
       </ButtonElement>
-      <ButtonElement icon={'category'} color={Color.DARK_GRAY} link={'/category'} fluid>
+      <ButtonElement
+        icon={'category'}
+        color={Color.DARK_GRAY}
+        link={'/category'}
+        onClick={() => Tracker.send('button_menu_clicked', { button_menu_type: 'category' })}
+        fluid
+      >
         {t('category.category')}
       </ButtonElement>
-      <ButtonElement icon={'calendar'} color={Color.DARK_GRAY} link={'/calendar'} fluid>
+      <ButtonElement
+        icon={'calendar'}
+        color={Color.DARK_GRAY}
+        link={'/calendar'}
+        onClick={() => Tracker.send('button_menu_clicked', { button_menu_type: 'calendar' })}
+        fluid
+      >
         {t('calendar.calendar')}
       </ButtonElement>
     </Layout>

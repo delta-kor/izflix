@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
+import Tracker from '../../services/tracker';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import ListItem from '../atoms/ListItem';
 import Repeat from '../tools/Repeat';
@@ -36,6 +37,7 @@ const PlaylistListSection: React.FC<Props> = ({ playlists }) => {
             type={'image'}
             value={Spaceship.getThumbnail(data.thumbnail)}
             link={`/playlist/${data.id}`}
+            onClick={() => Tracker.send('page_playlist_clicked', { playlist_id: data.id })}
             key={data.id}
           />
         ))

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import Icon from '../../icons/Icon';
+import Tracker from '../../services/tracker';
 import { Color, MobileQuery, PcQuery, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 
@@ -72,6 +73,12 @@ const Breadcrumb: React.FC<Props> = ({ path, shrinked }) => {
     return (
       <Chip
         to={`/category/${id}`}
+        onClick={() => {
+          const from = path.slice(-1)[0].id;
+          const to = id;
+          if (from === to) return false;
+          Tracker.send('breadcrumb_clicked', { item_path: to, item_from: from });
+        }}
         layoutId={id + (shrinked ? 'shrinked' : 'default')}
         key={id}
         {...motionProps}
@@ -88,6 +95,9 @@ const Breadcrumb: React.FC<Props> = ({ path, shrinked }) => {
     items.unshift(
       <Chip
         to={`/category/`}
+        onClick={() =>
+          Tracker.send('breadcrumb_clicked', { item_path: 'root', item_from: path.slice(-1)[0].id })
+        }
         layoutId={'root' + (shrinked ? 'shrinked' : 'default')}
         key={'root'}
         {...motionProps}

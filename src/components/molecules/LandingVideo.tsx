@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import Settings from '../../services/settings';
 import Spaceship from '../../services/spaceship';
+import Tracker from '../../services/tracker';
 import {
   Color,
   HideOverflow,
@@ -239,6 +240,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
     if (!data) return false;
 
     if (type === 'play') {
+      Tracker.send('landing_video_clicked', { video_id: data.video.id });
       navigate(`/${data.video.id}`, { state: { key: 'playlist', value: data.playlist_id } });
     } else {
       navigate(`/playlist/${data.playlist_id}`);

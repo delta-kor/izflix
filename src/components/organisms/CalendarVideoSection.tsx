@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import Cache from '../../services/cache';
+import Tracker from '../../services/tracker';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import VideoPanel from '../atoms/VideoPanel';
 import Repeat from '../tools/Repeat';
@@ -51,6 +52,7 @@ const CalendarVideoSection: React.FC<Props> = ({ videos, date }) => {
               data={data}
               link={`/${data.id}`}
               state={{ key: 'calendar', value: date }}
+              onClick={() => Tracker.send('calendar_video_clicked', { video_id: data.id })}
               key={data.id}
             />
           ))

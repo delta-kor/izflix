@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import PageManager from '../../services/page-manager';
+import Tracker from '../../services/tracker';
 import { Color, MobileQuery, PcLeftMargin, PcQuery } from '../../styles';
 import SmoothBox from '../atoms/SmoothBox';
 
@@ -79,17 +80,17 @@ const Navigator: React.FC = () => {
   if (pageInfo) {
     return (
       <Layout>
-        <Link to={'/'}>
+        <Link to={'/'} onClick={() => Tracker.send('nav_click', { item_type: 'main' })}>
           <ItemClickBox hover={1.1} tap={0.9}>
             <Item type={'home'} color={location.pathname === '/' ? Color.WHITE : Color.GRAY} />
           </ItemClickBox>
         </Link>
-        <Link to={'/vod'}>
+        <Link to={'/vod'} onClick={() => Tracker.send('nav_click', { item_type: 'vod' })}>
           <ItemClickBox hover={1.1} tap={0.9}>
             <Item type={'tv'} color={location.pathname === '/vod' ? Color.WHITE : Color.GRAY} />
           </ItemClickBox>
         </Link>
-        <Link to={'/playlist'}>
+        <Link to={'/playlist'} onClick={() => Tracker.send('nav_click', { item_type: 'playlist' })}>
           <ItemClickBox hover={1.1} tap={0.9}>
             <Item
               type={'playlist'}
@@ -102,7 +103,7 @@ const Navigator: React.FC = () => {
             <Item type={'chat'} color={location.pathname === '/live' ? Color.WHITE : Color.GRAY} />
           </ItemClickBox>
         </Link> */}
-        <Link to={'/profile'}>
+        <Link to={'/profile'} onClick={() => Tracker.send('nav_click', { item_type: 'profile' })}>
           <ItemClickBox hover={1.1} tap={0.9}>
             <Item
               type={'user'}

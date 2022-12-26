@@ -12,6 +12,7 @@ import Playtime from '../../services/playtime';
 import Settings from '../../services/settings';
 import Spaceship from '../../services/spaceship';
 import { getDuration } from '../../services/time';
+import Tracker from '../../services/tracker';
 import {
   Color,
   HideOverflow,
@@ -697,23 +698,6 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   }, [videoRef.current]);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video || !panorama.nextVideo) return;
-
-    setIsEnded(video.ended);
-    clearTimeout(nextVideoTimeout);
-
-    if (video.ended) {
-      if (panorama.state === PanoramaState.ACTIVE) {
-        nextVideoTimeout = setTimeout(
-          handleNextVideo,
-          isPip() ? 0 : Settings.getOne('VIDEO_NEXT_COUNTDOWN') * 1000
-        );
-      } else handleNextVideo();
-    }
-  }, [videoRef.current?.ended]);
-
-  useEffect(() => {
     if (!isEnded) clearTimeout(nextVideoTimeout);
   }, [isEnded]);
 
@@ -758,11 +742,75 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   }, [panorama.videoInfo, videoRef.current]);
 
   const handlePlay = () => {
+    const video = videoRef.current;
+    if (!video) return false;
+
+    panorama.currentVideoId &&
+      Tracker.send('video_play', {
+        video_id: panorama.currentVideoId,
+        video_time: video.currentTime,
+      });
     setIsPlaying(true);
   };
 
   const handlePause = () => {
+    const video = videoRef.current;
+    if (!video) return false;
+
+    panorama.currentVideoId &&
+      Tracker.send('video_pause', {
+        video_id: panorama.currentVideoId,
+        video_time: video.currentTime,
+      });
     setIsPlaying(false);
+  };
+
+  const handleEnded = () => {
+    const video = videoRef.current;
+    if (!video) return false;
+
+    panorama.currentVideoId && Tracker.send('video_end', { video_id: panorama.currentVideoId });
+    if (!video || !panorama.nextVideo) return;
+
+    setIsEnded(video.ended);
+    clearTimeout(nextVideoTimeout);
+
+    if (video.ended) {
+      if (panorama.state === PanoramaState.ACTIVE) {
+        nextVideoTimeout = setTimeout(
+          () => {
+            panorama.currentVideoId &&
+              panorama.nextVideo &&
+              Tracker.send('video_next', {
+                video_id: panorama.nextVideo.id,
+                item_from: panorama.currentVideoId,
+                next_type: 'auto',
+              });
+
+            handleNextVideo();
+          },
+          isPip() ? 0 : Settings.getOne('VIDEO_NEXT_COUNTDOWN') * 1000
+        );
+      } else {
+        Tracker.send('video_next', {
+          video_id: panorama.nextVideo.id,
+          item_from: panorama.currentVideoId,
+          next_type: 'background',
+        });
+        handleNextVideo();
+      }
+    }
+  };
+
+  const handleSeeked = () => {
+    const video = videoRef.current;
+    if (!video) return false;
+
+    panorama.currentVideoId &&
+      Tracker.send('video_seek', {
+        video_id: panorama.currentVideoId,
+        video_time: video.currentTime,
+      });
   };
 
   // document mouse move
@@ -949,8 +997,18 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       return false;
 
     if (isFullscreenEnabled) {
+      panorama.currentVideoId &&
+        Tracker.send('fullscreen_clicked', {
+          video_id: panorama.currentVideoId,
+          item_type: 'down',
+        });
       disableFullscreen();
     } else {
+      panorama.currentVideoId &&
+        Tracker.send('fullscreen_clicked', {
+          video_id: panorama.currentVideoId,
+          item_type: 'up',
+        });
       handleTouch();
 
       // @ts-ignore
@@ -984,6 +1042,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
   const handleBackClick = () => {
     if (isFullScreenRef.current) disableFullscreen();
+    panorama.currentVideoId && Tracker.send('video_back', { video_id: panorama.currentVideoId });
     navigate(-1);
   };
 
@@ -999,9 +1058,14 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     const video = videoRef.current;
 
     if (isPip()) {
+      panorama.currentVideoId &&
+        Tracker.send('video_pip', { video_id: panorama.currentVideoId, item_type: 'off' });
       exitPip();
     } else {
-      video.requestPictureInPicture();
+      video.requestPictureInPicture().then(() => {
+        panorama.currentVideoId &&
+          Tracker.send('video_pip', { video_id: panorama.currentVideoId, item_type: 'on' });
+      });
     }
   };
 
@@ -1011,10 +1075,16 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
     if (!video.textTracks[0]) return false;
     if (video.textTracks[0].mode === 'showing') {
+      panorama.currentVideoId &&
+        Tracker.send('video_subtitle', { video_id: panorama.currentVideoId, item_type: 'off' });
+
       video.textTracks[0].mode = 'hidden';
       Settings.setOne('VIDEO_SUBTITLE', false);
       sendToast(t('video.subtitle_off'));
     } else {
+      panorama.currentVideoId &&
+        Tracker.send('video_subtitle', { video_id: panorama.currentVideoId, item_type: 'on' });
+
       video.textTracks[0].mode = 'showing';
       Settings.setOne('VIDEO_SUBTITLE', true);
       sendToast(t('video.subtitle_on'));
@@ -1026,6 +1096,14 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   };
 
   const handleQualityItemClick = (quality: number) => {
+    panorama.currentVideoId &&
+      panorama.streamInfo &&
+      Tracker.send('video_quality_change', {
+        video_id: panorama.currentVideoId,
+        quality_from: panorama.streamInfo?.quality,
+        quality_to: quality,
+      });
+
     panorama.setQuality(quality);
     setIsQualityActive(false);
   };
@@ -1138,6 +1216,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       ref={videoRef}
       onPlay={handlePlay}
       onPause={handlePause}
+      onEnded={handleEnded}
+      onSeeked={handleSeeked}
       onTouchStart={handleTouch}
       onTouchMove={handleTouch}
       onTimeUpdate={handleTimeUpdate}
@@ -1201,7 +1281,20 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
               )}
               {isEnded && panorama.nextVideo && !isPip() && (
                 <NextVideoWrapper>
-                  <NextVideo hover={1.05} tap={0.95} onClick={handleNextVideo}>
+                  <NextVideo
+                    hover={1.05}
+                    tap={0.95}
+                    onClick={() => {
+                      panorama.currentVideoId &&
+                        panorama.nextVideo &&
+                        Tracker.send('video_next', {
+                          video_id: panorama.nextVideo.id,
+                          item_from: panorama.currentVideoId,
+                          next_type: 'manual',
+                        });
+                      handleNextVideo();
+                    }}
+                  >
                     <NextVideoThumbnail src={Spaceship.getThumbnail(panorama.nextVideo.id)} />
                     <NextVideoContent>
                       <NextVideoTitle>{panorama.nextVideo.title}</NextVideoTitle>

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { VideoPageState } from '../../pages/VideoPage';
 import { getDate } from '../../services/time';
+import Tracker from '../../services/tracker';
 import { Color } from '../../styles';
 import VideoPanel from '../atoms/VideoPanel';
 import Repeat from '../tools/Repeat';
@@ -96,6 +97,7 @@ const VideoCarousel: React.FC<Props> = ({ data, createLink }) => {
                   }
                   link={createLink && createLink(id)[0]}
                   state={createLink && createLink(id)[1]}
+                  onClick={() => Tracker.send('music_video_clicked', { video_id: id })}
                   key={id}
                 />
               ))}

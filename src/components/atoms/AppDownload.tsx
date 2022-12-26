@@ -11,8 +11,8 @@ const Layout = styled(SmoothBox)`
   & > .content {
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 8px 16px;
+    gap: 10px;
+    padding: 12px 16px;
 
     border: 2px solid ${Color.GRAY};
     background: ${Color.DARK_GRAY};
@@ -27,7 +27,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  gap: 4px;
+  gap: 6px;
 `;
 
 const Title = styled.div`
@@ -36,7 +36,7 @@ const Title = styled.div`
 `;
 
 const Description = styled.div`
-  ${Text.SUBTITLE_2};
+  ${Text.BODY_2};
   height: unset;
   color: ${Color.WHITE};
   opacity: 0.7;

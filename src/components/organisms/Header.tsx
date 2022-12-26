@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import intersect from '../../services/intersect';
 import PageManager from '../../services/page-manager';
+import Tracker from '../../services/tracker';
 import {
   Color,
   HideOverflow,
@@ -170,6 +171,9 @@ const Header: React.FC = () => {
   };
 
   const handleIconClick = () => {
+    if (!searchActive) {
+      Tracker.send('search_clicked');
+    }
     setSearchValue('');
     setSearchActive(!searchActive);
   };

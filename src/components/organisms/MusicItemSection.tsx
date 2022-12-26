@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import { VideoPageState } from '../../pages/VideoPage';
 import { getDate } from '../../services/time';
+import Tracker from '../../services/tracker';
 import { Color, MobileQuery, PcInnerPadding, PcQuery, PcTopMargin } from '../../styles';
 import MusicItem from '../atoms/MusicItem';
 import SectionTitle from '../atoms/SectionTitle';
@@ -161,16 +162,17 @@ const MusicItemSection: React.FC<Props> = ({ musics, selected }) => {
         )}
       </Mobile>
       <Pc>
-        <Pc>
-          <MusicSelectorPlaceholder />
-        </Pc>
+        <MusicSelectorPlaceholder />
         <MusicSelector>
           {selectedMusic ? (
             musics.map(data => (
               <MusicItem
                 data={data}
                 active={selectedMusic.id === data.id}
-                onClick={() => setSelectedMusic(data)}
+                onClick={() => {
+                  Tracker.send('music_selected', { music_id: data.id });
+                  setSelectedMusic(data);
+                }}
                 key={data.id}
               />
             ))
@@ -193,6 +195,7 @@ const MusicItemSection: React.FC<Props> = ({ musics, selected }) => {
                 }
                 link={createLink(id)[0]}
                 state={createLink(id)[1]}
+                onClick={() => Tracker.send('music_video_clicked', { video_id: id })}
                 key={id}
               />
             ))

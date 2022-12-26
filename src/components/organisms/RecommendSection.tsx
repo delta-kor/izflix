@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Settings from '../../services/settings';
+import Tracker from '../../services/tracker';
 import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import SectionTitle from '../atoms/SectionTitle';
 import VideoPanel from '../atoms/VideoPanel';
@@ -45,23 +46,36 @@ const ItemList = styled.section<{ $fluid: boolean }>`
 
 interface Props {
   recommends: IVideo[];
-  fluid?: boolean;
+  videoRecommend?: boolean;
 }
 
-const RecommendSection: React.FC<Props> = ({ recommends, fluid }) => {
+const RecommendSection: React.FC<Props> = ({ recommends, videoRecommend }) => {
   const { t } = useTranslation();
 
   return (
-    <Layout $fluid={!!fluid}>
-      {!fluid && <SectionTitle>{t('video.recommends')}</SectionTitle>}
-      <ItemList $fluid={!!fluid}>
+    <Layout $fluid={!!videoRecommend}>
+      {!videoRecommend && <SectionTitle>{t('video.recommends')}</SectionTitle>}
+      <ItemList $fluid={!!videoRecommend}>
         {recommends.length ? (
           recommends.map(data => (
-            <VideoPanel type={'full'} data={data} link={`/${data.id}`} key={data.id} />
+            <VideoPanel
+              type={'full'}
+              data={data}
+              link={`/${data.id}`}
+              onClick={() =>
+                Tracker.send(
+                  videoRecommend ? 'video_recommend_clicked' : 'user_recommend_clicked',
+                  { video_id: data.id }
+                )
+              }
+              key={data.id}
+            />
           ))
         ) : (
           <Repeat
-            count={Settings.getOne(fluid ? 'VIDEO_RECOMMEND_COUNT' : 'USER_RECOMMEND_COUNT')}
+            count={Settings.getOne(
+              videoRecommend ? 'VIDEO_RECOMMEND_COUNT' : 'USER_RECOMMEND_COUNT'
+            )}
             element={(i: number) => <VideoPanel type={'full'} key={i} />}
           />
         )}

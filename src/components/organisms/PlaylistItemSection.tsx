@@ -6,6 +6,7 @@ import useDevice from '../../hooks/useDevice';
 import useModal from '../../hooks/useModal';
 import Icon from '../../icons/Icon';
 import Spaceship from '../../services/spaceship';
+import Tracker from '../../services/tracker';
 import Transmitter from '../../services/transmitter';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import SmoothBox from '../atoms/SmoothBox';
@@ -151,6 +152,9 @@ const PlaylistItemSection: React.FC<Props> = ({ playlist, access }) => {
               data={data}
               link={`/${data.id}`}
               state={{ key: 'playlist', value: playlist!.id }}
+              onClick={() =>
+                Tracker.send('playlist_clicked', { video_id: data.id, playlist_id: playlist!.id })
+              }
             />
 
             {access && (

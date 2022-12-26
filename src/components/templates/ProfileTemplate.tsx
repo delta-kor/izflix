@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import useModal from '../../hooks/useModal';
 import { User } from '../../hooks/useUser';
 import Spaceship from '../../services/spaceship';
+import Tracker from '../../services/tracker';
 import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
 import AppDownload from '../atoms/AppDownload';
 import IconListItem from '../atoms/IconListItem';
@@ -36,6 +37,8 @@ const ProfileTemplate: React.FC<Props> = ({ user }) => {
   const modal = useModal();
 
   const handleLanguageClick = () => {
+    Tracker.send('profile_list_clicked', { item_type: 'language' });
+
     modal({
       type: 'select',
       content: 'profile.select_language',
@@ -46,6 +49,7 @@ const ProfileTemplate: React.FC<Props> = ({ user }) => {
       current: i18n.resolvedLanguage === 'ko' ? 'ko' : 'en',
     }).then(result => {
       if (result.type === 'select') {
+        Tracker.send('language_selected', { item_type: result.selected });
         i18n.changeLanguage(result.selected);
         Spaceship.flush();
       }
@@ -80,13 +84,31 @@ const ProfileTemplate: React.FC<Props> = ({ user }) => {
         <IconListItem icon={'language'} onClick={handleLanguageClick}>
           {t('profile.language')}
         </IconListItem>
-        <IconListItem icon={'settings'} onClick={() => navigate('/profile/settings')}>
+        <IconListItem
+          icon={'settings'}
+          onClick={() => {
+            Tracker.send('profile_list_clicked', { item_type: 'settings' });
+            navigate('/profile/settings');
+          }}
+        >
           {t('profile.settings')}
         </IconListItem>
-        <IconListItem icon={'notice'} onClick={() => navigate('/profile/notice')}>
+        <IconListItem
+          icon={'notice'}
+          onClick={() => {
+            Tracker.send('profile_list_clicked', { item_type: 'notice' });
+            navigate('/profile/notice');
+          }}
+        >
           {t('profile.notice')}
         </IconListItem>
-        <IconListItem icon={'info'} onClick={() => navigate('/profile/info')}>
+        <IconListItem
+          icon={'info'}
+          onClick={() => {
+            Tracker.send('profile_list_clicked', { item_type: 'info' });
+            navigate('/profile/info');
+          }}
+        >
           {t('profile.info')}
         </IconListItem>
       </IconListSection>
