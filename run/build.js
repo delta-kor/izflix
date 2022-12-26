@@ -7,7 +7,7 @@ console.log('Post build starting...');
 
 const build = './build';
 const templates = './run/templates';
-const defaultFiles = ['index', 'vod', 'playlist', 'profile'];
+const defaultFiles = ['vod', 'playlist', 'profile'];
 
 function getDate(number) {
   const date = new Date(number);
@@ -37,7 +37,10 @@ axios
       const filePath = path.join(templates, fileName + '.pug');
       const html = pug.compileFile(filePath)({ videos, playlists, scripts });
       if (fileName === 'index') fs.writeFileSync(path.join(build, fileName + '.html'), html);
-      else fs.writeFileSync(path.join(build, fileName), html);
+      else {
+        fs.mkdirSync(path.join(build, fileName));
+        fs.writeFileSync(path.join(build, fileName, 'index.html'), html);
+      }
     }
 
     for (const video of videos) {
@@ -45,15 +48,15 @@ axios
 
       const filePath = path.join(templates, 'video.pug');
       const html = pug.compileFile(filePath)({ video, scripts });
-      fs.writeFileSync(path.join(build, video.id), html);
+      fs.mkdirSync(path.join(build, video.id));
+      fs.writeFileSync(path.join(build, video.id, 'index.html'), html);
     }
-
-    fs.mkdirSync(path.join(build, 'playlist'));
 
     for (const playlist of playlists) {
       const filePath = path.join(templates, 'playlistItem.pug');
       const html = pug.compileFile(filePath)({ playlist, scripts });
-      fs.writeFileSync(path.join(build, 'playlist', playlist.id), html);
+      fs.mkdirSync(path.join(build, 'playlist', playlist.id));
+      fs.writeFileSync(path.join(build, 'playlist', playlist.id, 'index.html'), html);
     }
   })
   .catch(console.error);
