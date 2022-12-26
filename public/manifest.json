@@ -1,6 +1,7 @@
 {
   "short_name": "IZFLIX",
   "name": "IZFLIX",
+  "version": "2.0",
   "icons": [
     {
       "src": "favicon.ico",
