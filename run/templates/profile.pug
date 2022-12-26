@@ -1,0 +1,9 @@
+include head.pug
+include image.pug
+
+html
+  +head('Profile - IZFLIX', 'https://izflix.net/profile')
+  body.hydrated.snapped
+    #root
+      h1 Profile
+    include footer.pug

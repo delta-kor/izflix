@@ -1,0 +1,16 @@
+include head.pug
+include image.pug
+
+html
+  +head(`${playlist.title} (${playlist.description}) - IZFLIX`, `https://izflix.net/playlist/${playlist.id}`, '', 'https://api2.izflix.net/thumbnail/' + playlist.thumbnail)
+  body.hydrated.snapped
+    #root
+      h1= playlist.title
+      h2= playlist.description
+      h3 Videos
+        each video in playlist.video
+          article
+            h3= video.title
+            p= video.description
+            +image(video.id)
+    include footer.pug

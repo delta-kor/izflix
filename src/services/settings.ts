@@ -1,27 +1,26 @@
-const key = 'izflix_settings';
+const key = 'izflix_settings_v2';
 
 class SettingsClass {
   private data: ISettings;
 
   constructor() {
-    const data = this.loadData();
-    this.data = data;
+    this.data = SettingsClass.loadData();
     this.saveData();
   }
 
-  private loadData(): ISettings {
+  private static loadData(): ISettings {
     const data: ISettings = {
       FEATURED_VIDEO_AUTOPLAY: true,
       VIDEO_AUTOPLAY: true,
-      DEFAULT_VIDEO_QUALITY: 1080,
-      DISPLAY_NEXT_VIDEO: true,
-      VIDEO_RECOMMEND_COUNT: 20,
-      FEATURED_VIDEO_START_POSITION: 0.5,
-      NEXT_VIDEO_AUTOPLAY: true,
-      NEXT_VIDEO_AUTOPLAY_COUNTDOWN: 5,
-      NEXT_VIDEO_INSTANT_PIP: true,
-      $_TRAFFIC_ALERT: false,
-      $_4K_ALERT: false,
+      VIDEO_SUBTITLE: false,
+      VIDEO_QUALITY: 1080,
+      VIDEO_NEXT_COUNTDOWN: 5,
+      VIDEO_SCREEN_ADJUST: 'left',
+
+      USER_RECOMMEND_COUNT: 20,
+      VIDEO_RECOMMEND_COUNT: 10,
+
+      $_AUTH_TOKEN: null,
       $_LIVE_TOKEN: null,
     };
 
@@ -33,8 +32,7 @@ class SettingsClass {
 
       for (const index in savedData) {
         const key = index as keyof ISettings;
-        const value = savedData[key] as any;
-        (<any>data)[key] = value;
+        (<any>data)[key] = savedData[key] as any;
       }
 
       return data;
@@ -60,13 +58,13 @@ class SettingsClass {
   public setAll(data: ISettings): void {
     this.data = data;
     this.saveData();
-    this.loadData();
+    SettingsClass.loadData();
   }
 
   public setOne<K extends keyof ISettings>(key: K, value: ISettings[K]): void {
     this.data[key] = value;
     this.saveData();
-    this.loadData();
+    SettingsClass.loadData();
   }
 }
 

@@ -1,25 +1,60 @@
-type ModalData = SelectModalData | ShareModalData | InfoModalData;
+interface ModalContextType {
+  modal: Modal | null;
+  fire: ModalFireFunction;
+  respond: ModalRespondFunction;
+}
 
-interface SelectModalData {
+type ModalRespondFunction = (result: ModalResult) => void;
+type ModalFireFunction = (modal: Modal) => Promise<ModalResult>;
+
+type ModalResult = ModalOkResult | ModalCancelResult | ModalSelectResult | ModalInputResult;
+
+interface ModalOkResult {
+  type: 'ok';
+}
+
+interface ModalCancelResult {
+  type: 'cancel';
+}
+
+interface ModalSelectResult {
   type: 'select';
-  title: string;
-  submit?: string;
-  content: SelectModalContent[];
-  default: any;
+  selected: any;
 }
 
-interface SelectModalContent {
-  id: any;
-  text: string;
+interface ModalInputResult {
+  type: 'input';
+  value: string;
 }
 
-interface ShareModalData {
-  type: 'share';
-  id: string;
+type Modal = TextModal | SelectModal | InputModal | PlaylistModal;
+
+interface ModalBase {
+  id?: string;
 }
 
-interface InfoModalData {
-  type: 'info';
-  title: string;
-  description: string;
+interface TextModal extends ModalBase {
+  type: 'text';
+  content: string;
+}
+
+interface SelectModal extends ModalBase {
+  type: 'select';
+  content: string;
+  items: [any, string][];
+  current?: any;
+}
+
+interface InputModal extends ModalBase {
+  type: 'input';
+  content: string;
+  value?: string;
+  placeholder?: string;
+  maxLength?: number;
+}
+
+interface PlaylistModal extends ModalBase {
+  type: 'playlist';
+  videoId: string;
+  promise?: Evoke<void>;
 }

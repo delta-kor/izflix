@@ -1,0 +1,10 @@
+{
+  "i18n-ally.localesPaths": ["src/locales"],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.extract.ignoredByFiles": {
+    "src\\components\\molecules\\VideoAction.tsx": [
+      "\r\n  display: flex;\r\n  justify-content: space-evenly;\r\n\r\n  ${MobileQuery} {\r\n    margin: 16px 16px 0 16px;\r\n    background: ${Color.DARK_GRAY};\r\n    border-radius: 8px;\r\n  }\r\n\r\n  ${PcQuery} {\r\n    margin: 24px 0;\r\n    padding: 8px 0;\r\n  }\r\n",
+      "\r\n  display: flex;\r\n  justify-content: center;\r\n\r\n  ${MobileQuery} {\r\n    min-width: 72px;\r\n  }\r\n\r\n  ${PcQuery} {\r\n    min-width: 76px;\r\n  }\r\n"
+    ]
+  }
+}

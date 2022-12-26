@@ -23,9 +23,13 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea
+.vscode
 
 .env
 .env.development
 .env.production
 
 video-rank.json
+
+.prettierrc
+.eslintignore

@@ -1,4 +1,4 @@
-const key = 'izflix_playtime';
+const key = 'izflix_playtime_v2';
 
 type PlaytimeData = [string, number][];
 
@@ -6,8 +6,7 @@ class Playtime {
   public static get(): PlaytimeData {
     const json = localStorage.getItem(key) || '[]';
     try {
-      const data = JSON.parse(json);
-      return data;
+      return JSON.parse(json);
     } catch (e) {
       return [];
     }

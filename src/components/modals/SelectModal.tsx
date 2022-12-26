@@ -1,117 +1,112 @@
-import { Component } from 'react';
+import { m, motion } from 'framer-motion';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import ModalController from '../../services/modal-controller';
-import { Color, MobileQuery, PcQuery } from '../../styles';
+import useDevice from '../../hooks/useDevice';
+import { MobileQuery, PcQuery, Color, Text, ModalWidthSmall } from '../../styles';
+import SmoothBox from '../atoms/SmoothBox';
+import ModalAction from './ModalAction';
+import ModalBase from './ModalBase';
 
 const Layout = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  width: 540px;
-  max-width: calc(100% - 64px);
-
   display: flex;
   flex-direction: column;
-  padding: 24px 24px 12px 24px;
+  width: ${ModalWidthSmall};
+  max-width: 360px;
 
-  background: ${Color.BACKGROUND};
-  border: 2px solid ${Color.PRIMARY};
-  border-radius: 8px;
+  ${MobileQuery} {
+    gap: 12px;
+  }
 
-  z-index: 500;
+  ${PcQuery} {
+    gap: 16px;
+  }
+`;
 
-  & > * {
-    margin: 0 0 16px 0;
+const Content = styled.div`
+  color: ${Color.WHITE};
 
-    :last-child {
-      margin: 0;
+  ${MobileQuery} {
+    ${Text.HEADLINE_3};
+  }
+
+  ${PcQuery} {
+    ${Text.HEADLINE_2};
+  }
+`;
+
+const Selector = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  ${MobileQuery} {
+    gap: 6px;
+  }
+
+  ${PcQuery} {
+    gap: 8px;
+  }
+`;
+
+const Item = styled(SmoothBox)<{ $active: boolean }>`
+  & > .content {
+    ${Text.BODY_1};
+    height: unset;
+
+    color: ${Color.WHITE};
+    background: ${({ $active }) => ($active ? Color.GRAY : Color.GRAY + '1F')};
+    border-radius: 4px;
+
+    transition: background 0.2s;
+    cursor: pointer;
+
+    ${MobileQuery} {
+      padding: 10px 16px;
+    }
+
+    ${PcQuery} {
+      padding: 12px 16px;
     }
   }
 `;
 
-const Title = styled.div`
-  width: 100%;
-  font-weight: bold;
-  font-size: 20px;
-`;
-
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  row-gap: 12px;
-`;
-
-const Chip = styled.div<{ $active: boolean }>`
-  display: inline-block;
-  font-weight: bold;
-  border-radius: 4px;
-  background: ${({ $active }) => ($active ? Color.PRIMARY : Color.DARK_GRAY)};
-  transition: background 0.2s;
-  cursor: pointer;
-  user-select: none;
-
-  ${MobileQuery} {
-    padding: 10px 12px;
-    font-size: 14px;
-  }
-
-  ${PcQuery} {
-    padding: 12px 16px;
-    font-size: 16px;
-  }
-`;
-
-const Submit = styled.div`
-  width: 100%;
-  font-weight: bold;
-  font-size: 16px;
-  text-align: center;
-  padding: 8px 0;
-  cursor: pointer;
-  user-select: none;
-`;
-
 interface Props {
-  data: SelectModalData;
-  modalKey: number;
+  modal: SelectModal;
+  respond: ModalRespondFunction;
 }
 
-interface State {
-  selected: any;
-}
+const SelectModal: React.FC<Props> = ({ modal, respond }) => {
+  const { t } = useTranslation();
+  const device = useDevice();
 
-class SelectModal extends Component<Props, State> {
-  state: State = { selected: this.props.data.default };
+  const [selected, setSelected] = useState<any>(modal.current || modal.items[0][0]);
 
-  onSumbit = () => {
-    const key = this.props.modalKey;
-    ModalController.submit(key, this.state.selected);
+  const handleRespond: ModalRespondFunction = result => {
+    if (result.type === 'ok') respond({ type: 'select', selected });
+    else respond(result);
   };
 
-  render() {
-    const data = this.props.data;
-
-    return (
+  return (
+    <ModalBase>
       <Layout>
-        <Title>{data.title}</Title>
-        <Content>
-          {data.content.map((item) => (
-            <Chip
-              key={item.id}
-              $active={item.id === this.state.selected}
-              onClick={() => this.setState({ selected: item.id })}
+        <Content>{t(modal.content)}</Content>
+        <Selector>
+          {modal.items.map(([value, label]) => (
+            <Item
+              $active={selected === value}
+              hover={device === 'pc' ? 1.02 : 1.04}
+              tap={device === 'pc' ? 0.98 : 0.96}
+              onClick={() => setSelected(value)}
+              key={value}
             >
-              {item.text}
-            </Chip>
+              {label}
+            </Item>
           ))}
-        </Content>
-        <Submit onClick={this.onSumbit}>{data.submit || '확인'}</Submit>
+        </Selector>
+        <ModalAction respond={handleRespond} ok cancel />
       </Layout>
-    );
-  }
-}
+    </ModalBase>
+  );
+};
 
 export default SelectModal;

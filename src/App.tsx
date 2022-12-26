@@ -1,154 +1,81 @@
-import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
-import LandingVideo from './components/actions/LandingVideo';
-import Popup from './components/actions/Popup';
-import Header from './components/menus/Header';
-import Navigator from './components/menus/Navigator';
 import Meta from './components/Meta';
 import Modal from './components/modals/Modal';
-import CategoryPage from './components/pages/CategoryPage';
-import InfoPage from './components/pages/InfoPage';
-import LivePage from './components/pages/LivePage';
-import MainPage from './components/pages/MainPage';
-import MusicPage from './components/pages/MusicPage';
-import NotFoundPage from './components/pages/NotFoundPage';
-import SettingsPage from './components/pages/SettingsPage';
-import StatsPage from './components/pages/StatsPage';
-import VideoPage from './components/pages/VideoPage';
-import { Mobile, Pc } from './components/tools/MediaQuery';
-import Constants from './constants';
-import ModalController from './services/modal-controller';
-import Tracker from './services/tracker';
-import Transmitter from './services/transmitter';
+import Header from './components/organisms/Header';
+import Navigator from './components/organisms/Navigator';
+import PanoramaSection from './components/organisms/PanoramaSection';
+import Popup from './components/organisms/Popup';
+import useModal from './hooks/useModal';
+import usePanorama from './hooks/usePanorama';
+import AppPage from './pages/AppPage';
+import CalendarPage from './pages/CalendarPage';
+import CategoryPage from './pages/CategoryPage';
+import ErrorPage from './pages/ErrorPage';
+import InfoPage from './pages/InfoPage';
+import LiveEntrancePage from './pages/LiveEntrancePage';
+import MainPage from './pages/MainPage';
+import MusicItemPage from './pages/MusicItemPage';
+import MusicPage from './pages/MusicPage';
+import NoticePage from './pages/NoticePage';
+import PlaylistItemPage from './pages/PlaylistItemPage';
+import PlaylistPage from './pages/PlaylistPage';
+import ProfilePage from './pages/ProfilePage';
+import SearchPage from './pages/SearchPage';
+import SettingsPage from './pages/SettingsPage';
+import VideoPage from './pages/VideoPage';
+import VodPage from './pages/VodPage';
+import PageManager from './services/page-manager';
+import Spaceship from './services/spaceship';
 
-const NavigatorBlock = styled.div`
-  width: 100%;
-  height: 64px;
-`;
-
-const LandingBlock = styled(motion.div)``;
-
-const App = (): JSX.Element => {
+const App: React.FC = () => {
   const location = useLocation();
+  const panorama = usePanorama();
+  const modal = useModal();
 
-  const [headerSticked, setHeaderSticked] = useState(false);
-  const [modalData, setModalData] = useState<[ModalData, number] | null>(null);
-
-  const navigatorController = () => {
-    if (Constants.IS_PC() && !Constants.IS_ADDITIONAL_PAGE())
-      setHeaderSticked(Constants.IS_HEADER_STICK_POSITION_PC());
-    else setHeaderSticked(false);
-  };
-
-  const prevPath = useRef(location.pathname);
   useEffect(() => {
-    Transmitter.emit('locationupdate', location.pathname, prevPath.current);
-    prevPath.current = location.pathname;
-
-    Tracker.page(location.pathname);
-
-    Transmitter.on('levelscroll', navigatorController);
-    return () => {
-      Transmitter.removeListener('levelscroll', navigatorController);
-    };
-  }, [location]);
-
-  function onModalUpdate(data: ModalData | null, key: number) {
-    if (!data) return setModalData(null);
-    setModalData([data, key]);
-  }
-
-  useEffect(() => ModalController.subscribe(onModalUpdate), []);
-  useEffect(() => () => ModalController.unsubscribe(onModalUpdate), []);
+    window.history.scrollRestoration = 'manual';
+    Spaceship.load();
+  }, []);
 
   return (
-    <AnimateSharedLayout>
+    <>
       <Meta data={{}} />
 
+      <PanoramaSection panorama={panorama} />
+
       <Popup />
-      <AnimatePresence>
-        {modalData && (
-          <Modal key="modal" data={modalData[0]} modalKey={modalData[1]} />
-        )}
-      </AnimatePresence>
+      <Modal />
 
-      {!Constants.IS_BLANK_PAGE() ? (
-        <>
-          <Mobile>
-            <Navigator />
-          </Mobile>
-          <Pc>
-            <Header />
-          </Pc>
-        </>
-      ) : (
-        <></>
-      )}
-
-      <Pc>
-        <AnimatePresence exitBeforeEnter>
-          {!Constants.IS_ADDITIONAL_PAGE() ? (
-            <LandingBlock
-              key="default layout"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <LandingVideo />
-              {headerSticked ? <NavigatorBlock /> : <Navigator />}
-            </LandingBlock>
-          ) : (
-            <LandingBlock
-              key="video layout"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            ></LandingBlock>
-          )}
-        </AnimatePresence>
-      </Pc>
-
-      <Mobile>
-        <AnimatePresence exitBeforeEnter>
-          {!Constants.IS_VIDEO_PAGE() ? (
-            <LandingBlock
-              key="default layout"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <Header />
-            </LandingBlock>
-          ) : (
-            <LandingBlock
-              key="video layout"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            ></LandingBlock>
-          )}
-        </AnimatePresence>
-      </Mobile>
+      <Header />
+      <Navigator />
 
       <AnimatePresence exitBeforeEnter>
         <Routes
           location={location}
-          key={location.pathname.split('/').splice(1, 1).join('/')}
+          key={PageManager.getPageKey(location.pathname + location.search)}
         >
           <Route path="/" element={<MainPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/vod" element={<VodPage />} />
+          <Route path="/playlist" element={<PlaylistPage />} />
+          <Route path="/playlist/:id" element={<PlaylistItemPage />} />
           <Route path="/music" element={<MusicPage />} />
-          <Route path="/info" element={<InfoPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/stats" element={<StatsPage />} />
+          <Route path="/music/:id" element={<MusicItemPage />} />
           <Route path="/category/*" element={<CategoryPage />} />
-          <Route path="/live" element={<LivePage />} />
-          <Route path="/:id" element={<VideoPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/live" element={<LiveEntrancePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/settings" element={<SettingsPage />} />
+          <Route path="/profile/info" element={<InfoPage />} />
+          <Route path="/profile/notice" element={<NoticePage />} />
+          <Route path="/profile/app" element={<AppPage />} />
+          <Route path="/:id" element={<VideoPage panorama={panorama} />} />
+          <Route path="*" element={<ErrorPage data={'error.not_found'} />} />
         </Routes>
       </AnimatePresence>
-    </AnimateSharedLayout>
+    </>
   );
 };
 

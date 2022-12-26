@@ -17,14 +17,8 @@ interface PingpongEvents {
 }
 
 declare interface Pingpong {
-  on<U extends keyof PingpongEvents>(
-    event: U,
-    listener: PingpongEvents[U]
-  ): this;
-  emit<U extends keyof PingpongEvents>(
-    event: U,
-    ...args: Parameters<PingpongEvents[U]>
-  ): boolean;
+  on<U extends keyof PingpongEvents>(event: U, listener: PingpongEvents[U]): this;
+  emit<U extends keyof PingpongEvents>(event: U, ...args: Parameters<PingpongEvents[U]>): boolean;
 }
 
 class Pingpong extends EventEmitter {
@@ -39,17 +33,15 @@ class Pingpong extends EventEmitter {
       this.socket.addEventListener('open', this.onOpen.bind(this));
       this.socket.addEventListener('message', this.onMessage.bind(this));
       this.socket.addEventListener('error', () =>
-        this.onError('서버 연결에 실패했어요\n다시 시도해 주세요')
+        Pingpong.onError('서버 연결에 실패했어요\n다시 시도해 주세요')
       );
     } catch (e) {
       console.error(e);
-      this.onError('서버 연결에 실패했어요\n다시 시도해 주세요');
+      Pingpong.onError('서버 연결에 실패했어요\n다시 시도해 주세요');
     }
   }
 
-  private sendPacketAndWait<T extends ServerPacketBase>(
-    packet: ClientPacketBase
-  ): Promise<T> {
+  private sendPacketAndWait<T extends ServerPacketBase>(packet: ClientPacketBase): Promise<T> {
     const packetId = this.packetId;
     packet.packet_id = packetId;
     this.packetId++;
@@ -70,10 +62,8 @@ class Pingpong extends EventEmitter {
     this.socket.send(json);
   }
 
-  private onError(
-    message: string = '오류가 발생했어요\n다시 시도해 주세요'
-  ): void {
-    Transmitter.emit('popup', message);
+  private static onError(message: string = '오류가 발생했어요\n다시 시도해 주세요'): void {
+    Transmitter.emit('popup', {type: 'error', message});
   }
 
   private async onOpen(): Promise<void> {
@@ -87,9 +77,7 @@ class Pingpong extends EventEmitter {
         ticket,
         token,
       };
-      const response = await this.sendPacketAndWait<ServerPacket.Hello>(
-        helloPacket
-      );
+      const response = await this.sendPacketAndWait<ServerPacket.Hello>(helloPacket);
 
       const newToken = response.token;
       Settings.setOne('$_LIVE_TOKEN', newToken);
@@ -97,7 +85,7 @@ class Pingpong extends EventEmitter {
       this.emit('me', response.user_info.id);
     } catch (e: any) {
       console.error(e);
-      this.onError(e.message);
+      Pingpong.onError(e.message);
     }
   }
 
@@ -127,7 +115,7 @@ class Pingpong extends EventEmitter {
       }
     } catch (e) {
       console.error(e);
-      this.onError();
+      Pingpong.onError();
     }
   }
 

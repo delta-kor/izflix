@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { Color } from './styles';
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -7,18 +8,18 @@ const GlobalStyle = createGlobalStyle`
   outline: none;
   box-sizing: border-box;
   text-decoration: none;
-  color: #ffffff;
+  color: ${Color.WHITE};
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: #070d2d;
+  background: ${Color.BACKGROUND};
   font-family: 'NanumSquare', sans-serif;
   overflow-y: overlay;
 }
 
-body:lang(zh) {
-  font-family: sans-serif;
+input {
+  font-family: 'NanumSquare', sans-serif;
 }
 
 body::-webkit-scrollbar {
@@ -38,6 +39,18 @@ body::-webkit-scrollbar-thumb:active {
   background: rgba(69, 75, 107, 0.95);
 }
 
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
 `;
 
 export default GlobalStyle;

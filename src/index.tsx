@@ -1,27 +1,36 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import delay from './delay';
 import GlobalStyle from './GlobalStyle';
+import ModalProvider from './providers/ModalProvider';
 import reportWebVitals from './reportWebVitals';
 import isCrawler from './services/crawl';
+import delay from './services/delay';
+import './services/i18n';
 import Tracker from './services/tracker';
 
 Tracker.initialize();
 
+const rootElement = document.getElementById('root')!;
+
 const app = (
   <React.StrictMode>
     <GlobalStyle />
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ModalProvider>
+      <BrowserRouter>
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
+      </BrowserRouter>
+    </ModalProvider>
   </React.StrictMode>
 );
 
-const rootElement = document.getElementById('root')!;
-
+const minimumDelay = 2000;
 const renderStartTime = Date.now();
+
 render(app, rootElement, hydrate);
 
 async function hydrate() {
@@ -35,8 +44,8 @@ async function hydrate() {
 
   const hydrationTime = Date.now();
   const timeDelta = hydrationTime - renderStartTime;
-  if (timeDelta < 2000) {
-    await delay(2000 - timeDelta);
+  if (timeDelta < minimumDelay) {
+    await delay(minimumDelay - timeDelta);
   }
 
   document.body.classList.replace('dry', 'hydrating');

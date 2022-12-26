@@ -1,4 +1,5 @@
-type Method = 'GET' | 'POST' | 'DELETE';
+type VideoType = 'performance' | 'vod';
+type VideoProperty = '4k' | 'cc';
 
 interface ApiResponse {
   ok: boolean;
@@ -6,156 +7,195 @@ interface ApiResponse {
   message?: string;
 }
 
-namespace ApiResponse {
-  export namespace Ad {
-    export interface GetAll extends ApiResponse {
-      ads: IAd[];
-    }
-  }
-
-  export namespace Feed {
-    export namespace Playlist {
-      export interface GetAllPlaylists extends ApiResponse {
-        playlists: IPlaylist[];
-      }
-
-      export interface GetOnePlaylist extends ApiResponse {
-        id: string;
-        title: string;
-        videos: IVideoItem[];
-        featured: boolean;
-      }
-    }
-
-    export interface GetVideoRecommends extends ApiResponse {
-      videos: IVideoItem[];
-    }
-
-    export interface GetUserRecommends extends ApiResponse {
-      videos: IVideoItem[];
-      emotion: number[];
-    }
-
-    export interface GetEmotion extends ApiResponse {
-      emotion: number[];
-    }
-  }
-
-  export namespace Music {
-    export interface ViewAll extends ApiResponse {
-      musics: IMusic[];
-    }
-
-    export interface ViewOne extends ApiResponse {
-      videos: IMusicVideoItem[];
-    }
-  }
-
-  export namespace Video {
-    export interface Stream extends ApiResponse {
-      url: string;
-      duration: number;
-      quality: number;
-      qualities: number[];
-    }
-
-    export interface Info extends ApiResponse {
-      title: string;
-      description: string;
-      duration: number;
-      date: number;
-      path: IPath[];
-    }
-
-    export interface List extends ApiResponse {
-      data: IVideoInfo[];
-    }
-  }
-
-  export namespace Category {
-    export interface ViewAll extends ApiResponse {
-      type: 'parent';
-      path: IPath[];
-      folders: ICategoryFolder[];
-    }
-
-    interface Parent extends ApiResponse {
-      type: 'parent';
-      path: IPath[];
-      folders: ICategoryFolder[];
-    }
-
-    interface Children extends ApiResponse {
-      type: 'children';
-      path: IPath[];
-      files: ICategoryFile[];
-    }
-
-    export type ViewOne = Parent | Children;
-  }
+interface ApiResponseWithToken extends ApiResponse {
+  token: string;
 }
 
-interface IAd {
+enum Role {
+  USER,
+  STAFF,
+  MASTER,
+}
+
+interface IUser {
   id: string;
-  title: string;
-  description: string;
-  link: string;
+  nickname: string;
+  role: Role;
+  ip: string[];
 }
 
 interface IPlaylist {
   id: string;
+  label: string;
+  type: VideoType;
   title: string;
-  videos: IVideoItem[];
+  description: string;
+  video: IVideo[];
   featured: boolean;
-  recommend?: boolean;
+  order: number;
+  thumbnail: string;
+  count: number;
+}
+
+interface IVideo {
+  id: string;
+  type: VideoType;
+  title: string;
+  description: string;
+  date: number;
+  category: [string, string, string];
+  duration: number;
+  properties: VideoProperty[];
+}
+
+interface IAlbum {
+  id: string;
+  title: string;
+  count: number;
 }
 
 interface IMusic {
   id: string;
   title: string;
-  count: number;
+  videos: IVideo[];
 }
 
-interface IMusicVideoItem {
-  id: string;
-  description: string;
-  date: number;
-  duration: number;
-  is_4k: boolean;
-}
-
-interface IVideoItem {
+interface IPath {
   id: string;
   title: string;
-  description: string;
-  duration: number;
-  is_4k: boolean;
-}
-
-interface ICategoryFolder {
-  title: string;
-  path: string;
   count: number;
   children: number;
 }
 
-interface ICategoryFile {
-  title: string;
+interface IFolder {
   id: string;
-  date: number;
-  duration: number;
-  is_4k: boolean;
-}
-
-interface IPath {
-  name: string;
-  path: string;
+  path: string[];
+  title: string;
   count: number;
+  children: number;
+  date: number;
 }
 
-interface IVideoInfo {
-  id: string;
-  title: string;
-  description: string;
-  duration: number;
+type CalendarTimestamp = [string, number];
+
+namespace ApiResponse {
+  namespace User {
+    interface Get extends ApiResponse {
+      user: IUser;
+    }
+  }
+
+  namespace Search {
+    interface Search extends ApiResponse {
+      videos: IVideo[];
+    }
+  }
+
+  namespace Recommend {
+    interface GetUserRecommends extends ApiResponse {
+      videos: IVideo[];
+    }
+
+    interface GetVideoRecommends extends ApiResponse {
+      videos: IVideo[];
+    }
+  }
+
+  namespace Video {
+    interface Stream extends ApiResponse {
+      url: string;
+      quality: number;
+      qualities: number[];
+      duration: number;
+    }
+
+    interface Info extends ApiResponse {
+      id: string;
+      title: string;
+      description: string;
+      duration: number;
+      date: number;
+      path: IPath[];
+      properties: VideoProperty[];
+      music: [string, string] | null;
+    }
+
+    interface Action extends ApiResponse {
+      liked: boolean;
+      likes_total: number;
+    }
+
+    interface Like extends ApiResponse {
+      liked: boolean;
+      total: number;
+    }
+  }
+
+  namespace Playlist {
+    interface Read extends ApiResponse {
+      playlist: IPlaylist;
+      access: boolean;
+    }
+
+    interface ReadAll extends ApiResponse {
+      playlists: IPlaylist[];
+    }
+
+    interface ReadFeatured extends ApiResponse {
+      playlist_id: string;
+      video: IVideo;
+      url: string;
+    }
+
+    interface CreateUserPlaylist extends ApiResponse {
+      id: string;
+    }
+
+    interface UpdateUserPlaylist extends ApiResponse {
+      playlist: IPlaylist;
+    }
+
+    interface DeleteUserPlaylist extends ApiResponse {}
+  }
+
+  namespace Music {
+    interface GetAllAlbums extends ApiResponse {
+      albums: IAlbum[];
+    }
+
+    interface GetOneAlbum extends ApiResponse {
+      album: IAlbum;
+      musics: IMusic[];
+    }
+
+    interface GetOneMusic extends ApiResponse {
+      music: IMusic;
+    }
+  }
+
+  namespace Category {
+    type View = ViewFolder | ViewFile;
+
+    interface ViewFolder extends ApiResponse {
+      type: 'folder';
+      path: IPath[];
+      data: IFolder[];
+    }
+
+    interface ViewFile extends ApiResponse {
+      type: 'file';
+      path: IPath[];
+      data: IVideo[];
+    }
+  }
+
+  namespace Calendar {
+    interface GetAll extends ApiResponse {
+      timestamps: CalendarTimestamp[];
+    }
+
+    interface GetOne extends ApiResponse {
+      videos: IVideo[];
+    }
+  }
 }

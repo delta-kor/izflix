@@ -11,11 +11,12 @@ export default async function getTicket() {
     const data = await response.json();
 
     if (!data.ok) throw new Error();
+
     return data.ticket;
   } catch (e) {
-    Transmitter.emit(
-      'popup',
-      '서버 사용량이 많아 접속이 지연되고 있습니다\n잠시후 다시 시도해주세요'
-    );
+    Transmitter.emit('popup', {
+      type: 'error',
+      message: '서버 사용량이 많아 접속이 지연되고 있습니다\n잠시후 다시 시도해주세요',
+    });
   }
 }

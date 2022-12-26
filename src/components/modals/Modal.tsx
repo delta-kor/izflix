@@ -1,65 +1,69 @@
-import { motion } from 'framer-motion';
-import { Component } from 'react';
+import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import { useContext } from 'react';
 import styled from 'styled-components';
-import { Color } from '../../styles';
-import InfoModal from './InfoModal';
+import ModalContext from '../../contexts/ModalContext';
+import InputModal from './InputModal';
+import PlaylistModal from './PlaylistModal';
 import SelectModal from './SelectModal';
-import ShareModal from './ShareModal';
+import TextModal from './TextModal';
 
-const Layout = styled(motion.div)`
+const Background = styled(motion.div)`
   position: fixed;
-  z-index: 500;
+  inset: 0;
+  background: rgba(7, 13, 45, 0.8);
+  z-index: 90;
 `;
 
-const Cover = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: ${Color.BACKGROUND};
-  opacity: 0.7;
-  z-index: 500;
+const ModalWrapper = styled(motion.div)`
+  position: absolute;
+  z-index: 90;
 `;
 
-interface Props {
-  data: ModalData;
-  modalKey: number;
-}
+const Modal: React.FC = () => {
+  const { modal, respond } = useContext(ModalContext);
 
-class Modal extends Component<Props> {
-  render() {
-    const data = this.props.data;
+  const modalWrapperProps = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+    transition: { duration: 0.2 },
+  };
 
-    let content: JSX.Element;
-
-    switch (data.type) {
-      case 'select':
-        content = <SelectModal data={data} modalKey={this.props.modalKey} />;
-        break;
-      case 'share':
-        content = <ShareModal data={data} modalKey={this.props.modalKey} />;
-        break;
-      case 'info':
-        content = <InfoModal data={data} modalKey={this.props.modalKey} />;
-        break;
-      default:
-        console.error('Empty modal');
-        content = <h1>EMPTY MODAL</h1>;
-    }
-
-    return (
-      <Layout
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.2 }}
-      >
-        <Cover />
-        {content}
-      </Layout>
+  let content;
+  if (!modal) content = null;
+  else if (modal.type === 'text')
+    content = (
+      <ModalWrapper key={modal.id!} {...modalWrapperProps}>
+        <TextModal modal={modal} respond={respond} />
+      </ModalWrapper>
     );
-  }
-}
+  else if (modal.type === 'select')
+    content = (
+      <ModalWrapper key={modal.id!} {...modalWrapperProps}>
+        <SelectModal modal={modal} respond={respond} />
+      </ModalWrapper>
+    );
+  else if (modal.type === 'input')
+    content = (
+      <ModalWrapper key={modal.id!} {...modalWrapperProps}>
+        <InputModal modal={modal} respond={respond} />
+      </ModalWrapper>
+    );
+  else if (modal.type === 'playlist')
+    content = (
+      <ModalWrapper key={modal.id!} {...modalWrapperProps}>
+        <PlaylistModal modal={modal} respond={respond} />
+      </ModalWrapper>
+    );
+
+  return (
+    <AnimateSharedLayout>
+      <AnimatePresence>
+        {content && <Background key={'background'} {...modalWrapperProps} />}
+        {content}
+      </AnimatePresence>
+    </AnimateSharedLayout>
+  );
+};
 
 export default Modal;

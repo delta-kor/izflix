@@ -1,11 +1,11 @@
 import { Component } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 interface Props {
   data: Partial<IMeta>;
 }
 
-class Meta extends Component<Props> {
+class Meta extends Component<Props, any> {
   render() {
     const data = this.props.data;
     return (
@@ -17,25 +17,16 @@ class Meta extends Component<Props> {
 
         <meta
           name="description"
-          content={
-            data.description ||
-            '콘서트, 음악 방송 고화질 인터넷 스트리밍 & 다시보기'
-          }
+          content={data.description || 'Concerts, Music shows HD streaming & Replay'}
         />
         <meta
           property="og:description"
-          content={
-            data.description ||
-            '콘서트, 음악 방송 고화질 인터넷 스트리밍 & 다시보기'
-          }
+          content={data.description || 'Concerts, Music shows HD streaming & Replay'}
         />
 
         <meta property="og:image" content={data.image || '/og.png'} />
         <meta name="twitter:image" content={data.image || '/og.png'} />
-        <meta
-          name="twitter:card"
-          content={data.image ? 'summary_large_image' : 'summary'}
-        />
+        <meta name="twitter:card" content={data.image ? 'summary_large_image' : 'summary'} />
 
         <link rel="canonical" href={data.url || 'https://izflix.net/'} />
         <meta property="og:url" content={data.url || 'https://izflix.net/'} />

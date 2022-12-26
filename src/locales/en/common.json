@@ -1,0 +1,120 @@
+{
+  "video": {
+    "play": "Play",
+    "play_first": "Play",
+    "trending": "Trending",
+    "recommends": "Recommends",
+    "next": "Next Video",
+    "add": "Add",
+    "save": "Save",
+    "like": "Like",
+    "share": "Share",
+    "url_copied": "URL copied",
+    "url_copy_failed": "Failed to copy URL",
+    "next_video_cancel": "Cancel",
+    "seek_forward": "Seek forward {{time}}s",
+    "seek_backward": "Seek backward {{time}}s",
+    "subtitle_off": "Subtitle off",
+    "subtitle_on": "Subtitle on",
+    "screen_adjust_top": "Fit to screen",
+    "screen_adjust_left": "Fit to video",
+    "meta_description": "Watch in HD on IZFLIX"
+  },
+  "playlist": {
+    "playlist": "Playlist",
+    "view_all": "View All",
+    "play": "Play",
+    "add": "Add playlist",
+    "added": "Added to playlist",
+    "adding": "Adding to playlist...",
+    "deleted": "Deleted playlist",
+    "deleting": "Deleting playlist...",
+    "deletion_confirm": "Are you sure you want to delete the playlist?",
+    "enter_title": "Please enter title",
+    "loading": "Loading playlist...",
+    "no_playlist": "No playlist yet",
+    "title_renamed": "Renamed playlist",
+    "title_renaming": "Renaming playlist..."
+  },
+  "music": {
+    "music": "Music"
+  },
+  "category": {
+    "category": "Category",
+    "root": "Root"
+  },
+  "calendar": {
+    "calendar": "Calendar"
+  },
+  "error": {
+    "not_found": "Page not found",
+    "service": "Error occured while loading service",
+    "server_usage": "Network connection is being delayed due to high server usage\nPlease try again in a few minutes",
+    "network_unstable": "Network connection is not stable",
+    "login_failed": "Failed to login",
+    "main": "Main Page"
+  },
+  "profile": {
+    "input_nickname": "Enter nickname",
+    "nickname_updated": "Nickname updated",
+    "update_nickname": "Edit nickname",
+    "settings": "Settings",
+    "language": "언어",
+    "select_language": "Select language",
+    "info": "Info",
+    "id_copied": "ID copied to clipboard",
+    "id_copy_failed": "Failed to copy user id",
+    "notice": "Notice",
+    "profile": "Profile"
+  },
+  "modal": {
+    "cancel": "Cancel",
+    "ok": "OK"
+  },
+  "common": {
+    "count_one": "{{count}} item",
+    "count_other": "{{count}} items"
+  },
+  "settings": {
+    "featured_video_autoplay": "Play trending videos preview",
+    "featured_video_autoplay_description": "Turning off preview can reduce data usage",
+    "video_autoplay": "Autoplay video",
+    "video_autoplay_description": "Turning off autoplay can reduce data usage",
+    "playback": "Playback",
+    "video_subtitle": "Use video subtitles",
+    "video_subtitle_description": "Use subtitles when available",
+    "feed": "Feed",
+    "user_recommend_count": "Recommended video display count",
+    "video_recommend_count": "Related video display count",
+    "video_quality": "Video playback quality",
+    "video_quality_description": "Set default video playback quality when playing",
+    "next_video_duration": "Next video menu duration",
+    "next_video_duration_description": "Set duration of next video menu when video ends",
+    "second": "s",
+    "settings": "Settings"
+  },
+  "live": {
+    "rules": {
+      "0": "The live will run automatically.",
+      "1": "No harassing, stalking, or threatening of individuals.",
+      "2": "Chatting may not be available depending on the connection."
+    }
+  },
+  "search": {
+    "input_query": "Search",
+    "no_result": "No search results",
+    "search_result": "search result"
+  },
+  "info": {
+    "development": "Development",
+    "license": "Open Source License",
+    "subtitle": "Subtitles",
+    "video": "Video Source",
+    "thanks": "Special thanks to"
+  },
+  "app": {
+    "download": "Download app",
+    "description": "Use more features by using the app",
+    "web_app_description": "Web application is different from internet shortcut"
+  }
+}
