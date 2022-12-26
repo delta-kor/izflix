@@ -39,11 +39,20 @@ axios
       fs.writeFileSync(path.join(build, fileName + '.html'), html);
     }
 
-    const video = videos[0];
-    video.date = getDate(video.date);
+    for (const video of videos) {
+      video.date = getDate(video.date);
 
-    const filePath = path.join(templates, 'video.pug');
-    const html = pug.compileFile(filePath)({ video, scripts });
-    fs.writeFileSync(path.join(build, video.id + '.html'), html);
+      const filePath = path.join(templates, 'video.pug');
+      const html = pug.compileFile(filePath)({ video, scripts });
+      fs.writeFileSync(path.join(build, video.id + '.html'), html);
+    }
+
+    for (const video of videos) {
+      video.date = getDate(video.date);
+
+      const filePath = path.join(templates, 'playlistItem.pug');
+      const html = pug.compileFile(filePath)({ video, scripts });
+      fs.writeFileSync(path.join(build, 'playlist', video.id + '.html'), html);
+    }
   })
   .catch(console.error);
