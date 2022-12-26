@@ -28,7 +28,7 @@ const app = (
   </React.StrictMode>
 );
 
-const minimumDelay = 0;
+const minimumDelay = 2000;
 const renderStartTime = Date.now();
 
 render(app, rootElement, hydrate);
