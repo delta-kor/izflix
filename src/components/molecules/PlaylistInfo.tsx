@@ -197,7 +197,7 @@ const PlaylistInfo: React.FC<Props> = ({ data, access }) => {
   const handleShareClick = () => {
     if (!data) return false;
 
-    const url = `https://izflix.net/${data.id}`;
+    const url = `https://izflix.net/playlist/${data.id}`;
 
     if (navigator.share) {
       navigator.share({

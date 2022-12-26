@@ -20,14 +20,14 @@ const Notice: Notice[] = [
 
 ------
 *2022. 12. 25.*  
-*cm@izflix.net*`,
+*contact@izflix.net*`,
       en: `Bug report / Feature suggestions / Contact  
 **Email**: contact@izflix.net  
 **Form**: [https://forms.gle/TcL8SBfZuSEjCMxbA](https://forms.gle/TcL8SBfZuSEjCMxbA)  
 
 ------
 *2022. 12. 25.*  
-*cm@izflix.net*`,
+*contact@izflix.net*`,
     },
   },
   {
@@ -47,7 +47,7 @@ Be careful of impersonating accounts on Twitter, Instagram, etc.
 
 ------
 *2022. 12. 25.*   
-*cm@izflix.net*`,
+*contact@izflix.net*`,
     },
   },
   {
@@ -78,7 +78,7 @@ IZFLIX가 새로운 버전으로 업데이트 되었어요.
 
 ------
 *2022. 12. 25.*   
-*IZFLIX*`,
+*contact@izflix.net*`,
       en: `IZFLIX 2.0 Update  
 IZFLIX has been updated to a new version.  
 Try the new IZFLIX!
@@ -103,7 +103,7 @@ You can use IZFLIX in English.
 
 ------
 *2022. 12. 25.*   
-*cm@izflix.net*`,
+*contact@izflix.net*`,
     },
   },
 ];
