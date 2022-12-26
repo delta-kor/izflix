@@ -36,7 +36,8 @@ axios
     for (const fileName of defaultFiles) {
       const filePath = path.join(templates, fileName + '.pug');
       const html = pug.compileFile(filePath)({ videos, playlists, scripts });
-      fs.writeFileSync(path.join(build, fileName + '.html'), html);
+      if (fileName === 'index') fs.writeFileSync(path.join(build, fileName + '.html'), html);
+      else fs.writeFileSync(path.join(build, fileName), html);
     }
 
     for (const video of videos) {
@@ -44,7 +45,7 @@ axios
 
       const filePath = path.join(templates, 'video.pug');
       const html = pug.compileFile(filePath)({ video, scripts });
-      fs.writeFileSync(path.join(build, video.id + '.html'), html);
+      fs.writeFileSync(path.join(build, video.id), html);
     }
 
     fs.mkdirSync(path.join(build, 'playlist'));
@@ -52,7 +53,7 @@ axios
     for (const playlist of playlists) {
       const filePath = path.join(templates, 'playlistItem.pug');
       const html = pug.compileFile(filePath)({ playlist, scripts });
-      fs.writeFileSync(path.join(build, 'playlist', playlist.id + '.html'), html);
+      fs.writeFileSync(path.join(build, 'playlist', playlist.id), html);
     }
   })
   .catch(console.error);
