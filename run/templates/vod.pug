@@ -3,12 +3,14 @@ include image.pug
 
 html
   +head('VOD - IZFLIX', 'https://izflix.net/vod')
-  body
-    h1 VOD
-    include nav.pug
-    h3 Videos
-      each video in videos.filter(video => video.title.startsWith('EP'))
-        article
-          h3= video.title
-          p= video.description
-          +image(video.id)
+  body.hydrated.snapped
+    #root
+      h1 VOD
+      include nav.pug
+      h3 Videos
+        each video in videos.filter(video => video.title.startsWith('EP'))
+          article
+            h3= video.title
+            p= video.description
+            +image(video.id)
+    include footer.png
