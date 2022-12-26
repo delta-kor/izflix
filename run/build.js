@@ -50,7 +50,7 @@ axios
     for (const playlist of playlists) {
       const filePath = path.join(templates, 'playlistItem.pug');
       const html = pug.compileFile(filePath)({ playlist, scripts });
-      fs.writeFileSync(path.join(build, 'playlist', video.id + '.html'), html);
+      fs.writeFileSync(path.join(build, 'playlist', playlist.id + '.html'), html);
     }
   })
   .catch(console.error);
