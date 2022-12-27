@@ -9,6 +9,7 @@ html
       include nav.pug
       each playlist in playlists
         article
+          a(href= 'https://izflix.net/playlist/' + playlist.id)
           h4= playlist.title
           p= playlist.description
           +image(playlist.thumbnail)

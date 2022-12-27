@@ -10,6 +10,7 @@ html
       h3 Videos
         each video in videos.filter(video => video.title.startsWith('EP'))
           article
+            a(href= 'https://izflix.net/' + video.id)
             h3= video.title
             p= video.description
             +image(video.id)

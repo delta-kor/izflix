@@ -11,12 +11,14 @@ html
       h3 Playlists
         each playlist in playlists.filter(playlist => playlist.id.length === 8)
           article
+            a(href= 'https://izflix.net/playlist/' + video.id)
             h4= playlist.title
             p= playlist.description
             +image(playlist.thumbnail)
       h3 Videos
         each video in videos
           article
+            a(href= 'https://izflix.net/' + video.id)
             h3= video.title
             p= video.description
             +image(video.id)
