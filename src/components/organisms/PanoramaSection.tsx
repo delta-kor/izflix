@@ -676,6 +676,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const isFullScreenRef = useRef<boolean>(false);
   const panoramaRef = useRef<Panorama>(panorama);
   const panoramaStateRef = useRef<PanoramaState>(PanoramaState.NONE);
+  const lastBeacon = useRef<number>(Date.now());
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
@@ -860,6 +861,12 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
     const id = panorama.currentVideoId;
     if (id) {
+      const now = Date.now();
+      if (now - lastBeacon.current > 3 * 1000) {
+        lastBeacon.current = now;
+        Spaceship.videoBeacon(id, Math.round(video.currentTime), Math.round(Playtime.total()));
+      }
+
       let total: number = 0;
       const length = video.played.length;
       for (let i = 0; i < length; i++) {

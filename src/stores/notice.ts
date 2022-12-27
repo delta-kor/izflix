@@ -40,7 +40,7 @@ IZFLIX을 통해서 어떠한 수익도 창출하지 않으며 금전적 후원�
 
 ------
 *2022. 12. 25.*   
-*IZFLIX*`,
+*contact@izflix.net*`,
       en: `IZFLIX is fan site of IZ*ONE.  
 IZFLIX does not make any profit and does not receive financial supportive.  
 Be careful of impersonating accounts on Twitter, Instagram, etc.

@@ -1,5 +1,8 @@
 User-agent: *
+Disallow: /category
 Disallow: /category/
 Disallow: /profile
+Disallow: /profile/
 Disallow: /calendar
 Disallow: /music
+Disallow: /music/

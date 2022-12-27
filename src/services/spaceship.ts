@@ -266,6 +266,19 @@ class SpaceshipClass {
     });
   }
 
+  public videoBeacon(id: string, time: number, total: number): void {
+    try {
+      const payload = { time, total };
+      this.post(`/video/${id}/beacon`, payload, {
+        key: `video_beacon::${id}`,
+        expire: expireTime,
+        auth: true,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   public async readPlaylist(id: string): Promise<ApiResponse.Playlist.Read> {
     return this.get(`/playlist/${id}`, {
       key: `read_playlist::${id}`,
