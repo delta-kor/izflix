@@ -11,6 +11,27 @@ interface Notice {
 
 const Notice: Notice[] = [
   {
+    id: '4',
+    title: {
+      ko: '현재 일부 영상 재생이 제한되고 있습니다',
+      en: 'Playback of some videos is currently restricted',
+    },
+    content: {
+      ko: `현재 일부 영상 재생이 제한되고 있습니다.  
+해당 문제를 확인했으며, 복구 작업중에 있습니다.  
+
+------
+*2022. 12. 28.*  
+*contact@izflix.net*`,
+      en: `Playback of some videos is currently restricted.  
+The problem has been identified and is in the process of recovery.  
+
+------
+*2022. 12. 28.*  
+*contact@izflix.net*`,
+    },
+  },
+  {
     id: '3',
     title: { ko: '버그 신고 / 기능 제안 / 문의', en: 'Bug report / Feature suggestions / Contact' },
     content: {

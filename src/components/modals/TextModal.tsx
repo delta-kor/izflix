@@ -6,6 +6,7 @@ import ModalBase from './ModalBase';
 const Content = styled.div`
   color: ${Color.WHITE};
   width: ${ModalWidthLarge};
+  white-space: pre-line;
 
   ${MobileQuery} {
     ${Text.BODY_1};

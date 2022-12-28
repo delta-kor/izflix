@@ -1,19 +1,25 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import Meta from '../components/Meta';
 import VodTemplate from '../components/templates/VodTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
+import useModal from '../hooks/useModal';
 import delay from '../services/delay';
 import Spaceship from '../services/spaceship';
 import Page from './Page';
 
 const VodPage: React.FC = () => {
-  const { t } = useTranslation();
+  const modal = useModal();
+
   const [featured, setFeatured] = useState<ApiResponse.Playlist.ReadFeatured | null>(null);
   const [playlists, setPlaylists] = useState<IPlaylist[]>([]);
 
   useEffect(() => {
+    modal({
+      type: 'text',
+      content: `현재 일부 영상의 재생이 제한되고 있습니다. 자세한 내용은 공지를 참고해주세요.\nPlayback of some videos is currently restricted. Please be advised to the notice for details.`,
+    });
+
     loadData();
   }, []);
 
