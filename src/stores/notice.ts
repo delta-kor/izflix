@@ -13,14 +13,14 @@ const Notice: Notice[] = [
   {
     id: '4',
     title: {
-      ko: '현재 일부 영상 재생이 제한되고 있습니다',
-      en: 'Playback of some videos is currently restricted',
+      ko: '(복구중) 현재 일부 영상 재생이 제한되고 있습니다',
+      en: '(복구중) Playback of some videos is currently restricted',
     },
     content: {
       ko: `현재 일부 영상 재생이 제한되고 있습니다.  
 해당 문제를 확인했으며, 복구 작업중에 있습니다.  
   
-12. 28. 13:10 - 아이즈원 츄 환상캠퍼스 복구 완료
+12\. 28\. 13:10 - 아이즈원 츄 환상캠퍼스 복구 완료
   
 ------
 *2022. 12. 28.*  
@@ -28,7 +28,7 @@ const Notice: Notice[] = [
       en: `Playback of some videos is currently restricted.  
 The problem has been identified and is in the process of recovery.  
   
-12. 28. 13:10 - IZ*ONE Chu Fantasy Campus Recovered
+12\. 28\. 13:10 - IZ*ONE Chu Fantasy Campus Recovered
   
 ------
 *2022. 12. 28.*  
