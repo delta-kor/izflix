@@ -24,7 +24,7 @@ const Notice: Notice[] = [
 12\\. 28\\. 13:10 - 아이즈원 츄 환상캠퍼스 복구 완료  
 12\\. 28\\. 14:34 - 아이즈원 츄 ON:TACT 복구 완료  
 12\\. 28\\. 15:07 - 아이즈원 츄 비밀친구 복구 완료  
-12\\. 28\\. 13:28 - 아이즈원 츄 시즌 1 복구  
+12\\. 28\\. 15:28 - 아이즈원 츄 시즌 1 복구  
   
 ------
 *2022. 12. 28.*  
@@ -36,7 +36,7 @@ The problem has been identified and is in the process of recovery.
 12\\. 28\\. 13:10 - IZ*ONE Chu Fantasy Campus Recovered  
 12\\. 28\\. 14:34 - IZ*ONE Chu ON:TACT Recovered  
 12\\. 28\\. 15:07 - IZ*ONE Chu Secret Friends Recovered  
-12\\. 28\\. 13:28 - IZ*ONE Chu Season 1 Recovered  
+12\\. 28\\. 15:28 - IZ*ONE Chu Season 1 Recovered  
   
 ------
 *2022. 12. 28.*  
