@@ -20,6 +20,7 @@ const Notice: Notice[] = [
       ko: `현재 일부 영상 재생이 제한되고 있습니다.  
 해당 문제를 확인했으며, 복구 작업중에 있습니다.  
   
+-----
 12\\. 28\\. 13:10 - 아이즈원 츄 환상캠퍼스 복구 완료
   
 ------
@@ -28,6 +29,7 @@ const Notice: Notice[] = [
       en: `Playback of some videos is currently restricted.  
 The problem has been identified and is in the process of recovery.  
   
+------
 12\\. 28\\. 13:10 - IZ*ONE Chu Fantasy Campus Recovered
   
 ------
