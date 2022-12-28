@@ -13,15 +13,18 @@ const Notice: Notice[] = [
   {
     id: '4',
     title: {
-      ko: '(복구중) 현재 일부 영상 재생이 제한되고 있습니다',
-      en: '(복구중) Playback of some videos is currently restricted',
+      ko: '(복구 완료) 현재 일부 영상 재생이 제한되고 있습니다',
+      en: '(Recovered) Playback of some videos is currently restricted',
     },
     content: {
       ko: `현재 일부 영상 재생이 제한되고 있습니다.  
 해당 문제를 확인했으며, 복구 작업중에 있습니다.  
   
 -----
-12\\. 28\\. 13:10 - 아이즈원 츄 환상캠퍼스 복구 완료
+12\\. 28\\. 13:10 - 아이즈원 츄 환상캠퍼스 복구 완료  
+12\\. 28\\. 14:34 - 아이즈원 츄 ON:TACT 복구 완료  
+12\\. 28\\. 15:07 - 아이즈원 츄 비밀친구 복구 완료  
+12\\. 28\\. 13:28 - 아이즈원 츄 시즌 1 복구  
   
 ------
 *2022. 12. 28.*  
@@ -30,7 +33,10 @@ const Notice: Notice[] = [
 The problem has been identified and is in the process of recovery.  
   
 ------
-12\\. 28\\. 13:10 - IZ*ONE Chu Fantasy Campus Recovered
+12\\. 28\\. 13:10 - IZ*ONE Chu Fantasy Campus Recovered  
+12\\. 28\\. 14:34 - IZ*ONE Chu ON:TACT Recovered  
+12\\. 28\\. 15:07 - IZ*ONE Chu Secret Friends Recovered  
+12\\. 28\\. 13:28 - IZ*ONE Chu Season 1 Recovered  
   
 ------
 *2022. 12. 28.*  

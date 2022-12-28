@@ -15,11 +15,6 @@ const VodPage: React.FC = () => {
   const [playlists, setPlaylists] = useState<IPlaylist[]>([]);
 
   useEffect(() => {
-    modal({
-      type: 'text',
-      content: `현재 일부 영상의 재생이 제한되고 있습니다. 자세한 내용은 공지를 참고해주세요.\nPlayback of some videos is currently restricted. Please be advised to the notice for details.`,
-    });
-
     loadData();
   }, []);
 
