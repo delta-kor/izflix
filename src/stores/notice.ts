@@ -33,10 +33,10 @@ const Notice: Notice[] = [
 The problem has been identified and is in the process of recovery.  
   
 ------
-12\\. 28\\. 13:10 - IZ*ONE Chu Fantasy Campus Recovered  
-12\\. 28\\. 14:34 - IZ*ONE Chu ON:TACT Recovered  
-12\\. 28\\. 15:07 - IZ*ONE Chu Secret Friends Recovered  
-12\\. 28\\. 15:28 - IZ*ONE Chu Season 1 Recovered  
+12\\. 28\\. 13:10 - IZ\\*ONE Chu Fantasy Campus Recovered  
+12\\. 28\\. 14:34 - IZ\\*ONE Chu ON:TACT Recovered  
+12\\. 28\\. 15:07 - IZ\\*ONE Chu Secret Friends Recovered  
+12\\. 28\\. 15:28 - IZ\\*ONE Chu Season 1 Recovered  
   
 ------
 *2022. 12. 28.*  
