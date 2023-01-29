@@ -35,6 +35,7 @@ interface IPlaylist {
   order: number;
   thumbnail: string;
   count: number;
+  cluster?: string;
 }
 
 interface IVideo {

@@ -1,5 +1,7 @@
+import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { Color, MobileQuery, PcQuery } from '../../styles';
+import VideoCluster from '../atoms/VideoCluster';
 import VodItem from '../molecules/VodItem';
 import Repeat from '../tools/Repeat';
 
@@ -26,10 +28,38 @@ interface Props {
 }
 
 const VodSection: React.FC<Props> = ({ playlists }) => {
+  const [selectedCluster, setSelectedCluster] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (playlists.length) {
+      if (clusters.includes('아이즈원 츄')) setSelectedCluster('아이즈원 츄');
+      if (clusters.includes('IZ*ONE CHU')) setSelectedCluster('IZ*ONE CHU');
+    }
+  }, [playlists]);
+
+  const clusters = useMemo<string[]>(
+    () => [
+      ...new Set(playlists.filter(playlist => playlist.cluster).map(playlist => playlist.cluster!)),
+    ],
+    [playlists]
+  );
+
   return (
     <Layout>
+      <VideoCluster
+        clusters={clusters}
+        selected={selectedCluster}
+        setCluster={setSelectedCluster}
+      />
+
       {playlists.length ? (
-        playlists.map(data => <VodItem data={data} key={data.id} />)
+        playlists
+          .filter(
+            playlist =>
+              (selectedCluster === null && !playlist.cluster) ||
+              playlist.cluster === selectedCluster
+          )
+          .map(data => <VodItem data={data} key={data.id} />)
       ) : (
         <Repeat count={5} element={i => <VodItem key={i} />} />
       )}

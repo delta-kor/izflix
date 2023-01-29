@@ -34,7 +34,8 @@
     "adding": "재생목록에 추가하는 중...",
     "added": "재생목록에 추가되었어요",
     "loading": "재생목록을 불러오는 중...",
-    "no_playlist": "재생목록이 없어요"
+    "no_playlist": "재생목록이 없어요",
+    "cluster_default": "기타"
   },
   "music": {
     "music": "노래"
