@@ -70,12 +70,12 @@ const Placeholder = styled.div`
   border-radius: 4px;
 
   ${MobileQuery} {
-    width: 100px;
+    width: 80px;
     height: 28px;
   }
 
   ${PcQuery} {
-    width: 80px;
+    width: 100px;
     height: 38px;
   }
 `;
