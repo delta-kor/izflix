@@ -279,11 +279,11 @@ class SpaceshipClass {
     const language = i18n.language;
     const userAgent = window.navigator.userAgent;
     const sessionTime = Date.now() - this.sessionStartTime.getTime();
-    const pwa = () =>
+    const pwa = (() =>
       window.matchMedia('(display-mode: standalone)').matches ||
       // @ts-ignore
       window.navigator.standalone ||
-      document.referrer.includes('android-app://');
+      document.referrer.includes('android-app://'))();
 
     try {
       const payload = {
