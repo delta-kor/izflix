@@ -267,8 +267,11 @@ class SpaceshipClass {
   }
 
   public videoBeacon(id: string, time: number, total: number): void {
+    const language = i18n.language;
+    const userAgent = window.navigator.userAgent;
+
     try {
-      const payload = { time, total };
+      const payload = { time, total, language, agent: userAgent };
       this.post(`/video/${id}/beacon`, payload, {
         key: `video_beacon::${id}`,
         expire: expireTime,
