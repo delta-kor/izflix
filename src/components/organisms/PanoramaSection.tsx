@@ -864,7 +864,14 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       const now = Date.now();
       if (now - lastBeacon.current > 3 * 1000) {
         lastBeacon.current = now;
-        Spaceship.videoBeacon(id, Math.round(video.currentTime), Math.round(Playtime.total()));
+        Spaceship.videoBeacon(
+          id,
+          Math.round(video.currentTime),
+          Math.round(Playtime.total()),
+          panorama.streamInfo!.quality,
+          isFullScreenRef.current,
+          isPip()
+        );
       }
 
       let total: number = 0;

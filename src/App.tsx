@@ -7,7 +7,6 @@ import Header from './components/organisms/Header';
 import Navigator from './components/organisms/Navigator';
 import PanoramaSection from './components/organisms/PanoramaSection';
 import Popup from './components/organisms/Popup';
-import useModal from './hooks/useModal';
 import usePanorama from './hooks/usePanorama';
 import AppPage from './pages/AppPage';
 import CalendarPage from './pages/CalendarPage';
@@ -32,7 +31,6 @@ import Spaceship from './services/spaceship';
 const App: React.FC = () => {
   const location = useLocation();
   const panorama = usePanorama();
-  const modal = useModal();
 
   useEffect(() => {
     window.history.scrollRestoration = 'manual';

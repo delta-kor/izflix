@@ -21,11 +21,13 @@ class SpaceshipClass {
   private cache: NodeCache = new NodeCache();
   private token: string | null = null;
   private callbacks: any[] = [];
+  private sessionStartTime: Date = new Date();
 
   constructor(private baseUrl: string) {}
 
   public async load(): Promise<void> {
     this.getUserToken();
+    this.sessionStartTime = new Date();
   }
 
   public async flush(): Promise<void> {
@@ -266,12 +268,29 @@ class SpaceshipClass {
     });
   }
 
-  public videoBeacon(id: string, time: number, total: number): void {
+  public videoBeacon(
+    id: string,
+    time: number,
+    total: number,
+    quality: number,
+    fullscreen: boolean,
+    pip: boolean
+  ): void {
     const language = i18n.language;
     const userAgent = window.navigator.userAgent;
+    const sessionTime = Date.now() - this.sessionStartTime.getTime();
 
     try {
-      const payload = { time, total, language, agent: userAgent };
+      const payload = {
+        time,
+        total,
+        language,
+        agent: userAgent,
+        session_time: sessionTime,
+        quality,
+        fullscreen,
+        pip,
+      };
       this.post(`/video/${id}/beacon`, payload, {
         key: `video_beacon::${id}`,
         expire: expireTime,
