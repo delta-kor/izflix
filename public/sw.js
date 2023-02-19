@@ -14,7 +14,7 @@ self.addEventListener('install', event => {
 
 self.addEventListener('fetch', function (event) {
   const url = event.request.url;
-  const urls = ['cdn.jsdelivr.net', '.css', '.js', '.riv'];
+  const urls = ['cdn.jsdelivr.net', '.css', '.js'];
   if (!urls.some(target => url.includes(target))) return;
 
   event.respondWith(
@@ -23,8 +23,7 @@ self.addEventListener('fetch', function (event) {
         const response = await fetch(event.request);
         const type = response.headers.get('content-type');
         const cacheType = ['text/html', 'font/woff', 'text/css', 'application/javascript'];
-        const isCacheType =
-          url.inclues('.riv') || (type && cacheType.some(value => type.includes(value)));
+        const isCacheType = type && cacheType.some(value => type.includes(value));
 
         if (response.status === 200 && isCacheType) {
           const cache = await caches.open('cache');
