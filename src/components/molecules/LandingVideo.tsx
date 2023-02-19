@@ -210,14 +210,14 @@ const VideoLoader = styled(Rive)<{ $active: boolean }>`
 
   ${MobileQuery} {
     top: 108px;
-    left: calc(50% - 18px);
+    left: calc(50% - 24px);
     width: 48px;
     height: 48px;
   }
 
   ${PcQuery} {
     top: 220px;
-    left: calc(50% - 24px);
+    left: calc(50% - 36px);
     width: 72px;
     height: 72px;
   }

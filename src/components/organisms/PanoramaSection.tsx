@@ -1,3 +1,4 @@
+import Rive from '@rive-app/react-canvas';
 import { AnimatePresence, motion, PanInfo } from 'framer-motion';
 import { t } from 'i18next';
 import { MouseEventHandler, useEffect, useRef, useState } from 'react';
@@ -22,7 +23,6 @@ import {
   TabletQuery,
   Text,
 } from '../../styles';
-import Loader from '../atoms/Loader';
 import SmoothBox from '../atoms/SmoothBox';
 import SmoothImage from '../atoms/SmoothImage';
 
@@ -477,7 +477,7 @@ const ControlIcon = styled(Icon)`
   }
 `;
 
-const VideoLoader = styled(Loader)<{ $active: boolean }>`
+const VideoLoader = styled(Rive)<{ $active: boolean }>`
   position: absolute;
 
   z-index: 1;
@@ -485,17 +485,17 @@ const VideoLoader = styled(Loader)<{ $active: boolean }>`
   transition: opacity 0.5s ease;
 
   ${MobileQuery} {
-    top: calc(50% - 15px);
-    left: calc(50% - 15px);
-    width: 30px;
-    height: 30px;
-  }
-
-  ${PcQuery} {
     top: calc(50% - 24px);
     left: calc(50% - 24px);
     width: 48px;
     height: 48px;
+  }
+
+  ${PcQuery} {
+    top: calc(50% - 36px);
+    left: calc(50% - 36px);
+    width: 72px;
+    height: 72px;
   }
 `;
 
@@ -1271,7 +1271,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
         ref={videoAreaRef}
       >
         {VideoItem}
-        <VideoLoader $active={!videoLoaded} color={Color.BACKGROUND} />
+        <VideoLoader $active={!videoLoaded} src={'/riv/loading_gray.riv'} />
         <AnimatePresence>
           {panorama.state === PanoramaState.ACTIVE && synthedControlsActive && (
             <VideoControls
