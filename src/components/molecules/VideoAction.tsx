@@ -1,10 +1,15 @@
+import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import useDevice from '../../hooks/useDevice';
 import useModal from '../../hooks/useModal';
 import { Panorama } from '../../hooks/usePanorama';
+import { LightLike } from '../../services/rive';
 import Tracker from '../../services/tracker';
 import Transmitter from '../../services/transmitter';
-import { Color, MobileQuery, PcQuery } from '../../styles';
+import { Color, MobileQuery, PcQuery, Text } from '../../styles';
+import SmoothBox from '../atoms/SmoothBox';
 import VerticalButton from '../atoms/VerticalButton';
 
 const Layout = styled.div`
@@ -31,6 +36,44 @@ const WidthProtector = styled.div`
   margin: 0 -7px;
 `;
 
+const LikeButton = styled(SmoothBox)`
+  & > .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    gap: 10px;
+
+    cursor: pointer;
+    user-select: none;
+  }
+`;
+
+const LikeIcon = styled.div`
+  position: relative;
+
+  ${MobileQuery} {
+    width: 20px;
+    height: 20px;
+  }
+
+  ${PcQuery} {
+    width: 24px;
+    height: 24px;
+  }
+`;
+
+const LikeButtonContent = styled.div`
+  ${MobileQuery} {
+    ${Text.SUBTITLE_2};
+  }
+
+  ${PcQuery} {
+    ${Text.SUBTITLE_1};
+  }
+`;
+
 interface Props {
   action?: ApiResponse.Video.Action;
   panorama: Panorama;
@@ -40,7 +83,13 @@ interface Props {
 const VideoAction: React.FC<Props> = ({ action, panorama, onLike }) => {
   const { t } = useTranslation();
 
+  const device = useDevice();
   const modal = useModal();
+
+  useEffect(() => {
+    if (!action || !likeInput) return;
+    likeInput.value = action.liked;
+  }, [action?.liked]);
 
   const liked = action?.liked;
   const likesTotal = action?.likes_total;
@@ -79,16 +128,33 @@ const VideoAction: React.FC<Props> = ({ action, panorama, onLike }) => {
     modal({ type: 'playlist', videoId: panorama.currentVideoId });
   };
 
+  const { RiveComponent, rive } = useRive({
+    src: LightLike,
+    autoplay: true,
+    stateMachines: 'Like',
+  });
+
+  const likeInput = useStateMachineInput(rive, 'Like', 'Pressed', false);
+  const likeIconSize = device === 'mobile' ? 60 : 70;
+
   return (
     <Layout>
       <WidthProtector>
-        <VerticalButton
-          icon={liked ? 'heart_filled' : 'heart_border'}
-          color={Color.TRANSPARENT}
-          onClick={onLike}
-        >
-          {likesTotal || t('video.like')}
-        </VerticalButton>
+        <LikeButton onClick={onLike} hover={1.05} tap={0.95}>
+          <LikeIcon>
+            <RiveComponent
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: likeIconSize,
+                height: likeIconSize,
+              }}
+            />
+          </LikeIcon>
+          <LikeButtonContent>{likesTotal || t('video.like')}</LikeButtonContent>
+        </LikeButton>
       </WidthProtector>
       <VerticalButton icon={'share'} color={Color.TRANSPARENT} onClick={handleShareClick}>
         {t('video.share')}
