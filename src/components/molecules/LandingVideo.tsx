@@ -1,3 +1,4 @@
+import Rive from '@rive-app/react-canvas';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -21,7 +22,6 @@ import {
   Text,
 } from '../../styles';
 import Button from '../atoms/Button';
-import Loader from '../atoms/Loader';
 
 const Layout = styled.div`
   position: relative;
@@ -201,7 +201,7 @@ const Cover = styled.div`
   background: linear-gradient(180deg, rgba(7, 13, 45, 0.2) 0%, rgba(7, 13, 45, 1) 95%);
 `;
 
-const VideoLoader = styled(Loader)<{ $active: boolean }>`
+const VideoLoader = styled(Rive)<{ $active: boolean }>`
   position: absolute;
 
   z-index: 1;
@@ -211,15 +211,15 @@ const VideoLoader = styled(Loader)<{ $active: boolean }>`
   ${MobileQuery} {
     top: 108px;
     left: calc(50% - 18px);
-    width: 36px;
-    height: 36px;
+    width: 48px;
+    height: 48px;
   }
 
   ${PcQuery} {
     top: 220px;
     left: calc(50% - 24px);
-    width: 48px;
-    height: 48px;
+    width: 72px;
+    height: 72px;
   }
 `;
 
@@ -257,7 +257,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
   return (
     <Layout>
       <VideoWrapper>
-        <VideoLoader $active={!videoLoaded} color={Color.DARK_GRAY} />
+        <VideoLoader $active={!videoLoaded} src="/riv/loading.riv" />
         {url && (
           <Video
             $active={videoLoaded}
