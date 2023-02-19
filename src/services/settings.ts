@@ -22,6 +22,7 @@ class SettingsClass {
 
       $_AUTH_TOKEN: null,
       $_LIVE_TOKEN: null,
+      $_VOD_CLUSTER: null,
     };
 
     const json = localStorage.getItem(key);

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
+import Settings from '../../services/settings';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import VideoCluster from '../atoms/VideoCluster';
 import VodItem from '../molecules/VodItem';
@@ -28,14 +29,21 @@ interface Props {
 }
 
 const VodSection: React.FC<Props> = ({ playlists }) => {
-  const [selectedCluster, setSelectedCluster] = useState<string | null>(null);
+  const [selectedCluster, setSelectedCluster] = useState<string | null>(
+    Settings.getOne('$_VOD_CLUSTER')
+  );
 
   useEffect(() => {
-    if (playlists.length) {
+    if (playlists.length && !selectedCluster) {
       if (clusters.includes('아이즈원 츄')) setSelectedCluster('아이즈원 츄');
       if (clusters.includes('IZ*ONE CHU')) setSelectedCluster('IZ*ONE CHU');
     }
   }, [playlists]);
+
+  const handleClusterSet = (cluster: string) => {
+    Settings.setOne('$_VOD_CLUSTER', cluster);
+    setSelectedCluster(cluster);
+  };
 
   const clusters = useMemo<string[]>(
     () => [
@@ -48,15 +56,15 @@ const VodSection: React.FC<Props> = ({ playlists }) => {
     <Layout>
       <VideoCluster
         clusters={clusters}
-        selected={selectedCluster}
-        setCluster={setSelectedCluster}
+        selected={selectedCluster || 'others'}
+        setCluster={handleClusterSet}
       />
 
       {playlists.length ? (
         playlists
           .filter(
             playlist =>
-              (selectedCluster === null && !playlist.cluster) ||
+              (selectedCluster === 'others' && !playlist.cluster) ||
               playlist.cluster === selectedCluster
           )
           .map(data => <VodItem data={data} key={data.id} />)

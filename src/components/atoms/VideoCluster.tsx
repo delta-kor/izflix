@@ -82,8 +82,8 @@ const Placeholder = styled.div`
 
 interface Props {
   clusters: string[];
-  selected: string | null;
-  setCluster(cluster: string | null): void;
+  selected: string;
+  setCluster(cluster: string): void;
 }
 
 const VideoCluster: React.FC<Props> = ({ clusters, selected, setCluster }) => {
@@ -98,10 +98,10 @@ const VideoCluster: React.FC<Props> = ({ clusters, selected, setCluster }) => {
           <Placeholder />
         </>
       ) : (
-        [...clusters, null].map(cluster => (
+        [...clusters, 'others'].map(cluster => (
           <ClusterItem onClick={() => setCluster(cluster)}>
             <ClusterContent hover={1.05} tap={0.95}>
-              {cluster || t('playlist.cluster_default')}
+              {cluster === 'others' ? t('playlist.cluster_default') : cluster}
             </ClusterContent>
             {selected === cluster && <ClusterHandle layoutId={'cluster-handle'} />}
           </ClusterItem>
