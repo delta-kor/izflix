@@ -4,7 +4,6 @@ import VodTemplate from '../components/templates/VodTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
 import useModal from '../hooks/useModal';
-import delay from '../services/delay';
 import Spaceship from '../services/spaceship';
 import Page from './Page';
 
@@ -34,7 +33,6 @@ const VodPage: React.FC = () => {
   };
 
   const loadData = async () => {
-    await delay(200);
     new Evoke(loadFeatured());
     new Evoke(loadPlaylists());
   };

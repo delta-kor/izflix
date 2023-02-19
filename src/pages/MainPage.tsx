@@ -3,7 +3,6 @@ import Meta from '../components/Meta';
 import MainTemplate from '../components/templates/MainTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
-import delay from '../services/delay';
 import Spaceship from '../services/spaceship';
 import Page from './Page';
 
@@ -40,7 +39,6 @@ const MainPage: React.FC = () => {
   };
 
   const loadData = async () => {
-    await delay(200);
     new Evoke(loadFeatured());
     new Evoke(loadPlaylists());
     new Evoke(loadRecommends());

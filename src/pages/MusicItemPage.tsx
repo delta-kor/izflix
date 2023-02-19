@@ -5,7 +5,6 @@ import Meta from '../components/Meta';
 import MusicItemTemplate from '../components/templates/MusicItemTemplate';
 import HttpException from '../exceptions/http-exception';
 import Evoke from '../filters/evoke';
-import delay from '../services/delay';
 import Spaceship from '../services/spaceship';
 import ErrorPage from './ErrorPage';
 import Page from './Page';
@@ -40,7 +39,6 @@ const MusicItemPage: React.FC = () => {
   };
 
   const loadData = async () => {
-    await delay(200);
     new Evoke(loadAlbum(id));
   };
 
