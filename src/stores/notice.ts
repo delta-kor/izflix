@@ -11,6 +11,41 @@ interface Notice {
 
 const Notice: Notice[] = [
   {
+    id: '5',
+    title: {
+      ko: '서비스 중단 안내',
+      en: 'Discontinuance of Service',
+    },
+    content: {
+      ko: `서비스 중단 안내  
+현재 영상 제공 서버의 트래픽이 예상을 크게 초과하여 일시적으로 사용이 중단되었습니다..  
+따라서 당분간 장편 영상 (10분 이상) 및 일부 영상에 대해 서비스를 중단하게 되었습니다.  
+  
+현재 서비스 복구 작업을 위해 노력 중에 있으며,  
+최대한 빠르게 서비스를 복구시키기 위해 노력하고 있습니다.  
+  
+추후 서비스 재개일정에 대해서는 별도로 공지드리겠습니다.  
+감사합니다.
+  
+------
+*2023. 02. 22.*  
+*contact@izflix.net*`,
+      en: `Discontinuance of Service  
+The current video delivery server's traffic has exceeded expectations and is temporarily out of use.  
+Therefore, for the time being, the service for videos (more than 10 minutes) will be discontinued.  
+  
+We are currently working on a service recovery effort.  
+We are committed to recovering our services as quickly as possible.  
+  
+We will notify you about the resumption schedule of the service in the future.  
+Thank you.  
+  
+------
+*2023. 02. 22.*
+*contact@izflix.net*`,
+    },
+  },
+  {
     id: '4',
     title: {
       ko: '(복구 완료) 현재 일부 영상 재생이 제한되고 있습니다',

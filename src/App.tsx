@@ -7,6 +7,7 @@ import Header from './components/organisms/Header';
 import Navigator from './components/organisms/Navigator';
 import PanoramaSection from './components/organisms/PanoramaSection';
 import Popup from './components/organisms/Popup';
+import useModal from './hooks/useModal';
 import usePanorama from './hooks/usePanorama';
 import AppPage from './pages/AppPage';
 import CalendarPage from './pages/CalendarPage';
@@ -31,10 +32,16 @@ import Spaceship from './services/spaceship';
 const App: React.FC = () => {
   const location = useLocation();
   const panorama = usePanorama();
+  const modal = useModal();
 
   useEffect(() => {
     window.history.scrollRestoration = 'manual';
     Spaceship.load();
+    modal({
+      type: 'text',
+      content:
+        '서비스를 일시적으로 중단합니다. 자세한 사항은 공지사항을 참고하세요. Service is temporarily discontinued. Please refer to the notice for details.',
+    });
   }, []);
 
   return (
