@@ -1226,7 +1226,6 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       animate={videoLoaded ? 'show' : 'hide'}
       transition={{ duration: 0.5 }}
       src={panorama.streamInfo?.url}
-      crossOrigin={'anonymous'}
       ref={videoRef}
       onPlay={handlePlay}
       onPause={handlePause}
