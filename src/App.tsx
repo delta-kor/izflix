@@ -40,7 +40,7 @@ const App: React.FC = () => {
     modal({
       type: 'text',
       content:
-        '서비스를 일시적으로 중단합니다. 자세한 사항은 공지사항을 참고하세요. Service is temporarily discontinued. Please refer to the notice for details.',
+        '서비스 복구가 진행중입니다. 자세한 내용은 공지사항을 참고하세요. Service recovery is in progress. Please refer to notice for more details.',
     });
   }, []);
 

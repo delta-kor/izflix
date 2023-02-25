@@ -11,6 +11,32 @@ interface Notice {
 
 const Notice: Notice[] = [
   {
+    id: '6',
+    title: {
+      ko: '서비스 복구 안내',
+      en: 'Recovery of Service',
+    },
+    content: {
+      ko: `서비스 복구 안내  
+기존 데이터를 새로운 서버로 이전하고 있습니다.  
+데이터 이전은 순차적으로 진행될 예정입니다.  
+데이터 이전이 진행 중일때는 영상 화질이 720p 로 고정됩니다.  
+감사합니다.
+  
+------
+*2023. 02. 25.*  
+*contact@izflix.net*`,
+      en: `Recovery of Service  
+Previous data are being transferred to a new server.  
+Data transfer will proceed sequentially.  
+When data transfer is in progress, the video quality is fixed at 720p.  
+  
+------
+*2023. 02. 25.*  
+*contact@izflix.net*`,
+    },
+  },
+  {
     id: '5',
     title: {
       ko: '서비스 중단 안내',
