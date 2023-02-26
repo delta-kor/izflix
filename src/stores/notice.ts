@@ -20,7 +20,12 @@ const Notice: Notice[] = [
       ko: `서비스 복구 안내  
 기존 데이터를 새로운 서버로 이전하고 있습니다.  
 데이터 이전은 순차적으로 진행될 예정입니다.  
-감사합니다.
+감사합니다.  
+  
+-----
+2\\. 26\\. 20:00 - 잇힝트립, 아이즈원 츄 복구  
+2\\. 26\\. 21:00 - 프로듀스 48 복구  
+2\\. 26\\. 22:00 - 쇼콘, MAMA 2018 복구  
   
 ------
 *2023. 02. 25.*  
@@ -28,6 +33,11 @@ const Notice: Notice[] = [
       en: `Recovery of Service  
 Previous data are being transferred to a new server.  
 Data transfer will proceed sequentially.  
+  
+-----
+2\\. 26\\. 20:00 - Eat-ing Trip, IZ\\*ONE CHU Recovered  
+2\\. 26\\. 21:00 - Produce 48 Recovered  
+2\\. 26\\. 22:00 - Show-Con, MAMA 2018 Recovered  
   
 ------
 *2023. 02. 25.*  
