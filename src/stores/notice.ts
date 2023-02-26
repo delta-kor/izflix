@@ -26,6 +26,7 @@ const Notice: Notice[] = [
 2\\. 26\\. 20:00 - 잇힝트립, 아이즈원 츄 복구  
 2\\. 26\\. 21:00 - 프로듀스 48 복구  
 2\\. 26\\. 22:00 - 쇼콘, MAMA 2018 복구  
+2\\. 26\\. 23:00 - UNI-KON, 일본 데뷔 쇼케이스 복구  
   
 ------
 *2023. 02. 25.*  
@@ -38,6 +39,7 @@ Data transfer will proceed sequentially.
 2\\. 26\\. 20:00 - Eat-ing Trip, IZ\\*ONE CHU Recovered  
 2\\. 26\\. 21:00 - Produce 48 Recovered  
 2\\. 26\\. 22:00 - Show-Con, MAMA 2018 Recovered  
+2\\. 26\\. 23:00 - UNI-KON, Japan Debut Showcase Recovered  
   
 ------
 *2023. 02. 25.*  
