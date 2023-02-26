@@ -1330,7 +1330,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
               </Time>
 
               <BottomRight>
-                <QualityWrapper>
+                {/* <QualityWrapper>
                   <AnimatePresence>
                     {isQualityActive && panorama.streamInfo && (
                       <QualityItems
@@ -1365,7 +1365,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                       <QualityText>{panorama.streamInfo?.quality}p</QualityText>
                     </Quality>
                   )}
-                </QualityWrapper>
+                </QualityWrapper> */}
                 {(videoRef.current?.textTracks.length || 0) > 0 && (
                   <BottomRightButton hover={1.1} tap={0.9} onClick={handleSubtitleClick}>
                     <ControlIcon type={'subtitle'} color={Color.WHITE} />
