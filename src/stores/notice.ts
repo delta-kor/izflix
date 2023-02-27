@@ -27,6 +27,8 @@ const Notice: Notice[] = [
 2\\. 26\\. 21:00 - 프로듀스 48 복구  
 2\\. 26\\. 22:00 - 쇼콘, MAMA 2018 복구  
 2\\. 26\\. 23:00 - UNI-KON, 일본 데뷔 쇼케이스 복구  
+2\\. 27\\. 22:00 - EYES ON ME In Seoul 복구
+2\\. 27\\. 23:00 - 온라인 콘서트 복구
   
 ------
 *2023. 02. 25.*  
@@ -40,6 +42,8 @@ Data transfer will proceed sequentially.
 2\\. 26\\. 21:00 - Produce 48 Recovered  
 2\\. 26\\. 22:00 - Show-Con, MAMA 2018 Recovered  
 2\\. 26\\. 23:00 - UNI-KON, Japan Debut Showcase Recovered  
+2\\. 27\\. 22:00 - EYES ON ME In Seoul Recovered
+2\\. 27\\. 23:00 - Online concert Recovered
   
 ------
 *2023. 02. 25.*  
