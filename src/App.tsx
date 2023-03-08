@@ -37,11 +37,6 @@ const App: React.FC = () => {
   useEffect(() => {
     window.history.scrollRestoration = 'manual';
     Spaceship.load();
-    modal({
-      type: 'text',
-      content:
-        '서비스 복구가 진행중입니다. 자세한 내용은 공지사항을 참고하세요. Service recovery is in progress. Please refer to notice for more details.',
-    });
   }, []);
 
   return (
