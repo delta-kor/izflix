@@ -96,6 +96,7 @@ const VideoCluster: React.FC<Props> = ({ clusters, selected, setCluster }) => {
           <Placeholder />
           <Placeholder />
           <Placeholder />
+          <Placeholder />
         </>
       ) : (
         [...clusters, 'others'].map(cluster => (
