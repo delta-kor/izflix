@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { Panorama } from '../../hooks/usePanorama';
 import { VideoPageState } from '../../pages/VideoPage';
-import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
+import { Color, MobileQuery, PcInnerPadding, PcQuery, TabletQuery } from '../../styles';
 import NextVideoList from '../molecules/NextVideoList';
 import VideoAction from '../molecules/VideoAction';
 import RecommendSection from '../organisms/RecommendSection';
@@ -22,6 +22,10 @@ const Layout = styled.div`
     grid-template-columns: 1fr min(30vw, 300px);
     gap: 0 32px;
   }
+
+  ${TabletQuery} {
+    grid-template-columns: 1fr min(30vw, 220px);
+  }
 `;
 
 const VideoArea = styled.div`
@@ -32,6 +36,10 @@ const VideoArea = styled.div`
 
   ${PcQuery} {
     width: calc((100vw - ${PcInnerPadding} * 2) - min(30vw, 300px) - 32px);
+  }
+
+  ${TabletQuery} {
+    width: calc((100vw - ${PcInnerPadding} * 2) - min(30vw, 220px) - 32px);
   }
 `;
 
@@ -72,6 +80,10 @@ const ContentArea = styled.div`
   ${PcQuery} {
     gap: 24px;
     width: min(30vw, 300px);
+  }
+
+  ${TabletQuery} {
+    width: min(30vw, 220px);
   }
 `;
 

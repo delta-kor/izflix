@@ -116,6 +116,7 @@
   "app": {
     "download": "Download app",
     "description": "Use more features by using the app",
-    "web_app_description": "Web application is different from internet shortcut"
+    "web_app_description": "Web application is different from internet shortcut",
+    "install": "Install"
   }
 }

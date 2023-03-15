@@ -73,6 +73,14 @@ const RenderArea = styled(motion.div)<{ $state: PanoramaState }>`
         overflow: hidden;
         `}
   }
+
+  ${TabletQuery} {
+    ${({ $state }) =>
+      $state === PanoramaState.ACTIVE &&
+      `
+        width: calc((100vw - ${PcInnerPadding} * 2) - min(30vw, 220px) - 32px);
+        `}
+  }
 `;
 
 const Video = styled(motion.video)<{ $active: boolean; $screenAdjust: string }>`
@@ -496,6 +504,13 @@ const VideoLoader = styled(Rive)<{ $active: boolean }>`
     left: calc(50% - 36px);
     width: 72px;
     height: 72px;
+  }
+
+  ${TabletQuery} {
+    top: calc(50% - 29px);
+    left: calc(50% - 29px);
+    width: 58px;
+    height: 58px;
   }
 `;
 

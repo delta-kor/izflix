@@ -67,7 +67,7 @@ const Action = styled.div`
 `;
 
 const AppDownload: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const navigate = useNavigate();
   const device = useDevice();
@@ -80,12 +80,7 @@ const AppDownload: React.FC = () => {
         <Title>{t('app.download')}</Title>
         <Description>{t('app.description')}</Description>
       </Content>
-      <Action>
-        원클릭
-        <br />
-        <span>&nbsp;</span>
-        설치
-      </Action>
+      <Action>{t('app.install')}</Action>
     </Layout>
   );
 };
