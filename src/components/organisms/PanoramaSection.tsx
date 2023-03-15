@@ -941,7 +941,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     const video = videoRef.current;
     const boundingRect = video.getBoundingClientRect();
 
-    const firstY = info.point.y - info.offset.y;
+    const firstY = info.point.y - window.scrollY - info.offset.y;
     if (Math.abs(firstY - boundingRect.bottom) > 50) return false;
 
     const percentage = Math.max(

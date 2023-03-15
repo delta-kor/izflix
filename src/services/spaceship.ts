@@ -456,7 +456,7 @@ class SpaceshipClass {
   }
 }
 
-const baseUrl = 'https://api2.izflix.net' || process.env.REACT_APP_API_BASE!;
+const baseUrl = process.env.REACT_APP_API_BASE!;
 
 const Spaceship = new SpaceshipClass(baseUrl);
 export default Spaceship;
