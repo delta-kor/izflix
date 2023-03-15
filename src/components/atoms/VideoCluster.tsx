@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
@@ -6,6 +7,13 @@ import SmoothBox from './SmoothBox';
 
 const Layout = styled.div`
   display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 32px;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 
   ${MobileQuery} {
     padding: 0 32px;
@@ -37,9 +45,12 @@ const ClusterItem = styled.div`
 `;
 
 const ClusterContent = styled(SmoothBox)`
+  scroll-snap-align: start;
+
   & > .content {
     font-weight: 700;
     color: ${Color.WHITE};
+    white-space: nowrap;
 
     ${MobileQuery} {
       font-size: 18px;
@@ -89,8 +100,20 @@ interface Props {
 const VideoCluster: React.FC<Props> = ({ clusters, selected, setCluster }) => {
   const { t } = useTranslation();
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleItemClick = (cluster: string) => {
+    const parent = scrollRef.current;
+    if (!parent) return false;
+
+    const element = parent.querySelector(`.video-cluster[data-cluster="${cluster}"]`);
+    element?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+
+    setCluster(cluster);
+  };
+
   return (
-    <Layout>
+    <Layout ref={scrollRef}>
       {!clusters.length ? (
         <>
           <Placeholder />
@@ -100,7 +123,12 @@ const VideoCluster: React.FC<Props> = ({ clusters, selected, setCluster }) => {
         </>
       ) : (
         [...clusters, 'others'].map(cluster => (
-          <ClusterItem onClick={() => setCluster(cluster)}>
+          <ClusterItem
+            className={'video-cluster'}
+            onClick={e => handleItemClick(cluster)}
+            data-cluster={cluster}
+            key={cluster}
+          >
             <ClusterContent hover={1.05} tap={0.95}>
               {cluster === 'others' ? t('playlist.cluster_default') : cluster}
             </ClusterContent>
