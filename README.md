@@ -1,7 +1,9 @@
 ![Header](https://user-images.githubusercontent.com/48397257/225324412-3c8354e7-b091-4179-be6f-f03adcdc49d2.png)
 
 ## IZ*ONE Interactive Web Video Streaming Player
-The repository for website of IZFLIX - [izflix.net](https://izflix.net).
+The repository for website of IZFLIX.
+
+[izflix.net](https://izflix.net)
 
 ![IZFLIX Production](https://img.shields.io/github/deployments/delta-kor/izflix/production)
 ![IZFLIX WEB](https://cronitor.io/badges/xdQGle/production/qPaMi7L7IsLnTzdtTC_4IKuzD9c.svg)
