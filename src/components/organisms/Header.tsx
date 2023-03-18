@@ -19,6 +19,7 @@ import {
   Text,
 } from '../../styles';
 import SmoothBox from '../atoms/SmoothBox';
+import useModal from '../../hooks/useModal';
 
 const Layout = styled.header<{ $active: boolean; $search: boolean }>`
   position: fixed;
@@ -149,6 +150,7 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
+  const modal = useModal();
 
   const [active, setActive] = useState<boolean>(false);
   const [searchActive, setSearchActive] = useState<boolean>(false);
@@ -168,6 +170,7 @@ const Header: React.FC = () => {
 
   const handleHeaderIconClick = (isMain: boolean) => {
     if (!isMain) navigate(-1);
+    else modal({ type: 'text', content: 'Happy Birthday Miyawaki Sakura\n\n#FlowerRoadWithSakura\n#사쿠라_아름답게_피어나다' })
   };
 
   const handleIconClick = () => {
