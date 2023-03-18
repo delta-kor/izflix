@@ -208,7 +208,7 @@ const InfoTemplate: React.FC = () => {
   const { t } = useTranslation();
 
   // prettier-ignore
-  const licenses = ['framer-motion', 'i18next', 'i18next-browser-languagedetector', 'node-cache', 'path-to-regexp', 'react', 'react-ga4', 'react-helmet-async', 'react-i18next', 'react-lazy-load-image-component', 'react-responsive', 'react-router-dom', 'rooks', 'styled-components', 'typescript'];
+  const licenses = ['framer-motion', 'i18next', 'i18next-browser-languagedetector', 'node-cache', 'path-to-regexp', 'react', 'react-helmet-async', 'react-i18next', 'react-lazy-load-image-component', 'react-responsive', 'react-router-dom', 'rooks', 'styled-components', 'typescript'];
 
   return (
     <Layout>
