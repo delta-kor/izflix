@@ -10,6 +10,7 @@ import useDevice from '../../hooks/useDevice';
 import { Panorama, PanoramaState } from '../../hooks/usePanorama';
 import Icon from '../../icons/Icon';
 import Playtime from '../../services/playtime';
+import { LoadingGrayRiv } from '../../services/rive';
 import Settings from '../../services/settings';
 import Spaceship from '../../services/spaceship';
 import { getDuration } from '../../services/time';
@@ -1285,7 +1286,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
         ref={videoAreaRef}
       >
         {VideoItem}
-        <VideoLoader $active={!videoLoaded} src={'/riv/loading_gray.riv'} />
+        <VideoLoader $active={!videoLoaded} src={LoadingGrayRiv} />
         <AnimatePresence>
           {panorama.state === PanoramaState.ACTIVE && synthedControlsActive && (
             <VideoControls

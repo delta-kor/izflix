@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import useModal from '../../hooks/useModal';
 import { Panorama } from '../../hooks/usePanorama';
-import { LightLike } from '../../services/rive';
+import { LightLikeRiv } from '../../services/rive';
 import Tracker from '../../services/tracker';
 import Transmitter from '../../services/transmitter';
 import { Color, MobileQuery, PcQuery, Text } from '../../styles';
@@ -129,7 +129,7 @@ const VideoAction: React.FC<Props> = ({ action, panorama, onLike }) => {
   };
 
   const { RiveComponent, rive } = useRive({
-    src: LightLike,
+    src: LightLikeRiv,
     autoplay: true,
     stateMachines: 'Like',
   });

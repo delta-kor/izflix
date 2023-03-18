@@ -36,6 +36,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  min-width: 0;
 
   ${MobileQuery} {
     flex-grow: 1;

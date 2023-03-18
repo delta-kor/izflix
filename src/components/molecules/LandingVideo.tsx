@@ -6,6 +6,7 @@ import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
+import { LoadingRiv } from '../../services/rive';
 import Settings from '../../services/settings';
 import Spaceship from '../../services/spaceship';
 import Tracker from '../../services/tracker';
@@ -257,7 +258,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
   return (
     <Layout>
       <VideoWrapper>
-        <VideoLoader $active={!videoLoaded} src="/riv/loading.riv" />
+        <VideoLoader $active={!videoLoaded} src={LoadingRiv} />
         {url && (
           <Video
             $active={videoLoaded}
