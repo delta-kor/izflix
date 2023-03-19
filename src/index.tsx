@@ -24,7 +24,7 @@ if (Tracker.isActivated()) {
     ],
     tracesSampleRate: 0.7,
     replaysSessionSampleRate: 0.1,
-    replaysOnErrorSampleRate: 0.7,
+    replaysOnErrorSampleRate: 1.0,
   });
   console.log('Sentry initialized');
 }
