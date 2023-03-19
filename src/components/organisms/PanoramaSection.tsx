@@ -1537,7 +1537,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
               transition={{ duration: 0.2 }}
               key={'teleport'}
             >
-              건너뛰기
+              {t('video.skip')}
               <TeleportIcon type={'close'} color={Color.WHITE} onClick={handleTeleportClose} />
             </Teleport>
           )}

@@ -18,7 +18,8 @@
     "subtitle_on": "자막 사용",
     "screen_adjust_top": "화면 크기에 맞춤",
     "screen_adjust_left": "영상 크기에 맞춤",
-    "meta_description": "IZFLIX에서 고화질로 시청하세요"
+    "meta_description": "IZFLIX에서 고화질로 시청하세요",
+    "skip": "건너뛰기"
   },
   "playlist": {
     "playlist": "재생목록",
