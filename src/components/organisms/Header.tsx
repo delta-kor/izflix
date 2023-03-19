@@ -170,7 +170,6 @@ const Header: React.FC = () => {
 
   const handleHeaderIconClick = (isMain: boolean) => {
     if (!isMain) navigate(-1);
-    else modal({ type: 'text', content: 'Happy Birthday Miyawaki Sakura\n\n#FlowerRoadWithSakura\n#사쿠라_아름답게_피어나다' })
   };
 
   const handleIconClick = () => {

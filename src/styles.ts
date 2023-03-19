@@ -14,7 +14,7 @@ const PcLeftMargin = 112;
 
 const Color = {
   WHITE: '#FFFFFF',
-  PRIMARY: '#f363c5',
+  PRIMARY: '#556FE5',
   GRAY: '#454B6B',
   DARK_GRAY: '#161A36',
   BACKGROUND: '#070D2D',
