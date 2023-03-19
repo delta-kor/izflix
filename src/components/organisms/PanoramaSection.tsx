@@ -661,6 +661,61 @@ const Toast = styled(motion.div)`
   }
 `;
 
+const Teleport = styled(SmoothBox)`
+  position: absolute;
+  z-index: 3;
+
+  ${MobileQuery} {
+    top: 16px;
+    right: 16px;
+  }
+
+  ${PcQuery} {
+    top: 28px;
+    right: 28px;
+  }
+
+  & > .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+
+    background: rgba(22, 26, 54, 0.5);
+    backdrop-filter: blur(2px);
+    border: 2px solid ${Color.GRAY};
+
+    color: ${Color.WHITE};
+    border-radius: 4px;
+    user-select: none;
+    cursor: pointer;
+
+    ${MobileQuery} {
+      padding: 8px 12px;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    ${PcQuery} {
+      padding: 12px 16px;
+      font-size: 20px;
+      font-weight: 400;
+    }
+  }
+`;
+
+const TeleportIcon = styled(Icon)`
+  ${MobileQuery} {
+    width: 16px;
+    height: 16px;
+  }
+
+  ${PcQuery} {
+    width: 20px;
+    height: 20px;
+  }
+`;
+
 interface Props {
   panorama: Panorama;
 }
@@ -683,6 +738,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
   const [screenAdjust, setScreenAdjust] = useState<string>(Settings.getOne('VIDEO_SCREEN_ADJUST'));
   const [isQualityActive, setIsQualityActive] = useState<boolean>(false);
   const [toastContent, setToastContent] = useState<string>('');
+  const [teleportClose, setTeleportClose] = useState<number | null>(0);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoAreaRef = useRef<HTMLDivElement>(null);
@@ -1231,6 +1287,51 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     }, 1000);
   };
 
+  const getTeleport = () => {
+    const video = videoRef.current;
+    if (!video) return null;
+
+    const info = panorama.videoInfo;
+    if (!info) return null;
+
+    const timeline = info.timeline;
+    if (!timeline) return null;
+
+    const teleports = timeline.teleports;
+    const currentTime = video.currentTime * 1000;
+    for (const teleport of teleports) {
+      if (currentTime >= teleport.from && currentTime < teleport.to) {
+        if (teleportClose === teleport.to) return null;
+        return teleport;
+      }
+    }
+
+    if (teleportClose) setTeleportClose(null);
+    return null;
+  };
+
+  const handleTeleport: MouseEventHandler = e => {
+    e.stopPropagation();
+
+    const teleport = getTeleport();
+    if (!teleport) return;
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.currentTime = teleport.to / 1000;
+    video.play();
+  };
+
+  const handleTeleportClose: MouseEventHandler = e => {
+    e.stopPropagation();
+
+    const teleport = getTeleport();
+    if (!teleport) return;
+
+    setTeleportClose(teleport.to);
+  };
+
   if (panorama.state === PanoramaState.NONE) return null;
 
   const VideoItem = (
@@ -1422,6 +1523,23 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
             >
               {toastContent}
             </Toast>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {getTeleport() && videoLoaded && isPlaying && (
+            <Teleport
+              hover={1.03}
+              tap={0.97}
+              onClick={handleTeleport}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              key={'teleport'}
+            >
+              건너뛰기
+              <TeleportIcon type={'close'} color={Color.WHITE} onClick={handleTeleportClose} />
+            </Teleport>
           )}
         </AnimatePresence>
         {panorama.state === PanoramaState.ACTIVE && (

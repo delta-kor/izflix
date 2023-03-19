@@ -77,6 +77,21 @@ interface IFolder {
   date: number;
 }
 
+interface ITeleport {
+  from: number;
+  to: number;
+}
+
+interface IChapter {
+  title: string;
+  time: number;
+}
+
+interface ITimeline {
+  teleports: [ITeleport];
+  chapters: [IChapter];
+}
+
 type CalendarTimestamp = [string, number];
 
 namespace ApiResponse {
@@ -119,6 +134,7 @@ namespace ApiResponse {
       path: IPath[];
       properties: VideoProperty[];
       music: [string, string] | null;
+      timeline?: ITimeline;
     }
 
     interface Action extends ApiResponse {
