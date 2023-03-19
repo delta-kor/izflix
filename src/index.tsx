@@ -18,8 +18,10 @@ Tracker.initialize();
 if (Tracker.isActivated()) {
   Sentry.init({
     dsn: process.env.REACT_APP_SENTRY_DSN,
-    integrations: [new BrowserTracing()],
+    integrations: [new BrowserTracing(), new Sentry.Replay()],
     tracesSampleRate: 1.0,
+    replaysSessionSampleRate: 0.1,
+    replaysOnErrorSampleRate: 1.0,
   });
   console.log('Sentry initialized');
 }
