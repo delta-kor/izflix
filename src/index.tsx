@@ -22,9 +22,9 @@ if (Tracker.isActivated()) {
       new BrowserTracing(),
       new Sentry.Replay({ maskAllText: false, blockAllMedia: false }),
     ],
-    tracesSampleRate: 1.0,
+    tracesSampleRate: 0.7,
     replaysSessionSampleRate: 0.1,
-    replaysOnErrorSampleRate: 1.0,
+    replaysOnErrorSampleRate: 0.7,
   });
   console.log('Sentry initialized');
 }
