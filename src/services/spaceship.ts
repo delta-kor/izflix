@@ -56,6 +56,9 @@ class SpaceshipClass {
       if (token) options.headers = { ...options.headers, Authorization: `izflix ${token}` };
       else if (!requestOption.ignoreAuthError)
         return { ok: false, message: 'error.login_failed' } as T;
+    } else {
+      const token = await this.getUserToken();
+      if (token) options.headers = { ...options.headers, Authorization: `izflix-ig ${token}` };
     }
 
     let data: T;
