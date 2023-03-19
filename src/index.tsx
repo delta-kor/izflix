@@ -8,10 +8,21 @@ import ModalProvider from './providers/ModalProvider';
 import reportWebVitals from './reportWebVitals';
 import isCrawler from './services/crawl';
 import delay from './services/delay';
-import './services/i18n';
 import Tracker from './services/tracker';
+import * as Sentry from '@sentry/react';
+import { BrowserTracing } from '@sentry/tracing';
+import './services/i18n';
 
 Tracker.initialize();
+
+if (Tracker.isActivated()) {
+  Sentry.init({
+    dsn: process.env.REACT_APP_SENTRY_DSN,
+    integrations: [new BrowserTracing()],
+    tracesSampleRate: 1.0,
+  });
+  console.log('Sentry initialized');
+}
 
 const rootElement = document.getElementById('root')!;
 

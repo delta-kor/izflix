@@ -5,7 +5,7 @@ import isCrawler from './crawl';
 let gtag: any;
 
 class Tracker {
-  private static isActivated(): boolean {
+  public static isActivated(): boolean {
     if (window.location.host !== 'izflix.net') return false;
     return !isCrawler() && process.env.NODE_ENV !== 'development';
   }
