@@ -23,8 +23,8 @@ if (Tracker.isActivated()) {
       new Sentry.Replay({ maskAllText: false, blockAllMedia: false }),
     ],
     tracesSampleRate: 0.5,
-    replaysSessionSampleRate: 0.1,
-    replaysOnErrorSampleRate: 0.2,
+    replaysSessionSampleRate: 0.05,
+    replaysOnErrorSampleRate: 0.1,
   });
   console.log('Sentry initialized');
 }
