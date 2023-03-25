@@ -2,6 +2,7 @@ import EventEmitter from 'events';
 
 interface TransmitterEvents {
   popup(popup: Popup): void;
+  seek(time: number): void;
 }
 
 declare interface TransmitterClass {

@@ -15,6 +15,7 @@ import Settings from '../../services/settings';
 import Spaceship from '../../services/spaceship';
 import { getDuration } from '../../services/time';
 import Tracker from '../../services/tracker';
+import Transmitter from '../../services/transmitter';
 import {
   Color,
   HideOverflow,
@@ -754,11 +755,13 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     document.addEventListener('keydown', handleKeyPress);
     document.addEventListener('mousemove', handleMouseMoveEvent);
     document.addEventListener('mousedown', handleMouseDownEvent);
+    Transmitter.addListener('seek', handleSeek);
 
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
       document.removeEventListener('mousemove', handleMouseMoveEvent);
       document.removeEventListener('mousedown', handleMouseDownEvent);
+      Transmitter.removeListener('seek', handleSeek);
       clearTimeout(nextVideoTimeout);
     };
   }, []);
@@ -1330,6 +1333,14 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     if (!teleport) return;
 
     setTeleportClose(teleport.to);
+  };
+
+  const handleSeek = (time: number) => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.currentTime = time / 1000;
+    video.play();
   };
 
   if (panorama.state === PanoramaState.NONE) return null;

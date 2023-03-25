@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Panorama } from '../../hooks/usePanorama';
 import { VideoPageState } from '../../pages/VideoPage';
 import { Color, MobileQuery, PcInnerPadding, PcQuery, TabletQuery } from '../../styles';
+import ChapterList from '../molecules/ChapterList';
 import NextVideoList from '../molecules/NextVideoList';
 import VideoAction from '../molecules/VideoAction';
 import RecommendSection from '../organisms/RecommendSection';
@@ -78,7 +79,7 @@ const ContentArea = styled.div`
   }
 
   ${PcQuery} {
-    gap: 24px;
+    gap: 16px;
     width: min(30vw, 300px);
   }
 
@@ -115,6 +116,11 @@ const VideoTemplate: React.FC<Props> = ({ panorama, action, onLike }) => {
       </VideoArea>
       <ContentArea>
         <AnimatePresence>
+          {(panorama.videoInfo?.timeline?.chapters.length || 0) > 0 && (
+            <motion.div layoutId={'chapters' + videoId} key={'chapters'} {...motionProps}>
+              <ChapterList chapters={panorama.videoInfo!.timeline!.chapters} />
+            </motion.div>
+          )}
           {panorama.nextVideos.length > 1 && (
             <motion.div layoutId={'next videos' + videoId} key={'next videos'} {...motionProps}>
               <NextVideoList videos={panorama.nextVideos} currentVideoId={videoId} state={state} />

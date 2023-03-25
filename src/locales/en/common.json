@@ -19,7 +19,8 @@
     "screen_adjust_top": "Fit to screen",
     "screen_adjust_left": "Fit to video",
     "meta_description": "Watch in HD on IZFLIX",
-    "skip": "Skip"
+    "skip": "Skip",
+    "timeline": "Timeline"
   },
   "playlist": {
     "playlist": "Playlist",
