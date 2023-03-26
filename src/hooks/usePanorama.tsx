@@ -15,6 +15,7 @@ interface PanoramaMethods {
   view(id: string, state?: VideoPageState): Promise<ApiResponse>;
   setState(state: PanoramaState): void;
   setQuality(quality: number): void;
+  setActiveChapter(chapter: IChapter | undefined): void;
 }
 
 interface Panorama extends PanoramaMethods {
@@ -26,6 +27,7 @@ interface Panorama extends PanoramaMethods {
   nextVideos: IVideo[];
   nextVideo?: IVideo;
   recommends: IVideo[];
+  activeChapter?: IChapter;
 }
 
 enum PanoramaState {
@@ -46,6 +48,7 @@ function usePanorama(): Panorama {
   const [nextVideos, setNextVideos] = useState<IVideo[]>([]);
   const [nextVideo, setNextVideo] = useState<IVideo | undefined>();
   const [recommends, setRecommends] = useState<IVideo[]>([]);
+  const [activeChapter, setActiveChapter] = useState<IChapter | undefined>();
 
   useEffect(() => {
     if (state === PanoramaState.BACKGROUND && location.pathname === `/${currentVideoId}`)
@@ -69,6 +72,10 @@ function usePanorama(): Panorama {
       setNextVideo(nextVideo);
     }
   }, [nextVideos, currentVideoId, recommends]);
+
+  useEffect(() => {
+    setActiveChapter(undefined);
+  }, [videoInfo]);
 
   const view = async (id: string, videoState?: VideoPageState) => {
     if (id === currentVideoId) return { ok: true, status: 200 };
@@ -192,7 +199,7 @@ function usePanorama(): Panorama {
     });
   };
 
-  const methods = { view, setState: setStateMethod, setQuality };
+  const methods = { view, setState: setStateMethod, setQuality, setActiveChapter };
 
   return {
     state,
@@ -203,6 +210,7 @@ function usePanorama(): Panorama {
     nextVideos,
     nextVideo,
     recommends,
+    activeChapter,
     ...methods,
   };
 }

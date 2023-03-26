@@ -118,7 +118,7 @@ const VideoTemplate: React.FC<Props> = ({ panorama, action, onLike }) => {
         <AnimatePresence>
           {(panorama.videoInfo?.timeline?.chapters.length || 0) > 0 && (
             <motion.div layoutId={'chapters' + videoId} key={'chapters'} {...motionProps}>
-              <ChapterList chapters={panorama.videoInfo!.timeline!.chapters} />
+              <ChapterList panorama={panorama} chapters={panorama.videoInfo!.timeline!.chapters} />
             </motion.div>
           )}
           {panorama.nextVideos.length > 1 && (

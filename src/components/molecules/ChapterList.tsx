@@ -1,5 +1,5 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Panorama } from '../../hooks/usePanorama';
@@ -60,11 +60,11 @@ const ExpandedContent = styled.div`
 `;
 
 const ExpandedArea = styled(motion.div)`
-  ${PcQuery} {
-    max-height: 446px;
-    overflow-x: hidden;
-    overflow-y: scroll;
+  max-height: 240px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 
+  ${PcQuery} {
     margin: 0 -12px;
     padding: 0 12px;
 
@@ -84,13 +84,38 @@ const ExpandedItem = styled(motion.div)`
 `;
 
 interface Props {
+  panorama: Panorama;
   chapters: IChapter[];
 }
 
-const ChapterList: React.FC<Props> = ({ chapters }) => {
+const ChapterList: React.FC<Props> = ({ panorama, chapters }) => {
   const { t } = useTranslation();
 
   const [expanded, setExpanded] = useState<boolean>(false);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const sortedChapters = [...chapters].sort((a, b) => a.time - b.time);
+
+  const activeChapter = panorama.activeChapter;
+  const activeIndex = activeChapter
+    ? sortedChapters.findIndex(chapter => chapter.time === activeChapter.time)
+    : -1;
+  const nextChapters = sortedChapters.slice(activeIndex);
+  const prevChapters = sortedChapters.slice(0, activeIndex);
+
+  let renderingChapters: IChapter[] = [];
+  if (activeChapter) {
+    renderingChapters = [...nextChapters, ...prevChapters];
+  } else {
+    renderingChapters = sortedChapters;
+  }
+
+  const scrollTop = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
+    }
+  };
 
   return (
     <Layout>
@@ -131,12 +156,35 @@ const ChapterList: React.FC<Props> = ({ chapters }) => {
                   },
                 }}
                 transition={{ duration: 0.7 }}
+                ref={scrollRef}
               >
-                {chapters.map(data => (
-                  <ExpandedItem key={data.time}>
-                    <ChapterItem chapter={data} onClick={(time) => Transmitter.emit('seek', time)}/>
-                  </ExpandedItem>
-                ))}
+                <AnimateSharedLayout>
+                  <AnimatePresence>
+                    {renderingChapters.map(data => {
+                      const id =
+                        'chapter' +
+                        data.time +
+                        (sortedChapters.indexOf(data) < activeIndex ? 'prev' : 'next');
+
+                      return (
+                        <ExpandedItem
+                          layoutId={id}
+                          key={id}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <ChapterItem
+                            chapter={data}
+                            active={data === panorama.activeChapter}
+                            onClick={time => Transmitter.emit('seek', time)}
+                          />
+                        </ExpandedItem>
+                      );
+                    })}
+                  </AnimatePresence>
+                </AnimateSharedLayout>
               </ExpandedArea>
             )}
           </AnimatePresence>

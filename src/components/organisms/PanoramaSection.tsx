@@ -399,21 +399,16 @@ const NextVideoCancel = styled(SmoothBox)`
 
 const Time = styled.div`
   display: flex;
-  position: absolute;
   align-items: flex-end;
   transform: skew(0.1deg);
   user-select: none;
 
   ${MobileQuery} {
     gap: 4px;
-    bottom: 24px;
-    left: 16px;
   }
 
   ${PcQuery} {
     gap: 6px;
-    bottom: 28px;
-    left: 20px;
   }
 
   & > div {
@@ -444,6 +439,58 @@ const Time = styled.div`
     ${PcQuery} {
       font-size: 18px;
     }
+  }
+`;
+
+const ChapterText = styled.div`
+  align-self: center;
+  font-weight: 700;
+  color: ${Color.WHITE};
+  ${HideOverflow};
+
+  ${MobileQuery} {
+    font-size: 12px;
+  }
+
+  ${PcQuery} {
+    font-size: 18px;
+  }
+`;
+
+const BottomLeft = styled.div`
+  position: absolute;
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+
+  ${MobileQuery} {
+    bottom: 24px;
+    left: 16px;
+  }
+
+  ${PcQuery} {
+    bottom: 28px;
+    left: 20px;
+  }
+`;
+
+const BottomCenter = styled.div`
+  position: absolute;
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+
+  ${MobileQuery} {
+    bottom: 24px;
+    left: 50%;
+    transform: translate(-50%);
+    max-width: calc(100vw - 270px);
+  }
+
+  ${PcQuery} {
+    bottom: 28px;
+    left: 50%;
+    transform: translate(-50%);
   }
 `;
 
@@ -817,6 +864,10 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     updateMediaSession();
   }, [panorama.videoInfo, videoRef.current]);
 
+  useEffect(() => {
+    updateActiveChapter();
+  }, [videoRef.current?.currentTime]);
+
   const handlePlay = () => {
     const video = videoRef.current;
     if (!video) return false;
@@ -968,6 +1019,22 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
       sessionPlaytime[0] = id;
       sessionPlaytime[1] = total;
     }
+  };
+
+  const updateActiveChapter = () => {
+    const chapters = panorama.videoInfo?.timeline?.chapters;
+    if (!chapters) return;
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    const currentChapter = [...chapters]
+      .sort((a, b) => a.time - b.time)
+      .filter(chapter => chapter.time <= video.currentTime * 1000)
+      .slice(-1)[0];
+    if (!currentChapter) return;
+
+    panorama.setActiveChapter(currentChapter);
   };
 
   // video & progress bar mouse down
@@ -1451,11 +1518,19 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                 </NextVideoWrapper>
               )}
 
-              <Time>
-                <div>{getDuration(played)}</div>
-                <div>/</div>
-                <div>{getDuration(duration)}</div>
-              </Time>
+              <BottomLeft>
+                <Time>
+                  <div>{getDuration(played)}</div>
+                  <div>/</div>
+                  <div>{getDuration(duration)}</div>
+                </Time>
+              </BottomLeft>
+
+              <BottomCenter>
+                {panorama.activeChapter && (
+                  <ChapterText>{panorama.activeChapter.title}</ChapterText>
+                )}
+              </BottomCenter>
 
               <BottomRight>
                 {/* <QualityWrapper>
