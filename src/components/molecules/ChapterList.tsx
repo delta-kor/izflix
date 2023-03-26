@@ -158,33 +158,15 @@ const ChapterList: React.FC<Props> = ({ panorama, chapters }) => {
                 transition={{ duration: 0.7 }}
                 ref={scrollRef}
               >
-                <AnimateSharedLayout>
-                  <AnimatePresence>
-                    {renderingChapters.map(data => {
-                      const id =
-                        'chapter' +
-                        data.time +
-                        (sortedChapters.indexOf(data) < activeIndex ? 'prev' : 'next');
-
-                      return (
-                        <ExpandedItem
-                          layoutId={id}
-                          key={id}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <ChapterItem
-                            chapter={data}
-                            active={data === panorama.activeChapter}
-                            onClick={time => Transmitter.emit('seek', time)}
-                          />
-                        </ExpandedItem>
-                      );
-                    })}
-                  </AnimatePresence>
-                </AnimateSharedLayout>
+                {renderingChapters.map(data => (
+                  <ExpandedItem key={data.time}>
+                    <ChapterItem
+                      chapter={data}
+                      active={data === panorama.activeChapter}
+                      onClick={time => Transmitter.emit('seek', time)}
+                    />
+                  </ExpandedItem>
+                ))}
               </ExpandedArea>
             )}
           </AnimatePresence>
