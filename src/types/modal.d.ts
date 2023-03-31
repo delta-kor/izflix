@@ -27,7 +27,7 @@ interface ModalInputResult {
   value: string;
 }
 
-type Modal = TextModal | SelectModal | InputModal | PlaylistModal;
+type Modal = TextModal | SelectModal | InputModal | PlaylistModal | LinkModal;
 
 interface ModalBase {
   id?: string;
@@ -57,4 +57,11 @@ interface PlaylistModal extends ModalBase {
   type: 'playlist';
   videoId: string;
   promise?: Evoke<void>;
+}
+
+interface LinkModal extends ModalBase {
+  type: 'link';
+  content: string;
+  link: string;
+  image: string;
 }

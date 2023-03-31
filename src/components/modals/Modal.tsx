@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import styled from 'styled-components';
 import ModalContext from '../../contexts/ModalContext';
 import InputModal from './InputModal';
+import LinkModal from './LinkModal';
 import PlaylistModal from './PlaylistModal';
 import SelectModal from './SelectModal';
 import TextModal from './TextModal';
@@ -53,6 +54,12 @@ const Modal: React.FC = () => {
     content = (
       <ModalWrapper key={modal.id!} {...modalWrapperProps}>
         <PlaylistModal modal={modal} respond={respond} />
+      </ModalWrapper>
+    );
+  else if (modal.type === 'link')
+    content = (
+      <ModalWrapper key={modal.id!} {...modalWrapperProps}>
+        <LinkModal modal={modal} respond={respond} />
       </ModalWrapper>
     );
 

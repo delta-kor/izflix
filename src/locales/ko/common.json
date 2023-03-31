@@ -64,7 +64,8 @@
   },
   "modal": {
     "cancel": "취소",
-    "ok": "확인"
+    "ok": "확인",
+    "watch": "시청"
   },
   "common": {
     "count_one": "{{count}}개",

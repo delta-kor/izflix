@@ -31,9 +31,11 @@ interface Props {
   respond: ModalRespondFunction;
   ok?: boolean;
   cancel?: boolean;
+  okText?: string;
+  cancelText?: string;
 }
 
-const ModalAction: React.FC<Props> = ({ respond, ok, cancel }) => {
+const ModalAction: React.FC<Props> = ({ respond, ok, cancel, okText, cancelText }) => {
   const { t } = useTranslation();
 
   const handleOk = () => {
@@ -54,7 +56,7 @@ const ModalAction: React.FC<Props> = ({ respond, ok, cancel }) => {
           onClick={handleCancel}
           layoutId={'modal_cancel'}
         >
-          {t('modal.cancel')}
+          {cancelText || t('modal.cancel')}
         </Button>
       )}
       {ok && (
@@ -65,7 +67,7 @@ const ModalAction: React.FC<Props> = ({ respond, ok, cancel }) => {
           onClick={handleOk}
           layoutId={'modal_ok'}
         >
-          {t('modal.ok')}
+          {okText || t('modal.ok')}
         </Button>
       )}
     </Layout>

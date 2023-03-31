@@ -72,7 +72,8 @@
   },
   "modal": {
     "cancel": "Cancel",
-    "ok": "OK"
+    "ok": "OK",
+    "watch": "Watch"
   },
   "common": {
     "count_one": "{{count}} item",
