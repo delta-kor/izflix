@@ -37,13 +37,6 @@ const App: React.FC = () => {
   useEffect(() => {
     window.history.scrollRestoration = 'manual';
     Spaceship.load();
-    modal({
-      type: 'link',
-      content: 'NEW: Introducing IZ GPT',
-      link: 'https://youtu.be/QBS4f6TyeHQ',
-      image:
-        'https://user-images.githubusercontent.com/48397257/229120593-6dfc65b0-22a3-4dbe-889e-bd0a09354b26.png',
-    });
   }, []);
 
   return (
