@@ -28,6 +28,7 @@ import VideoPage from './pages/VideoPage';
 import VodPage from './pages/VodPage';
 import PageManager from './services/page-manager';
 import Spaceship from './services/spaceship';
+import CamMainPage from './pages/CamMainPage';
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -71,6 +72,7 @@ const App: React.FC = () => {
           <Route path="/profile/info" element={<InfoPage />} />
           <Route path="/profile/notice" element={<NoticePage />} />
           <Route path="/profile/app" element={<AppPage />} />
+          <Route path="/campd" element={<CamMainPage />} />
           <Route path="/:id" element={<VideoPage panorama={panorama} />} />
           <Route path="*" element={<ErrorPage data={'error.not_found'} />} />
         </Routes>
