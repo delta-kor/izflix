@@ -1389,6 +1389,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     const video = videoRef.current;
     if (!video) return;
 
+    Tracker.send('skip_click', { video_id: panorama.currentVideoId });
+
     video.currentTime = teleport.to / 1000;
     video.play();
   };
