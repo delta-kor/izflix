@@ -465,6 +465,10 @@ class SpaceshipClass {
   public getSubtitle(id: string): string {
     return `${this.baseUrl}/video/${id}/subtitle`;
   }
+
+  public getCamVideoUrl(id: string): string {
+    return `${this.baseUrl}/campd/games/${id}/video`;
+  }
 }
 
 const baseUrl = process.env.REACT_APP_API_BASE!;

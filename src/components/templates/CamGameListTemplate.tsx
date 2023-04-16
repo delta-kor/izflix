@@ -15,6 +15,7 @@ const Layout = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 0 ${PcInnerPadding};
+    gap: 32px;
   }
 `;
 
@@ -27,7 +28,7 @@ const CamGameListTemplate: React.FC<Props> = ({ games }) => {
 
   return (
     <Layout>
-      <CamGamePreviewSection />
+      <CamGamePreviewSection game={game} />
       <CamGameListSection activeGame={game} games={games} onSelect={game => setGame(game)} />
     </Layout>
   );
