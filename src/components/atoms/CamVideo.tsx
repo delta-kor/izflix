@@ -21,7 +21,7 @@ interface Props {
 const CamVideo: React.FC<Props> = ({ game, className }) => {
   return (
     <Layout className={className}>
-      <Video src={Spaceship.getCamVideoUrl(game.id)} autoPlay muted />
+      <Video src={Spaceship.getCamVideoUrl(game.id)} muted />
     </Layout>
   );
 };
