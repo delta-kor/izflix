@@ -450,6 +450,14 @@ class SpaceshipClass {
     });
   }
 
+  public async getCampdGames(): Promise<ApiResponse.Campd.GetGames> {
+    return this.get('/campd/games', {
+      key: `get_campd_games`,
+      expire: expireTime,
+      auth: true,
+    });
+  }
+
   public getThumbnail(id: string): string {
     return `${this.baseUrl}/thumbnail/${id}`;
   }

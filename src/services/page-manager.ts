@@ -37,7 +37,7 @@ class PageManager {
         const type =
           path === '/'
             ? 'main'
-            : ['/vod', '/playlist', '/profile'].includes(path)
+            : ['/vod', '/playlist', '/profile', '/campd'].includes(path)
             ? 'submain'
             : 'children';
         return { title, params, type };
