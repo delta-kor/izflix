@@ -57,6 +57,7 @@ const CamGamePreviewSection: React.FC<Props> = ({ game }) => {
   const navigate = useNavigate();
 
   const handlePlay = () => {
+    if (!game) return false;
     navigate('/campd/play', { state: { game } });
   };
 
