@@ -64,7 +64,7 @@ const CamGamePreviewSection: React.FC<Props> = ({ game }) => {
   return (
     <Layout>
       {game ? (
-        <Video game={game} />
+        <Video type={'preview'} game={game} />
       ) : (
         <VideoPlaceholder>
           <VideoPlaceholderText>영상을 선택해주세요</VideoPlaceholderText>

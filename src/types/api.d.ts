@@ -99,6 +99,8 @@ interface ICampdGame {
   score: number;
 }
 
+type ICampdInput = { [key: string]: number };
+
 type CalendarTimestamp = [string, number];
 
 namespace ApiResponse {
