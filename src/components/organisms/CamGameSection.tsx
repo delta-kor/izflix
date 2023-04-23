@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import HttpException from '../../exceptions/http-exception';
 import Evoke from '../../filters/evoke';
 
-const Layout = styled.div<{ $started: boolean }>`
+const Layout = styled.div`
   ${PcQuery} {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -29,8 +29,6 @@ const Layout = styled.div<{ $started: boolean }>`
     gap: 24px;
     margin: 0 auto;
   }
-
-  /* ${({ $started }) => (!$started ? 'opacity: 0.3;' : '')} */
 `;
 
 const Selector = styled.div`
@@ -234,13 +232,14 @@ const CamGameSection: React.FC<Props> = ({ game }) => {
   };
 
   const handlePlayClick = () => {
+    if (!loaded) return false;
     setStarted(true);
     videoRef.current?.play();
   };
 
   return (
     <>
-      <Layout $started={started}>
+      <Layout>
         <Selector>
           <Video
             src={Spaceship.getCamVideoUrl(game.id) + '#t=240'}

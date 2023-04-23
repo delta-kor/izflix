@@ -48,7 +48,7 @@ const CamVideo: React.FC<Props> = ({ type, game, active, input, currentTime, cla
 
       const closestKey = index === -1 ? keys[keys.length - 1] : keys[index - 1];
 
-      setActiveCamera(input[closestKey]);
+      setActiveCamera(input[closestKey] + 1);
     }
   };
 
@@ -74,7 +74,7 @@ const CamVideo: React.FC<Props> = ({ type, game, active, input, currentTime, cla
       <Video
         $x={x}
         $y={y}
-        src={Spaceship.getCamVideoUrl(game.id) + '#t=240'}
+        src={Spaceship.getCamVideoUrl(game.id)}
         ref={videoRef}
         muted={type !== 'replay'}
         loop={type === 'replay'}

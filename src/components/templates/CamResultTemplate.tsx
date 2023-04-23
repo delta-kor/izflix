@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 import { MobileQuery, PcQuery, PcInnerPadding } from '../../styles';
 import CamVideoController from '../molecules/CamVideoController';
+import CamScore from '../atoms/CamScore';
+import CamResultSection from '../organisms/CamResultSection';
 
 const Layout = styled.div`
   ${MobileQuery} {
     display: flex;
     flex-direction: column;
-    padding: 0 32px;
+    padding: 32px 32px 0 32px;
+    gap: 32px;
   }
 
   ${PcQuery} {
@@ -17,7 +20,7 @@ const Layout = styled.div`
 
     align-items: center;
     justify-content: center;
-    gap: 32px;
+    gap: 64px;
   }
 `;
 
@@ -31,6 +34,7 @@ const CamResultTemplate: React.FC<Props> = ({ game, input, result }) => {
   return (
     <Layout>
       <CamVideoController game={game} input={input} />
+      <CamResultSection game={game} result={result} />
     </Layout>
   );
 };
