@@ -21,7 +21,7 @@ interface Props {
 const CamVideoController: React.FC<Props> = ({ game, input }) => {
   return (
     <Layout>
-      <Video type={'preview'} game={game} />
+      <Video type={'replay'} game={game} input={input} />
     </Layout>
   );
 };
