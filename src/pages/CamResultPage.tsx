@@ -9,9 +9,9 @@ import CamResultTemplate from '../components/templates/CamResultTemplate';
 const CamResultPage: React.FC = () => {
   const location = useLocation();
   const state = location.state as any;
-  const game: ICampdGame = state.game;
-  const input: ICampdInput = state.input;
-  const token: string = state.token;
+  const game: ICampdGame = state?.game;
+  const input: ICampdInput = state?.input;
+  const token: string = state?.token;
 
   const [result, setResult] = useState<ICampdResult | undefined>(undefined);
 

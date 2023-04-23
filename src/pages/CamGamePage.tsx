@@ -5,7 +5,7 @@ import CamGameTemplate from '../components/templates/CamGameTemplate';
 const CamGamePage: React.FC = () => {
   const location = useLocation();
   const state = location.state as any;
-  const game: ICampdGame = state.game;
+  const game: ICampdGame = state?.game;
 
   if (!game) return <Navigate to={'/campd'} />;
 
