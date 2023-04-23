@@ -242,7 +242,7 @@ const CamGameSection: React.FC<Props> = ({ game }) => {
       <Layout>
         <Selector>
           <Video
-            src={Spaceship.getCamVideoUrl(game.id) + '#t=240'}
+            src={Spaceship.getCamVideoUrl(game.id) + '#t=0'}
             ref={videoRef}
             onCanPlayThrough={handleOnCanPlayThrough}
             onPause={handlePause}
