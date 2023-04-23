@@ -16,14 +16,15 @@ const Video = styled.video<{ $x: number; $y: number }>`
 `;
 
 interface Props {
-  type: 'preview' | 'live';
+  type: 'preview' | 'live' | 'live_paused' | 'replay';
   game: ICampdGame;
   active?: number;
+  input?: ICampdInput;
   className?: string;
   currentTime?: number;
 }
 
-const CamVideo: React.FC<Props> = ({ type, game, active, currentTime, className }) => {
+const CamVideo: React.FC<Props> = ({ type, game, active,input, currentTime, className }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   if (type === 'live' && videoRef.current) {
@@ -35,6 +36,11 @@ const CamVideo: React.FC<Props> = ({ type, game, active, currentTime, className 
   }
 
   active = active ?? 0;
+
+  if(type === 'replay' && input) {
+    const keys = Object.keys(input).map(Number);
+    
+  }
 
   let x = 0;
   let y = 0;

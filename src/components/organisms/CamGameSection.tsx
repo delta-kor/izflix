@@ -1,11 +1,15 @@
 import styled from 'styled-components';
-import { Color, MobileQuery, PcQuery } from '../../styles';
+import { Color, MobileQuery, PcQuery, Text } from '../../styles';
 import Spaceship from '../../services/spaceship';
 import CamVideo from '../atoms/CamVideo';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Button from '../atoms/Button';
+import { useTranslation } from 'react-i18next';
+import HttpException from '../../exceptions/http-exception';
+import Evoke from '../../filters/evoke';
 
-const Layout = styled.div`
+const Layout = styled.div<{ $started: boolean }>`
   ${PcQuery} {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -25,6 +29,8 @@ const Layout = styled.div`
     gap: 24px;
     margin: 0 auto;
   }
+
+  /* ${({ $started }) => (!$started ? 'opacity: 0.3;' : '')} */
 `;
 
 const Selector = styled.div`
@@ -135,15 +141,55 @@ const ActiveCamera = styled.div`
   border: 2px solid ${Color.WHITE};
 `;
 
+const Splash = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: ${Color.BACKGROUND}AE;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+`;
+
+const SplashTitle = styled.div`
+  color: ${Color.WHITE};
+  ${Text.HEADLINE_1};
+  height: unset;
+`;
+
+const SplashDescription = styled.div`
+  opacity: 0.7;
+  color: ${Color.WHITE};
+  ${Text.SUBTITLE_1};
+  height: unset;
+`;
+
+const SplashNotice = styled.div`
+  margin: 8px 0;
+  color: ${Color.PRIMARY};
+  ${Text.SUBTITLE_1};
+  height: unset;
+`;
+
 interface Props {
   game: ICampdGame;
 }
 
 const CamGameSection: React.FC<Props> = ({ game }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const [activeCam, setActiveCam] = useState(4);
-  const [currentTime, setCurrentTime] = useState(0);
+  const [started, setStarted] = useState<boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
+  const [notice, setNotice] = useState<string>(t('campd.loading'));
+  const [token, setToken] = useState<string | undefined>(undefined);
+  const [activeCam, setActiveCam] = useState<number>(4);
+  const [currentTime, setCurrentTime] = useState<number>(0);
   const [input, setInput] = useState<ICampdInput>({ 0: 4 });
 
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -164,50 +210,89 @@ const CamGameSection: React.FC<Props> = ({ game }) => {
   };
 
   const handlePause = () => {
-    videoRef.current?.play();
+    if (!videoRef.current) return false;
+    !videoRef.current.ended && videoRef.current.play();
   };
 
   const handleEnd = () => {
-    navigate('/campd/result', { state: { game, input } });
+    navigate('/campd/result', { state: { game, input, token } });
   };
 
   const handleOnCanPlayThrough = () => {
+    setNotice(t('campd.token'));
+    new Evoke(loadGameToken()).then(() => {
+      setLoaded(true);
+      setNotice(t('campd.start'));
+    });
+  };
+
+  const loadGameToken = async () => {
+    const response = await Spaceship.createCampdToken(game.id);
+    if (!response.ok) throw new HttpException(response);
+
+    setToken(response.token);
+  };
+
+  const handlePlayClick = () => {
+    setStarted(true);
     videoRef.current?.play();
   };
 
   return (
-    <Layout>
-      <Selector>
-        <Video
-          src={Spaceship.getCamVideoUrl(game.id) + '#t=240'}
-          ref={videoRef}
-          onCanPlayThrough={handleOnCanPlayThrough}
-          onPause={handlePause}
-          onEnded={handleEnd}
-          onTimeUpdate={handleTimeupdate}
-          playsInline
-          disableRemotePlayback
-          disablePictureInPicture
-        />
-        <Masks>
-          <Mask>
-            <CameraNoSignal>
-              <CameraNoSignalText>No Signal</CameraNoSignalText>
-            </CameraNoSignal>
-            <CameraName>CAM 1</CameraName>
-          </Mask>
-          {[0, 1, 2, 3, 4].map(i => (
-            <Mask key={i} onClick={() => handleCamClick(i)}>
-              <CameraName>CAM {i + 2}</CameraName>
-              {activeCam === i && <ActiveCamera />}
+    <>
+      <Layout $started={started}>
+        <Selector>
+          <Video
+            src={Spaceship.getCamVideoUrl(game.id) + '#t=240'}
+            ref={videoRef}
+            onCanPlayThrough={handleOnCanPlayThrough}
+            onPause={handlePause}
+            onEnded={handleEnd}
+            onTimeUpdate={handleTimeupdate}
+            playsInline
+            disableRemotePlayback
+            disablePictureInPicture
+          />
+          <Masks>
+            <Mask>
+              <CameraNoSignal>
+                <CameraNoSignalText>No Signal</CameraNoSignalText>
+              </CameraNoSignal>
+              <CameraName>CAM 1</CameraName>
             </Mask>
-          ))}
-        </Masks>
-      </Selector>
-      <Menu>
-        <ResultVideo type={'live'} game={game} active={activeCam + 1} currentTime={currentTime} />
-      </Menu>
-    </Layout>
+            {[0, 1, 2, 3, 4].map(i => (
+              <Mask key={i} onClick={() => handleCamClick(i)}>
+                <CameraName>CAM {i + 2}</CameraName>
+                {activeCam === i && <ActiveCamera />}
+              </Mask>
+            ))}
+          </Masks>
+        </Selector>
+        <Menu>
+          <ResultVideo
+            type={started ? 'live' : 'live_paused'}
+            game={game}
+            active={activeCam + 1}
+            currentTime={currentTime}
+          />
+        </Menu>
+      </Layout>
+      {!started && (
+        <Splash>
+          <SplashTitle>{game.title}</SplashTitle>
+          <SplashDescription>{game.description}</SplashDescription>
+          <SplashNotice>{notice}</SplashNotice>
+          <Button
+            color={loaded ? Color.PRIMARY : Color.GRAY}
+            icon={'play'}
+            scale={0.95}
+            onClick={handlePlayClick}
+          >
+            Play
+          </Button>
+        </Splash>
+      )}
+    </>
   );
 };
 
