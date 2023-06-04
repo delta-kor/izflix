@@ -24,7 +24,7 @@ axios
     const baseFile = fs.readFileSync(path.join(build, 'index.html'));
     const base = baseFile.toString();
 
-    const scripts = base.split(`sw.js/sw.js?v=2"></script>`)[1].split(`</head>`)[0];
+    const scripts = base.split(`sw.js?v=2"></script>`)[1].split(`</head>`)[0];
 
     const data = res.data;
     if (!data.ok) return false;
