@@ -27,6 +27,11 @@ const Layout = styled.div`
   }
 `;
 
+const ThemeImage = styled.img`
+  width: 100%;
+  border-radius: 8px;
+`;
+
 interface Props {
   user: User;
 }
@@ -112,6 +117,11 @@ const ProfileTemplate: React.FC<Props> = ({ user }) => {
           {t('profile.info')}
         </IconListItem>
       </IconListSection>
+      <ThemeImage
+        src={
+          'https://github.com/delta-kor/izflix/assets/48397257/9c971c9d-8b49-4df3-8333-fafe3ea0a3b8'
+        }
+      />
     </Layout>
   );
 };
