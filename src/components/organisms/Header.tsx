@@ -170,7 +170,7 @@ const Header: React.FC = () => {
 
   const handleHeaderIconClick = (isMain: boolean) => {
     if (!isMain) navigate(-1);
-    else modal({ type: 'text', content: '2001.06.18.\nHappy Nako Day' });
+    // else modal({ type: 'text', content: '2001.06.18.\nHappy Nako Day' });
   };
 
   const handleIconClick = () => {

@@ -117,11 +117,11 @@ const ProfileTemplate: React.FC<Props> = ({ user }) => {
           {t('profile.info')}
         </IconListItem>
       </IconListSection>
-      <ThemeImage
+      {/* <ThemeImage
         src={
           'https://github.com/delta-kor/izflix/assets/48397257/9c971c9d-8b49-4df3-8333-fafe3ea0a3b8'
         }
-      />
+      /> */}
     </Layout>
   );
 };

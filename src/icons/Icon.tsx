@@ -23,7 +23,7 @@ import { ReactComponent as HeartBorderSvg } from '../icons/svg/heart_border.svg'
 import { ReactComponent as HeartFilledSvg } from '../icons/svg/heart_filled.svg';
 import { ReactComponent as HomeSvg } from '../icons/svg/home.svg';
 import { ReactComponent as InfoSvg } from '../icons/svg/info.svg';
-import { ReactComponent as IzflixSvg } from '../icons/theme/nako.svg';
+import { ReactComponent as IzflixSvg } from '../icons/svg/izflix.svg';
 import { ReactComponent as LanguageSvg } from '../icons/svg/language.svg';
 import { ReactComponent as LeftSvg } from '../icons/svg/left.svg';
 import { ReactComponent as LoaderSvg } from '../icons/svg/loader.svg';
