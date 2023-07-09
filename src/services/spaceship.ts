@@ -450,12 +450,45 @@ class SpaceshipClass {
     });
   }
 
+  public async getCampdGames(): Promise<ApiResponse.Campd.GetGames> {
+    return this.get('/campd/games', {
+      key: `get_campd_games`,
+      expire: expireTime,
+      auth: true,
+    });
+  }
+
+  public async createCampdToken(id: string): Promise<ApiResponse.Campd.CreateToken> {
+    return this.get(`/campd/games/${id}/token`, {
+      key: `create_campd_token_${id}`,
+      expire: expireTime,
+      auth: true,
+    });
+  }
+
+  public async submitCampdGame(
+    id: string,
+    input: ICampdInput,
+    token: string
+  ): Promise<ApiResponse.Campd.SubmitGame> {
+    const payload = { input, token };
+    return this.post(`/campd/games/${id}/submit`, payload, {
+      key: `submit_campd_game_${id}`,
+      expire: expireTime,
+      auth: true,
+    });
+  }
+
   public getThumbnail(id: string): string {
     return `${this.baseUrl}/thumbnail/${id}`;
   }
 
   public getSubtitle(id: string): string {
     return `${this.baseUrl}/video/${id}/subtitle`;
+  }
+
+  public getCamVideoUrl(id: string): string {
+    return `${this.baseUrl}/campd/games/${id}/video`;
   }
 }
 

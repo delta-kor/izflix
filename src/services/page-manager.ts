@@ -18,6 +18,7 @@ PageTitles.set('/playlist', 'Playlist');
 PageTitles.set('/playlist/:id', 'Playlist');
 PageTitles.set('/search', '#');
 PageTitles.set('/live', 'Live');
+PageTitles.set('/campd', 'CAM PD');
 
 interface PageInfo {
   title: string;
@@ -36,7 +37,7 @@ class PageManager {
         const type =
           path === '/'
             ? 'main'
-            : ['/vod', '/playlist', '/profile'].includes(path)
+            : ['/vod', '/playlist', '/profile', '/campd'].includes(path)
             ? 'submain'
             : 'children';
         return { title, params, type };

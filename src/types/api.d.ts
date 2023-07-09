@@ -92,6 +92,25 @@ interface ITimeline {
   chapters: [IChapter];
 }
 
+interface ICampdGame {
+  id: string;
+  title: string;
+  description: string;
+  score: number;
+}
+
+interface ICampdResult {
+  total_score: number;
+  group_bonus: number;
+  solo_bonus: number;
+  long_penalty: number;
+  short_penalty: number;
+  miss_penalty: number;
+  exp: number;
+}
+
+type ICampdInput = { [key: string]: number };
+
 type CalendarTimestamp = [string, number];
 
 namespace ApiResponse {
@@ -213,6 +232,20 @@ namespace ApiResponse {
 
     interface GetOne extends ApiResponse {
       videos: IVideo[];
+    }
+  }
+
+  namespace Campd {
+    interface GetGames extends ApiResponse {
+      games: ICampdGame[];
+    }
+
+    interface CreateToken extends ApiResponse {
+      token: string;
+    }
+
+    interface SubmitGame extends ApiResponse {
+      result: ICampdResult;
     }
   }
 }

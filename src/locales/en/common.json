@@ -121,5 +121,10 @@
     "description": "Use more features by using the app",
     "web_app_description": "Web application is different from internet shortcut",
     "install": "Install"
+  },
+  "campd": {
+    "loading": "Loading data",
+    "validate": "Receving game token",
+    "start": "Please use PC browser"
   }
 }

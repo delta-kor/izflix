@@ -29,6 +29,10 @@ if (Tracker.isActivated()) {
   console.log('Sentry initialized');
 }
 
+if (window.location.pathname === '/campd/play') {
+  window.history.replaceState({}, '');
+}
+
 const rootElement = document.getElementById('root')!;
 
 const app = (
