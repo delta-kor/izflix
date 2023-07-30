@@ -48,6 +48,7 @@ const StatisticsSection: React.FC<Props> = ({ title, videos }) => {
               data={video}
               link={`/${video.id}`}
               playTime={video.playTime}
+              key={video.id}
             />
           ))
         ) : (
