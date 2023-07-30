@@ -42,15 +42,17 @@ const StatisticsSection: React.FC<Props> = ({ title, videos }) => {
       <SectionTitle fluid>{title}</SectionTitle>
       <VideoList>
         {videos.length ? (
-          videos.map(video => (
-            <VideoPanel
-              type={'horizontal'}
-              data={video}
-              link={`/${video.id}`}
-              playTime={video.playTime}
-              key={video.id}
-            />
-          ))
+          [...videos]
+            .sort((a, b) => b.playTime - a.playTime)
+            .map(video => (
+              <VideoPanel
+                type={'horizontal'}
+                data={video}
+                link={`/${video.id}`}
+                playTime={video.playTime}
+                key={video.id}
+              />
+            ))
         ) : (
           <NoData>{t('statistics.no_data')}</NoData>
         )}
