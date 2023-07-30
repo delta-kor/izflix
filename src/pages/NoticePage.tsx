@@ -8,7 +8,12 @@ const NoticePage: React.FC = () => {
 
   return (
     <Page>
-      <Meta data={{ title: `${t('profile.notice')} - IZFLIX`, url: 'https://izflix.net/notice' }} />
+      <Meta
+        data={{
+          title: `${t('profile.notice')} - IZFLIX`,
+          url: 'https://izflix.net/profile/notice',
+        }}
+      />
       <NoticeTemplate />
     </Page>
   );

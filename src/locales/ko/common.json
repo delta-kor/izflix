@@ -60,7 +60,8 @@
     "id_copied": "아이디를 클립보드에 복사했어요",
     "id_copy_failed": "아이디 복사에 실패했어요",
     "notice": "공지",
-    "profile": "프로필"
+    "profile": "프로필",
+    "statistics": "통계"
   },
   "modal": {
     "cancel": "취소",
@@ -121,5 +122,10 @@
     "description": "앱을 이용하면 더 많은 기능을 사용할 수 있어요",
     "web_app_description": "웹 애플리케이션은 일반 바로가기와 다릅니다",
     "install": "설치"
+  },
+  "statistics": {
+    "no_data": "데이터가 없습니다",
+    "me": "Me",
+    "total": "전체"
   }
 }

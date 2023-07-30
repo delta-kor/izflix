@@ -68,7 +68,8 @@
     "id_copied": "ID copied to clipboard",
     "id_copy_failed": "Failed to copy user id",
     "notice": "Notice",
-    "profile": "Profile"
+    "profile": "Profile",
+    "statistics": "Statistics"
   },
   "modal": {
     "cancel": "Cancel",
@@ -121,5 +122,10 @@
     "description": "Use more features by using the app",
     "web_app_description": "Web application is different from internet shortcut",
     "install": "Install"
+  },
+  "statistics": {
+    "no_data": "No data available",
+    "me": "Me",
+    "total": "Total"
   }
 }

@@ -255,6 +255,14 @@ class SpaceshipClass {
     });
   }
 
+  public async getVideoList(ids: string[]): Promise<ApiResponse.Video.List> {
+    const payload = ids.join(',');
+    return this.get(`/video/list?ids=${payload}`, {
+      key: `get_video_list::${payload}`,
+      expire: expireTime,
+    });
+  }
+
   public async getVideoAction(id: string): Promise<ApiResponse.Video.Action> {
     return this.get(`/video/${id}/action`, {
       key: `get_video_action::${id}`,

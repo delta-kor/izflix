@@ -2,7 +2,7 @@ import { MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
-import { getDuration } from '../../services/time';
+import { getDuration, getHumanDuration } from '../../services/time';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 import SmoothImage from './SmoothImage';
@@ -53,6 +53,20 @@ const Description = styled.p<{ $shrink?: boolean }>`
   width: 100%;
   color: ${Color.WHITE};
   opacity: 0.7;
+  ${HideOverflow};
+
+  ${MobileQuery} {
+    ${Text.SUBTITLE_2};
+  }
+
+  ${PcQuery} {
+    ${({ $shrink }) => ($shrink ? Text.SUBTITLE_2 : Text.SUBTITLE_1)};
+  }
+`;
+
+const PlayTime = styled.p<{ $shrink?: boolean }>`
+  width: 100%;
+  color: ${Color.PRIMARY};
   ${HideOverflow};
 
   ${MobileQuery} {
@@ -132,9 +146,10 @@ interface Props {
   state?: any;
   onClick?: MouseEventHandler;
   shrink?: boolean;
+  playTime?: number;
 }
 
-const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink }) => {
+const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink, playTime }) => {
   const thumbnail = data && Spaceship.getThumbnail(data.id);
   const title = data && data.title;
   const description = data && data.description;
@@ -160,6 +175,7 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink 
           ) : (
             <DescriptionPlaceholder />
           )}
+          {playTime ? <PlayTime $shrink={!!shrink}>{getHumanDuration(playTime)}</PlayTime> : null}
         </Content>
       </HorizontalLayout>
     ) : (

@@ -99,6 +99,15 @@ const ProfileTemplate: React.FC<Props> = ({ user }) => {
           {t('profile.settings')}
         </IconListItem>
         <IconListItem
+          icon={'compass'}
+          onClick={() => {
+            Tracker.send('profile_list_clicked', { item_type: 'statistics' });
+            navigate('/profile/statistics');
+          }}
+        >
+          {t('profile.statistics')}
+        </IconListItem>
+        <IconListItem
           icon={'notice'}
           onClick={() => {
             Tracker.send('profile_list_clicked', { item_type: 'notice' });

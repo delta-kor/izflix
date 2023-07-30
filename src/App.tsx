@@ -24,6 +24,7 @@ import PlaylistPage from './pages/PlaylistPage';
 import ProfilePage from './pages/ProfilePage';
 import SearchPage from './pages/SearchPage';
 import SettingsPage from './pages/SettingsPage';
+import StatisticsPage from './pages/StatisticsPage';
 import VideoPage from './pages/VideoPage';
 import VodPage from './pages/VodPage';
 import PageManager from './services/page-manager';
@@ -69,6 +70,7 @@ const App: React.FC = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/settings" element={<SettingsPage />} />
           <Route path="/profile/info" element={<InfoPage />} />
+          <Route path="/profile/statistics" element={<StatisticsPage />} />
           <Route path="/profile/notice" element={<NoticePage />} />
           <Route path="/profile/app" element={<AppPage />} />
           <Route path="/:id" element={<VideoPage panorama={panorama} />} />

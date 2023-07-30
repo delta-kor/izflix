@@ -49,6 +49,10 @@ interface IVideo {
   properties: VideoProperty[];
 }
 
+interface IVideoWithPlayTime extends IVideo {
+  playTime: number;
+}
+
 interface IAlbum {
   id: string;
   title: string;
@@ -135,6 +139,10 @@ namespace ApiResponse {
       properties: VideoProperty[];
       music: [string, string] | null;
       timeline?: ITimeline;
+    }
+
+    interface List extends ApiResponse {
+      data: IVideo[];
     }
 
     interface Action extends ApiResponse {
