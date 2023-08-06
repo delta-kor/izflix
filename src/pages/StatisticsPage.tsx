@@ -24,8 +24,7 @@ const StatisticsPage: React.FC = () => {
 
   const loadVideos = async () => {
     const response = await Spaceship.getVideoList([
-      ...myTops.map(([id]) => id),
-      ...totalTops.map(([id]) => id),
+      ...new Set([...myTops.map(([id]) => id), ...totalTops.map(([id]) => id)]),
     ]);
     if (!response.ok) throw new HttpException(response);
 
