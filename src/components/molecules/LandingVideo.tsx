@@ -291,7 +291,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
               afterLoad={() => setIconLoaded(true)}
             />
           )}
-          {title ? <Title>{description}</Title> : <TitlePlaceholder $type={'vod'} />}
+          {title ? <Title>5년전 오늘</Title> : <TitlePlaceholder $type={'vod'} />}
         </VodContent>
       )}
       <Action>
