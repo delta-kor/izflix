@@ -235,11 +235,9 @@ const PlayButton = styled(SmoothBox)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
   z-index: 1;
 
   & > .content {
-    background: ${Color.WHITE};
     border-radius: 100%;
     cursor: pointer;
 
@@ -249,8 +247,8 @@ const PlayButton = styled(SmoothBox)`
     }
 
     ${PcQuery} {
-      width: 66px;
-      height: 66px;
+      width: 86px;
+      height: 86px;
     }
   }
 `;
@@ -262,13 +260,13 @@ const PlayIcon = styled(Icon)`
   transform: translate(-50%, -50%);
 
   ${MobileQuery} {
-    width: 20px;
-    height: 20px;
+    width: 42px;
+    height: 42px;
   }
 
   ${PcQuery} {
-    width: 26px;
-    height: 26px;
+    width: 56px;
+    height: 56px;
   }
 `;
 
@@ -1486,7 +1484,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
                     isPlaying ? pause() : play();
                   }}
                 >
-                  <PlayIcon type={isPlaying ? 'pause' : 'play'} color={Color.DARK_GRAY} />
+                  <PlayIcon type={isPlaying ? 'pause' : 'play'} color={Color.WHITE} />
                 </PlayButton>
               )}
               {isEnded && panorama.nextVideo && !isPip() && (

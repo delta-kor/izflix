@@ -91,6 +91,7 @@ const Title = styled.div`
 const Description = styled.div`
   color: ${Color.WHITE};
   flex-grow: 1;
+  opacity: 0.7;
 
   ${HideOverflow};
 
