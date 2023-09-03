@@ -93,15 +93,31 @@ body.dry #splash-icon .x {
   animation-delay: 0.65s;
 }
 
-body.hydrating #splash-icon {
+body.hydrating #splash-icon,
+body.hydrating #splash > .text {
   animation: fadeout 0.2s;
   animation-fill-mode: forwards;
+}
+
+#splash > .text {
+  position: fixed;
+  bottom: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff50;
+  text-align: center;
+
+  animation: fadein 0.5s forwards;
+  animation-delay: 0.2s;
 }
 
 @keyframes splashfadein {
   from {
     opacity: 0;
-    transform: translate(0, 24px);
+    transform: translate(24px, 0);
   }
 
   to {
@@ -117,6 +133,18 @@ body.hydrating #splash-icon {
 
   to {
     opacity: 1;
+  }
+}
+
+@keyframes splashfadeout {
+  from {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(24px, 0);
   }
 }
 

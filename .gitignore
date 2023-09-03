@@ -35,3 +35,4 @@ video-rank.json
 .eslintignore
 
 pnpm-lock.yaml
+.vercel
