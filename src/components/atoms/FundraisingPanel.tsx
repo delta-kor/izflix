@@ -13,6 +13,7 @@ const Layout = styled(SmoothBox)`
     flex-direction: column;
     background: ${Color.DARK_GRAY};
     border-radius: 8px;
+    border: 2px solid ${Color.PRIMARY};
     padding: 16px 16px 12px 16px;
     gap: 8px;
     cursor: pointer;

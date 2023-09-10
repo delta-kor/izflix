@@ -1655,8 +1655,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
           </Content>
           <Icons>
             <IconWrapper
-              hover={1.1}
-              tap={0.9}
+              hover={1.2}
+              tap={0.8}
               onClick={e => {
                 e.preventDefault();
                 e.stopPropagation();
