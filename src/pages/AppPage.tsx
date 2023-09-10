@@ -8,7 +8,9 @@ const AppPage: React.FC = () => {
 
   return (
     <Page>
-      <Meta data={{ title: `${t('app.download')} - IZFLIX`, url: 'https://izflix.net/app' }} />
+      <Meta
+        data={{ title: `${t('app.download')} - IZFLIX`, url: 'https://izflix.net/profile/app' }}
+      />
       <AppTemplate />
     </Page>
   );

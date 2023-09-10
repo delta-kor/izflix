@@ -35,7 +35,7 @@ const Notice: Notice[] = [
     title: { ko: 'IZFLIX은 아이즈원 팬 사이트입니다', en: 'IZFLIX is fan site of IZ*ONE' },
     content: {
       ko: `IZFLIX은 아이즈원 팬 사이트입니다.  
-IZFLIX을 통해서 어떠한 수익도 창출하지 않으며 금전적 후원을 받지 않습니다.  
+IZFLIX을 통해서 어떠한 수익도 창출하지 않습니다.  
 트위터, 인스타그램 등에서의 사칭 계정에 유의하세요.
 
 ------

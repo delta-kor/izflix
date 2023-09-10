@@ -67,7 +67,7 @@ const Action = styled.div`
 `;
 
 const AppDownload: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
   const device = useDevice();

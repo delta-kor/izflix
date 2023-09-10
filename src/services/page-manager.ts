@@ -10,6 +10,7 @@ PageTitles.set('/profile/info', 'Info');
 PageTitles.set('/profile/statistics', 'Statistics');
 PageTitles.set('/profile/notice', 'Notice');
 PageTitles.set('/profile/app', 'App Download');
+PageTitles.set('/profile/fundraising', 'Fundraising');
 PageTitles.set('/music', 'Music');
 PageTitles.set('/music/:id', 'Music');
 PageTitles.set('/category', 'Category');

@@ -4,11 +4,13 @@ import styled from 'styled-components';
 import { Panorama } from '../../hooks/usePanorama';
 import { VideoPageState } from '../../pages/VideoPage';
 import { Color, MobileQuery, PcInnerPadding, PcQuery, TabletQuery } from '../../styles';
+import FundraisingPanel from '../atoms/FundraisingPanel';
 import ChapterList from '../molecules/ChapterList';
 import NextVideoList from '../molecules/NextVideoList';
 import VideoAction from '../molecules/VideoAction';
 import RecommendSection from '../organisms/RecommendSection';
 import VideoInfoSection from '../organisms/VideoInfoSection';
+import Funder from '../../services/funder';
 
 const Layout = styled.div`
   ${MobileQuery} {
@@ -116,6 +118,11 @@ const VideoTemplate: React.FC<Props> = ({ panorama, action, onLike }) => {
       </VideoArea>
       <ContentArea>
         <AnimatePresence>
+          {Funder.isActive() && (
+            <motion.div layoutId={'fundraising' + videoId} key={'fundraising'} {...motionProps}>
+              <FundraisingPanel />
+            </motion.div>
+          )}
           {(panorama.videoInfo?.timeline?.chapters.length || 0) > 0 && (
             <motion.div layoutId={'chapters' + videoId} key={'chapters'} {...motionProps}>
               <ChapterList panorama={panorama} chapters={panorama.videoInfo!.timeline!.chapters} />

@@ -127,5 +127,8 @@
     "no_data": "No data available",
     "me": "Me",
     "total": "Total"
+  },
+  "fund": {
+    "fund": "Fundraising"
   }
 }
