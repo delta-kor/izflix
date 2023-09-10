@@ -6,7 +6,6 @@ const current = 5000;
 
 export default class Funder {
   public static isActive(): boolean {
-    console.log(Playtime.total());
     return active && Playtime.total() > 60 * 60 * 1;
   }
 
