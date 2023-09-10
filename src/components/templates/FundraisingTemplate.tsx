@@ -86,6 +86,12 @@ const GraphIndicator = styled.div`
   border-radius: 4px;
 `;
 
+const Indexes = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const Index = styled.div`
   color: ${Color.WHITE};
   font-weight: 700;
@@ -161,9 +167,12 @@ const FundraisingTemplate: React.FC = () => {
         <p>감사합니다.</p>
       </Description>
       <Content>
-        <Index>
-          목표 : {Funder.target()}원 | {Funder.left()}원 남음 ({Funder.percentage()})
-        </Index>
+        <Indexes>
+          <Index>
+            {Funder.left()}원 남음 ({Funder.percentage()})
+          </Index>
+          <Index>목표 : {Funder.target()}원</Index>
+        </Indexes>
         <Graph>
           <GraphIndicator style={{ width: Funder.percentage() }} />
         </Graph>
