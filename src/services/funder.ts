@@ -2,12 +2,12 @@ import Playtime from './playtime';
 
 const active = true;
 const target = 42000;
-const current = 3000;
+const current = 5000;
 
 export default class Funder {
   public static isActive(): boolean {
     console.log(Playtime.total());
-    return active && Playtime.total() > 60 * 60 * 3;
+    return active && Playtime.total() > 60 * 60 * 1;
   }
 
   public static percentage(): string {
