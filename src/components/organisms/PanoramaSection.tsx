@@ -840,6 +840,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     }
 
     try {
+      // @ts-ignore
       if (isFullscreenEnabled) window.screen.orientation.lock('landscape');
       else window.screen.orientation.unlock();
     } catch (e) {}
@@ -1077,6 +1078,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     video.currentTime = percentage * (video.duration || 0);
     setPlayed(video.currentTime || 0);
     setDuration(video.duration || 0);
+
+    handleTouch();
   };
 
   // video click & double click
@@ -1391,6 +1394,8 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
 
     video.currentTime = teleport.to / 1000;
     video.play();
+
+    handleTouch();
   };
 
   const handleTeleportClose: MouseEventHandler = e => {
@@ -1400,6 +1405,7 @@ const PanoramaSection: React.FC<Props> = ({ panorama }) => {
     if (!teleport) return;
 
     setTeleportClose(teleport.to);
+    handleTouch();
   };
 
   const handleSeek = (time: number) => {
