@@ -4,7 +4,7 @@ const PageTitles = new Map<string, string>();
 
 PageTitles.set('/', 'IZFLIX');
 PageTitles.set('/vod', 'VOD');
-PageTitles.set('/vlive', 'Vlive');
+PageTitles.set('/vlive', 'VLIVE');
 PageTitles.set('/profile', 'Profile');
 PageTitles.set('/profile/settings', 'Settings');
 PageTitles.set('/profile/info', 'Info');

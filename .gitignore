@@ -34,5 +34,4 @@ video-rank.json
 .prettierrc
 .eslintignore
 
-pnpm-lock.yaml
 .vercel

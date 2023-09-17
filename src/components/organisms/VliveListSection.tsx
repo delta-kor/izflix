@@ -7,6 +7,7 @@ import VideoPanel from '../atoms/VideoPanel';
 import { MobileQuery, PcQuery, PcInnerPadding, TabletQuery } from '../../styles';
 import useDevice from '../../hooks/useDevice';
 import session from '../../services/session';
+import SelectionMenu from '../atoms/SelectionMenu';
 
 const Layout = styled.div`
   ${MobileQuery} {
@@ -98,10 +99,12 @@ const VliveListSection: React.FC = () => {
 
   return (
     <Layout>
+      <SelectionMenu data={[{ key: 'oldest', label: '날짜순' }]} />
       {videos.map(video => (
         <VideoPanel
           type={device === 'mobile' ? 'vlive_horizontal' : 'vlive_full'}
           data={video}
+          link={`/${video.id}`}
           key={video.id}
         />
       ))}
