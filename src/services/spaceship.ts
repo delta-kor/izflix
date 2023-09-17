@@ -458,9 +458,9 @@ class SpaceshipClass {
     });
   }
 
-  public async getVliveList(anchor?: string): Promise<ApiResponse.Vlive.List> {
-    return this.get(`/vlive/list?anchor=${anchor}&count=10`, {
-      key: `get_vlive_list::${anchor}`,
+  public async getVliveList(anchor?: string, sort?: string): Promise<ApiResponse.Vlive.List> {
+    return this.get(`/vlive/list?anchor=${anchor || '0'}&sort=${sort || 'oldest'}&count=12`, {
+      key: `get_vlive_list::${anchor}::${sort}`,
       expire: expireTime,
     });
   }

@@ -185,6 +185,19 @@ const VliveDate = styled.div`
   }
 `;
 
+const VliveInfoPlaceholder = styled.div`
+  width: 70%;
+
+  ${PcQuery} {
+    margin: 4px 0 0 0;
+    ${Placeholder.HEADLINE_2};
+  }
+
+  ${MobileQuery} {
+    ${Placeholder.SUBTITLE_1};
+  }
+`;
+
 interface Props {
   type: 'full' | 'horizontal' | 'vertical' | 'vlive_horizontal' | 'vlive_full';
   data?: IVideo;
@@ -236,14 +249,18 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink,
         <HorizontalImage src={thumbnail} text={duration} />
         <Content>
           {title ? <Title $shrink={!!shrink}>{title}</Title> : <TitlePlaceholder />}
-          <VliveInfo>
-            <MembersList>
-              <MemberCircle />
-              <MemberCircle />
-              <MemberCircle />
-            </MembersList>
-            <VliveDate>{date}</VliveDate>
-          </VliveInfo>
+          {date ? (
+            <VliveInfo>
+              <MembersList>
+                <MemberCircle />
+                <MemberCircle />
+                <MemberCircle />
+              </MembersList>
+              <VliveDate>{date}</VliveDate>
+            </VliveInfo>
+          ) : (
+            <VliveInfoPlaceholder />
+          )}
         </Content>
       </HorizontalLayout>
     ) : (
@@ -251,14 +268,18 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink,
         <Image src={thumbnail} text={duration} />
         <Content>
           {title ? <Title>{title}</Title> : <TitlePlaceholder />}
-          <VliveInfo>
-            <MembersList>
-              <MemberCircle />
-              <MemberCircle />
-              <MemberCircle />
-            </MembersList>
-            <VliveDate>{date}</VliveDate>
-          </VliveInfo>
+          {date ? (
+            <VliveInfo>
+              <MembersList>
+                <MemberCircle />
+                <MemberCircle />
+                <MemberCircle />
+              </MembersList>
+              <VliveDate>{date}</VliveDate>
+            </VliveInfo>
+          ) : (
+            <VliveInfoPlaceholder />
+          )}
         </Content>
       </FullLayout>
     );

@@ -13,6 +13,7 @@ const PcTopMargin = 100;
 const PcLeftMargin = 112;
 
 const Color = {
+  BLACK: '#272928',
   WHITE: '#FFFFFF',
   PRIMARY: '#556FE5',
   GRAY: '#454B6B',
