@@ -130,5 +130,8 @@
   },
   "fund": {
     "fund": "Fundraising"
+  },
+  "vlive": {
+    "vlive": "Vlive"
   }
 }
