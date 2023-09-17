@@ -4,6 +4,7 @@ const PageTitles = new Map<string, string>();
 
 PageTitles.set('/', 'IZFLIX');
 PageTitles.set('/vod', 'VOD');
+PageTitles.set('/vlive', 'Vlive');
 PageTitles.set('/profile', 'Profile');
 PageTitles.set('/profile/settings', 'Settings');
 PageTitles.set('/profile/info', 'Info');
@@ -38,7 +39,7 @@ class PageManager {
         const type =
           path === '/'
             ? 'main'
-            : ['/vod', '/playlist', '/profile'].includes(path)
+            : ['/vod', '/vlive', '/profile'].includes(path)
             ? 'submain'
             : 'children';
         return { title, params, type };

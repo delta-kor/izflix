@@ -30,6 +30,7 @@ import VodPage from './pages/VodPage';
 import PageManager from './services/page-manager';
 import Spaceship from './services/spaceship';
 import FundraisingPage from './pages/FundraisingPage';
+import VlivePage from './pages/VlivePage';
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -61,6 +62,7 @@ const App: React.FC = () => {
           <Route path="/" element={<MainPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/vod" element={<VodPage />} />
+          <Route path="/vlive" element={<VlivePage />} />
           <Route path="/playlist" element={<PlaylistPage />} />
           <Route path="/playlist/:id" element={<PlaylistItemPage />} />
           <Route path="/music" element={<MusicPage />} />

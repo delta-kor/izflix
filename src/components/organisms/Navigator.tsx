@@ -90,11 +90,11 @@ const Navigator: React.FC = () => {
             <Item type={'tv'} color={location.pathname === '/vod' ? Color.WHITE : Color.GRAY} />
           </ItemClickBox>
         </Link>
-        <Link to={'/playlist'} onClick={() => Tracker.send('nav_click', { item_type: 'playlist' })}>
+        <Link to={'/vlive'} onClick={() => Tracker.send('nav_click', { item_type: 'vlive' })}>
           <ItemClickBox hover={1.1} tap={0.9}>
             <Item
               type={'playlist'}
-              color={location.pathname === '/playlist' ? Color.WHITE : Color.GRAY}
+              color={location.pathname === '/vlive' ? Color.WHITE : Color.GRAY}
             />
           </ItemClickBox>
         </Link>
