@@ -47,6 +47,7 @@ interface IVideo {
   category: [string, string, string];
   duration: number;
   properties: VideoProperty[];
+  members: string[];
 }
 
 interface IVideoWithPlayTime extends IVideo {
@@ -221,6 +222,12 @@ namespace ApiResponse {
 
     interface GetOne extends ApiResponse {
       videos: IVideo[];
+    }
+  }
+
+  namespace Vlive {
+    interface List extends ApiResponse {
+      videos: Video[];
     }
   }
 }

@@ -458,6 +458,13 @@ class SpaceshipClass {
     });
   }
 
+  public async getVliveList(anchor?: string): Promise<ApiResponse.Vlive.List> {
+    return this.get(`/vlive/list?anchor=${anchor}&count=10`, {
+      key: `get_vlive_list::${anchor}`,
+      expire: expireTime,
+    });
+  }
+
   public getThumbnail(id: string): string {
     return `${this.baseUrl}/thumbnail/${id}`;
   }

@@ -9,6 +9,8 @@ export function getDate(number: number, language: string): string {
       return `${month}/${dayOfMonth}/${year}`;
     case 'ko':
       return `${year}년 ${month}월 ${dayOfMonth}일`;
+    case 'dot':
+      return `${year}. ${month}. ${dayOfMonth}.`;
     default:
       return `${month}/${dayOfMonth}/${year}`;
   }

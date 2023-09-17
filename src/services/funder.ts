@@ -2,7 +2,7 @@ import Playtime from './playtime';
 
 const active = true;
 const target = 42000;
-const current = 13854;
+const current = 23854;
 
 export default class Funder {
   public static isActive(): boolean {

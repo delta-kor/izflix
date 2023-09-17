@@ -2,7 +2,7 @@ import { MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
-import { getDuration, getHumanDuration } from '../../services/time';
+import { getDate, getDuration, getHumanDuration } from '../../services/time';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 import SmoothImage from './SmoothImage';
@@ -139,8 +139,54 @@ const VerticalImage = styled(SmoothImage)`
   border-radius: 8px;
 `;
 
+const MembersList = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const VliveInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  ${PcQuery} {
+    margin: 4px 0 0 0;
+  }
+`;
+
+const MemberCircle = styled.div`
+  border-radius: 100%;
+  border: 3px solid ${Color.BACKGROUND};
+  background: #ea6868;
+
+  ${MobileQuery} {
+    margin: 0 -8px 0 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  ${PcQuery} {
+    margin: 0 -10px 0 0;
+    width: 24px;
+    height: 24px;
+  }
+`;
+
+const VliveDate = styled.div`
+  color: ${Color.GRAY};
+  font-weight: 700;
+
+  ${MobileQuery} {
+    font-size: 14px;
+  }
+
+  ${PcQuery} {
+    font-size: 16px;
+  }
+`;
+
 interface Props {
-  type: 'full' | 'horizontal' | 'vertical';
+  type: 'full' | 'horizontal' | 'vertical' | 'vlive_horizontal' | 'vlive_full';
   data?: IVideo;
   link?: string;
   state?: any;
@@ -155,6 +201,8 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink,
   const description = data && data.description;
   const properties = data && data.properties;
   const duration = data && getDuration(data.duration, properties);
+  const members = data && data.members;
+  const date = data && getDate(data.date, 'dot');
 
   const Component =
     type === 'full' ? (
@@ -178,11 +226,41 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink,
           {playTime ? <PlayTime $shrink={!!shrink}>{getHumanDuration(playTime)}</PlayTime> : null}
         </Content>
       </HorizontalLayout>
-    ) : (
+    ) : type === 'vertical' ? (
       <VerticalLayout hover={1.05} tap={0.95} onClick={onClick}>
         <VerticalImage src={thumbnail} text={duration} />
         {title ? <Title>{title}</Title> : <TitlePlaceholder />}
       </VerticalLayout>
+    ) : type === 'vlive_horizontal' ? (
+      <HorizontalLayout $shrink={!!shrink} hover={1.03} tap={0.97} onClick={onClick}>
+        <HorizontalImage src={thumbnail} text={duration} />
+        <Content>
+          {title ? <Title $shrink={!!shrink}>{title}</Title> : <TitlePlaceholder />}
+          <VliveInfo>
+            <MembersList>
+              <MemberCircle />
+              <MemberCircle />
+              <MemberCircle />
+            </MembersList>
+            <VliveDate>{date}</VliveDate>
+          </VliveInfo>
+        </Content>
+      </HorizontalLayout>
+    ) : (
+      <FullLayout hover={1.02} tap={0.98} onClick={onClick}>
+        <Image src={thumbnail} text={duration} />
+        <Content>
+          {title ? <Title>{title}</Title> : <TitlePlaceholder />}
+          <VliveInfo>
+            <MembersList>
+              <MemberCircle />
+              <MemberCircle />
+              <MemberCircle />
+            </MembersList>
+            <VliveDate>{date}</VliveDate>
+          </VliveInfo>
+        </Content>
+      </FullLayout>
     );
 
   return link ? (
