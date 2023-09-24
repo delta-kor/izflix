@@ -61,10 +61,11 @@ const VliveListSection: React.FC = () => {
   const modal = useModal();
 
   const [videos, setVideos] = useState<IVideo[]>(sessionData.videos || []);
-  const [sort, setSort] = useState<string>(sessionData.filter?.sort || 'oldest');
 
   const observerRef = useRef<HTMLDivElement>(null);
   const anchorRef = useRef<string>(sessionData.filter?.anchor || '0');
+  const filterRef = useRef<IVliveFilter>(sessionData.filter || { sort: 'oldest', count: 12 });
+
   const loading = useRef<boolean>(false);
   const ended = useRef<boolean>(false);
 
@@ -95,7 +96,12 @@ const VliveListSection: React.FC = () => {
     };
   }, [observerRef, videos]);
 
-  const loadVideos = async (filter: IVliveFilter, reset: boolean = false) => {
+  const loadVideos = async (reset: boolean = false) => {
+    if (reset) anchorRef.current = '0';
+    const filter: IVliveFilter = { ...filterRef.current, anchor: anchorRef.current };
+
+    console.log(filter);
+
     loading.current = true;
     const response = await Spaceship.getVliveList(filter);
     loading.current = false;
@@ -107,6 +113,11 @@ const VliveListSection: React.FC = () => {
     if (newVideos.length === 0) {
       ended.current = true;
       forceUpdate();
+      session.set<Session>('vlive_list', {
+        videos,
+        filter,
+      });
+
       return false;
     }
 
@@ -121,33 +132,31 @@ const VliveListSection: React.FC = () => {
     setVideos(appendedVideos);
   };
 
-  const updateData = (filter: IVliveFilter = {}, reset: boolean = false) => {
-    filter.anchor = reset ? '0' : anchorRef.current;
-    filter.sort = filter.sort || sort;
-    filter.count = filter.count || 12;
+  const updateData = (reset: boolean = false) => {
+    new Evoke(loadVideos(reset));
+  };
 
-    new Evoke(loadVideos(filter, reset));
+  const resetData = () => {
+    setVideos([]);
+    ended.current = false;
+    session.remove('vlive_list');
   };
 
   const handleFilterUpdate = (key: string) => {
     if (key === 'set') return setDateFilter();
 
-    setSort(key);
-    setVideos([]);
-    ended.current = false;
-    session.remove('vlive_list');
-    updateData({ sort: key }, true);
+    resetData();
+    filterRef.current.sort = key;
+    updateData(true);
   };
 
   const setDateFilter = async () => {
     const result = await modal({ type: 'date', content: '날짜', value: '2019-01-01' });
     if (result.type === 'date') {
-      setSort('set');
-      setVideos([]);
-      ended.current = false;
-      session.remove('vlive_list');
-
-      updateData({ sort: 'oldest', from: new Date(result.type).getTime() }, true);
+      resetData();
+      filterRef.current.sort = 'set';
+      filterRef.current.from = new Date(result.value).getTime();
+      updateData(true);
     }
   };
 
@@ -159,20 +168,22 @@ const VliveListSection: React.FC = () => {
           { key: 'newest', label: '최근순' },
           { key: 'set', label: '기간 설정' },
         ]}
-        selected={[sort]}
+        selected={[filterRef.current.sort!]}
         onSelect={handleFilterUpdate}
       />
       <ListSector>
-        <List id={'boundary'}>
-          {videos.map(video => (
-            <VideoPanel
-              type={device === 'mobile' ? 'vlive_horizontal' : 'vlive_full'}
-              data={video}
-              link={`/${video.id}`}
-              key={video.id}
-            />
-          ))}
-        </List>
+        {!!videos.length && (
+          <List>
+            {videos.map(video => (
+              <VideoPanel
+                type={device === 'mobile' ? 'vlive_horizontal' : 'vlive_full'}
+                data={video}
+                link={`/${video.id}`}
+                key={video.id}
+              />
+            ))}
+          </List>
+        )}
         <Refresh ref={observerRef} />
         <List>
           {!ended.current && (

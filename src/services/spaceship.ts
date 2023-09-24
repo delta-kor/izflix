@@ -460,7 +460,7 @@ class SpaceshipClass {
 
   public async getVliveList(filter: IVliveFilter): Promise<ApiResponse.Vlive.List> {
     return this.get(
-      `/vlive/list?anchor=${filter.anchor}&sort=${filter.sort}&count=${filter.count}`,
+      `/vlive/list?anchor=${filter.anchor}&sort=${filter.sort}&from=${filter.from}&count=${filter.count}`,
       {
         key: `get_vlive_list::${filter.anchor}::${filter.sort}::${filter.count}::${filter.from}`,
         expire: expireTime,

@@ -3,6 +3,7 @@ class Session {
 
   public set<T>(key: string, value: T): void {
     this.map.set(key, value);
+    console.log(key, value);
   }
 
   public get<T>(key: string): Partial<T> {
