@@ -63,7 +63,6 @@ const VliveListSection: React.FC = () => {
   const [videos, setVideos] = useState<IVideo[]>(sessionData.videos || []);
 
   const observerRef = useRef<HTMLDivElement>(null);
-  const anchorRef = useRef<string>(sessionData.filter?.anchor || '0');
   const filterRef = useRef<IVliveFilter>(sessionData.filter || { sort: 'oldest', count: 12 });
 
   const loading = useRef<boolean>(false);
@@ -97,13 +96,10 @@ const VliveListSection: React.FC = () => {
   }, [observerRef, videos]);
 
   const loadVideos = async (reset: boolean = false) => {
-    if (reset) anchorRef.current = '0';
-    const filter: IVliveFilter = { ...filterRef.current, anchor: anchorRef.current };
-
-    console.log(filter);
+    if (reset) filterRef.current.anchor = '0';
 
     loading.current = true;
-    const response = await Spaceship.getVliveList(filter);
+    const response = await Spaceship.getVliveList(filterRef.current);
     loading.current = false;
 
     if (!response.ok) throw new HttpException(response);
@@ -115,18 +111,18 @@ const VliveListSection: React.FC = () => {
       forceUpdate();
       session.set<Session>('vlive_list', {
         videos,
-        filter,
+        filter: filterRef.current,
       });
 
       return false;
     }
 
     const appendedVideos = reset ? newVideos : [...videos, ...newVideos];
-    anchorRef.current = newVideos.slice(-1)[0].id;
+    filterRef.current.anchor = appendedVideos.slice(-1)[0].id;
 
     session.set<Session>('vlive_list', {
       videos: appendedVideos,
-      filter,
+      filter: filterRef.current,
     });
 
     setVideos(appendedVideos);
