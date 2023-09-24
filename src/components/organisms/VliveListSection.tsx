@@ -147,11 +147,15 @@ const VliveListSection: React.FC = () => {
   };
 
   const setDateFilter = async () => {
-    const result = await modal({ type: 'date', content: '날짜', value: '2019-01-01' });
+    const result = await modal({
+      type: 'date',
+      content: '날짜',
+      value: new Date(filterRef.current.from || '2018-10-29').toLocaleDateString('sv-SE'),
+    });
     if (result.type === 'date') {
       resetData();
       filterRef.current.sort = 'set';
-      filterRef.current.from = new Date(result.value).getTime();
+      filterRef.current.from = new Date(result.value).getTime() || 0;
       updateData(true);
     }
   };
