@@ -44,6 +44,8 @@ const List = styled.div`
 
 const Refresh = styled.div``;
 
+const ListSector = styled.div``;
+
 interface Session {
   videos: IVideo[];
   anchor: string;
@@ -76,7 +78,7 @@ const VliveListSection: React.FC = () => {
           updateData();
         }
       },
-      { threshold: 1, rootMargin: '0px 0px 0px 0px' }
+      { threshold: 1, rootMargin: '0px 0px 500px 0px' }
     );
 
     if (observerRef.current) {
@@ -143,26 +145,32 @@ const VliveListSection: React.FC = () => {
         selected={[sort]}
         onSelect={handleFilterUpdate}
       />
-      <List id={'boundary'}>
-        {videos.map(video => (
-          <VideoPanel
-            type={device === 'mobile' ? 'vlive_horizontal' : 'vlive_full'}
-            data={video}
-            link={`/${video.id}`}
-            key={video.id}
-          />
-        ))}
-
-        {!ended.current && (
-          <Repeat
-            count={3 - (videos.length % 3)}
-            element={i => (
-              <VideoPanel type={device === 'mobile' ? 'vlive_horizontal' : 'vlive_full'} key={i} />
-            )}
-          />
-        )}
+      <ListSector>
+        <List id={'boundary'}>
+          {videos.map(video => (
+            <VideoPanel
+              type={device === 'mobile' ? 'vlive_horizontal' : 'vlive_full'}
+              data={video}
+              link={`/${video.id}`}
+              key={video.id}
+            />
+          ))}
+        </List>
         <Refresh ref={observerRef} />
-      </List>
+        <List>
+          {!ended.current && (
+            <Repeat
+              count={3}
+              element={i => (
+                <VideoPanel
+                  type={device === 'mobile' ? 'vlive_horizontal' : 'vlive_full'}
+                  key={i}
+                />
+              )}
+            />
+          )}
+        </List>
+      </ListSector>
     </Layout>
   );
 };
