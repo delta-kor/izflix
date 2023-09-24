@@ -25,6 +25,8 @@ const Layout = styled.div`
 `;
 
 const List = styled.div`
+  margin: 0 0 32px 0;
+
   ${MobileQuery} {
     display: flex;
     flex-direction: column;
@@ -48,8 +50,7 @@ const ListSector = styled.div``;
 
 interface Session {
   videos: IVideo[];
-  anchor: string;
-  sort: string;
+  filter: IVliveFilter;
 }
 
 const VliveListSection: React.FC = () => {
@@ -58,17 +59,17 @@ const VliveListSection: React.FC = () => {
   const device = useDevice();
 
   const [videos, setVideos] = useState<IVideo[]>(sessionData.videos || []);
-  const [sort, setSort] = useState<string>(sessionData.sort || 'oldest');
+  const [sort, setSort] = useState<string>(sessionData.filter?.sort || 'oldest');
 
   const observerRef = useRef<HTMLDivElement>(null);
-  const anchorRef = useRef<string>(sessionData.anchor || '');
+  const anchorRef = useRef<string>(sessionData.filter?.anchor || '0');
   const loading = useRef<boolean>(false);
   const ended = useRef<boolean>(false);
 
   const forceUpdate = useReducer(x => x + 1, 0)[1];
 
   useEffect(() => {
-    !sessionData.anchor && loadVideos();
+    !sessionData.filter?.anchor && updateData();
   }, []);
 
   useEffect(() => {
@@ -92,15 +93,9 @@ const VliveListSection: React.FC = () => {
     };
   }, [observerRef, videos]);
 
-  const loadVideos = async (anchor?: string, sortInput?: string) => {
-    const reset = !!sortInput;
-    if (reset) {
-      setVideos([]);
-      ended.current = false;
-    }
-
+  const loadVideos = async (filter: IVliveFilter, reset: boolean = false) => {
     loading.current = true;
-    const response = await Spaceship.getVliveList(reset ? '0' : anchor, sortInput || sort);
+    const response = await Spaceship.getVliveList(filter);
     loading.current = false;
 
     if (!response.ok) throw new HttpException(response);
@@ -113,27 +108,38 @@ const VliveListSection: React.FC = () => {
       return false;
     }
 
-    const appendedVideos = sortInput ? newVideos : [...videos, ...newVideos];
+    const appendedVideos = reset ? newVideos : [...videos, ...newVideos];
     anchorRef.current = newVideos.slice(-1)[0].id;
 
     session.set<Session>('vlive_list', {
       videos: appendedVideos,
-      anchor: anchorRef.current,
-      sort: sortInput || sort,
+      filter,
     });
 
     setVideos(appendedVideos);
   };
 
-  const updateData = (sort?: string) => {
-    new Evoke(loadVideos(anchorRef.current, sort));
+  const updateData = (filter?: IVliveFilter, reset: boolean = false) => {
+    filter = filter || {};
+    filter.anchor = reset ? '0' : anchorRef.current;
+    filter.sort = filter.sort || sort;
+    filter.count = filter.count || 12;
+
+    new Evoke(loadVideos(filter, reset));
   };
 
   const handleFilterUpdate = (key: string) => {
+    if (key === 'set') return setDateFilter();
+
+    setVideos([]);
+    ended.current = false;
+
     session.remove('vlive_list');
     setSort(key);
-    updateData(key);
+    updateData({ sort: key }, true);
   };
+
+  const setDateFilter = () => {};
 
   return (
     <Layout>
@@ -141,6 +147,7 @@ const VliveListSection: React.FC = () => {
         data={[
           { key: 'oldest', label: '날짜순' },
           { key: 'newest', label: '최근순' },
+          { key: 'set', label: '기간 설정' },
         ]}
         selected={[sort]}
         onSelect={handleFilterUpdate}

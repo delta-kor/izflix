@@ -458,11 +458,14 @@ class SpaceshipClass {
     });
   }
 
-  public async getVliveList(anchor?: string, sort?: string): Promise<ApiResponse.Vlive.List> {
-    return this.get(`/vlive/list?anchor=${anchor || '0'}&sort=${sort || 'oldest'}&count=12`, {
-      key: `get_vlive_list::${anchor}::${sort}`,
-      expire: expireTime,
-    });
+  public async getVliveList(filter: IVliveFilter): Promise<ApiResponse.Vlive.List> {
+    return this.get(
+      `/vlive/list?anchor=${filter.anchor}&sort=${filter.sort}&count=${filter.count}`,
+      {
+        key: `get_vlive_list::${filter.anchor}::${filter.sort}`,
+        expire: expireTime,
+      }
+    );
   }
 
   public getThumbnail(id: string): string {

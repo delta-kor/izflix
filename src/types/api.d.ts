@@ -97,6 +97,13 @@ interface ITimeline {
   chapters: [IChapter];
 }
 
+interface IVliveFilter {
+  anchor?: string;
+  count?: number;
+  sort?: string;
+  from?: number;
+}
+
 type CalendarTimestamp = [string, number];
 
 namespace ApiResponse {
