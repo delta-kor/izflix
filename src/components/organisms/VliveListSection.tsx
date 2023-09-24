@@ -9,6 +9,7 @@ import useDevice from '../../hooks/useDevice';
 import session from '../../services/session';
 import SelectionMenu from '../atoms/SelectionMenu';
 import Repeat from '../tools/Repeat';
+import useModal from '../../hooks/useModal';
 
 const Layout = styled.div`
   display: flex;
@@ -57,6 +58,7 @@ const VliveListSection: React.FC = () => {
   const sessionData = session.get<Session>('vlive_list');
 
   const device = useDevice();
+  const modal = useModal();
 
   const [videos, setVideos] = useState<IVideo[]>(sessionData.videos || []);
   const [sort, setSort] = useState<string>(sessionData.filter?.sort || 'oldest');
@@ -119,8 +121,7 @@ const VliveListSection: React.FC = () => {
     setVideos(appendedVideos);
   };
 
-  const updateData = (filter?: IVliveFilter, reset: boolean = false) => {
-    filter = filter || {};
+  const updateData = (filter: IVliveFilter = {}, reset: boolean = false) => {
     filter.anchor = reset ? '0' : anchorRef.current;
     filter.sort = filter.sort || sort;
     filter.count = filter.count || 12;
@@ -131,15 +132,24 @@ const VliveListSection: React.FC = () => {
   const handleFilterUpdate = (key: string) => {
     if (key === 'set') return setDateFilter();
 
+    setSort(key);
     setVideos([]);
     ended.current = false;
-
     session.remove('vlive_list');
-    setSort(key);
     updateData({ sort: key }, true);
   };
 
-  const setDateFilter = () => {};
+  const setDateFilter = async () => {
+    const result = await modal({ type: 'date', content: '날짜', value: '2019-01-01' });
+    if (result.type === 'date') {
+      setSort('set');
+      setVideos([]);
+      ended.current = false;
+      session.remove('vlive_list');
+
+      updateData({ sort: 'oldest', from: new Date(result.type).getTime() }, true);
+    }
+  };
 
   return (
     <Layout>

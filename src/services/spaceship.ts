@@ -462,7 +462,7 @@ class SpaceshipClass {
     return this.get(
       `/vlive/list?anchor=${filter.anchor}&sort=${filter.sort}&count=${filter.count}`,
       {
-        key: `get_vlive_list::${filter.anchor}::${filter.sort}`,
+        key: `get_vlive_list::${filter.anchor}::${filter.sort}::${filter.count}::${filter.from}`,
         expire: expireTime,
       }
     );
