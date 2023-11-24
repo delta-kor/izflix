@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Settings from '../../services/settings';
 import Tracker from '../../services/tracker';
-import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
+import { Color, MobileQuery, MobileSideMargin, PcInnerPadding, PcQuery } from '../../styles';
 import SectionTitle from '../atoms/SectionTitle';
 import VideoPanel from '../atoms/VideoPanel';
 import Repeat from '../tools/Repeat';
@@ -28,7 +28,7 @@ const ItemList = styled.section<{ $fluid: boolean }>`
   ${MobileQuery} {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 24px 24px;
-    padding: 0 ${({ $fluid: $flat }) => ($flat ? 0 : '32px')};
+    padding: 0 ${({ $fluid: $flat }) => ($flat ? 0 : `${MobileSideMargin}px`)};
   }
 
   ${PcQuery} {

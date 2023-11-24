@@ -1,14 +1,22 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
-import { Color, HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
+import {
+  Color,
+  HideOverflow,
+  MobileQuery,
+  MobileSideMargin,
+  PcInnerPadding,
+  PcQuery,
+  Text,
+} from '../../styles';
 
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
 
   ${MobileQuery} {
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
     gap: 32px;
   }
 

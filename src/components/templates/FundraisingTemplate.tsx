@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Color, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
+import { Color, MobileQuery, MobileSideMargin, PcInnerPadding, PcQuery, Text } from '../../styles';
 import Funder from '../../services/funder';
 
 const Layout = styled.div`
@@ -8,7 +8,7 @@ const Layout = styled.div`
   max-width: 1230px;
 
   ${MobileQuery} {
-    padding: 0 32px 64px 32px;
+    padding: 0 ${MobileSideMargin}px 64px ${MobileSideMargin}px;
     gap: 32px;
   }
 

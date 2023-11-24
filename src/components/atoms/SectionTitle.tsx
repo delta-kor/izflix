@@ -5,6 +5,7 @@ import {
   Color,
   HideOverflow,
   MobileQuery,
+  MobileSideMargin,
   PcInnerPadding,
   PcQuery,
   Placeholder,
@@ -17,7 +18,7 @@ const Layout = styled.div<{ $fluid: boolean }>`
   align-items: center;
 
   ${MobileQuery} {
-    padding: 8px ${({ $fluid }) => ($fluid ? '0' : '32px')};
+    padding: 8px ${({ $fluid }) => ($fluid ? '0' : `${MobileSideMargin}px`)};
     gap: 8px;
   }
 

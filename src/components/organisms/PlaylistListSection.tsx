@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
 import Tracker from '../../services/tracker';
-import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
+import { MobileQuery, MobileSideMargin, PcInnerPadding, PcQuery } from '../../styles';
 import ListItem from '../atoms/ListItem';
 import Repeat from '../tools/Repeat';
 
@@ -11,7 +11,7 @@ const Layout = styled.div`
   flex-direction: column;
 
   ${MobileQuery} {
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
   }
 
   ${PcQuery} {

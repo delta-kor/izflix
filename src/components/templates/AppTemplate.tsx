@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Color, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
+import { Color, MobileQuery, MobileSideMargin, PcInnerPadding, PcQuery, Text } from '../../styles';
 import SmoothImage from '../atoms/SmoothImage';
 
 const Layout = styled.div`
@@ -8,7 +8,7 @@ const Layout = styled.div`
   flex-direction: column;
 
   ${MobileQuery} {
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
     gap: 28px;
   }
 

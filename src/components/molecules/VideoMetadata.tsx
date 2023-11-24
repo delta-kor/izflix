@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import { dateToKey, getDate } from '../../services/time';
-import { Color, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
+import { Color, MobileQuery, MobileSideMargin, PcQuery, Placeholder, Text } from '../../styles';
 import Breadcrumb from '../atoms/Breadcrumb';
 import SmoothBox from '../atoms/SmoothBox';
 
@@ -11,14 +11,15 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 32px;
 
   ${MobileQuery} {
     gap: 8px;
+    padding: 0 ${MobileSideMargin}px;
   }
 
   ${PcQuery} {
     gap: 12px;
+    padding: 0 32px;
   }
 `;
 

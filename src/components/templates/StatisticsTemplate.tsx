@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { MobileQuery, PcQuery, PcInnerPadding } from '../../styles';
+import { MobileQuery, PcQuery, PcInnerPadding, MobileSideMargin } from '../../styles';
 import StatisticsSection from '../organisms/StatisticsSection';
 import { useTranslation } from 'react-i18next';
 
@@ -8,7 +8,7 @@ const Layout = styled.div`
   flex-direction: column;
 
   ${MobileQuery} {
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
     gap: 12px;
   }
 

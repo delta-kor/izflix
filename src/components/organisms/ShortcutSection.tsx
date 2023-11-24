@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import Tracker from '../../services/tracker';
-import { Color, MobileQuery, PcQuery } from '../../styles';
+import { Color, MobileQuery, MobileSideMargin, PcQuery } from '../../styles';
 import ListButton from '../atoms/ListButton';
 import VerticalButton from '../atoms/VerticalButton';
 
@@ -13,7 +13,7 @@ const Layout = styled.div`
   ${MobileQuery} {
     justify-content: space-between;
     gap: 12px;
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
   }
 
   ${PcQuery} {

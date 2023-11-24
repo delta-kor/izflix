@@ -20,7 +20,7 @@ const Layout = styled.nav`
     right: 0;
     justify-content: space-around;
 
-    padding: 16px 32px;
+    padding: 8px 16px;
     background: ${Color.BACKGROUND};
 
     border-top: 1px solid ${Color.DARK_GRAY};

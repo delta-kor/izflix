@@ -8,6 +8,9 @@ const PcQuery = `@media (min-width: ${MobileLimit + 1}px)`;
 const PcStretchLimitInner = 1240;
 const PcStretchLimitOuter = PcStretchLimitInner + 132 * 2;
 
+const MobileSideMargin = 24;
+const VideoPageAdditionalMargin = -8;
+
 const MobileTopMargin = 80;
 const PcTopMargin = 100;
 const PcLeftMargin = 112;
@@ -75,6 +78,8 @@ export {
   TabletQuery,
   PcStretchLimitInner,
   PcStretchLimitOuter,
+  MobileSideMargin,
+  VideoPageAdditionalMargin,
   MobileTopMargin,
   PcTopMargin,
   PcLeftMargin,

@@ -8,7 +8,14 @@ import { Panorama } from '../../hooks/usePanorama';
 import { LightLikeRiv } from '../../services/rive';
 import Tracker from '../../services/tracker';
 import Transmitter from '../../services/transmitter';
-import { Color, MobileQuery, PcQuery, Text } from '../../styles';
+import {
+  Color,
+  MobileQuery,
+  MobileSideMargin,
+  PcQuery,
+  Text,
+  VideoPageAdditionalMargin,
+} from '../../styles';
 import SmoothBox from '../atoms/SmoothBox';
 import VerticalButton from '../atoms/VerticalButton';
 
@@ -17,7 +24,8 @@ const Layout = styled.div`
   justify-content: space-evenly;
 
   ${MobileQuery} {
-    margin: 16px 16px 0 16px;
+    margin: 16px ${MobileSideMargin + VideoPageAdditionalMargin}px 0
+      ${MobileSideMargin + VideoPageAdditionalMargin}px;
     background: ${Color.DARK_GRAY};
     border-radius: 8px;
   }

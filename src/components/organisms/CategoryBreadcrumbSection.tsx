@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
+import { MobileQuery, MobileSideMargin, PcInnerPadding, PcQuery } from '../../styles';
 import Breadcrumb from '../atoms/Breadcrumb';
 
 const Layout = styled.div`
   ${MobileQuery} {
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
   }
 
   ${PcQuery} {

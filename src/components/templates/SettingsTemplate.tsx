@@ -3,7 +3,14 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import useModal from '../../hooks/useModal';
 import Settings from '../../services/settings';
-import { HideOverflow, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
+import {
+  HideOverflow,
+  MobileQuery,
+  MobileSideMargin,
+  PcInnerPadding,
+  PcQuery,
+  Text,
+} from '../../styles';
 import SettingsItem from '../atoms/SettingsItem';
 
 const Layout = styled.div`
@@ -11,7 +18,7 @@ const Layout = styled.div`
   flex-direction: column;
 
   ${MobileQuery} {
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
     gap: 28px;
   }
 

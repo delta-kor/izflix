@@ -12,6 +12,7 @@ import {
   EaseReverse,
   HideOverflow,
   MobileQuery,
+  MobileSideMargin,
   PcInnerPadding,
   PcQuery,
   Text,
@@ -22,7 +23,7 @@ const Layout = styled.div`
   flex-direction: column;
 
   ${MobileQuery} {
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
     gap: 8px;
   }
 

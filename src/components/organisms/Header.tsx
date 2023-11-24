@@ -11,6 +11,7 @@ import {
   Color,
   HideOverflow,
   MobileQuery,
+  MobileSideMargin,
   MobileTopMargin,
   PcInnerPadding,
   PcLeftMargin,
@@ -44,7 +45,7 @@ const Layout = styled.header<{ $active: boolean; $search: boolean }>`
     width: 100%;
     height: ${MobileTopMargin}px;
 
-    padding: 24px 28px;
+    padding: 24px ${MobileSideMargin - 4}px;
     gap: 16px;
   }
 

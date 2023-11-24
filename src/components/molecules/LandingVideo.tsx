@@ -14,6 +14,7 @@ import {
   Color,
   HideOverflow,
   MobileQuery,
+  MobileSideMargin,
   MobileTopMargin,
   PcInnerPadding,
   PcLeftMargin,
@@ -35,7 +36,7 @@ const Layout = styled.div`
   ${MobileQuery} {
     gap: 16px;
     height: 320px;
-    padding: 24px 32px;
+    padding: 24px ${MobileSideMargin}px;
     margin: -${MobileTopMargin}px 0 0 0;
   }
 
