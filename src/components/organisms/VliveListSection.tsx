@@ -4,12 +4,13 @@ import Spaceship from '../../services/spaceship';
 import { useEffect, useReducer, useRef, useState } from 'react';
 import Evoke from '../../filters/evoke';
 import VideoPanel from '../atoms/VideoPanel';
-import { MobileQuery, PcQuery, PcInnerPadding, TabletQuery } from '../../styles';
+import { MobileQuery, PcQuery, PcInnerPadding, TabletQuery, Color } from '../../styles';
 import useDevice from '../../hooks/useDevice';
 import session from '../../services/session';
 import SelectionMenu from '../atoms/SelectionMenu';
 import Repeat from '../tools/Repeat';
 import useModal from '../../hooks/useModal';
+import SmoothBox from '../atoms/SmoothBox';
 
 const Layout = styled.div`
   display: flex;
@@ -17,7 +18,7 @@ const Layout = styled.div`
   gap: 16px;
 
   ${MobileQuery} {
-    padding: 0 32px;
+    padding: 0 24px;
   }
 
   ${PcQuery} {
@@ -54,6 +55,28 @@ const Refresh = styled.div`
 `;
 
 const ListSector = styled.div``;
+
+const Menu = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Filter = styled(SmoothBox)`
+  & > .content {
+    display: flex;
+    padding: 10px 14px;
+    border-radius: 4px;
+    background: ${Color.GRAY};
+
+    font-size: 16px;
+    font-weight: 700;
+    color: ${Color.WHITE};
+    transform: skew(0.1deg);
+
+    cursor: pointer;
+    user-select: none;
+  }
+`;
 
 interface Session {
   videos: IVideo[];
@@ -168,15 +191,20 @@ const VliveListSection: React.FC = () => {
 
   return (
     <Layout>
-      <SelectionMenu
-        data={[
-          { key: 'oldest', label: '날짜순' },
-          { key: 'newest', label: '최근순' },
-          { key: 'set', label: '기간 설정' },
-        ]}
-        selected={[filterRef.current.sort!]}
-        onSelect={handleFilterUpdate}
-      />
+      <Menu>
+        <SelectionMenu
+          data={[
+            { key: 'oldest', label: '날짜순' },
+            { key: 'newest', label: '최근순' },
+            { key: 'set', label: '기간 설정' },
+          ]}
+          selected={[filterRef.current.sort!]}
+          onSelect={handleFilterUpdate}
+        />
+        <Filter hover={1.03} tap={0.97}>
+          필터
+        </Filter>
+      </Menu>
       <ListSector>
         <List>
           {videos.map(video => (
