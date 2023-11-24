@@ -98,10 +98,12 @@ const Description = styled.div`
 
   ${MobileQuery} {
     ${Text.SUBTITLE_1};
+    font-weight: 400;
   }
 
   ${PcQuery} {
     ${Text.EX_SUBTITLE_1};
+    font-weight: 400;
   }
 `;
 

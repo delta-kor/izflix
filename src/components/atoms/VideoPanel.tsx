@@ -62,6 +62,7 @@ const Description = styled.p<{ $shrink?: boolean }>`
 
   ${PcQuery} {
     ${({ $shrink }) => ($shrink ? Text.SUBTITLE_2 : Text.SUBTITLE_1)};
+    font-weight: 400;
   }
 `;
 

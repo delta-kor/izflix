@@ -9,7 +9,7 @@ const PcStretchLimitInner = 1240;
 const PcStretchLimitOuter = PcStretchLimitInner + 132 * 2;
 
 const MobileSideMargin = 24;
-const VideoPageAdditionalMargin = -8;
+const VideoPageAdditionalMargin = -12;
 
 const MobileTopMargin = 80;
 const PcTopMargin = 100;
@@ -31,7 +31,7 @@ const Text = {
   HEADLINE_2: `font-size: 20px; font-weight: 800; height: 24px; line-height: 24px;`,
   HEADLINE_3: `font-size: 18px; font-weight: 700; height: 22px; line-height: 22px;`,
   SUBTITLE_1: `font-size: 16px; font-weight: 700; height: 20px; line-height: 20px;`,
-  SUBTITLE_2: `font-size: 14px; font-weight: 700; height: 18px; line-height: 18px;`,
+  SUBTITLE_2: `font-size: 14px; font-weight: 400; height: 18px; line-height: 18px;`,
   BODY_1: `font-size: 16px; font-weight: 400; height: 20px; line-height: 20px;`,
   BODY_2: `font-size: 14px; font-weight: 400; height: 18px; line-height: 18px;`,
   BODY_3: `font-size: 12px; font-weight: 400; height: 14px; line-height: 14px;`,
