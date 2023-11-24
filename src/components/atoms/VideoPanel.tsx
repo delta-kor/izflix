@@ -15,6 +15,7 @@ const FullLayout = styled(SmoothBox)`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    min-width: 0;
 
     cursor: pointer;
     user-select: none;
@@ -285,7 +286,7 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink,
     );
 
   return link ? (
-    <Link to={link} state={state}>
+    <Link to={link} state={state} style={{ minWidth: 0 }}>
       {Component}
     </Link>
   ) : (

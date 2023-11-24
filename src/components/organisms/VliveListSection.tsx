@@ -26,8 +26,6 @@ const Layout = styled.div`
 `;
 
 const List = styled.div`
-  margin: 0 0 32px 0;
-
   ${MobileQuery} {
     display: flex;
     flex-direction: column;
@@ -45,7 +43,15 @@ const List = styled.div`
   }
 `;
 
-const Refresh = styled.div``;
+const Refresh = styled.div`
+  ${MobileQuery} {
+    margin: 0 0 16px 0;
+  }
+
+  ${PcQuery} {
+    margin: 0 0 36px 0;
+  }
+`;
 
 const ListSector = styled.div``;
 
@@ -63,7 +69,7 @@ const VliveListSection: React.FC = () => {
   const [videos, setVideos] = useState<IVideo[]>(sessionData.videos || []);
 
   const observerRef = useRef<HTMLDivElement>(null);
-  const filterRef = useRef<IVliveFilter>(sessionData.filter || { sort: 'oldest', count: 12 });
+  const filterRef = useRef<IVliveFilter>(sessionData.filter || { sort: 'oldest', count: 18 });
 
   const loading = useRef<boolean>(false);
   const ended = useRef<boolean>(false);
@@ -172,19 +178,17 @@ const VliveListSection: React.FC = () => {
         onSelect={handleFilterUpdate}
       />
       <ListSector>
-        {!!videos.length && (
-          <List>
-            {videos.map(video => (
-              <VideoPanel
-                type={device === 'mobile' ? 'vlive_horizontal' : 'vlive_full'}
-                data={video}
-                link={`/${video.id}`}
-                key={video.id}
-              />
-            ))}
-          </List>
-        )}
-        <Refresh ref={observerRef} />
+        <List>
+          {videos.map(video => (
+            <VideoPanel
+              type={device === 'mobile' ? 'vlive_horizontal' : 'vlive_full'}
+              data={video}
+              link={`/${video.id}`}
+              key={video.id}
+            />
+          ))}
+        </List>
+        {!!videos.length && <Refresh ref={observerRef} />}
         <List>
           {!ended.current && (
             <Repeat

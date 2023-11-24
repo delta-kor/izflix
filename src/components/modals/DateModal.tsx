@@ -32,6 +32,7 @@ const Content = styled.div`
 `;
 
 const Input = styled.input`
+  width: 100%;
   color: ${Color.WHITE};
   font-weight: 700;
   border: none;
