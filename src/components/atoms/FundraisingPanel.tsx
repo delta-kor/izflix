@@ -67,7 +67,7 @@ const FundraisingPanel: React.FC = () => {
   return (
     <Layout hover={1.03} tap={0.97} onClick={() => navigate('/profile/fundraising')}>
       <Header>
-        <Title>9월 모금 진행률</Title>
+        <Title>10월 모금 진행률</Title>
         <LinkIcon type={'right'} color={Color.WHITE} />
       </Header>
       <Content>
