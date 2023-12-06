@@ -6,6 +6,8 @@ import { getDate, getDuration, getHumanDuration } from '../../services/time';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 import SmoothImage from './SmoothImage';
+import getMemberColor from '../../services/color';
+import MemberCircle from './MemberCircle';
 
 const FullLayout = styled(SmoothBox)`
   width: 100%;
@@ -141,11 +143,6 @@ const VerticalImage = styled(SmoothImage)`
   border-radius: 8px;
 `;
 
-const MembersList = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 const VliveInfo = styled.div`
   display: flex;
   justify-content: space-between;
@@ -156,27 +153,9 @@ const VliveInfo = styled.div`
   }
 `;
 
-const MemberCircle = styled.div`
-  border-radius: 100%;
-  border: 3px solid ${Color.BACKGROUND};
-  background: #ea6868;
-
-  ${MobileQuery} {
-    margin: 0 -8px 0 0;
-    width: 20px;
-    height: 20px;
-  }
-
-  ${PcQuery} {
-    margin: 0 -10px 0 0;
-    width: 24px;
-    height: 24px;
-  }
-`;
-
 const VliveDate = styled.div`
   color: ${Color.GRAY};
-  font-weight: 700;
+  font-weight: 400;
 
   ${MobileQuery} {
     font-size: 14px;
@@ -253,11 +232,7 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink,
           {title ? <Title $shrink={!!shrink}>{title}</Title> : <TitlePlaceholder />}
           {date ? (
             <VliveInfo>
-              <MembersList>
-                <MemberCircle />
-                <MemberCircle />
-                <MemberCircle />
-              </MembersList>
+              <MemberCircle members={members!} />
               <VliveDate>{date}</VliveDate>
             </VliveInfo>
           ) : (
@@ -272,11 +247,7 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink,
           {title ? <Title>{title}</Title> : <TitlePlaceholder />}
           {date ? (
             <VliveInfo>
-              <MembersList>
-                <MemberCircle />
-                <MemberCircle />
-                <MemberCircle />
-              </MembersList>
+              <MemberCircle members={members!} />
               <VliveDate>{date}</VliveDate>
             </VliveInfo>
           ) : (
