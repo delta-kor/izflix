@@ -46,7 +46,8 @@ const SendPage: React.FC = () => {
     await Spaceship.getUser();
     const token = Settings.getOne('$_AUTH_TOKEN')!;
     const time = Date.now();
-    const url = `https://live.izflix.net/login?token=${encodeURIComponent(token)}&time=${time}`;
+    // prettier-ignore
+    const url = `${process.env.REACT_APP_LOGIN_URL}/login?token=${encodeURIComponent(token)}&time=${time}`;
     window.location.href = url;
   };
 
