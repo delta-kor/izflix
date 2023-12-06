@@ -6,6 +6,7 @@ import { dateToKey, getDate } from '../../services/time';
 import { Color, MobileQuery, MobileSideMargin, PcQuery, Placeholder, Text } from '../../styles';
 import Breadcrumb from '../atoms/Breadcrumb';
 import SmoothBox from '../atoms/SmoothBox';
+import MemberCircle from '../atoms/MemberCircle';
 
 const Layout = styled.div`
   display: flex;
@@ -82,6 +83,8 @@ const CategoryPlaceholder = styled.div`
   }
 `;
 
+const MemberCircleLayout = styled(MemberCircle)``;
+
 interface Props {
   videoInfo?: ApiResponse.Video.Info;
 }
@@ -92,6 +95,7 @@ const VideoMetadata: React.FC<Props> = ({ videoInfo }) => {
 
   const date = videoInfo?.date;
   const path = videoInfo?.path;
+  const members = videoInfo?.members;
 
   const onDateAreaClick = () => {
     const dateKey = date && dateToKey(new Date(date));
@@ -108,7 +112,8 @@ const VideoMetadata: React.FC<Props> = ({ videoInfo }) => {
           <DatePlaceholder />
         )}
       </DateArea>
-      {path ? <Breadcrumb path={path} shrinked /> : <CategoryPlaceholder />}
+      {path ? members ? null : <Breadcrumb path={path} shrinked /> : <CategoryPlaceholder />}
+      {members && <MemberCircle members={members} info />}
     </Layout>
   );
 };

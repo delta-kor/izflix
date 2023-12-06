@@ -147,6 +147,7 @@ namespace ApiResponse {
       properties: VideoProperty[];
       music: [string, string] | null;
       timeline?: ITimeline;
+      members?: string[];
     }
 
     interface List extends ApiResponse {

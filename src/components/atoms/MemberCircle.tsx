@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import getMemberColor from '../../services/color';
 
-const MembersList = styled.div`
+const MembersList = styled.div<{ $info?: boolean }>`
   display: flex;
   align-items: center;
+  ${({ $info }) => $info && 'margin-bottom: -4px;'}
 `;
 
 const CircleItem = styled.div<{ $color: string }>`
@@ -13,7 +14,6 @@ const CircleItem = styled.div<{ $color: string }>`
   background: ${({ $color }) => $color};
   color: ${Color.WHITE};
   text-align: center;
-  font-weight: 700;
 
   ${MobileQuery} {
     margin: 0 -8px 0 0;
@@ -21,22 +21,33 @@ const CircleItem = styled.div<{ $color: string }>`
     height: 20px;
     line-height: 15px;
     font-size: 10px;
+    font-weight: 700;
   }
 
   ${PcQuery} {
     margin: 0 -10px 0 0;
     width: 24px;
     height: 24px;
-    line-height: 20px;
+    line-height: 18px;
     font-size: 12px;
   }
 `;
 
 interface Props {
   members: string[];
+  info?: boolean;
 }
 
-const MemberCircle: React.FC<Props> = ({ members }) => {
+const MemberCircle: React.FC<Props> = ({ members, info }) => {
+  if (info)
+    return (
+      <MembersList $info>
+        {members.map(member => (
+          <CircleItem key={member} $color={getMemberColor(member)} />
+        ))}
+      </MembersList>
+    );
+
   return (
     <MembersList>
       {members.slice(0, 4).map(member => (

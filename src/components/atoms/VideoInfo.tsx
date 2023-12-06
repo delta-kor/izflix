@@ -54,6 +54,7 @@ const Description = styled.h3`
 
   ${PcQuery} {
     ${Text.SUBTITLE_1};
+    font-weight: 400;
   }
 `;
 
