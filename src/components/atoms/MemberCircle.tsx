@@ -13,12 +13,13 @@ const CircleItem = styled.div<{ $color: string }>`
   background: ${({ $color }) => $color};
   color: ${Color.WHITE};
   text-align: center;
+  font-weight: 700;
 
   ${MobileQuery} {
     margin: 0 -8px 0 0;
     width: 20px;
     height: 20px;
-    line-height: 16px;
+    line-height: 15px;
     font-size: 10px;
   }
 
