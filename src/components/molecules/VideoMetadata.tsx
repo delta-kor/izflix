@@ -112,7 +112,13 @@ const VideoMetadata: React.FC<Props> = ({ videoInfo }) => {
           <DatePlaceholder />
         )}
       </DateArea>
-      {path ? members ? null : <Breadcrumb path={path} shrinked /> : <CategoryPlaceholder />}
+      {path ? (
+        members?.length ? null : (
+          <Breadcrumb path={path} shrinked />
+        )
+      ) : (
+        <CategoryPlaceholder />
+      )}
       {members && <MemberCircle members={members} info />}
     </Layout>
   );

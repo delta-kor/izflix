@@ -159,8 +159,9 @@ const VideoWrapper = styled.div`
 `;
 
 const Video = styled.video<{ $active: boolean }>`
-  position: fixed;
+  position: absolute;
   top: -10px;
+  left: 0;
 
   width: 100%;
 
@@ -171,12 +172,10 @@ const Video = styled.video<{ $active: boolean }>`
   transition: opacity 1s ease;
 
   ${MobileQuery} {
-    left: 0;
     height: calc(320px * 1.39);
   }
 
   ${PcQuery} {
-    left: ${PcLeftMargin}px;
     height: calc(562px * 1.39);
   }
 `;

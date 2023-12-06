@@ -17,7 +17,8 @@ const Layout = styled.div<{ $fluid: boolean }>`
   z-index: 1;
 
   ${PcQuery} {
-    margin: ${({ $fluid }) => ($fluid ? 0 : '24px')} 0 0 0;
+    margin: ${({ $fluid }) => ($fluid ? 0 : '-16px')} 0 0 0;
+    padding: ${({ $fluid }) => ($fluid ? 0 : '24px')} 0 0 0;
   }
 `;
 

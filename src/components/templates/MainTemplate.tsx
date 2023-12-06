@@ -4,6 +4,7 @@ import LandingVideo from '../molecules/LandingVideo';
 import PlaylistSection from '../organisms/PlaylistSection';
 import RecommendSection from '../organisms/RecommendSection';
 import ShortcutSection from '../organisms/ShortcutSection';
+import VodSection from '../organisms/VodSection';
 
 const Layout = styled.div`
   display: flex;
@@ -14,10 +15,11 @@ const Layout = styled.div`
 interface Props {
   featured: ApiResponse.Playlist.ReadFeatured | null;
   playlists: IPlaylist[];
+  vodPlaylists: IPlaylist[];
   recommends: IVideo[];
 }
 
-const MainTemplate: React.FC<Props> = ({ featured, playlists, recommends }) => {
+const MainTemplate: React.FC<Props> = ({ featured, playlists, vodPlaylists, recommends }) => {
   const device = useDevice();
 
   return (
@@ -25,6 +27,7 @@ const MainTemplate: React.FC<Props> = ({ featured, playlists, recommends }) => {
       <LandingVideo type={'performance'} data={featured} />
       <PlaylistSection playlists={playlists} />
       {device === 'mobile' ? <ShortcutSection /> : null}
+      <VodSection playlists={vodPlaylists} />
       <RecommendSection recommends={recommends} />
     </Layout>
   );

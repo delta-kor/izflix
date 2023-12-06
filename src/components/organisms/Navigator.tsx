@@ -85,19 +85,16 @@ const Navigator: React.FC = () => {
             <Item type={'home'} color={location.pathname === '/' ? Color.WHITE : Color.GRAY} />
           </ItemClickBox>
         </Link>
-        <Link to={'/vod'} onClick={() => Tracker.send('nav_click', { item_type: 'vod' })}>
+        <Link to={'/vlive'} onClick={() => Tracker.send('nav_click', { item_type: 'vlive' })}>
+          <ItemClickBox hover={1.1} tap={0.9}>
+            <Item type={'tv'} color={location.pathname === '/vlive' ? Color.WHITE : Color.GRAY} />
+          </ItemClickBox>
+        </Link>
+        {/* <Link to={'/vod'} onClick={() => Tracker.send('nav_click', { item_type: 'vod' })}>
           <ItemClickBox hover={1.1} tap={0.9}>
             <Item type={'tv'} color={location.pathname === '/vod' ? Color.WHITE : Color.GRAY} />
           </ItemClickBox>
-        </Link>
-        <Link to={'/vlive'} onClick={() => Tracker.send('nav_click', { item_type: 'vlive' })}>
-          <ItemClickBox hover={1.1} tap={0.9}>
-            <Item
-              type={'playlist'}
-              color={location.pathname === '/vlive' ? Color.WHITE : Color.GRAY}
-            />
-          </ItemClickBox>
-        </Link>
+        </Link> */}
         {/* <Link to={'/live'}>
           <ItemClickBox hover={1.1} tap={0.9}>
             <Item type={'chat'} color={location.pathname === '/live' ? Color.WHITE : Color.GRAY} />

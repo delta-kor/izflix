@@ -26,7 +26,7 @@ const Wrapper = styled.div`
     display: grid;
     grid-template-columns: auto 182px;
     gap: 32px;
-    margin: -16px 0 -32px 0;
+    margin: 0 0 36px 0;
     padding: 0 ${PcInnerPadding};
   }
 `;
