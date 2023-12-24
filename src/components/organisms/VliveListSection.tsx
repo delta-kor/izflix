@@ -61,18 +61,19 @@ const Menu = styled.div`
   justify-content: space-between;
 `;
 
-const Filter = styled(SmoothBox)`
+const Filter = styled(SmoothBox)<{ $active: boolean }>`
   & > .content {
     display: flex;
     padding: 10px 14px;
     border-radius: 4px;
-    background: ${Color.GRAY};
+    background: ${({ $active }) => ($active ? Color.PRIMARY : Color.GRAY)};
 
     font-size: 16px;
     font-weight: 700;
     color: ${Color.WHITE};
     transform: skew(0.1deg);
 
+    transition: background 0.2s;
     cursor: pointer;
     user-select: none;
   }
@@ -184,7 +185,7 @@ const VliveListSection: React.FC = () => {
     if (result.type === 'date') {
       resetData();
       filterRef.current.sort = 'set';
-      filterRef.current.from = new Date(result.value).getTime() || 0;
+      filterRef.current.from = new Date(result.value).getTime() - 24 * 60 * 60 * 1000 || 0;
       updateData(true);
     }
   };
@@ -210,7 +211,12 @@ const VliveListSection: React.FC = () => {
           selected={[filterRef.current.sort!]}
           onSelect={handleFilterUpdate}
         />
-        <Filter hover={1.03} tap={0.97} onClick={handleFilterSelect}>
+        <Filter
+          $active={filterRef.current.members ? !!filterRef.current.members.length : false}
+          hover={1.03}
+          tap={0.97}
+          onClick={handleFilterSelect}
+        >
           필터
         </Filter>
       </Menu>
