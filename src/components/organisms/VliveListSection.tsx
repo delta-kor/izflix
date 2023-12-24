@@ -79,6 +79,11 @@ const Filter = styled(SmoothBox)<{ $active: boolean }>`
   }
 `;
 
+const NoItems = styled.div`
+  text-align: center;
+  font-size: 20px;
+`;
+
 interface Session {
   videos: IVideo[];
   filter: IVliveFilter;
@@ -245,6 +250,7 @@ const VliveListSection: React.FC = () => {
             />
           )}
         </List>
+        {ended.current && !videos.length && <NoItems>영상을 찾지 못했어요.</NoItems>}
       </ListSector>
     </Layout>
   );
