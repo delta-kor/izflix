@@ -189,6 +189,15 @@ const VliveListSection: React.FC = () => {
     }
   };
 
+  const handleFilterSelect = async () => {
+    const response = await modal({ type: 'member_filter', value: filterRef.current.members || [] });
+    if (response.type === 'member_filter') {
+      resetData();
+      filterRef.current.members = response.value;
+      updateData(true);
+    }
+  };
+
   return (
     <Layout>
       <Menu>
@@ -201,7 +210,7 @@ const VliveListSection: React.FC = () => {
           selected={[filterRef.current.sort!]}
           onSelect={handleFilterUpdate}
         />
-        <Filter hover={1.03} tap={0.97}>
+        <Filter hover={1.03} tap={0.97} onClick={handleFilterSelect}>
           필터
         </Filter>
       </Menu>

@@ -102,6 +102,7 @@ interface IVliveFilter {
   count?: number;
   sort?: string;
   from?: number;
+  members?: string[];
 }
 
 type CalendarTimestamp = [string, number];

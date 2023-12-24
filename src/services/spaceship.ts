@@ -460,9 +460,10 @@ class SpaceshipClass {
 
   public async getVliveList(filter: IVliveFilter): Promise<ApiResponse.Vlive.List> {
     return this.get(
-      `/vlive/list?anchor=${filter.anchor}&sort=${filter.sort}&from=${filter.from}&count=${filter.count}`,
+      // prettier-ignore
+      `/vlive/list?anchor=${filter.anchor}&sort=${filter.sort}&from=${filter.from}&count=${filter.count}&members=${filter.members ? filter.members.join(',') : ''}`,
       {
-        key: `get_vlive_list::${filter.anchor}::${filter.sort}::${filter.count}::${filter.from}`,
+        key: `get_vlive_list::${filter.anchor}::${filter.sort}::${filter.count}::${filter.from}::${filter.members}`,
         expire: expireTime,
       }
     );
