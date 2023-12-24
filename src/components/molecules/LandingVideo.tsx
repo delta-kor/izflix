@@ -282,7 +282,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
           {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
         </PerformanceContent>
       ) : (
-        <VodContent id={'boundary'}>
+        <VodContent>
           {!iconLoaded && <PlaylistIconPlaceholder />}
           {playlistId && (
             <PlaylistIcon
