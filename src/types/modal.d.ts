@@ -12,7 +12,8 @@ type ModalResult =
   | ModalCancelResult
   | ModalSelectResult
   | ModalInputResult
-  | ModalDateResult;
+  | ModalDateResult
+  | ModealMemberFilterResult;
 
 interface ModalOkResult {
   type: 'ok';
@@ -37,7 +38,19 @@ interface ModalDateResult {
   value: string;
 }
 
-type Modal = TextModal | SelectModal | InputModal | PlaylistModal | LinkModal | DateMoal;
+interface ModealMemberFilterResult {
+  type: 'member_filter';
+  value: string[];
+}
+
+type Modal =
+  | TextModal
+  | SelectModal
+  | InputModal
+  | PlaylistModal
+  | LinkModal
+  | DateModal
+  | MemberFilterModal;
 
 interface ModalBase {
   id?: string;
@@ -76,9 +89,14 @@ interface LinkModal extends ModalBase {
   image: string;
 }
 
-interface DateMoal extends ModalBase {
+interface DateModal extends ModalBase {
   type: 'date';
   content: string;
   value?: string;
   placeholder?: string;
+}
+
+interface MemberFilterModal extends ModalBase {
+  type: 'member_filter';
+  value: string[];
 }

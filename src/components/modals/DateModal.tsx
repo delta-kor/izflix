@@ -57,7 +57,7 @@ const Input = styled.input`
 `;
 
 interface Props {
-  modal: DateMoal;
+  modal: DateModal;
   respond: ModalRespondFunction;
 }
 

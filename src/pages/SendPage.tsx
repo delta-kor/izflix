@@ -48,7 +48,7 @@ const SendPage: React.FC = () => {
     const time = Date.now();
     // prettier-ignore
     const url = `${process.env.REACT_APP_LOGIN_URL}/login?token=${encodeURIComponent(token)}&time=${time}`;
-    window.location.href = url;
+    window.location.replace(url);
   };
 
   return (

@@ -6,7 +6,6 @@ import { getDate, getDuration, getHumanDuration } from '../../services/time';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 import SmoothImage from './SmoothImage';
-import getMemberColor from '../../services/color';
 import MemberCircle from './MemberCircle';
 
 const FullLayout = styled(SmoothBox)`

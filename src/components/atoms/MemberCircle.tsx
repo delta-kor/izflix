@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Color, MobileQuery, PcQuery } from '../../styles';
-import getMemberColor from '../../services/color';
+import { getMemberColor } from '../../services/member';
 
 const MembersList = styled.div<{ $info?: boolean }>`
   display: flex;
