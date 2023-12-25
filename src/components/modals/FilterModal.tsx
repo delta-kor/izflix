@@ -79,8 +79,8 @@ const FilterModal: React.FC<Props> = ({ modal, respond }) => {
   };
 
   const handleItemClick = (member: string) => {
-    if (value.includes(member)) setValue(value.filter(item => item !== member));
-    else setValue([...value, member]);
+    if (value.includes(member)) setValue(value => value.filter(item => item !== member));
+    else setValue(value => [...value, member]);
   };
 
   const handleDisable = () => {
