@@ -2,10 +2,9 @@ import styled from 'styled-components';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import { getMemberColor } from '../../services/member';
 
-const MembersList = styled.div<{ $info?: boolean }>`
+const MembersList = styled.div`
   display: flex;
   align-items: center;
-  ${({ $info }) => $info && 'margin-bottom: -4px;'}
 `;
 
 const CircleItem = styled.div<{ $color: string }>`
@@ -41,7 +40,7 @@ interface Props {
 const MemberCircle: React.FC<Props> = ({ members, info }) => {
   if (info)
     return (
-      <MembersList $info>
+      <MembersList>
         {members.map(member => (
           <CircleItem key={member} $color={getMemberColor(member)} />
         ))}

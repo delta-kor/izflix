@@ -72,6 +72,7 @@ const CategoryPlaceholder = styled.div`
   height: 20px;
   border-radius: 4px;
   background: ${Color.DARK_GRAY};
+  margin: 0 0 4px 0;
 
   ${MobileQuery} {
     width: 80%;
@@ -119,7 +120,7 @@ const VideoMetadata: React.FC<Props> = ({ videoInfo }) => {
       ) : (
         <CategoryPlaceholder />
       )}
-      {members && <MemberCircle members={members} info />}
+      {members && members.length ? <MemberCircle members={members} info /> : null}
     </Layout>
   );
 };
