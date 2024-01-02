@@ -5,16 +5,32 @@ import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import { VideoPageState } from '../../pages/VideoPage';
 import Tracker from '../../services/tracker';
-import { Color, Ease, EaseReverse, HideOverflow, MobileQuery, PcQuery, Text } from '../../styles';
+import {
+  Color,
+  Ease,
+  EaseReverse,
+  HideOverflow,
+  MobileQuery,
+  PcQuery,
+  Text,
+  VideoPageAdditionalMargin,
+} from '../../styles';
 import VideoPanel from '../atoms/VideoPanel';
 
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 -16px;
 
   background: ${Color.DARK_GRAY};
   border-radius: 8px;
+
+  ${MobileQuery} {
+    margin: 0 ${VideoPageAdditionalMargin}px;
+  }
+
+  ${PcQuery} {
+    margin: 0 -16px;
+  }
 `;
 
 const Header = styled.div`

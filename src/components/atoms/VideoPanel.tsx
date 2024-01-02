@@ -2,10 +2,11 @@ import { MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Spaceship from '../../services/spaceship';
-import { getDuration, getHumanDuration } from '../../services/time';
+import { getDate, getDuration, getHumanDuration } from '../../services/time';
 import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
 import SmoothBox from './SmoothBox';
 import SmoothImage from './SmoothImage';
+import MemberCircle from './MemberCircle';
 
 const FullLayout = styled(SmoothBox)`
   width: 100%;
@@ -15,6 +16,7 @@ const FullLayout = styled(SmoothBox)`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    min-width: 0;
 
     cursor: pointer;
     user-select: none;
@@ -61,6 +63,7 @@ const Description = styled.p<{ $shrink?: boolean }>`
 
   ${PcQuery} {
     ${({ $shrink }) => ($shrink ? Text.SUBTITLE_2 : Text.SUBTITLE_1)};
+    font-weight: 400;
   }
 `;
 
@@ -139,8 +142,44 @@ const VerticalImage = styled(SmoothImage)`
   border-radius: 8px;
 `;
 
+const VliveInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  ${PcQuery} {
+    margin: 4px 0 0 0;
+  }
+`;
+
+const VliveDate = styled.div`
+  color: ${Color.GRAY};
+  font-weight: 400;
+
+  ${MobileQuery} {
+    font-size: 14px;
+  }
+
+  ${PcQuery} {
+    font-size: 16px;
+  }
+`;
+
+const VliveInfoPlaceholder = styled.div`
+  width: 70%;
+
+  ${PcQuery} {
+    margin: 4px 0 0 0;
+    ${Placeholder.HEADLINE_2};
+  }
+
+  ${MobileQuery} {
+    ${Placeholder.SUBTITLE_1};
+  }
+`;
+
 interface Props {
-  type: 'full' | 'horizontal' | 'vertical';
+  type: 'full' | 'horizontal' | 'vertical' | 'vlive_horizontal' | 'vlive_full';
   data?: IVideo;
   link?: string;
   state?: any;
@@ -155,6 +194,8 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink,
   const description = data && data.description;
   const properties = data && data.properties;
   const duration = data && getDuration(data.duration, properties);
+  const members = data && data.members;
+  const date = data && getDate(data.date, 'dot');
 
   const Component =
     type === 'full' ? (
@@ -178,15 +219,45 @@ const VideoPanel: React.FC<Props> = ({ type, data, link, state, onClick, shrink,
           {playTime ? <PlayTime $shrink={!!shrink}>{getHumanDuration(playTime)}</PlayTime> : null}
         </Content>
       </HorizontalLayout>
-    ) : (
+    ) : type === 'vertical' ? (
       <VerticalLayout hover={1.05} tap={0.95} onClick={onClick}>
         <VerticalImage src={thumbnail} text={duration} />
         {title ? <Title>{title}</Title> : <TitlePlaceholder />}
       </VerticalLayout>
+    ) : type === 'vlive_horizontal' ? (
+      <HorizontalLayout $shrink={!!shrink} hover={1.03} tap={0.97} onClick={onClick}>
+        <HorizontalImage src={thumbnail} text={duration} />
+        <Content>
+          {title ? <Title $shrink={!!shrink}>{title}</Title> : <TitlePlaceholder />}
+          {date ? (
+            <VliveInfo>
+              <MemberCircle members={members!} />
+              <VliveDate>{date}</VliveDate>
+            </VliveInfo>
+          ) : (
+            <VliveInfoPlaceholder />
+          )}
+        </Content>
+      </HorizontalLayout>
+    ) : (
+      <FullLayout hover={1.02} tap={0.98} onClick={onClick}>
+        <Image src={thumbnail} text={duration} />
+        <Content>
+          {title ? <Title>{title}</Title> : <TitlePlaceholder />}
+          {date ? (
+            <VliveInfo>
+              <MemberCircle members={members!} />
+              <VliveDate>{date}</VliveDate>
+            </VliveInfo>
+          ) : (
+            <VliveInfoPlaceholder />
+          )}
+        </Content>
+      </FullLayout>
     );
 
   return link ? (
-    <Link to={link} state={state}>
+    <Link to={link} state={state} style={{ minWidth: 0 }}>
       {Component}
     </Link>
   ) : (

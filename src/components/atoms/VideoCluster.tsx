@@ -2,28 +2,29 @@ import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Color, MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
+import { Color, MobileQuery, MobileSideMargin, PcInnerPadding, PcQuery } from '../../styles';
 import SmoothBox from './SmoothBox';
 
 const Layout = styled.div`
   display: flex;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
-  scroll-padding-left: 32px;
 
   ::-webkit-scrollbar {
     display: none;
   }
 
   ${MobileQuery} {
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
     gap: 12px;
+    scroll-padding-left: ${MobileSideMargin}px;
   }
 
   ${PcQuery} {
     padding: 0 ${PcInnerPadding};
     margin: 0 0 8px 0;
     gap: 18px;
+    scroll-padding-left: 32px;
   }
 `;
 

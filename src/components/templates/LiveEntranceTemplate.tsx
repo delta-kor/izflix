@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Color, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
+import { Color, MobileQuery, MobileSideMargin, PcInnerPadding, PcQuery, Text } from '../../styles';
 import Button from '../atoms/Button';
 import LiveRules from '../atoms/LiveRules';
 
@@ -9,7 +9,7 @@ const Layout = styled.div`
   flex-direction: column;
 
   ${MobileQuery} {
-    padding: 64px 32px 8px 32px;
+    padding: 64px ${MobileSideMargin}px 8px ${MobileSideMargin}px;
     gap: 28px;
   }
 

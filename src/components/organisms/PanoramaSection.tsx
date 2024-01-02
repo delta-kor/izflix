@@ -20,10 +20,12 @@ import {
   Color,
   HideOverflow,
   MobileQuery,
+  MobileSideMargin,
   PcInnerPadding,
   PcQuery,
   TabletQuery,
   Text,
+  VideoPageAdditionalMargin,
 } from '../../styles';
 import SmoothBox from '../atoms/SmoothBox';
 import SmoothImage from '../atoms/SmoothImage';
@@ -47,8 +49,8 @@ const RenderArea = styled(motion.div)<{ $state: PanoramaState }>`
         : `
         display: flex;
         bottom: 85px;
-        left: 16px;
-        right: 16px;
+        left: ${MobileSideMargin + VideoPageAdditionalMargin}px;
+        right: ${MobileSideMargin + VideoPageAdditionalMargin}px;
         height: 72px;
         border-radius: 8px;
         overflow: hidden;
@@ -349,6 +351,8 @@ const NextVideoDescription = styled.div`
   color: ${Color.WHITE};
   opacity: 0.7;
   ${Text.SUBTITLE_1};
+  font-weight: 400;
+
   ${HideOverflow};
 
   ${PcQuery} {

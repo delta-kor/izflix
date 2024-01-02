@@ -7,6 +7,8 @@ import LinkModal from './LinkModal';
 import PlaylistModal from './PlaylistModal';
 import SelectModal from './SelectModal';
 import TextModal from './TextModal';
+import DateModal from './DateModal';
+import FilterModal from './FilterModal';
 
 const Background = styled(motion.div)`
   position: fixed;
@@ -60,6 +62,18 @@ const Modal: React.FC = () => {
     content = (
       <ModalWrapper key={modal.id!} {...modalWrapperProps}>
         <LinkModal modal={modal} respond={respond} />
+      </ModalWrapper>
+    );
+  else if (modal.type === 'date')
+    content = (
+      <ModalWrapper key={modal.id!} {...modalWrapperProps}>
+        <DateModal modal={modal} respond={respond} />
+      </ModalWrapper>
+    );
+  else if (modal.type === 'member_filter')
+    content = (
+      <ModalWrapper key={modal.id!} {...modalWrapperProps}>
+        <FilterModal modal={modal} respond={respond} />
       </ModalWrapper>
     );
 

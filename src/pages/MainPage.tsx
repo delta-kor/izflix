@@ -10,6 +10,7 @@ const MainPage: React.FC = () => {
   const [featured, setFeatured] = useState<ApiResponse.Playlist.ReadFeatured | null>(null);
   const [playlists, setPlaylists] = useState<IPlaylist[]>([]);
   const [recommends, setRecommends] = useState<IVideo[]>([]);
+  const [vodPlaylists, setVodPlaylists] = useState<IPlaylist[]>([]);
 
   useEffect(() => {
     loadData();
@@ -38,16 +39,30 @@ const MainPage: React.FC = () => {
     setRecommends(recommends);
   };
 
+  const loadVodPlaylists = async () => {
+    const response = await Spaceship.readAllPlaylists('vod');
+    if (!response.ok) throw new HttpException(response);
+
+    const playlists = response.playlists;
+    setVodPlaylists(playlists);
+  };
+
   const loadData = async () => {
     new Evoke(loadFeatured());
     new Evoke(loadPlaylists());
+    new Evoke(loadVodPlaylists());
     new Evoke(loadRecommends());
   };
 
   return (
     <Page>
       <Meta data={{ title: `IZFLIX`, url: 'https://izflix.net/' }} />
-      <MainTemplate playlists={playlists} featured={featured} recommends={recommends} />
+      <MainTemplate
+        playlists={playlists}
+        vodPlaylists={vodPlaylists}
+        featured={featured}
+        recommends={recommends}
+      />
     </Page>
   );
 };

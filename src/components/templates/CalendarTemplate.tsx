@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
+import { MobileQuery, MobileSideMargin, PcInnerPadding, PcQuery } from '../../styles';
 import CalendarSection from '../organisms/CalendarSection';
 import CalendarVideoSection from '../organisms/CalendarVideoSection';
 import { Pc } from '../tools/MediaQuery';
@@ -10,7 +10,7 @@ const Layout = styled.div`
     flex-direction: column;
     gap: 24px;
 
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
   }
 
   ${PcQuery} {

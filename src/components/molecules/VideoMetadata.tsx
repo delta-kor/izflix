@@ -3,22 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
 import { dateToKey, getDate } from '../../services/time';
-import { Color, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
+import { Color, MobileQuery, MobileSideMargin, PcQuery, Placeholder, Text } from '../../styles';
 import Breadcrumb from '../atoms/Breadcrumb';
 import SmoothBox from '../atoms/SmoothBox';
+import MemberCircle from '../atoms/MemberCircle';
 
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 32px;
 
   ${MobileQuery} {
     gap: 8px;
+    padding: 0 ${MobileSideMargin}px;
   }
 
   ${PcQuery} {
     gap: 12px;
+    padding: 0 32px;
   }
 `;
 
@@ -70,6 +72,7 @@ const CategoryPlaceholder = styled.div`
   height: 20px;
   border-radius: 4px;
   background: ${Color.DARK_GRAY};
+  margin: 0 0 4px 0;
 
   ${MobileQuery} {
     width: 80%;
@@ -81,6 +84,8 @@ const CategoryPlaceholder = styled.div`
   }
 `;
 
+const MemberCircleLayout = styled(MemberCircle)``;
+
 interface Props {
   videoInfo?: ApiResponse.Video.Info;
 }
@@ -91,6 +96,7 @@ const VideoMetadata: React.FC<Props> = ({ videoInfo }) => {
 
   const date = videoInfo?.date;
   const path = videoInfo?.path;
+  const members = videoInfo?.members;
 
   const onDateAreaClick = () => {
     const dateKey = date && dateToKey(new Date(date));
@@ -107,7 +113,14 @@ const VideoMetadata: React.FC<Props> = ({ videoInfo }) => {
           <DatePlaceholder />
         )}
       </DateArea>
-      {path ? <Breadcrumb path={path} shrinked /> : <CategoryPlaceholder />}
+      {path ? (
+        members?.length ? null : (
+          <Breadcrumb path={path} shrinked />
+        )
+      ) : (
+        <CategoryPlaceholder />
+      )}
+      {members && members.length ? <MemberCircle members={members} info /> : null}
     </Layout>
   );
 };

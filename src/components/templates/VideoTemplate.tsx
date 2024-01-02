@@ -3,7 +3,14 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { Panorama } from '../../hooks/usePanorama';
 import { VideoPageState } from '../../pages/VideoPage';
-import { Color, MobileQuery, PcInnerPadding, PcQuery, TabletQuery } from '../../styles';
+import {
+  Color,
+  MobileQuery,
+  MobileSideMargin,
+  PcInnerPadding,
+  PcQuery,
+  TabletQuery,
+} from '../../styles';
 import FundraisingPanel from '../atoms/FundraisingPanel';
 import ChapterList from '../molecules/ChapterList';
 import NextVideoList from '../molecules/NextVideoList';
@@ -77,7 +84,7 @@ const ContentArea = styled.div`
 
   ${MobileQuery} {
     gap: 16px;
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
   }
 
   ${PcQuery} {

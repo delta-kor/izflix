@@ -30,6 +30,8 @@ import VodPage from './pages/VodPage';
 import PageManager from './services/page-manager';
 import Spaceship from './services/spaceship';
 import FundraisingPage from './pages/FundraisingPage';
+import VlivePage from './pages/VlivePage';
+import SendPage from './pages/SendPage';
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -60,7 +62,8 @@ const App: React.FC = () => {
         >
           <Route path="/" element={<MainPage />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/vod" element={<VodPage />} />
+          {/* <Route path="/vod" element={<VodPage />} /> */}
+          <Route path="/vlive" element={<VlivePage />} />
           <Route path="/playlist" element={<PlaylistPage />} />
           <Route path="/playlist/:id" element={<PlaylistItemPage />} />
           <Route path="/music" element={<MusicPage />} />
@@ -75,6 +78,7 @@ const App: React.FC = () => {
           <Route path="/profile/notice" element={<NoticePage />} />
           <Route path="/profile/app" element={<AppPage />} />
           <Route path="/profile/fundraising" element={<FundraisingPage />} />
+          <Route path="/send" element={<SendPage />} />
           <Route path="/:id" element={<VideoPage panorama={panorama} />} />
           <Route path="*" element={<ErrorPage data={'error.not_found'} />} />
         </Routes>

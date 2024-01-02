@@ -8,6 +8,7 @@ import {
   Color,
   HideOverflow,
   MobileQuery,
+  MobileSideMargin,
   PcInnerPadding,
   PcQuery,
   Placeholder,
@@ -23,7 +24,7 @@ const Layout = styled.div`
   gap: 48px;
 
   ${MobileQuery} {
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
   }
 
   ${PcQuery} {

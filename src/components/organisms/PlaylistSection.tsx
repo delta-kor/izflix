@@ -2,7 +2,14 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
 import Tracker from '../../services/tracker';
-import { HideScrollbar, MobileQuery, PcInnerPadding, PcQuery, TabletQuery } from '../../styles';
+import {
+  HideScrollbar,
+  MobileQuery,
+  MobileSideMargin,
+  PcInnerPadding,
+  PcQuery,
+  TabletQuery,
+} from '../../styles';
 import PlaylistItem from '../atoms/PlaylistItem';
 import SectionTitle from '../atoms/SectionTitle';
 import Repeat from '../tools/Repeat';
@@ -19,7 +26,7 @@ const Wrapper = styled.div`
     display: grid;
     grid-template-columns: auto 182px;
     gap: 32px;
-    margin: -16px 0 -32px 0;
+    margin: 0 0 36px 0;
     padding: 0 ${PcInnerPadding};
   }
 `;
@@ -42,9 +49,9 @@ const ItemList = styled.div`
   ${MobileQuery} {
     gap: 24px;
     height: 236px;
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
     scroll-snap-type: x mandatory;
-    scroll-padding: 0 32px;
+    scroll-padding: 0 ${MobileSideMargin}px;
     overflow-x: auto;
   }
 

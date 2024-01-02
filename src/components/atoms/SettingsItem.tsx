@@ -51,6 +51,7 @@ const Description = styled.div`
 
   ${PcQuery} {
     ${Text.SUBTITLE_1};
+    font-weight: 400;
     height: unset;
   }
 `;

@@ -47,6 +47,7 @@ interface IVideo {
   category: [string, string, string];
   duration: number;
   properties: VideoProperty[];
+  members: string[];
 }
 
 interface IVideoWithPlayTime extends IVideo {
@@ -96,6 +97,14 @@ interface ITimeline {
   chapters: [IChapter];
 }
 
+interface IVliveFilter {
+  anchor?: string;
+  count?: number;
+  sort?: string;
+  from?: number;
+  members?: string[];
+}
+
 type CalendarTimestamp = [string, number];
 
 namespace ApiResponse {
@@ -139,6 +148,7 @@ namespace ApiResponse {
       properties: VideoProperty[];
       music: [string, string] | null;
       timeline?: ITimeline;
+      members?: string[];
     }
 
     interface List extends ApiResponse {
@@ -221,6 +231,12 @@ namespace ApiResponse {
 
     interface GetOne extends ApiResponse {
       videos: IVideo[];
+    }
+  }
+
+  namespace Vlive {
+    interface List extends ApiResponse {
+      videos: Video[];
     }
   }
 }

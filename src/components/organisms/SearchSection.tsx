@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import useDevice from '../../hooks/useDevice';
-import { Color, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
+import { Color, MobileQuery, MobileSideMargin, PcInnerPadding, PcQuery, Text } from '../../styles';
 import VideoPanel from '../atoms/VideoPanel';
 import Repeat from '../tools/Repeat';
 
@@ -9,7 +9,7 @@ const Layout = styled.div`
   ${MobileQuery} {
     display: flex;
     flex-direction: column;
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
     gap: 12px;
   }
 
@@ -25,7 +25,7 @@ const NoResult = styled.div`
   color: ${Color.WHITE};
 
   ${MobileQuery} {
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
     ${Text.HEADLINE_1};
   }
 

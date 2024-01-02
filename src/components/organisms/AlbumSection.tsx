@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
+import { MobileQuery, MobileSideMargin, PcInnerPadding, PcQuery } from '../../styles';
 import AlbumItem from '../atoms/AlbumItem';
 import Repeat from '../tools/Repeat';
 
@@ -8,7 +8,7 @@ const Layout = styled.div`
   ${MobileQuery} {
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-    padding: 0 32px 16px 32px;
+    padding: 0 ${MobileSideMargin}px 16px ${MobileSideMargin}px;
   }
 
   ${PcQuery} {

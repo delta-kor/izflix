@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { VideoPageState } from '../../pages/VideoPage';
 import { getDate } from '../../services/time';
 import Tracker from '../../services/tracker';
-import { Color } from '../../styles';
+import { Color, MobileQuery, MobileSideMargin, PcQuery } from '../../styles';
 import VideoPanel from '../atoms/VideoPanel';
 import Repeat from '../tools/Repeat';
 
@@ -28,12 +28,18 @@ const Content = styled.div`
   flex-direction: column;
   gap: 12px;
 
-  padding: 0 32px;
-
   width: 100vw;
   scroll-snap-align: start;
   flex-shrink: 0;
   overflow: hidden;
+
+  ${PcQuery} {
+    padding: 0 32px;
+  }
+
+  ${MobileQuery} {
+    padding: 0 ${MobileSideMargin}px;
+  }
 `;
 
 const CarouselHandle = styled.span`

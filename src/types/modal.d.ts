@@ -7,7 +7,13 @@ interface ModalContextType {
 type ModalRespondFunction = (result: ModalResult) => void;
 type ModalFireFunction = (modal: Modal) => Promise<ModalResult>;
 
-type ModalResult = ModalOkResult | ModalCancelResult | ModalSelectResult | ModalInputResult;
+type ModalResult =
+  | ModalOkResult
+  | ModalCancelResult
+  | ModalSelectResult
+  | ModalInputResult
+  | ModalDateResult
+  | ModealMemberFilterResult;
 
 interface ModalOkResult {
   type: 'ok';
@@ -27,7 +33,24 @@ interface ModalInputResult {
   value: string;
 }
 
-type Modal = TextModal | SelectModal | InputModal | PlaylistModal | LinkModal;
+interface ModalDateResult {
+  type: 'date';
+  value: string;
+}
+
+interface ModealMemberFilterResult {
+  type: 'member_filter';
+  value: string[];
+}
+
+type Modal =
+  | TextModal
+  | SelectModal
+  | InputModal
+  | PlaylistModal
+  | LinkModal
+  | DateModal
+  | MemberFilterModal;
 
 interface ModalBase {
   id?: string;
@@ -64,4 +87,16 @@ interface LinkModal extends ModalBase {
   content: string;
   link: string;
   image: string;
+}
+
+interface DateModal extends ModalBase {
+  type: 'date';
+  content: string;
+  value?: string;
+  placeholder?: string;
+}
+
+interface MemberFilterModal extends ModalBase {
+  type: 'member_filter';
+  value: string[];
 }

@@ -1,3 +1,5 @@
+@import url('https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.0/packages/wanted-sans/fonts/webfonts/static/split/WantedSans.min.css');
+
 @font-face {
   font-family: 'MaruBuri-Regular';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri-Regular.woff')
@@ -6,7 +8,7 @@
   font-style: normal;
 }
 
-@font-face {
+/* @font-face {
   font-family: 'NanumSquare';
   font-weight: 400;
   src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/NanumSquareR.woff)
@@ -28,7 +30,7 @@
   src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/NanumSquareEB.woff)
     format('truetype');
   unicode-range: U+AC00-D7A3, U+00-52F, U+1E00-1FFF, U+2200-22FF;
-}
+} */
 
 body {
   background: #070d2d;

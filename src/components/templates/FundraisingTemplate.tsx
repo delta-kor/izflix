@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Color, MobileQuery, PcInnerPadding, PcQuery, Text } from '../../styles';
+import { Color, MobileQuery, MobileSideMargin, PcInnerPadding, PcQuery, Text } from '../../styles';
 import Funder from '../../services/funder';
 import SmoothBox from '../atoms/SmoothBox';
 import SmoothImage from '../atoms/SmoothImage';
@@ -10,7 +10,7 @@ const Layout = styled.div`
   max-width: 1230px;
 
   ${MobileQuery} {
-    padding: 0 32px 64px 32px;
+    padding: 0 ${MobileSideMargin}px 64px ${MobileSideMargin}px;
     gap: 32px;
   }
 
@@ -130,26 +130,24 @@ const Image = styled(SmoothImage)`
 const FundraisingTemplate: React.FC = () => {
   return (
     <Layout>
-      <Title>IZFLIX 모금 / 9월 사용 내역</Title>
+      <Title>IZFLIX 정기 모금 / 10, 11, 12월 사용 내역</Title>
       <Description>
         <p>안녕하세요, IZFLIX 운영진입니다.</p>
-        <p>
-          최근에 진행한 모금에 관해 목표액을 뛰어넘는 약 10만원 가량의 모금액이 모였음을
-          알려드립니다.
-        </p>
+        <p>10월 정기 모금을 통해 약 10만원 가량의 모금액이 모였음을 알려드립니다.</p>
         <p>해당 모금액은 사이트 유지비용으로 사용되었습니다.</p>
-        <p>모금에 참여해주신 모든 분께 감사드립니다.</p>
-        <br />
         <p>
-          <b>모금액 사용내역</b>
+          또한, 9월, 10월 모금에 대한 목표 초과액은 11월, 12월 사이트 유지비용으로 사용하였습니다.
         </p>
-        <Image src="https://github.com/delta-kor/izflix/assets/48397257/3506deb3-4ef6-41c5-8c22-2547bb8ef4dd" />
+        <p>모금에 참여해주신 모든 분께 감사드립니다.</p>
       </Description>
-      <Title>10월 모금 안내</Title>
+      <Title>1월 모금 안내</Title>
       <Description>
-        <p>현재 예상되는 사이트 유지비용은 월 약 15만원으로,</p>
-        <p>이 중 60%인 90,000원은 운영진에서 직접 부담하고 있습니다.</p>
-        <p>나머지 40%인 60,000원을 모금을 통해 충당하려 합니다.</p>
+        <p>2024년 새해를 맞아 사이트 업데이트가 완료 되었습니다.</p>
+        <p>현재 예상되는 사이트 유지비용은 도메인 연장 비용을 포함해 월 약 18만원으로,</p>
+        <p>이 중 60%인 110,000원은 운영진에서 직접 부담하고 있습니다.</p>
+        <p>
+          <u>나머지 40%인 70,000원을 모금을 통해 충당하려 합니다.</u>
+        </p>
         <br />
         <p>모금은 아래와 같은 방식으로 진행됩니다:</p>
         <br />

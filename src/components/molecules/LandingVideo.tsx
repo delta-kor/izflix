@@ -14,6 +14,7 @@ import {
   Color,
   HideOverflow,
   MobileQuery,
+  MobileSideMargin,
   MobileTopMargin,
   PcInnerPadding,
   PcLeftMargin,
@@ -35,7 +36,7 @@ const Layout = styled.div`
   ${MobileQuery} {
     gap: 16px;
     height: 320px;
-    padding: 24px 32px;
+    padding: 24px ${MobileSideMargin}px;
     margin: -${MobileTopMargin}px 0 0 0;
   }
 
@@ -97,10 +98,12 @@ const Description = styled.div`
 
   ${MobileQuery} {
     ${Text.SUBTITLE_1};
+    font-weight: 400;
   }
 
   ${PcQuery} {
     ${Text.EX_SUBTITLE_1};
+    font-weight: 400;
   }
 `;
 
@@ -156,8 +159,9 @@ const VideoWrapper = styled.div`
 `;
 
 const Video = styled.video<{ $active: boolean }>`
-  position: fixed;
+  position: absolute;
   top: -10px;
+  left: 0;
 
   width: 100%;
 
@@ -168,12 +172,10 @@ const Video = styled.video<{ $active: boolean }>`
   transition: opacity 1s ease;
 
   ${MobileQuery} {
-    left: 0;
     height: calc(320px * 1.39);
   }
 
   ${PcQuery} {
-    left: ${PcLeftMargin}px;
     height: calc(562px * 1.39);
   }
 `;
@@ -280,7 +282,7 @@ const LandingVideo: React.FC<Props> = ({ type, data }) => {
           {description ? <Description>{description}</Description> : <DescriptionPlaceholder />}
         </PerformanceContent>
       ) : (
-        <VodContent id={'boundary'}>
+        <VodContent>
           {!iconLoaded && <PlaylistIconPlaceholder />}
           {playlistId && (
             <PlaylistIcon

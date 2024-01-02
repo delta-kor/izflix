@@ -1,21 +1,36 @@
-import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Panorama } from '../../hooks/usePanorama';
 import Icon from '../../icons/Icon';
-import { VideoPageState } from '../../pages/VideoPage';
 import Transmitter from '../../services/transmitter';
-import { Color, Ease, EaseReverse, HideOverflow, MobileQuery, PcQuery, Text } from '../../styles';
+import {
+  Color,
+  Ease,
+  EaseReverse,
+  HideOverflow,
+  MobileQuery,
+  PcQuery,
+  Text,
+  VideoPageAdditionalMargin,
+} from '../../styles';
 import ChapterItem from '../atoms/ChapterItem';
 
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 -16px;
 
   background: ${Color.DARK_GRAY};
   border-radius: 8px;
+
+  ${MobileQuery} {
+    margin: 0 ${VideoPageAdditionalMargin}px;
+  }
+
+  ${PcQuery} {
+    margin: 0 -16px;
+  }
 `;
 
 const Header = styled.div`

@@ -1,7 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../icons/Icon';
-import { Color, HideOverflow, MobileQuery, PcQuery, Placeholder, Text } from '../../styles';
+import {
+  Color,
+  HideOverflow,
+  MobileQuery,
+  MobileSideMargin,
+  PcQuery,
+  Placeholder,
+  Text,
+} from '../../styles';
 import SmoothBox from './SmoothBox';
 
 const Layout = styled.div`
@@ -11,7 +19,7 @@ const Layout = styled.div`
 
   ${MobileQuery} {
     gap: 8px;
-    padding: 16px 32px;
+    padding: 16px ${MobileSideMargin}px;
   }
 
   ${PcQuery} {
@@ -46,6 +54,7 @@ const Description = styled.h3`
 
   ${PcQuery} {
     ${Text.SUBTITLE_1};
+    font-weight: 400;
   }
 `;
 

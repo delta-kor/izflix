@@ -5,7 +5,7 @@ import useModal from '../../hooks/useModal';
 import { User } from '../../hooks/useUser';
 import Spaceship from '../../services/spaceship';
 import Tracker from '../../services/tracker';
-import { MobileQuery, PcInnerPadding, PcQuery } from '../../styles';
+import { MobileQuery, MobileSideMargin, PcInnerPadding, PcQuery } from '../../styles';
 import AppDownload from '../atoms/AppDownload';
 import IconListItem from '../atoms/IconListItem';
 import IconListSection from '../organisms/IconListSection';
@@ -16,7 +16,7 @@ const Layout = styled.div`
   flex-direction: column;
 
   ${MobileQuery} {
-    padding: 0 32px;
+    padding: 0 ${MobileSideMargin}px;
     gap: 28px;
   }
 
