@@ -161,7 +161,7 @@ const VersionLink = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
-  font-weight: 800;
+  font-weight: 600;
   font-size: 16px;
   color: ${Color.WHITE};
   opacity: 0.3;
@@ -224,7 +224,7 @@ const InfoTemplate: React.FC = () => {
         <VersionItem href={'https://github.com/delta-kor/izflix'} target={'_blank'}>
           <VersionContent>
             <VersionTitle>IZFLIX</VersionTitle>
-            <VersionNumber>V2.0</VersionNumber>
+            <VersionNumber>V2.1</VersionNumber>
           </VersionContent>
           <VersionLink>
             <GithubIcon type={'github'} color={Color.WHITE} />
@@ -241,18 +241,6 @@ const InfoTemplate: React.FC = () => {
             delta-kor/video-server
           </VersionLink>
         </VersionItem>
-        <VersionItem>
-          <VersionContent>
-            <VersionTitle>LT2 TICKET</VersionTitle>
-            <VersionNumber>V1.1</VersionNumber>
-          </VersionContent>
-        </VersionItem>
-        <VersionItem>
-          <VersionContent>
-            <VersionTitle>LT2 LIVE</VersionTitle>
-            <VersionNumber>V1.1</VersionNumber>
-          </VersionContent>
-        </VersionItem>
       </VersionWrapper>
       <Group>
         <GroupTitle>{t('info.development')}</GroupTitle>
@@ -265,9 +253,13 @@ const InfoTemplate: React.FC = () => {
             <DevelopmentIcon type={'management'} color={Color.WHITE} />
             Kwon Hayul
           </DevelopmentItem>
-          <DevelopmentItem title={'Subtitle Editor'}>
-            <DevelopmentIcon type={'subtitle'} color={Color.WHITE} />
+          <DevelopmentItem title={'Contents Management'}>
+            <DevelopmentIcon type={'management'} color={Color.WHITE} />
             Kim Eunseo
+          </DevelopmentItem>
+          <DevelopmentItem title={'Contents Management'}>
+            <DevelopmentIcon type={'management'} color={Color.WHITE} />
+            Jo Sumin
           </DevelopmentItem>
         </DevelopmentWrapper>
       </Group>
@@ -277,19 +269,8 @@ const InfoTemplate: React.FC = () => {
           <NameItem>Lee Jinsol</NameItem>
           <NameItem>Seol Yeha</NameItem>
           <NameItem>Jin Taein</NameItem>
-          <NameItem>PolarBear#1201</NameItem>
-          <NameItem>powha#8932</NameItem>
-        </NameWrapper>
-      </Group>
-      <Group>
-        <GroupTitle>{t('info.subtitle')}</GroupTitle>
-        <NameWrapper>
-          <NameItem>@ruo_xi_ss</NameItem>
-          <NameItem>@YNF</NameItem>
-          <NameItem>@Skell6009</NameItem>
-          <NameItem>@Crensation</NameItem>
-          <NameItem>@Yubseyo</NameItem>
-          <NameItem>@boris</NameItem>
+          <NameItem>Kim Laewon</NameItem>
+          <NameItem>Kim Dohyeon</NameItem>
         </NameWrapper>
       </Group>
       <Group>
