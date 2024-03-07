@@ -107,6 +107,19 @@ const Index = styled.div`
   }
 `;
 
+const Date = styled.div`
+  color: ${Color.GRAY};
+  font-weight: 700;
+
+  ${PcQuery} {
+    font-size: 16px;
+  }
+
+  ${MobileQuery} {
+    font-size: 12px;
+  }
+`;
+
 const Link = styled.a`
   color: ${Color.PRIMARY};
   font-weight: 700;
@@ -130,20 +143,17 @@ const Image = styled(SmoothImage)`
 const FundraisingTemplate: React.FC = () => {
   return (
     <Layout>
-      <Title>IZFLIX 정기 모금 / 10, 11, 12월 사용 내역</Title>
+      <Title>IZFLIX 정기 모금 / 1, 2월 사용 내역</Title>
       <Description>
         <p>안녕하세요, IZFLIX 운영진입니다.</p>
-        <p>10월 정기 모금을 통해 약 10만원 가량의 모금액이 모였음을 알려드립니다.</p>
+        <p>1월 정기 모금을 통해 약 14만원 가량의 모금액이 모였음을 알려드립니다.</p>
         <p>해당 모금액은 사이트 유지비용으로 사용되었습니다.</p>
-        <p>
-          또한, 9월, 10월 모금에 대한 목표 초과액은 11월, 12월 사이트 유지비용으로 사용하였습니다.
-        </p>
+        <p>또한, 1월 모금에 대한 목표 초과액은 2월 사이트 유지비용으로 사용하였습니다.</p>
         <p>모금에 참여해주신 모든 분께 감사드립니다.</p>
       </Description>
-      <Title>1월 모금 안내</Title>
+      <Title>3월 모금 안내</Title>
       <Description>
-        <p>2024년 새해를 맞아 사이트 업데이트가 완료 되었습니다.</p>
-        <p>현재 예상되는 사이트 유지비용은 도메인 연장 비용을 포함해 월 약 18만원으로,</p>
+        <p>현재 예상되는 사이트 유지비용은 월 약 18만원으로,</p>
         <p>이 중 60%인 110,000원은 운영진에서 직접 부담하고 있습니다.</p>
         <p>
           <u>나머지 40%인 70,000원을 모금을 통해 충당하려 합니다.</u>
@@ -168,9 +178,10 @@ const FundraisingTemplate: React.FC = () => {
         <Graph>
           <GraphIndicator style={{ width: Funder.percentage() }} />
         </Graph>
+        <Date>2024. 3. 7. 12:00 기준</Date>
       </Content>
-      <Link href={'https://toss.me/4ever12'} target={'_blank'}>
-        모금링크 (toss.me/4ever12)
+      <Link href={'https://toss.me/twelve1212'} target={'_blank'}>
+        모금링크 (toss.me/twelve1212)
       </Link>
     </Layout>
   );
