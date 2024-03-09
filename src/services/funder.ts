@@ -1,6 +1,6 @@
 import Playtime from './playtime';
 
-const active = true;
+const active = false;
 const target = 70000;
 const current = 70000;
 
