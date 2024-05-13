@@ -42,17 +42,6 @@
     "eject": "react-scripts eject",
     "postbuild": "node run/build.js"
   },
-  "reactSnap": {
-    "include": [
-      "/"
-    ],
-    "puppeteerArgs": [
-      "--no-sandbox",
-      "--disable-setuid-sandbox"
-    ],
-    "fixWebpackChunksIssue": false,
-    "removeStyleTags": true
-  },
   "eslintConfig": {
     "extends": [
       "react-app",

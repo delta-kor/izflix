@@ -140,23 +140,44 @@ const Image = styled(SmoothImage)`
   border-radius: 16px;
 `;
 
+const Line = styled.div`
+  height: 2px;
+  width: 100%;
+  background: ${Color.DARK_GRAY};
+`
+
 const FundraisingTemplate: React.FC = () => {
   return (
     <Layout>
-      <Title>IZFLIX 정기 모금 / 1, 2월 사용 내역</Title>
+      <Title>IZFLIX 운영 안내</Title>
       <Description>
         <p>안녕하세요, IZFLIX 운영진입니다.</p>
-        <p>1월 정기 모금을 통해 약 14만원 가량의 모금액이 모였음을 알려드립니다.</p>
+        <p>현재 IZFLIX는 정식 서비스 2년째에 들어서고 있습니다.</p>
+        <p>4월 기준, 누적 스트리밍 20만 시간, 총 페이지 조회수 1,000만을 달성했으며</p>
+        <p>현재까지도 일 평균 500시간 이상 많은 분이 이용하고 있습니다.</p>
+        <br/>
+        <p><u>IZFLIX는 계속해서 운영 예정</u>이며</p>
+        <p>서비스 중단 및 파탄(??)설은 사실이 아닙니다.</p>
+        <br/>
+        <p>한편, 더 폭넓은 기능을 제공하기 위해</p>
+        <p>새로운 서비스를 기획하고 있습니다.</p>
+        <p>많은 기대 부탁드립니다.</p>
+      </Description>
+      <Line/>
+      <Title>IZFLIX 모금 결과 안내</Title>
+      <Description>
+        <p>안녕하세요, IZFLIX 운영진입니다.</p>
+        <p>2월 정기 모금을 통해 약 38만원 가량의 모금액이 모였음을 알려드립니다.</p>
         <p>해당 모금액은 사이트 유지비용으로 사용되었습니다.</p>
-        <p>또한, 1월 모금에 대한 목표 초과액은 2월 사이트 유지비용으로 사용하였습니다.</p>
+        <p>또한, 2월 모금에 대한 목표 초과액은 3월, 4월 사이트 유지비용으로 사용하였습니다.</p>
         <p>모금에 참여해주신 모든 분께 감사드립니다.</p>
       </Description>
-      <Title>3월 모금 안내</Title>
+      <Line />
+      <Title>5월 모금 안내</Title>
       <Description>
-        <p>현재 예상되는 사이트 유지비용은 월 약 18만원으로,</p>
-        <p>이 중 60%인 110,000원은 운영진에서 직접 부담하고 있습니다.</p>
+        <p>현재 예상되는 사이트 유지비용은 월 약 22만원으로,</p>
         <p>
-          <u>나머지 40%인 70,000원을 모금을 통해 충당하려 합니다.</u>
+          운영진 부담액을 제외한 <u>70,000원을 모금을 통해 충당하려 합니다.</u>
         </p>
         <br />
         <p>모금은 아래와 같은 방식으로 진행됩니다:</p>
@@ -165,7 +186,7 @@ const FundraisingTemplate: React.FC = () => {
         <p>2. 모금액은 자유롭게 설정하실 수 있습니다.</p>
         <p>3. 매월 받은 모금액과 그 사용 내역을 공개합니다.</p>
         <br />
-        <p>모금 참여를 원치 않으시더라도 계속해서 사이트를 이용할 수 있음을 알려드립니다.</p>
+        <p>모금 참여를 원치 않으시더라도 계속해서 사이트를 이용할 수 있습니다.</p>
         <p>모금은 하단 링크를 통해 진행하실 수 있습니다.</p>
       </Description>
       <Content>
@@ -178,7 +199,7 @@ const FundraisingTemplate: React.FC = () => {
         <Graph>
           <GraphIndicator style={{ width: Funder.percentage() }} />
         </Graph>
-        <Date>2024. 3. 7. 12:00 기준</Date>
+        <Date>2024. 5. 13. 15:00 기준</Date>
       </Content>
       <Link href={'https://toss.me/twelve1212'} target={'_blank'}>
         모금링크 (toss.me/twelve1212)
