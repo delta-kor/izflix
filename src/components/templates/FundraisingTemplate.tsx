@@ -157,11 +157,7 @@ const FundraisingTemplate: React.FC = () => {
         <p>현재까지도 일 평균 500시간 이상 많은 분이 이용하고 있습니다.</p>
         <br/>
         <p><u>IZFLIX는 계속해서 운영 예정</u>이며</p>
-        <p>서비스 중단 및 파탄(??)설은 사실이 아닙니다.</p>
-        <br/>
-        <p>한편, 더 폭넓은 기능을 제공하기 위해</p>
-        <p>새로운 서비스를 기획하고 있습니다.</p>
-        <p>많은 기대 부탁드립니다.</p>
+        <p>운영 종료 계획은 없습니다.</p>
       </Description>
       <Line/>
       <Title>IZFLIX 모금 결과 안내</Title>
@@ -199,7 +195,7 @@ const FundraisingTemplate: React.FC = () => {
         <Graph>
           <GraphIndicator style={{ width: Funder.percentage() }} />
         </Graph>
-        <Date>2024. 5. 13. 15:00 기준</Date>
+        <Date>2024. 5. 14. 20:00 기준</Date>
       </Content>
       <Link href={'https://toss.me/twelve1212'} target={'_blank'}>
         모금링크 (toss.me/twelve1212)
